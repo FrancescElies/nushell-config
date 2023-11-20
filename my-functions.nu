@@ -12,6 +12,25 @@ if $nu.os-info.name == "windows" {
   alias vim = c:\tools\vim\vim90\vim.exe
 }
 
+# Create a symlink
+export def symlink [
+    existing: path   # The existing file
+    link_name: path  # The name of the symlink
+] {
+    let existing = ($existing | path expand -s)
+    let link_name = ($link_name | path expand)
+
+    if $nu.os-info.family == 'windows' {
+        if ($existing | path type) == 'dir' {
+            mklink /D $link_name $existing
+        } else {
+            mklink $link_name $existing
+        }
+    } else {
+        ln -s $existing $link_name | ignore
+    }
+}
+
 # convert SVGs to PDFs
 def svgs-to-pdfs [path: path] {
   for file in (ls *svg) {
