@@ -97,47 +97,16 @@ def todos [] {
   nvim ~/todos/todos.md
 }
 
-# https://dystroy.org/broot/tricks/
-# A generic fuzzy finder
-# The goal here is to have a function you can use in shell to give you a path.
-#
-# Example:
-# echo $(bo)
-def bo [] {
-  let os = (sys | get host.name)
-  let select_hjson = (if $os == "Windows" {
-    $"($env.APPDATA)/dystroy/broot/config/select.hjson"
-  } else {
-    $"~/.config/broot/config/select.hjson"
-  } | path expand)
-  if not ($select_hjson | path exists) {
-    echo '
-      # select.hjson
-      verbs: [
-          {
-              invocation: "ok"
-              key: "enter"
-              leave_broot: true
-              execution: ":print_path"
-              apply_to: "file"
-          }
-      ]' | save $select_hjson
-  }
-  ^broot --conf $select_hjson
+
+def "config nvim" [] {
+  nvim ~/src/kickstart.nvim/init.lua
 }
 
-def tree [path: path = .] {
-  ^broot -c :pt $path
-}
-
-def myconfig [] {
-  let os = (sys | get host.name)
-  if $os == "Windows" {
-     nvim ~/.my-functions.nu $"($env.APPDATA)/espanso/default.yml" $"($env.APPDATA)/helix/languages.toml" $"($env.APPDATA)/helix/config.toml" $"($env.APPDATA)/dystroy/broot/config/conf.hjson" $"($env.APPDATA)/dystroy/broot/config/verbs.hjson" $"(($nu.config-path | path parse ).parent)/*.nu"
-      
+def "config espanso" [] {
+  if $nu.os-info.name == "windows" {
+    nvim $"($env.APPDATA)/espanso/default.yml"
   } else {
-     nvim ~/.my-functions.nu ~/.config/helix/languages.toml ~/.config/helix/config.toml "~/.config/broot/config/conf.hjson" "~/.config/broot/config/verbs.hjson" $"(($nu.config-path | path parse ).parent)/*.nu"
-      
+    error make {msg: "espanso config missing?"}
   }
 }
 
