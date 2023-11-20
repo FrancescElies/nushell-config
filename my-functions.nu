@@ -117,4 +117,12 @@ def watch-cwd [] {
 def maxmsp [maxpat: string = ""] {
     `C:\Program Files\Cycling '74\Max 8\Max.exe` ($maxpat | path expand)
 }
+def "maxmsp dumps" [] {
+  cd `~/AppData/Roaming/Cycling '74/Logs`
+}
+def "maxmsp open-latest-dump" [] {
+  let latest_dump = (ls `~/AppData/Roaming/Cycling '74/Logs` | sort-by modified | last)
+  start $latest_dump.name
+}
+
 
