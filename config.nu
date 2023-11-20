@@ -1,10 +1,11 @@
 # Windows
 chcp 65001 
 source ~/AppData/Roaming/dystroy/broot/config/launcher/nushell/br
-source ~/AppData/Roaming/nushell/my-functions.nu
-source ~/AppData/Roaming/nushell/git.nu
-source ~/AppData/Roaming/nushell/az.nu
-source ~/AppData/Roaming/nushell/work.nu
+source ~/src/nushell-config/my-functions.nu
+source ~/src/nushell-config/git.nu
+source ~/src/nushell-config/az.nu
+source ~/src/nushell-config/work.nu
+source ~/src/nushell-config/broot.nu
 source ~/.zoxide.nu
 
 # windows
