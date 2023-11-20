@@ -1,13 +1,16 @@
-alias c = clear
 alias e = nvim 
 alias r2 = radare2
-alias vim = c:\tools\vim\vim90\vim.exe
 alias elisten = nvim --listen 127.0.0.1:6666
 alias lg = lazygit
 alias b = bat
 alias edit-maxsettings = nvim `~/AppData/Roaming/Cycling '74/Max 8/Settings/maxpreferences.maxpref`
 
 def lsg [] { ls | sort-by type name -i | grid -c | str trim }
+alias l = lsg
+
+if $nu.os-info.name == "windows" {
+  alias vim = c:\tools\vim\vim90\vim.exe
+}
 
 # convert SVGs to PDFs
 def svgs-to-pdfs [path: path] {
