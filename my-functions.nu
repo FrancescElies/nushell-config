@@ -1,9 +1,10 @@
+alias todos = nvim ~/todos/todos.md
 alias e = nvim 
 alias r2 = radare2
-alias elisten = nvim --listen 127.0.0.1:6666
 alias lg = lazygit
-alias b = bat
-alias edit-maxsettings = nvim `~/AppData/Roaming/Cycling '74/Max 8/Settings/maxpreferences.maxpref`
+
+# extracts archives with different extensions
+alias extract = ouch decompress
 
 def lsg [] { ls | sort-by type name -i | grid -c | str trim }
 alias l = lsg
@@ -49,34 +50,6 @@ def killn [name: string] {
   ps | find $name | each {|x| kill -f $x.pid}
 }
 
-#Function to extract archives with different extensions
-def extract [name:string #name of the archive to extract
-] {
-  let extension = [ [ex com];
-                    ['.tar.bz2' 'tar xjf']
-                    ['.tar.gz' 'tar xzf']
-                    ['.bz2' 'bunzip2']
-                    ['.rar' 'unrar x']
-                    ['.tbz2' 'tar xjf']
-                    ['.tgz' 'tar xzf']
-                    ['.zip' 'unzip']
-                    ['.7z' '7z x']
-                    ['.deb' 'ar x']
-                    ['.tar.xz' 'tar xvf']
-                    ['.tar.zst' 'tar xvf']
-                    ['.tar' 'tar xvf']
-                    ['.gz' 'gunzip']
-                    ['.Z' 'uncompress']
-                    ]
-  let command = ($extension | where $name =~ $it.ex|first)
-  if ($command|is-empty) {
-    echo 'Error! Unsupported file extension'
-  } else {
-    nu -c (build-string $command.com ' ' $name)
-  }
-}
-
-
 def clang-commands-json [] {
   powershell -File "~/src/clang-power-tools/ClangPowerTools/ClangPowerTools/Tooling/v1/clang-build.ps1"  -export-jsondb
 }
@@ -91,12 +64,6 @@ def where-dumpbin [] {
 def reduce-video-size [input_video: path] {
   ffmpeg -i $input_video -vcodec libx265 -crf 28  $"($input_video).mp4"
 }
-
-
-def todos [] {
-  nvim ~/todos/todos.md
-}
-
 
 def "config nvim" [] {
   nvim ~/src/kickstart.nvim/init.lua
@@ -114,15 +81,5 @@ def watch-cwd [] {
   watch . { |op, path, new_path| $"($op) ($path) ($new_path)"}
 }
 
-def maxmsp [maxpat: string = ""] {
-    `C:\Program Files\Cycling '74\Max 8\Max.exe` ($maxpat | path expand)
-}
-def "maxmsp dumps" [] {
-  cd `~/AppData/Roaming/Cycling '74/Logs`
-}
-def "maxmsp open-latest-dump" [] {
-  let latest_dump = (ls `~/AppData/Roaming/Cycling '74/Logs` | sort-by modified | last)
-  start $latest_dump.name
-}
 
 
