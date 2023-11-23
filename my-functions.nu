@@ -65,6 +65,10 @@ def reduce-video-size [input_video: path] {
   ffmpeg -i $input_video -vcodec libx265 -crf 28  $"($input_video).mp4"
 }
 
+def "config weztern" [] {
+  nvim ~\src\wezterm-config\wezterm.lua
+}
+
 def "config nvim" [] {
   nvim ~/src/kickstart.nvim/init.lua
 }
