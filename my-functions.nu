@@ -1,3 +1,4 @@
+alias b = nu build.nu
 alias todos = nvim ~/todos/todos.md
 alias e = nvim 
 alias r2 = radare2
@@ -51,7 +52,11 @@ def killn [name: string] {
 }
 
 def clang-commands-json [] {
-  powershell -File "~/src/clang-power-tools/ClangPowerTools/ClangPowerTools/Tooling/v1/clang-build.ps1"  -export-jsondb
+  if not ("~/src/clang-power-tools" | path exists) { 
+    cd ~/src
+    git clone https://github.com/Caphyon/clang-power-tools
+  }
+  powershell -File ~/src/clang-power-tools/ClangPowerTools/ClangPowerTools/Tooling/v1/clang-build.ps1  -export-jsondb
 }
 
 def where-dumpbin [] {
