@@ -1,6 +1,6 @@
 # Windows
 chcp 65001 
-source ~/AppData/Roaming/dystroy/broot/config/launcher/nushell/br
+# source ~/AppData/Roaming/dystroy/broot/config/launcher/nushell/br
 
 source ~/src/nushell-config/my-functions.nu
 source ~/src/nushell-config/maxmsp.nu

@@ -3,12 +3,8 @@
 ## Install
 ```nu
 git clone https://github.com/FrancescElies/nushell-config ~/src/nushell-config
-
-# Create symlink
-# Windows
-mklink /D ~\AppData\Roaming\nushell ~\src\nushell-config
-# Nix
-ln -s  ~/src/nushell-config ~/AppData/Roaming/nushell
+cd ~/src/nushell-config
+nu install.nu
 ```
 
 ## Links
