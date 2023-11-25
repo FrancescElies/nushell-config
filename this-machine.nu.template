@@ -1,2 +1,5 @@
-source ~/src/nushell-config/os-mac.nu
-#source ~/src/nushell-config/os-windows.nu
+# Configuration file for machine spepecific settings
+#
+# Example:
+# source ~/src/nushell-config/os-mac.nu
+# source ~/src/nushell-config/os-windows.nu
