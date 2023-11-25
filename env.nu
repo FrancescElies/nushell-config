@@ -99,19 +99,34 @@ $env.NU_PLUGIN_DIRS = [
 
 # To add entries to PATH (on Windows you might use Path), you can use the following pattern:
 # $env.PATH = ($env.PATH | split row (char esep) | prepend '/some/path')
-if $nu.os-info.name == "windows" {
-    $env.PATH = ($env.PATH | split row (char esep) 
-        | prepend '~/AppData/Roaming/Python/Python311/Scripts'
-        | prepend '~/AppData/Roaming/Python/Scripts'
-        | prepend '~/src/radare2/prefix/bin'
-        | prepend '~/go/bin'
-    )
-} else {
-    $env.PATH = ($env.PATH | split row (char esep)
-        | prepend '/usr/local/bin'
-        | prepend '~/src/radare2/prefix/bin'
-        | prepend '~/go/bin'
-    )
+$env.PATH = match $nu.os-info.name { 
+    "windows" => {
+        ($env.PATH | split row (char esep) 
+            | prepend '~/AppData/Roaming/Python/Python311/Scripts'
+            | prepend '~/AppData/Roaming/Python/Scripts'
+            | prepend '~/src/radare2/prefix/bin'
+            | prepend '~/go/bin'
+        )
+    }, 
+    "macos" => {
+        ($env.PATH | split row (char esep)
+            | prepend '~/bin'
+            | prepend '/usr/local/bin'
+            | prepend '/opt/homebrew/bin'
+            | prepend '~/src/radare2/prefix/bin'
+            | prepend '~/go/bin'
+        )
+    }, 
+    "linux" => {
+        ($env.PATH | split row (char esep)
+            | prepend '~/bin'
+            | prepend '/usr/local/bin'
+            | prepend '/home/linuxbrew/.linuxbrew/bin')
+            | prepend '~/src/radare2/prefix/bin'
+            | prepend '~/go/bin'
+        )
+    }, 
+    _ => $env.PATH, 
 }
 
 $env.EDITOR = "nvim"
