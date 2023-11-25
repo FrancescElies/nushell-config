@@ -1,7 +1,4 @@
-# Windows
-# chcp 65001 
-# source ~/AppData/Roaming/dystroy/broot/config/launcher/nushell/br
-
+source ~/src/nushell-config/this-machine.nu
 source ~/src/nushell-config/my-functions.nu
 source ~/src/nushell-config/maxmsp.nu
 source ~/src/nushell-config/git.nu
@@ -10,8 +7,6 @@ source ~/src/nushell-config/work.nu
 source ~/src/nushell-config/broot.nu
 source ~/.zoxide.nu
 
-# windows
-# use ~/AppData/Roaming/nushell/cargo-completions.nu *
 # Nushell Config File
 #
 # version = "0.87.1"

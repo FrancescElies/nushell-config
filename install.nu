@@ -8,3 +8,4 @@ let config_folder = match $nu.os-info.name {
 
 ls $config_folder | where ($it.name) =~ `.nu$` | each {|x| rm $x.name } 
 [~/src/nushell-config/env.nu, ~/src/nushell-config/config.nu] | each {|x| symlink $x $config_folder } 
+touch this-machine.nu

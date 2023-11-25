@@ -10,10 +10,6 @@ alias extract = ouch decompress
 def lsg [] { ls | sort-by type name -i | grid -c | str trim }
 alias l = lsg
 
-if $nu.os-info.name == "windows" {
-  alias vim = c:\tools\vim\vim90\vim.exe
-}
-
 # convert SVGs to PDFs
 def svgs-to-pdfs [path: path] {
   for file in (ls *svg) {
