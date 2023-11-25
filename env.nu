@@ -100,14 +100,18 @@ $env.NU_PLUGIN_DIRS = [
 # To add entries to PATH (on Windows you might use Path), you can use the following pattern:
 # $env.PATH = ($env.PATH | split row (char esep) | prepend '/some/path')
 if $nu.os-info.name == "windows" {
-    $env.Path = ($env.Path | split row (char esep) 
+    $env.PATH = ($env.PATH | split row (char esep) 
         | prepend '~/AppData/Roaming/Python/Python311/Scripts'
         | prepend '~/AppData/Roaming/Python/Scripts'
         | prepend '~/src/radare2/prefix/bin'
         | prepend '~/go/bin'
     )
 } else {
-    $env.Path = ($env.Path | split row (char esep))
+    $env.PATH = ($env.PATH | split row (char esep)
+        | prepend '/usr/local/bin'
+        | prepend '~/src/radare2/prefix/bin'
+        | prepend '~/go/bin'
+    )
 }
 
 $env.EDITOR = "nvim"
