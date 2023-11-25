@@ -111,6 +111,7 @@ $env.PATH = match $nu.os-info.name {
     "macos" => {
         ($env.PATH | split row (char esep)
             | prepend '~/bin'
+            | prepend '~/Library/Python/3.12/bin'
             | prepend '/usr/local/bin'
             | prepend '/opt/homebrew/bin'
             | prepend '~/src/radare2/prefix/bin'
