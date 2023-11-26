@@ -1,9 +1,14 @@
 source ~/src/nushell-config/symlink.nu
 
-let config_folder = match $nu.os-info.name { 
-  "windows" => "~/AppData/Roaming/nushell", 
-  "macos" => "~/Library/Application Support/nushell", 
-  _ => "not implemented"
+
+let config_folder = if $nu.os-info.name == "windows" {
+  "~/AppData/Roaming/nushell" 
+} else if $nu.os-info.name == "macos" {
+  "~/Library/Application Support/nushell"
+} else if $nu.os-info.name == "linux" {
+  "~/.config/nushell"
+} else {
+  error make {msg: "not implemented", }
 }
 
 ls $config_folder | where ($it.name) =~ `.nu$` | each {|x| rm $x.name } 
