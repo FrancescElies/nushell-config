@@ -3,7 +3,7 @@ source ~/src/nushell-config/my-functions.nu
 source ~/src/nushell-config/maxmsp.nu
 source ~/src/nushell-config/git.nu
 source ~/src/nushell-config/az.nu
-source ~/src/nushell-config/work.nu
+source ~/src/nushell-config/docs.nu
 source ~/src/nushell-config/broot.nu
 source ~/.zoxide.nu
 

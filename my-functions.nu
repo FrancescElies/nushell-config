@@ -48,7 +48,7 @@ def reduce-video-size [input_video: path] {
 }
 
 def "config weztern" [] {
-  nvim ~\src\wezterm-config\wezterm.lua
+  nvim ~/src/wezterm-config/wezterm.lua
 }
 
 def "config nvim" [] {
