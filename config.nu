@@ -260,8 +260,9 @@ $env.config = {
             PWD: [
                 {
                     condition: { |_, after| (
-                        (pwd | path basename) != "nushell-config" 
-                         and ($after | path join env.nu | path exists)
+                        ( (pwd | path basename) != "nushell-config" )
+                        and ( (pwd | path basename) != "nushell"  )
+                        and ( $after | path join env.nu | path exists )
                     ) }
                     code: "overlay use env.nu"
                 }
