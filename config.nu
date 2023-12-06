@@ -1,4 +1,12 @@
 source ~/src/nushell-config/this-machine.nu
+
+# Windows
+chcp 65001 
+source ~/AppData/Roaming/dystroy/broot/config/launcher/nushell/br
+# Tu update that file use:
+# starship init nu | save -f starship_init.nu
+use ~/src/nushell-config/starship_init.nu
+
 source ~/src/nushell-config/my-functions.nu
 source ~/src/nushell-config/maxmsp.nu
 source ~/src/nushell-config/git.nu
