@@ -1,8 +1,5 @@
 source ~/src/nushell-config/this-machine.nu
 
-# Windows
-chcp 65001 
-source ~/AppData/Roaming/dystroy/broot/config/launcher/nushell/br
 # Tu update that file use:
 # starship init nu | save -f starship_init.nu
 use ~/src/nushell-config/starship_init.nu
@@ -14,6 +11,10 @@ source ~/src/nushell-config/az.nu
 source ~/src/nushell-config/docs.nu
 source ~/src/nushell-config/broot.nu
 source ~/.zoxide.nu
+
+if $nu.os-info.name == "windows" {
+    chcp 65001 
+} 
 
 # Nushell Config File
 #
