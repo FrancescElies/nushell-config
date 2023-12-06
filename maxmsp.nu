@@ -40,3 +40,9 @@ def "maxmsp latest-dump" [] {
   start $latest_dump.name
 }
 
+# opens Max 8 Packages folder
+def --env "maxmsp packages" [] {
+  cd `~/Documents/Max 8/Packages`
+}
+
+
