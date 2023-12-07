@@ -10,6 +10,7 @@ source ~/src/nushell-config/git.nu
 source ~/src/nushell-config/az.nu
 source ~/src/nushell-config/docs.nu
 source ~/src/nushell-config/broot.nu
+source ~/src/nushell-config/just.nu
 source ~/.zoxide.nu
 
 if $nu.os-info.name == "windows" {
