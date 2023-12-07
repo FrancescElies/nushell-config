@@ -101,7 +101,7 @@ $env.NU_PLUGIN_DIRS = [
 # $env.Path = ($env.Path | split row (char esep) | prepend '/some/path')
 if $nu.os-info.name == "windows" { 
     $env.Path = ($env.Path | split row (char esep) 
-        | prepend '~/AppData/Roaming/Python/Python311/Scripts'
+        | prepend '~/AppData/Roaming/Python/Python312/Scripts'
         | prepend '~/AppData/Roaming/Python/Scripts'
         | prepend '~/src/radare2/prefix/bin'
         | prepend '~/go/bin')

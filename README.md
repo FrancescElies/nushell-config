@@ -12,3 +12,33 @@ nu install.nu
 - https://github.com/dandavison/nushell-config
 - https://github.com/nushell/nu_scripts
 
+## Cargo
+
+  ambr
+  ast-grep
+  bacon
+  bat
+  broot
+  btm
+  coreutils
+  delta
+  diskonaut
+  fastmod
+  fnm
+  huniq
+  hwatch
+  just
+  mdbook
+  mprocs
+  nu
+  ouch
+  pgen
+  ptags
+  py-spy
+  sad
+  sd
+  sg
+  tldr
+  tokei
+  xh
+  zoxide
