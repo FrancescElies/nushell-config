@@ -1,3 +1,6 @@
+alias olist = overlay list
+alias ohide = overlay hide
+alias ouse = overlay use
 alias b = nu build.nu
 alias todos = nvim ~/todos/todos.md
 alias e = nvim 
