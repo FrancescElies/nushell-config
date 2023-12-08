@@ -45,4 +45,13 @@ def --env "maxmsp packages" [] {
   cd `~/Documents/Max 8/Packages`
 }
 
+# greps for something max related in all known locations where something interesting might be found
+def "maxmsp grep" [pattern: string] {
+  let locations = [
+    (echo `~/src/max-sdk` | path expand), 
+    (echo `C:/Program Files/Cycling '74` | path expand),
+    (echo `~/AppData/Roaming/Cycling '74`| path expand),
+  ]
+  rg $pattern $locations
+}
 
