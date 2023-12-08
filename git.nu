@@ -47,6 +47,23 @@ def "pr diff" [path: path = .] {
   git diff $this_branch ( git merge-base $this_branch origin/master ) 
 }
 
+# opens files modified by pr in nvim
+def "pr files" [
+  path: path = .
+  --extension: string = ""  # ts, py, rs ... (no dot), default matches everything
+  --target_branch: string = "origin/master"  # pr's target branch (normally main, master, ...)
+] {
+  let this_branch = (git rev-parse --abbrev-ref HEAD)
+  let files = ( git diff --name-only $this_branch ( git merge-base $this_branch $target_branch ) | lines )
+  if ($extension| is-empty) { 
+    nvim $files
+  } else {
+    let filtered_files = ( $files | filter { |x| ($x | path parse).extension == $extension} )
+    nvim $filtered_files
+  }
+
+}
+
 
 # https://stackoverflow.com/questions/46704572/git-error-encountered-7-files-that-should-have-been-pointers-but-werent
 def git-lfs-fix-everything [] {
