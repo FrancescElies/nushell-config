@@ -56,14 +56,28 @@ def "pr files" [
   let this_branch = (git rev-parse --abbrev-ref HEAD)
   let files = ( git diff --name-only $this_branch ( git merge-base $this_branch $target_branch ) | lines )
   if ($extension| is-empty) { 
-    nvim $files
+    $files
   } else {
     let filtered_files = ( $files | filter { |x| ($x | path parse).extension == $extension} )
-    nvim $filtered_files
+    $filtered_files
   }
 
 }
 
+# Opens current branch and target branch maxpats to comparison
+def "pr review-maxpats" [
+  --target_branch: string = "origin/master"  # pr's target branch (normally main, master, ...)
+] {
+  echo $"using ($target_branch)"
+  pr files --extension maxpat | each { |x| (
+    git show $"($target_branch):($x)" 
+    | save -f $"tmp-target-($x | path parse  | get stem).maxpat" 
+    ; echo $x 
+    ; start $x 
+    ; start $"tmp-target-($x | path parse  | get stem).maxpat") 
+  }
+  echo "Once done cleanup: rm tmp_*maxpat"
+}
 
 # https://stackoverflow.com/questions/46704572/git-error-encountered-7-files-that-should-have-been-pointers-but-werent
 def git-lfs-fix-everything [] {
