@@ -68,15 +68,30 @@ def "pr files" [
 def "pr review-maxpats" [
   --target_branch: string = "origin/master"  # pr's target branch (normally main, master, ...)
 ] {
-  echo $"using ($target_branch)"
-  pr files --extension maxpat | each { |x| (
+  echo $"target branch: ($target_branch)"
+  let open_files = pr files --extension maxpat | each { |x| (
     git show $"($target_branch):($x)" 
-    | save -f $"tmp-target-($x | path parse  | get stem).maxpat" 
-    ; echo $x 
+    | save -f $"($x | path expand | path dirname)/tmp-target-($x | path basename)" 
     ; start $x 
-    ; start $"tmp-target-($x | path parse  | get stem).maxpat") 
-  }
+    ; start $"($x | path expand | path dirname)/tmp-target-($x | path basename)" 
+    ; echo $x 
+  ) }
+
+  let untracked_maxpats = ( 
+    (git ls-files . --exclude-standard --others) 
+    | lines 
+    | path parse 
+    | filter {|x| $x.extension == "maxpat"} 
+    | path join
+  )
+  echo "untracked maxpats:"
+  echo $untracked_maxpats
+
+  if (input "remove untracked maxpat files (y/n)?") == "y" {  
+    $untracked_maxpats | each { || rm $in }
+  } 
   echo "Once done cleanup: rm tmp_*maxpat"
+
 }
 
 # https://stackoverflow.com/questions/46704572/git-error-encountered-7-files-that-should-have-been-pointers-but-werent
