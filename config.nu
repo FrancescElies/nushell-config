@@ -7,6 +7,7 @@ use ~/src/nushell-config/starship_init.nu
 source ~/src/nushell-config/my-functions.nu
 source ~/src/nushell-config/maxmsp.nu
 source ~/src/nushell-config/git.nu
+source ~/src/nushell-config/hosts.nu
 source ~/src/nushell-config/az.nu
 source ~/src/nushell-config/docs.nu
 source ~/src/nushell-config/broot.nu
