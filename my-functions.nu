@@ -1,15 +1,20 @@
+# overlay list
 alias olist = overlay list
+# overlay hide
 alias ohide = overlay hide
+# overlay use
 alias ouse = overlay use
-alias b = nu build.nu
+# todos
 alias todos = nvim ~/todos/todos.md
+# edit
 alias e = nvim 
+# radare2
 alias r2 = radare2
+# lazygit
 alias lg = lazygit
-
 # extracts archives with different extensions
 alias extract = ouch decompress
-
+# compact ls 
 def lsg [] { ls | sort-by type name -i | grid -c | str trim }
 alias l = lsg
 
