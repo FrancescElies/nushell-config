@@ -1,3 +1,5 @@
+alias rg-max = rg --type-add 'max:*.{maxhelp,maxpat,json}' -t max
+
 # Cycling '74 Max cli wrap
 def maxmsp [maxpat: string = ""] {
     let max_exe = match $nu.os-info.name { 
