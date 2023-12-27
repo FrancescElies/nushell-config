@@ -13,7 +13,7 @@ nu install.nu
 
 ## Cargo
 
-  ambr
+  amber
   ast-grep
   bacon
   bat
@@ -41,4 +41,5 @@ nu install.nu
   tldr
   tokei
   xh
+  pueue
   zoxide
