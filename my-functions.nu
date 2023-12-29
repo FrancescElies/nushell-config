@@ -14,6 +14,9 @@ alias r2 = radare2
 alias lg = lazygit
 # extracts archives with different extensions
 alias extract = ouch decompress
+
+alias time-today = python ~/src/nushell-config/time_spent_today.py
+
 # compact ls 
 def lsg [] { ls | sort-by type name -i | grid -c | str trim }
 alias l = lsg
