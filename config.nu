@@ -1,8 +1,5 @@
 source ~/src/nushell-config/this-machine.nu
 
-# Tu update that file use:
-# starship init nu | save -f starship_init.nu
-use ~/src/nushell-config/starship_init.nu
 use ~/src/nushell-config/task.nu
 
 source ~/src/nushell-config/my-functions.nu
@@ -13,7 +10,6 @@ source ~/src/nushell-config/az.nu
 source ~/src/nushell-config/docs.nu
 source ~/src/nushell-config/broot.nu
 source ~/src/nushell-config/just.nu
-source ~/.zoxide.nu
 
 if $nu.os-info.name == "windows" {
     chcp 65001 
