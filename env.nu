@@ -126,4 +126,3 @@ if $nu.os-info.name == "windows" {
 
 $env.EDITOR = "nvim"
 $env.PYTHONUNBUFFERED = 1
-$env.CARGO_LOG = "cargo::core::compiler::fingerprint=info cargo build"
