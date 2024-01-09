@@ -1,4 +1,5 @@
 # https://github.com/nushell/nu_scripts/blob/main/modules/background_task/task.nu
+
 # Spawn a task to run in the background, even when the shell is closed.
 #
 # Note that a fresh Nushell interpreter is spawned to execute the
