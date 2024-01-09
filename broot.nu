@@ -1,3 +1,11 @@
+# broot only dirs and cd into it
+def --env brd [] {
+  let selectdir_hjson = create-or-get-selectdir-json
+  let dir = ^broot --only-folders --conf $selectdir_hjson
+  cd $dir
+}
+
+
 # To update run:
 # !r broot --print-shell-function nushell
 #
@@ -152,20 +160,33 @@ def "config broot" [] {
   }
 }
 
+# returns a configuration file path with which you can select an entry with the enter key
+def create-or-get-selectdir-json [] {
+  let select_hjson = ( match $nu.os-info.name { 
+    "windows" => $"($env.APPDATA)/dystroy/broot/config/selectdir.hjson", 
+    _ => $"~/.config/broot/config/selectdir.hjson" 
+  } | path expand )
+  if not ($select_hjson | path exists) {
+    echo '
+      # selectdir.hjson
+      verbs: [
+          {
+              invocation: "ok"
+              key: "enter"
+              leave_broot: true
+              execution: ":print_path"
+              apply_to: "directory"
+          }
+      ]' | save $select_hjson
+  }
+  return $select_hjson
+}
 
-# https://dystroy.org/broot/tricks/
-# A generic fuzzy finder
-# The goal here is to have a function you can use in shell to give you a path.
-#
-# Example:
-# echo $(bo)
-def bo [] {
-  let os = (sys | get host.name)
-  let select_hjson = (if $os == "Windows" {
-    $"($env.APPDATA)/dystroy/broot/config/select.hjson"
-  } else {
-    $"~/.config/broot/config/select.hjson"
-  } | path expand)
+def create-or-get-select-json [] {
+  let select_hjson = ( match $nu.os-info.name { 
+    "windows" => $"($env.APPDATA)/dystroy/broot/config/select.hjson", 
+    _ => $"~/.config/broot/config/select.hjson" 
+  } | path expand )
   if not ($select_hjson | path exists) {
     echo '
       # select.hjson
@@ -179,6 +200,17 @@ def bo [] {
           }
       ]' | save $select_hjson
   }
+  return $select_hjson
+}
+
+# https://dystroy.org/broot/tricks/
+# A generic fuzzy finder
+# The goal here is to have a function you can use in shell to give you a path.
+#
+# Example:
+# echo $(bo)
+def bo [] {
+  let select_hjson = create-or-get-select-json
   ^broot --conf $select_hjson
 }
 
