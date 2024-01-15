@@ -104,7 +104,9 @@ if $nu.os-info.name == "windows" {
         | prepend '~/AppData/Roaming/Python/Python312/Scripts'
         | prepend '~/AppData/Roaming/Python/Scripts'
         | prepend '~/src/radare2/prefix/bin'
-        | prepend '~/go/bin')
+        | prepend '~/go/bin'
+        | prepend (ls ~/bin | where type == dir | get name)
+    )
 } else if $nu.os-info.name == "macos" {
     $env.Path = ($env.Path | split row (char esep)
         | prepend '~/bin'
