@@ -205,5 +205,11 @@ def watch-cwd [] {
   watch . { |op, path, new_path| $"($op) ($path) ($new_path)"}
 }
 
-
-
+def who-locks [path: path] {
+  if $nu.os-info.name == "windows" {
+    # https://learn.microsoft.com/en-us/sysinternals/downloads/handle
+    handle $path 
+  } else {
+    lsof $path
+  }
+}
