@@ -132,7 +132,8 @@ def "git work new-branch" [
 ] {
   let title = $title | str replace --all " " "-"  
   git topic-begin $"cesc/story($story)-($title)" $based_on 
-  let pr_target = $based_on | | str replace -r '(origin/)(.+)' '$2'
-  pr create --target-branch $based_on
+
+  let pr_target = $based_on | str replace -r '(origin/)(.+)' '$2'
+  pr create --target-branch $pr_target
 }
 
