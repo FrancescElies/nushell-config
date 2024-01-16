@@ -4,6 +4,15 @@ export def "git difft" [...rest] {
 
 alias gd = git difft
 
+# Pull requests
+
+def "pr create" [
+  --target-branch (-t): string = 'master'  
+] {
+  git push
+  az repos pr create --draft --open --auto-complete -t $target_branch -o table
+}
+
 def "git cm" [ 
   title: string 
   body: string = ""
@@ -113,3 +122,17 @@ def git-lfs-fix-everything [] {
 def git-lfs-fix [...paths: path] {
   git lfs migrate import --no-rewrite $paths
 }
+
+# work
+
+def "git work new-branch" [
+  story: number
+  title: string 
+  based_on: string = "origin/master"
+] {
+  let title = $title | str replace --all " " "-"  
+  git topic-begin $"cesc/story($story)-($title)" $based_on 
+  let pr_target = $based_on | | str replace -r '(origin/)(.+)' '$2'
+  pr create --target-branch $based_on
+}
+

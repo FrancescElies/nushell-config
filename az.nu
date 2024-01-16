@@ -20,16 +20,6 @@ def "az machines" [
   )
 }
 
-# Pull requests
-
-def "pr create" [
-  --target-branch (-t): string = 'master'  
-] {
-  git push
-  az repos pr create --draft --open --auto-complete -t $target_branch -o table
-}
-
-
 def "build queue" [ definition_id: int = 42 ] {
   az pipelines build queue --open --branch (git rev-parse --abbrev-ref HEAD) --definition-id $definition_id
 }
