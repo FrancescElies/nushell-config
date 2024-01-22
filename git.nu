@@ -1,5 +1,5 @@
 export def "git difft" [...rest] {
-    with-env [GIT_EXTERNAL_DIFF 'difft'] { git diff $rest }
+    with-env [GIT_EXTERNAL_DIFF 'difft'] { git diff ...$rest }
 }
 
 alias gd = git difft
