@@ -10,6 +10,7 @@ source ~/src/nushell-config/az.nu
 source ~/src/nushell-config/docs.nu
 source ~/src/nushell-config/broot.nu
 source ~/src/nushell-config/just.nu
+source ~/src/nushell-config/toolbox.nu
 
 if $nu.os-info.name == "windows" {
     chcp 65001 
