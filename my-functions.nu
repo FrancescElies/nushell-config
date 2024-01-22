@@ -185,6 +185,15 @@ def reduce-video-size [input_video: path] {
   ffmpeg -i $input_video -vcodec libx265 -crf 28  $"($input_video).mp4"
 }
 
+# One could download move parts like follows from some website
+# 400 is just an arbitrary number of how may parts there are
+# 1..400 | par-each { |x| curl $"mylink/part-($x)" -o $x -fS }
+def concat-videos-in-folder [folder: path] {
+  cd $folder
+  ls | get name | sort --natural | each { $"file ($in)" } | save -f inputs.txt
+  ffmpeg -f concat -safe 0 -i inputs.txt -c copy $"($folder | path basename).mkv"
+}
+
 def "config weztern" [] {
   nvim ~/src/wezterm-config/wezterm.lua
 }

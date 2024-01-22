@@ -267,7 +267,12 @@ $env.config = {
                     code: "overlay use env.nu"
                 }
                 {|before, after| print (lsg) }
-            ] # run if the PWD environment is different since the last repl input
+                {|before, after| print (lsg) }
+                {
+                    condition: {|before, after| ($after | path join "venv/bin/activate.nu" | path exists) }
+                    code: 'overlay use venv/bin/activate.nu'
+                }
+        ]
         }
         display_output: "if (term size).columns >= 100 { table -e } else { table }" # run to display the output of a pipeline
         command_not_found: { null } # return an error message when a command is not found

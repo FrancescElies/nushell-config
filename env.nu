@@ -108,7 +108,7 @@ if $nu.os-info.name == "windows" {
         | prepend (ls ~/bin | where type == dir | get name)
     )
 } else if $nu.os-info.name == "macos" {
-    $env.Path = ($env.Path | split row (char esep)
+    $env.PATH = ($env.PATH | split row (char esep)
         | prepend '~/bin'
         | prepend '~/Library/Python/3.12/bin'
         | prepend '/usr/local/bin'
@@ -116,15 +116,18 @@ if $nu.os-info.name == "windows" {
         | prepend '~/src/radare2/prefix/bin'
         | prepend '~/go/bin')
 } else if $nu.os-info.name == "linux" {
-    $env.Path = ($env.Path | split row (char esep)
+    $env.PATH = ($env.PATH | split row (char esep)
         | prepend '~/bin'
         | prepend '/usr/local/bin'
         | prepend '/home/linuxbrew/.linuxbrew/bin'
         | prepend '~/src/radare2/prefix/bin'
         | prepend '~/go/bin')
 } else {
-    $env.Path = $env.Path 
+    $env.PATH = $env.PATH 
 }
 
 $env.EDITOR = "nvim"
 $env.PYTHONUNBUFFERED = 1
+$env.PYTHONBREAKPOINT = "ipdb.set_trace"
+
+overlay use ~/py312/bin/activate.nu
