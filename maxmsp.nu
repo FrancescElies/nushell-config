@@ -1,3 +1,4 @@
+source broot.nu
 alias rg-max = rg --type-add 'max:*.{maxhelp,maxpat,json}' -t max
 
 # Cycling '74 Max cli wrap
@@ -23,6 +24,7 @@ def "maxmsp maxinterface" [] {
 # goes to Cycling '74/Logs, where .dmp files are
 def --env "maxmsp dumps" [] {
   cd `~/AppData/Roaming/Cycling '74/Logs`
+  br
 }
 
 # opens Max's api
@@ -32,7 +34,7 @@ def "maxmsp api" [] {
     git clone https://github.com/Cycling74/max-sdk
   }
   cd `~/src/max-sdk/source/max-sdk-base/c74support/max-includes`
-  nvim .
+  br 
 }
 
 
@@ -45,6 +47,7 @@ def "maxmsp latest-dump" [] {
 # opens Max 8 Packages folder
 def --env "maxmsp packages" [] {
   cd `~/Documents/Max 8/Packages`
+  br
 }
 
 # greps for something max related in all known locations where something interesting might be found
