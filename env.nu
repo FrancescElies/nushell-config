@@ -130,4 +130,3 @@ $env.EDITOR = "nvim"
 $env.PYTHONUNBUFFERED = 1
 $env.PYTHONBREAKPOINT = "ipdb.set_trace"
 
-overlay use ~/py312/bin/activate.nu
