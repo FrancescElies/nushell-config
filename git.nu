@@ -1,3 +1,8 @@
+# edit .gitignore
+export def "git ignore-edit" [] {
+    e $"(git rev-parse --show-toplevel)/.gitignore"
+}
+
 export def "git difft" [...rest] {
     with-env [GIT_EXTERNAL_DIFF 'difft'] { git diff ...$rest }
 }
@@ -42,7 +47,7 @@ def "git gone" [] {
       | each { |it| git branch -D $it.BranchName }
 }
 
-#  View git comitter activity as a histogram
+#  View git committer activity as a histogram
 def "git activity" [
   --path: path = .
   --since: string = '1 year ago'  
