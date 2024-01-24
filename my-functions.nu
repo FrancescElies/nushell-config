@@ -1,13 +1,5 @@
-# overlay list
-alias olist = overlay list
-# overlay hide
-alias ohide = overlay hide
-# overlay use
-alias ouse = overlay use
 # todos
 alias todos = nvim ~/todos/todos.md
-# edit
-alias e = nvim 
 # radare2
 alias r2 = radare2
 # lazygit
