@@ -269,7 +269,6 @@ $env.config = {
                     code: "overlay use env.nu"
                 }
                 {|before, after| print (lsg) }
-                {|before, after| print (lsg) }
                 {
                     condition: {|before, after| ($after | path join "venv/bin/activate.nu" | path exists) }
                     code: 'overlay use venv/bin/activate.nu'
