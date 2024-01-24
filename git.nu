@@ -1,6 +1,6 @@
 # edit .gitignore
 export def "git ignore-edit" [] {
-    e $"(git rev-parse --show-toplevel)/.gitignore"
+    nvim $"(git rev-parse --show-toplevel)/.gitignore"
 }
 
 export def "git difft" [...rest] {
