@@ -214,3 +214,13 @@ def who-locks [path: path] {
     lsof $path
   }
 }
+
+def lldbb-attach-windows-process [processid: int] {
+  with-env {Path: ($env.Path | prepend "C:/Python310") ,PYTHONHOME: `C:/Python310`, PYTHONPATH: "C:/Python310/Lib"} { 
+    python --version
+    lldb -p $processid 
+  }
+}
+
+
+
