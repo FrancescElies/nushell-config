@@ -185,3 +185,18 @@ alias gcleanest = git clean -dffx
 alias gcleanout = git clean -df ; git checkout -- .
 # git push force-with-lease
 alias gpushy = git push --force-with-lease
+
+# git worktree
+alias gw = git worktree 
+# git worktree list
+export def "git worktree list" [] {
+  ^git worktree list | parse --regex `(?P<path>.+?) +(?P<commit>\w+) \[(?P<branch>.+)\]`
+}
+# git worktree list
+alias gwl = git worktree list
+# git worktree add
+alias gwa = git worktree add
+# git worktree remove
+alias gwrem = git worktree remove
+# git worktree repair
+alias gwrep = git worktree repair
