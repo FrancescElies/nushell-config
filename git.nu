@@ -182,7 +182,7 @@ alias gdiscard = git checkout --
 # git clean into a pristine working directory 
 alias gcleanest = git clean -dffx
 # Clean (also untracked) and checkout.
-alias gcleanout = git clean -df ; git checkout -- .
+def gcleanout [] = {git clean -df ; git checkout -- .}
 # git push force-with-lease
 alias gpushy = git push --force-with-lease
 
