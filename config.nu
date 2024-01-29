@@ -1,18 +1,18 @@
-source ~/src/nushell-config/this-machine.nu
+source ~/src/nushell-config/src/this-machine.nu
 
-use ~/src/nushell-config/task.nu
+use ~/src/nushell-config/src/task.nu
 
-source ~/src/nushell-config/my-functions.nu
-source ~/src/nushell-config/maxmsp.nu
-source ~/src/nushell-config/git.nu
-source ~/src/nushell-config/hosts.nu
-source ~/src/nushell-config/az.nu
-source ~/src/nushell-config/docs.nu
-source ~/src/nushell-config/broot.nu
-source ~/src/nushell-config/just.nu
-source ~/src/nushell-config/toolbox.nu
-source ~/src/nushell-config/clip.nu
-source ~/src/nushell-config/nvim.nu
+source ~/src/nushell-config/src/my-functions.nu
+source ~/src/nushell-config/src/maxmsp.nu
+source ~/src/nushell-config/src/git.nu
+source ~/src/nushell-config/src/hosts.nu
+source ~/src/nushell-config/src/az.nu
+source ~/src/nushell-config/src/docs.nu
+source ~/src/nushell-config/src/broot.nu
+source ~/src/nushell-config/src/just.nu
+source ~/src/nushell-config/src/toolbox.nu
+source ~/src/nushell-config/src/clip.nu
+source ~/src/nushell-config/src/nvim.nu
 
 if $nu.os-info.name == "windows" {
     chcp 65001 

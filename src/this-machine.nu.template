@@ -1,0 +1,6 @@
+# Configuration file for machine specific settings
+#
+# Example:
+# source ~/src/nushell-config/src/os-mac.nu
+# source ~/src/nushell-config/src/os-windows.nu
+# source ~/src/nushell-config/src/os-linux.nu
