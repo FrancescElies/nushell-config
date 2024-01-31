@@ -1,17 +1,4 @@
 
-# nu-complete
-# -----------
-
-def "nu-complete git branches" [] {
-    git branch | lines
-    | filter {|x| not ($x | str starts-with '*')}
-    | each {|x| $"($x|str trim)"}
-}
-
-def "nu-complete git worktree list" [] {
-  gwl | get path | path relative-to (git worktree bare-path)
-}
-
 # edit .gitignore
 export def "git ignore-edit" [] {
     nvim $"(git rev-parse --show-toplevel)/.gitignore"
@@ -226,6 +213,10 @@ export def "git worktree list" [] {
 # git worktree list
 alias gwl = git worktree list
 alias gwa-core = git worktree add
+
+def "nu-complete git worktree list" [] {
+  gwl | get path | path relative-to (git worktree bare-path)
+}
 
 # git worktree add
 export def --env "gwa" [
