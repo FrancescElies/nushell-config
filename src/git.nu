@@ -1,3 +1,17 @@
+
+# nu-complete
+# -----------
+
+def "nu-complete git branches" [] {
+    git branch | lines
+    | filter {|x| not ($x | str starts-with '*')}
+    | each {|x| $"($x|str trim)"}
+}
+
+def "nu-complete git worktree list" [] {
+  gwl | get path | path relative-to (git worktree bare-path)
+}
+
 # edit .gitignore
 export def "git ignore-edit" [] {
     nvim $"(git rev-parse --show-toplevel)/.gitignore"
@@ -173,6 +187,8 @@ alias gcp = git cherry-pick
 alias gcpa = git cherry-pick --abort
 # git cherry pick continue
 alias gcpc = git cherry-pick --continue
+# git reset hard
+alias gresethard = git reset --hard
 # git uncommit
 alias guncommit = git reset --soft HEAD~1
 # git unadd files
@@ -183,8 +199,23 @@ alias gdiscard = git checkout --
 alias gcleanest = git clean -dffx
 # Clean (also untracked) and checkout.
 def gcleanout [] = {git clean -df ; git checkout -- .}
+# git push
+alias gp = git push 
 # git push force-with-lease
 alias gpushy = git push --force-with-lease
+# git pull
+alias gpull = git pull
+# git rebase 
+alias grb = git rebase 
+# git rebase interactive
+alias grba = git rebase --interactive
+# git rebase abort
+alias grba = git rebase --abort
+# git rebase continue
+alias grbc = git rebase --continue
+
+# worktree
+# --------
 
 # git worktree
 alias gw = git worktree 
@@ -194,9 +225,51 @@ export def "git worktree list" [] {
 }
 # git worktree list
 alias gwl = git worktree list
+alias gwa-core = git worktree add
+
 # git worktree add
-alias gwa = git worktree add
+export def --env "gwa" [
+  branch?: string@"nu-complete git worktree list"  # branch to create or checkout
+  --startingat(-@): string = "master"  # create a new branch starting at <commit-ish>, 
+] {
+  cd (git worktree bare-path)
+  let branch = if $branch == null { input "target branch: " } else { $branch }
+  if ($branch | path exists) { 
+    cd $branch
+  } else {
+    # create a new branch named $branch starting at <commit-ish>, 
+    # e.g.
+    # git worktree add -b emergency-fix ../temp master
+    let path = $branch
+    git worktree add -B $branch $path $startingat
+    cd $path
+  }
+  # cheap HACK
+  try { 
+    echo "running prepare_nu"
+    prepare_nu 
+  }
+}
+alias workon = gwa
+
 # git worktree remove
-alias gwrem = git worktree remove
+export def --env "gwr" [
+  branch: string@"nu-complete git worktree list"
+  --force(-f)
+] {
+  cd (git worktree bare-path)
+  if $force { git worktree remove --force $branch } else { git worktree remove $branch }
+}
+
+alias gwprune = git worktree prune 
 # git worktree repair
-alias gwrep = git worktree repair
+alias gwrepair = git worktree repair
+
+export def "git worktree bare-path" [] {
+  ^git worktree list | parse --regex `(?P<path>.+?) +\(bare\)` | get 0?.path?
+}
+
+# git cd to root (bare or worktree)
+alias groot = if ((git worktree bare-path) == null) { cd (git rev-parse --show-toplevel) } else { cd (git worktree bare-path) }
+# git cd to root (bare or worktree)
+alias cdroot = groot 
