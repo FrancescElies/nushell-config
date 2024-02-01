@@ -212,34 +212,32 @@ export def "git worktree list" [] {
 }
 # git worktree list
 alias gwl = git worktree list
-alias gwa-core = git worktree add
+alias gwa = git worktree add
 
 def "nu-complete git worktree list" [] {
   gwl | get path | path relative-to (git worktree bare-path)
 }
 
 # git worktree add
-export def --env "gwa" [
+export def --env "gwstart" [
   branch?: string@"nu-complete git worktree list"  # branch to create or checkout
   --startingat(-@): string = "master"  # create a new branch starting at <commit-ish>, 
 ] {
   cd (git worktree bare-path)
   let branch = if $branch == null { input "target branch: " } else { $branch }
-  if ($branch | path exists) { 
-    cd $branch
+  let path = "worktrees" | path join $branch
+  if ($path | path exists) { 
+    cd $path
   } else {
     # create a new branch named $branch starting at <commit-ish>, 
     # e.g.
     # git worktree add -b emergency-fix ../temp master
-    let path = $branch
+    mkdir worktrees
     git worktree add -B $branch $path $startingat
     cd $path
   }
   # cheap HACK
-  try { 
-    echo "running prepare_nu"
-    prepare_nu 
-  }
+  if not (ls | where type == file | find "prepare" | is-empty) { ./prepare }
 }
 alias workon = gwa
 
