@@ -2,6 +2,7 @@ source ~/src/nushell-config/src/this-machine.nu
 
 use ~/src/nushell-config/src/task.nu
 
+source ~/src/nushell-config/src/symlink.nu
 source ~/src/nushell-config/src/my-functions.nu
 source ~/src/nushell-config/src/maxmsp.nu
 source ~/src/nushell-config/src/git.nu
