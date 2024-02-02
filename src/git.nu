@@ -239,7 +239,6 @@ export def --env "gwstart" [
   # cheap HACK
   if not (ls | where type == file | find "prepare" | is-empty) { ./prepare }
 }
-alias workon = gwa
 
 # git worktree remove
 export def --env "gwr" [
