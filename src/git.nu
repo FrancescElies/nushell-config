@@ -231,7 +231,7 @@ export def --env "gwstart" [
   } else {
     # create a new branch named $branch starting at <commit-ish>, 
     # e.g.
-    # git worktree add -b emergency-fix ../temp master
+    # git worktree add -b emergency-fix ./worktrees/emergency-fix master
     mkdir worktrees
     git worktree add -B $branch $path $startingat
     cd $path
