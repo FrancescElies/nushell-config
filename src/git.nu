@@ -1,3 +1,18 @@
+# edit .gitignore
+
+# start a new topic
+export def "git topic-begin" [
+  ...topic: string 
+  --startingat(-@): string = "master"  # create a new branch starting at <commit-ish>, 
+] {
+    let newbranch = $topic | str join "-"
+    let newbranch = $"cesc/($newbranch)"
+    git checkout $startingat
+    git pull --ff-only
+    git checkout -b $newbranch $startingat
+    git push -u origin $newbranch
+}
+alias gtb = git topic-begin
 
 # edit .gitignore
 export def "git ignore-edit" [] {
