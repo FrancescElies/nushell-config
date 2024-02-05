@@ -248,6 +248,8 @@ export def --env "gwstart" [
     # e.g.
     # git worktree add -b emergency-fix ./worktrees/emergency-fix master
     mkdir worktrees
+    cd worktrees
+    let path = $branch
     git worktree add -B $branch $path $startingat
     cd $path
   }
