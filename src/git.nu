@@ -33,7 +33,7 @@ def "pr create" [
   az repos pr create --draft --open --auto-complete -t $target_branch -o table
 }
 
-def "git cm" [ 
+def "commit" [ 
   title: string 
   body: string = ""
 ] {
@@ -256,6 +256,10 @@ export def --env "gwstart" [
   }
   # cheap HACK
   if not (ls | where type == file | find "prepare" | is-empty) { ./prepare }
+}
+
+export def --env "gwpushy" [--upstream(-u): string = "origin"] {
+  git push -u $upstream (git rev-parse --abbrev-ref HEAD) --force-with-lease
 }
 
 # git worktree remove
