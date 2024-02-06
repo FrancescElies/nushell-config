@@ -69,8 +69,8 @@ def "git activity" [
 ] {
   git log --since $'"($since)"' --pretty=%h»¦«%aN»¦«%s»¦«%aD  -- $path
   | lines 
-  | split column "»¦«" sha1 committer desc merged_at 
-  | histogram committer merger 
+  | split column "»¦«" sha1 committer_name desc merged_at 
+  | histogram committer_name merger 
   | sort-by merger 
   | reverse
 }
