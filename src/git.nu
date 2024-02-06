@@ -240,7 +240,9 @@ export def --env "gwstart" [
 ] {
   cd (git worktree bare-path)
   let branch = if $branch == null { input "target branch: " } else { $branch }
-  let path = "worktrees" | path join $branch
+  # make sure path has no slashes coming from branch name
+  let branch_folder = $branch | str replace -a -r `[\\/]` "-"
+  let path = "worktrees" | path join $branch_folder
   if ($path | path exists) { 
     cd $path
   } else {
@@ -248,8 +250,7 @@ export def --env "gwstart" [
     # e.g.
     # git worktree add -b emergency-fix ./worktrees/emergency-fix master
     mkdir worktrees
-    cd worktrees
-    let path = $branch
+    echo $"git worktree add -B ($branch) ($path) ($startingat)"
     git worktree add -B $branch $path $startingat
     cd $path
   }
