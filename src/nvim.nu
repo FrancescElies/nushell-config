@@ -39,3 +39,14 @@
 # ]
 #
 alias e = nvim
+
+def "nvim clean-swap" [] {
+    match $nu.os-info.name {
+        "windows" => { fd swp ~/AppData/Local/nvim-data/swap -x rm },
+        _ => {
+            error make --unspanned {
+                msg: $"(ansi red)unknown_operating_system(ansi reset): '($nu.os-info.name)' not implemented"
+            }
+        },
+    }
+}
