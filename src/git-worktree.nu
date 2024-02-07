@@ -32,15 +32,15 @@ export def --env "gwstart" [
   let branch = if $branch == null { input "target branch: " } else { $branch }
   # make sure path has no slashes coming from branch name
   let branch_folder = $branch | str replace -a -r `[\\/]` "-"
-  let path = "worktrees" | path join $branch_folder
+  let path = "mycheckouts" | path join $branch_folder
   if ($path | path exists) { 
     cd $path
   } else {
     # create a new branch named $branch starting at <commit-ish>, 
     # e.g.
-    # git worktree add -b emergency-fix ./worktrees/emergency-fix master
-    mkdir worktrees
-    echo $"git worktree add -B ($branch) ($path) ($startingat)"
+    # git worktree add -b emergency-fix ./mycheckouts/emergency-fix master
+    mkdir mycheckouts
+    echo $"git worktree add -B ($branch) ($path) ($startingat) --guess-remote"
     git worktree add -B $branch $path $startingat --guess-remote
     cd $path
     # git push --set-upstream $upstream $branch
