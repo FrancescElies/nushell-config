@@ -180,7 +180,7 @@ alias gca = git commit --amend
 # git commit amend, don't edit meesage
 alias gcane = git commit --amend --no-edit
 # git commit
-alias gcm = git cm
+alias gcm = git commit
 # git checkout
 alias gco = git checkout
 # git cherry pick 
@@ -202,7 +202,7 @@ alias gcleanest = git clean -dffx
 # Clean (also untracked) and checkout.
 def gcleanout [] = {git clean -df ; git checkout -- .}
 # git push
-alias gp = git push 
+alias gpush = git push 
 # git push force-with-lease
 alias gpushy = git push --force-with-lease
 # git pull
@@ -251,15 +251,20 @@ export def --env "gwstart" [
     # git worktree add -b emergency-fix ./worktrees/emergency-fix master
     mkdir worktrees
     echo $"git worktree add -B ($branch) ($path) ($startingat)"
-    git worktree add -B $branch $path $startingat
+    git worktree add -B $branch $path $startingat --guess-remote
     cd $path
+    # git push --set-upstream $upstream $branch
   }
   # cheap HACK
   if not (ls | where type == file | find "prepare" | is-empty) { ./prepare }
 }
 
 export def --env "gwpushy" [--upstream(-u): string = "origin"] {
-  git push -u $upstream (git rev-parse --abbrev-ref HEAD) --force-with-lease
+  git push --set-upstream $upstream (git rev-parse --abbrev-ref HEAD) --force-with-lease
+}
+
+export def --env "gwpull" [--upstream(-u): string = "origin"] {
+  git pull --set-upstream $upstream (git rev-parse --abbrev-ref HEAD) --force-with-lease
 }
 
 # git worktree remove
