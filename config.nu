@@ -1,3 +1,4 @@
+# https://github.com/nushell/nushell/blob/main/crates/nu-utils/src/sample_config/default_config.nu
 source ~/src/nushell-config/src/this-machine.nu
 
 use ~/src/nushell-config/src/task.nu
@@ -21,7 +22,7 @@ if $nu.os-info.name == "windows" {
 
 # Nushell Config File
 #
-# version = "0.87.1"
+# version = "0.90.1"
 
 # For more information on defining custom themes, see
 # https://www.nushell.sh/book/coloring_and_theming.html
@@ -63,6 +64,7 @@ let dark_theme = {
     shape_directory: cyan
     shape_external: cyan
     shape_externalarg: green_bold
+    shape_external_resolved: light_yellow_bold
     shape_filepath: cyan
     shape_flag: blue_bold
     shape_float: purple_bold
@@ -127,6 +129,7 @@ let light_theme = {
     shape_directory: cyan
     shape_external: cyan
     shape_externalarg: green_bold
+    shape_external_resolved: light_purple_bold
     shape_filepath: cyan
     shape_flag: blue_bold
     shape_float: purple_bold
@@ -157,7 +160,7 @@ let light_theme = {
 
 # External completer example
 # let carapace_completer = {|spans|
-#     carapace $spans.0 nushell $spans | from json
+#     carapace $spans.0 nushell ...$spans | from json
 # }
 
 # The default config record. This is where much of your global configuration is setup.
@@ -246,7 +249,7 @@ $env.config = {
 
     color_config: $dark_theme # if you want a more interesting theme, you can replace the empty record with `$dark_theme`, `$light_theme` or another custom record
     use_grid_icons: true
-    footer_mode: "always" # always, never, number_of_rows, auto
+    footer_mode: "25" # always, never, number_of_rows, auto
     float_precision: 2 # the precision for displaying floats in tables
     buffer_editor: "" # command that will be used to edit the current line buffer with ctrl+o, if unset fallback to $env.EDITOR and $env.VISUAL
     use_ansi_coloring: true
@@ -254,27 +257,16 @@ $env.config = {
     edit_mode: vi # emacs, vi
     shell_integration: false # enables terminal shell integration. Off by default, as some terminals have issues with this.
     render_right_prompt_on_last_line: false # true or false to enable or disable right prompt to be rendered on last line of the prompt.
-    use_kitty_protocol: false # enables keyboard enhancement protocol implemented by kitty console, only if your terminal support this
+    use_kitty_protocol: false # enables keyboard enhancement protocol implemented by kitty console, only if your terminal support this.
+    highlight_resolved_externals: false # true enables highlighting of external commands in the repl resolved by which.
+
+    plugins: {} # Per-plugin configuration. See https://www.nushell.sh/contributor-book/plugins.html#configuration.
 
     hooks: {
         pre_prompt: [{ null }] # run before the prompt is shown
         pre_execution: [{ null }] # run before the repl input is run
         env_change: {
-            PWD: [
-                {
-                    condition: { |_, after| (
-                        ( (pwd | path basename) != "nushell-config" )
-                        and ( (pwd | path basename) != "nushell"  )
-                        and ( $after | path join env.nu | path exists )
-                    ) }
-                    code: "overlay use env.nu"
-                }
-                # {|before, after| print (lsg) }
-                {
-                    condition: {|before, after| ($after | path join "venv/bin/activate.nu" | path exists) }
-                    code: 'overlay use venv/bin/activate.nu'
-                }
-        ]
+            PWD: [{|before, after| null }] # run if the PWD environment is different since the last repl input
         }
         display_output: "if (term size).columns >= 100 { table -e } else { table }" # run to display the output of a pipeline
         command_not_found: { null } # return an error message when a command is not found
@@ -295,8 +287,43 @@ $env.config = {
             }
             style: {
                 text: green
-                selected_text: green_reverse
+                selected_text: {attr: r}
                 description_text: yellow
+                match_text: {attr: u}
+                selected_match_text: {attr: ur}
+            }
+        }
+        {
+            name: ide_completion_menu
+            only_buffer_difference: false
+            marker: "| "
+            type: {
+                layout: ide
+                min_completion_width: 0,
+                max_completion_width: 50,
+                # max_completion_height: 10, # will be limited by the available lines in the terminal
+                padding: 0,
+                border: true,
+                cursor_offset: 0,
+                description_mode: "prefer_right"
+                min_description_width: 0
+                max_description_width: 50
+                max_description_height: 10
+                description_offset: 1
+                # If true, the cursor pos will be corrected, so the suggestions match up with the typed text
+                #
+                # C:\> str
+                #      str join
+                #      str trim
+                #      str split
+                correct_cursor_pos: false
+            }
+            style: {
+                text: green
+                selected_text: {attr: r}
+                description_text: yellow
+                match_text: {attr: u}
+                selected_match_text: {attr: ur}
             }
         }
         {
@@ -342,6 +369,19 @@ $env.config = {
             event: {
                 until: [
                     { send: menu name: completion_menu }
+                    { send: menunext }
+                    { edit: complete }
+                ]
+            }
+        }
+        {
+            name: ide_completion_menu
+            modifier: control
+            keycode: char_n
+            mode: [emacs vi_normal vi_insert]
+            event: {
+                until: [
+                    { send: menu name: ide_completion_menu }
                     { send: menunext }
                     { edit: complete }
                 ]
@@ -790,6 +830,33 @@ $env.config = {
             mode: emacs
             event: {edit: capitalizechar}
         }
+        {
+            name: copy_selection
+            modifier: control_shift
+            keycode: char_c
+            mode: emacs
+            event: { edit: copyselection }
+        }
+        {
+            name: cut_selection
+            modifier: control_shift
+            keycode: char_x
+            mode: emacs
+            event: { edit: cutselection }
+        }
+        {
+            name: select_all
+            modifier: control_shift
+            keycode: char_a
+            mode: emacs
+            event: { edit: selectall }
+        }
+        {
+            name: paste
+            modifier: control_shift
+            keycode: char_v
+            mode: emacs
+            event: { edit: pastecutbufferbefore }
+        }
     ]
 }
-
