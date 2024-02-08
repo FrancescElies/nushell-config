@@ -21,6 +21,7 @@ export def --env "gwcd" [
 
 export def --env "gwstart" [
   branch?: string@"nu-complete git worktree paths"  # branch to create or checkout
+  --upstream(-u): string = "origin"  # sets upstream
   --startingat(-@): string = "master"  # create a new branch starting at <commit-ish>, 
 ] {
   cd (git worktree bare-path)
@@ -36,6 +37,7 @@ export def --env "gwstart" [
   echo $"git worktree add -B ($branch) ($path) ($startingat)"
   git worktree add -B $branch $path $startingat 
   cd $path
+  git pull --set-upstream $upstream $branch
   # git push --set-upstream $upstream $branch
 
   # cheap HACK
