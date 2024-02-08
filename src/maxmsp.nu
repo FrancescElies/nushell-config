@@ -29,11 +29,12 @@ def --env "maxmsp dumps" [] {
 
 # opens Max's api
 def "maxmsp api" [] {
-  if not ("~/src/max-sdk/source/max-sdk-base" | path exists) { 
-    cd ~/src
+  if not ("~/src/other/max-sdk/source/max-sdk-base" | path exists) { 
+    mkdir ~/src/other
+    cd ~/src/other
     git clone https://github.com/Cycling74/max-sdk
   }
-  cd `~/src/max-sdk/source/max-sdk-base/c74support/max-includes`
+  cd `~/src/other/max-sdk/source/max-sdk-base/c74support/max-includes`
   br 
 }
 
@@ -53,7 +54,7 @@ def --env "maxmsp packages" [] {
 # greps for something max related in all known locations where something interesting might be found
 def "maxmsp grep" [pattern: string] {
   let locations = [
-    (echo `~/src/max-sdk` | path expand), 
+    (echo `~/src/other/max-sdk` | path expand), 
     (echo `C:/Program Files/Cycling '74` | path expand),
     (echo `~/AppData/Roaming/Cycling '74`| path expand),
   ]
