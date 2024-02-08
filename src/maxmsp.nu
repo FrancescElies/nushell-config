@@ -58,6 +58,6 @@ def "maxmsp grep" [pattern: string] {
     (echo `C:/Program Files/Cycling '74` | path expand),
     (echo `~/AppData/Roaming/Cycling '74`| path expand),
   ]
-  rg $pattern $locations
+  rg $pattern ...$locations
 }
 
