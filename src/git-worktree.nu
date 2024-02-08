@@ -33,8 +33,8 @@ export def --env "gwstart" [
   # create a new branch named $branch starting at <commit-ish>, 
   # e.g.
   # git worktree add -b emergency-fix ./mycheckouts/emergency-fix master
-  echo $"git worktree add -B ($branch) ($path) ($startingat) --guess-remote"
-  git worktree add -B $branch $path $startingat --guess-remote
+  echo $"git worktree add -B ($branch) ($path) ($startingat)"
+  git worktree add -B $branch $path $startingat 
   cd $path
   # git push --set-upstream $upstream $branch
 

@@ -45,9 +45,12 @@ alias gs = git status
 alias gsl = git log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 # git log
 alias gl = git log --graph --pretty=format:'%C(auto)%h -%d %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+alias gl5 = gl -n5
+alias gl10 = gl -n10
 # git log all
 alias gla = git log --graph --topo-order --date=short --abbrev-commit --decorate --all --boundary --pretty=format:'%Cgreen%ad %Cred%h%Creset -%C(yellow)%d%Creset %s %Cblue[%cn]%Creset %Cblue%G?%Creset'
 # git fetch all, prune remote branches
+alias gf = git fetch 
 alias gfa = git fetch --all --prune
 # git commit amend 
 alias gca = git commit --amend 
