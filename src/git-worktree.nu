@@ -44,11 +44,15 @@ export def --env "gwstart" [
   if not (ls | where type == file | find "prepare" | is-empty) { ./prepare }
 }
 
-export def --env "gwpush" [--upstream(-u): string = "origin"] {
-  git push --set-upstream $upstream (git rev-parse --abbrev-ref HEAD) 
-}
-export def --env "gwpushy" [--upstream(-u): string = "origin"] {
-  git push --set-upstream $upstream (git rev-parse --abbrev-ref HEAD) --force-with-lease
+export def --env "gwpush" [
+  --upstream(-u): string = "origin"
+  --forcewithlease(-f)  # force-with-lease
+  --force(-F)           # force
+] {
+  mut args = []
+  if $forcewithlease != null { $args = ($args | append $'--forcewithlease=($forcewithlease)') }
+  if $force != null { $args = ($args | append $'--force=($force)') }
+  git push ...$args --set-upstream $upstream (git rev-parse --abbrev-ref HEAD) 
 }
 export def --env "gwpull" [--upstream(-u): string = "origin"] {
   git pull --set-upstream $upstream (git rev-parse --abbrev-ref HEAD) --force-with-lease
