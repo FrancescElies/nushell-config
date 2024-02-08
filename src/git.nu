@@ -54,7 +54,7 @@ alias gca = git commit --amend
 # git commit amend, don't edit meesage
 alias gcane = git commit --amend --no-edit
 # git commit
-alias gcm = git commit
+alias gcm = git commit -m
 # git checkout
 alias gco = git checkout
 # git cherry pick 
