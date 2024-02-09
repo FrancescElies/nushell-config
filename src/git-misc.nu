@@ -56,7 +56,7 @@ alias ggone = git gone
 
 #  View git committer activity as a histogram
 def "git activity" [
-  --path: path = .
+  path: path = .  # e.g. '*.rs', ./src ...
   --since: string = '1 year ago'  
 ] {
   git log --since $'"($since)"' --pretty=%h»¦«%aN»¦«%s»¦«%aD  -- $path

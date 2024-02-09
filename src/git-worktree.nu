@@ -33,7 +33,7 @@ export def --env "gwstart" [
 
   # create a new branch named $branch starting at <commit-ish>, 
   # e.g.
-  # git worktree add -b emergency-fix ./mycheckouts/emergency-fix master
+  # git worktree add -b emergency-fix ../emergency-fix master
   echo $"branch ($branch), path ($path), startingat ($startingat)"
   if $startingat == "" { 
     git worktree add -B $branch $path 
