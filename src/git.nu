@@ -79,11 +79,19 @@ alias gcleanest = git clean -dffx
 # Clean (also untracked) and checkout.
 def gcleanout [] = {git clean -df ; git checkout -- .}
 # git push
-alias gpush = git push 
-# git push force-with-lease
-alias gpushy = git push --force-with-lease
-# git pull
-alias gpull = git pull
+export def --env "gpush" [
+  --upstream(-u): string = "origin"
+  --forcewithlease(-f)  # force-with-lease
+  --force(-F)           # force
+] {
+  mut args = []
+  if $forcewithlease != null { $args = ($args | append $'--forcewithlease=($forcewithlease)') }
+  if $force != null { $args = ($args | append $'--force=($force)') }
+  git push ...$args --set-upstream $upstream (git rev-parse --abbrev-ref HEAD) 
+}
+export def --env "gpull" [--upstream(-u): string = "origin"] {
+  git pull --set-upstream $upstream (git rev-parse --abbrev-ref HEAD) --force-with-lease
+}
 # git rebase 
 alias grb = git rebase 
 # git rebase interactive

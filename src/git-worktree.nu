@@ -8,6 +8,7 @@ export def gwl [] {
   ^git worktree list | lines | parse --regex `(?P<path>.+?) +(?P<commit>\w+) \[(?P<branch>.+)\]`
 }
 
+# gwa -B emergency-fix ../emergency-fix master
 alias gwa = git worktree add
 
 def "nu-complete git worktree paths" [] { gwl | get path }
@@ -16,15 +17,14 @@ def "nu-complete git worktree paths" [] { gwl | get path }
 export def --env "gwcd" [
   path?: string@"nu-complete git worktree paths"  # branch to create or checkout
 ] {
-  cd ( (git worktree bare-path)| path join $path | str replace `\\` `/` )
+  cd $path
 }
 
 export def --env "gwstart" [
   branch?: string@"nu-complete git worktree paths"  # branch to create or checkout
   --upstream(-u): string = "origin"  # sets upstream
-  --startingat(-@): string = "master"  # create a new branch starting at <commit-ish>, 
+  --startingat(-@): string = ""  # create a new branch starting at <commit-ish> e.g. master, 
 ] {
-  cd (git worktree bare-path)
   let repo_name = pwd | path basename | str replace ".git" ""
   let branch = if $branch == null { input "target branch: " } else { $branch }
   # make sure path has no slashes coming from branch name
@@ -34,37 +34,22 @@ export def --env "gwstart" [
   # create a new branch named $branch starting at <commit-ish>, 
   # e.g.
   # git worktree add -b emergency-fix ./mycheckouts/emergency-fix master
-  echo $"git worktree add -B ($branch) ($path) ($startingat)"
-  git worktree add -B $branch $path $startingat 
+  echo $"branch ($branch), path ($path), startingat ($startingat)"
+  if $startingat == "" { 
+    git worktree add -B $branch $path 
+  } else { 
+    git worktree add -B $branch $path $startingat 
+  }
   cd $path
-  git pull --set-upstream $upstream $branch
-  # git push --set-upstream $upstream $branch
-
-  # cheap HACK
-  if not (ls | where type == file | find "prepare" | is-empty) { ./prepare }
-}
-
-export def --env "gwpush" [
-  --upstream(-u): string = "origin"
-  --forcewithlease(-f)  # force-with-lease
-  --force(-F)           # force
-] {
-  mut args = []
-  if $forcewithlease != null { $args = ($args | append $'--forcewithlease=($forcewithlease)') }
-  if $force != null { $args = ($args | append $'--force=($force)') }
-  git push ...$args --set-upstream $upstream (git rev-parse --abbrev-ref HEAD) 
-}
-export def --env "gwpull" [--upstream(-u): string = "origin"] {
-  git pull --set-upstream $upstream (git rev-parse --abbrev-ref HEAD) --force-with-lease
+  git push --set-upstream $upstream $branch
 }
 
 # git worktree remove
 export def --env "gwr" [
-  branch: string@"nu-complete git worktree paths"
+  path: string@"nu-complete git worktree paths"
   --force(-f)
 ] {
-  cd (git worktree bare-path)
-  if $force { git worktree remove --force $branch } else { git worktree remove $branch }
+  if $force { git worktree remove --force $path } else { git worktree remove $path }
 }
 
 alias gwprune = git worktree prune 
