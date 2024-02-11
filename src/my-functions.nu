@@ -173,8 +173,22 @@ def where-dumpbin [] {
 
 # Reduces video size and converts to mp4
 # See https://stackoverflow.com/questions/12026381/ffmpeg-converting-mov-files-to-mp4
-def reduce-video-size [input_video: path] {
+def "reduce video-size" [input_video: path] {
   ffmpeg -i $input_video -vcodec libx265 -crf 28  $"($input_video).mp4"
+}
+
+# reduces pdf size
+def "reduce-size pdf-size" [
+  inputpdf: path, 
+  outputpdf: path = output.pdf,
+  # -dPDFSETTINGS=/screen     lower quality and smaller size. (72 dpi)
+  # -dPDFSETTINGS=/ebook      default,  slightly larger size (150 dpi)
+  # -dPDFSETTINGS=/prepress   higher size and quality (300 dpi)
+  # -dPDFSETTINGS=/printer    printer type quality (300 dpi)
+  # -dPDFSETTINGS=/default    useful for multiple purposes. Can cause large PDFS.
+  pdfsettings: string = "/ebook"
+] {
+  ^gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 $"-dPDFSETTINGS=($pdfsettings)" -dNOPAUSE -dQUIET -dBATCH $"-sOutputFile=($outputpdf)" $inputpdf
 }
 
 # One could download move parts like follows from some website
