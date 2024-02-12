@@ -27,10 +27,11 @@ export def "git difft" [...rest] {
     with-env [GIT_EXTERNAL_DIFF 'difft'] { git diff ...$rest }
 }
 
+export def "git branches" [first: int = 5] { git branch --sort=-committerdate | lines | first $first }
 
 # aliases
 # -------
-
+alias gbb = git branches
 # open git ui
 alias gui = lazygit
 # git diff

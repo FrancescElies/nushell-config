@@ -50,3 +50,7 @@ def "nvim clean-swap" [] {
         },
     }
 }
+
+def "nvim pr-files" [] {
+  nvim (pr files)
+}
