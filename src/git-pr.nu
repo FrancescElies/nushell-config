@@ -12,9 +12,13 @@ def "commit" [
   title: string 
   body: string = ""
 ] {
- let branch = (git rev-parse --abbrev-ref HEAD)
- let story = ($branch | parse -r '[Ss]tory(?<story>\d+)' | get story.0 )
- git commit --message $"($title)" --message $"($body)" --message $"story #($story)"
+  let branch = (git rev-parse --abbrev-ref HEAD)
+  let story = ($branch | parse -r '[Ss]tory(?<story>\d+)' | get story?.0? )
+  let task = ($branch | parse -r '[Tt]ask(?<task>\d+)' | get task?.0? )
+  mut args = []
+  if $story != null { $args = ($args | append $'--message="story #($story)"') }
+  if $task != null { $args = ($args | append $'--message="task #($task)"') }
+  git commit --message $"($title)" --message $"($body)" ...$args
 }
 
 def "pr diff" [path: path = .] {
