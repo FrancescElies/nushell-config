@@ -45,7 +45,7 @@ export def --env "gwstart" [
 }
 
 # git worktree remove
-export def --env "gwr" [
+export def --env "gwremove" [
   path: string@"nu-complete git worktree paths"
   --force(-f)
 ] {
