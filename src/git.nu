@@ -50,7 +50,8 @@ export def "git topic-begin" [
     git checkout $startingat
     git pull --ff-only
     git checkout -b $newbranch $startingat
-    git push -u origin $newbranch
+    git pull -u origin $newbranch
+    # git pull -u origin $newbranch
 }
 alias gtb = git topic-begin
 
