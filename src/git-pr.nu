@@ -30,7 +30,7 @@ def "pr diff" [path: path = .] {
 def "pr files" [
   path: path = .
   --extension: string = ""  # ts, py, rs ... (no dot), default matches everything
-  --target_branch: string = "origin/master"  # pr's target branch (normally main, master, ...)
+  --target-branch: string = "origin/master"  # pr's target branch (normally main, master, ...)
 ] {
   let this_branch = (git rev-parse --abbrev-ref HEAD)
   let files = ( git diff --name-only $this_branch ( git merge-base $this_branch $target_branch ) | lines )
@@ -45,10 +45,16 @@ def "pr files" [
 
 # Opens current branch and target branch maxpats to comparison
 def "pr review-maxpats" [
-  --target_branch: string = "origin/master"  # pr's target branch (normally main, master, ...)
+  --target-branch: string = "origin/master"  # pr's target branch (normally main, master, ...)
+  --dry-run
 ] {
   echo $"target branch: ($target_branch)"
-  let open_files = pr files --extension maxpat | each { |x| (
+  let prfiles = (pr files --extension maxpat --target-branch $target_branch)
+  if $dry_run {
+     echo $prfiles
+     return
+  }
+  let open_files = $prfiles | each { |x| (
     git show $"($target_branch):($x)" 
     | save -f $"($x | path expand | path dirname)/tmp-target-($x | path basename)" 
     ; start $x 
