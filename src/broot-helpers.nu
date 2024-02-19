@@ -149,14 +149,6 @@ export def --env brd [] {
 }
 
 
-export def "config broot" [] {
-  if $nu.os-info.name == "windows" {
-    nvim $"($env.APPDATA)/dystroy/broot/config/conf.hjson" $"($env.APPDATA)/dystroy/broot/config/verbs.hjson"
-  } else {
-    nvim "~/.config/broot/config/conf.hjson" "~/.config/broot/config/verbs.hjson"
-  }
-}
-
 # returns a configuration file path with which you can select an entry with the enter key
 def create-or-get-selectdir-json [] {
   let select_hjson = ( match $nu.os-info.name { 

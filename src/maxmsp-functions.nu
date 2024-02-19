@@ -1,8 +1,8 @@
 use ~/src/nushell-config/src/broot-helpers.nu *
-alias rg-max = rg --type-add 'max:*.{maxhelp,maxpat,json}' -t max
+export alias rg-max = rg --type-add 'max:*.{maxhelp,maxpat,json}' -t max
 
 # Cycling '74 Max cli wrap
-def maxmsp [maxpat: string = ""] {
+export def maxmsp [maxpat: string = ""] {
     let max_exe = match $nu.os-info.name { 
       "windows" => `C:/Program Files/Cycling '74/Max 8/Max.exe` 
       "macos" => "/Applications/Max.app/Contents/MacOS/Max", 
@@ -12,23 +12,23 @@ def maxmsp [maxpat: string = ""] {
 }
 
 # opens maxpreferences.maxpref
-def "maxmsp maxpreferences" [] {
+export def "maxmsp maxpreferences" [] {
   nvim `~/AppData/Roaming/Cycling '74/Max 8/Settings/maxpreferences.maxpref`
 }
 
 # opens maxinterface.json
-def "maxmsp maxinterface" [] {
+export def "maxmsp maxinterface" [] {
   nvim `C:/Program Files/Cycling '74/Max 8/resources/interfaces/maxinterface.json`
 }
 
 # goes to Cycling '74/Logs, where .dmp files are
-def --env "maxmsp dumps" [] {
+export def --env "maxmsp dumps" [] {
   cd `~/AppData/Roaming/Cycling '74/Logs`
   br
 }
 
 # opens Max's api
-def "maxmsp api" [] {
+export def "maxmsp api" [] {
   if not ("~/src/oss/max-sdk/source/max-sdk-base" | path exists) { 
     mkdir ~/src/oss
     cd ~/src/oss
@@ -40,19 +40,19 @@ def "maxmsp api" [] {
 
 
 # opens latest .dmp file from Cycling '74/Logs
-def "maxmsp latest-dump" [] {
+export def "maxmsp latest-dump" [] {
   let latest_dump = (ls `~/AppData/Roaming/Cycling '74/Logs` | sort-by modified | last)
   start $latest_dump.name
 }
 
 # opens Max 8 Packages folder
-def --env "maxmsp packages" [] {
+export def --env "maxmsp packages" [] {
   cd `~/Documents/Max 8/Packages`
   br
 }
 
 # greps for something max related in all known locations where something interesting might be found
-def "maxmsp grep" [pattern: string] {
+export def "maxmsp grep" [pattern: string] {
   let locations = [
     (echo `~/src/oss/max-sdk` | path expand), 
     (echo `C:/Program Files/Cycling '74` | path expand),

@@ -3,9 +3,10 @@ source ~/src/nushell-config/src/this-machine.nu
 
 use ~/src/nushell-config/src/task.nu
 
-source ~/src/nushell-config/src/symlink.nu
-source ~/src/nushell-config/src/my-functions.nu
-source ~/src/nushell-config/src/maxmsp.nu
+use ~/src/nushell-config/src/symlinks.nu *
+use ~/src/nushell-config/src/my-functions.nu *
+use ~/src/nushell-config/src/my-configs.nu *
+use ~/src/nushell-config/src/maxmsp-functions.nu *
 source ~/src/nushell-config/src/git.nu
 source ~/src/nushell-config/src/hosts.nu
 source ~/src/nushell-config/src/az.nu
