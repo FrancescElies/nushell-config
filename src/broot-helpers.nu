@@ -1,14 +1,5 @@
 # broot only dirs and cd into it
-def --env brd [] {
-  let selectdir_hjson = create-or-get-selectdir-json
-  let dir = ^broot --only-folders --conf $selectdir_hjson
-  cd $dir
-}
 
-
-# To update run:
-# !r broot --print-shell-function nushell
-#
 # Launch broot
 #
 # Examples:
@@ -18,7 +9,7 @@ def --env brd [] {
 #   > br -hi -c "vacheblan.svg;:open_preview" ..
 #
 # See https://dystroy.org/broot/install-br/
-def --env br [
+export def --env br [
     --cmd(-c): string               # Semicolon separated commands to execute
     --color: string = "auto"        # Whether to have styles and colors (auto is default and usually OK) [possible values: auto, yes, no]
     --conf: string                  # Semicolon separated paths to specific config files"),
@@ -151,8 +142,14 @@ export extern broot [
     file?: path                     # Root Directory
 ]
 
+export def --env brd [] {
+  let selectdir_hjson = create-or-get-selectdir-json
+  let dir = ^broot --only-folders --conf $selectdir_hjson
+  cd $dir
+}
 
-def "config broot" [] {
+
+export def "config broot" [] {
   if $nu.os-info.name == "windows" {
     nvim $"($env.APPDATA)/dystroy/broot/config/conf.hjson" $"($env.APPDATA)/dystroy/broot/config/verbs.hjson"
   } else {
@@ -209,12 +206,12 @@ def create-or-get-select-json [] {
 #
 # Example:
 # echo $(bo)
-def bo [] {
+export def bo [] {
   let select_hjson = create-or-get-select-json
   ^broot --conf $select_hjson
 }
 
-def tree [path: path = .] {
+export def tree [path: path = .] {
   ^broot -c :pt $path
 }
 

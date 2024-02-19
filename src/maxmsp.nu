@@ -1,4 +1,4 @@
-source broot.nu
+use ~/src/nushell-config/src/broot-helpers.nu *
 alias rg-max = rg --type-add 'max:*.{maxhelp,maxpat,json}' -t max
 
 # Cycling '74 Max cli wrap
