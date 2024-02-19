@@ -11,6 +11,7 @@ source ~/src/nushell-config/src/hosts.nu
 source ~/src/nushell-config/src/az.nu
 source ~/src/nushell-config/src/docs.nu
 source ~/src/nushell-config/src/broot.nu
+source ~/src/nushell-config/src/rust.nu
 source ~/src/nushell-config/src/just.nu
 source ~/src/nushell-config/src/toolbox.nu
 source ~/src/nushell-config/src/clip.nu
