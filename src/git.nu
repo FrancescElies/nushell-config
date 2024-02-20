@@ -13,10 +13,6 @@
 #
 # git maintenance start
 
-use git-worktree.nu *
-use git-pr.nu *
-use git-misc.nu *
-
 # apply my defaults
 export def "git my-defaults" [] {
   # REuse REordered REsolution, tells git to remember conflicts so if it sees them again he won't ask about it.
