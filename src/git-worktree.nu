@@ -41,7 +41,7 @@ export def --env "gwstart" [
     git worktree add -B $branch $path $startingat 
   }
   cd $path
-  git push --set-upstream $upstream $branch
+  git pull --set-upstream $upstream $branch
 }
 
 # git worktree remove
