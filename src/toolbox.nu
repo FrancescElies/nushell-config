@@ -24,7 +24,7 @@ export def cherry-pick [
 
 
 #[test]
-def test_deep_record_with_key [] {
+export def test_deep_record_with_key [] {
     assert equal ({data: {value: 42, nested: {value: 442}}} | cherry-pick {|x| $x.value?}) [null 42 442]
     assert equal ({value: 42, nested: {value: 442, nested: {other: 4442}}} | cherry-pick {|x| $x.value?}) [42 442 null]
     assert equal ({
@@ -35,38 +35,38 @@ def test_deep_record_with_key [] {
 }
 
 #[test]
-def test_record_without_key [] {
+export def test_record_without_key [] {
     assert equal ({data: 1} | cherry-pick {|x| $x.value?}) [null]
 }
 
 #[test]
-def test_integer [] {
+export def test_integer [] {
     assert equal (1 | cherry-pick {|x| $x.value?}) []
 }
 
-def test_string [] {
+export def test_string [] {
     assert equal ("foo" | cherry-pick {|x| $x.value?}) []
 }
 
 #[test]
-def test_list [] {
+export def test_list [] {
     assert equal (["foo"] | cherry-pick {|x| $x.value?}) []
 }
 
 #[test]
-def test_table [] {
+export def test_table [] {
     assert equal ([[a b]; [1.1 1.2] [2.1 2.2]] | cherry-pick {|x| $x.value?}) [null null]
     assert equal ([[a b]; [1.1 1.2] [2.1 2.2]] | cherry-pick {|x| $x.b?}) [1.2 2.2]
 }
 
 #[test]
-def test_record_with_key [] {
+export def test_record_with_key [] {
     assert equal ({value: 42} | cherry-pick {|x| $x.value?}) [42]
     assert equal ({value: null} | cherry-pick {|x| $x.value?}) [null]
 }
 
 #[test]
-def test_deep_record_without_key [] {
+export def test_deep_record_without_key [] {
     assert equal ({data: {v: 42}} | cherry-pick {|x| $x.value?}) [null null]
 }
 
@@ -89,7 +89,7 @@ export def "flatten record-paths" [
     $input | flatten-record-paths $separator
 }
 
-def flatten-record-paths [separator: string, ctx?: string] {
+export def flatten-record-paths [separator: string, ctx?: string] {
     let input = $in
 
     match ($input | describe-primitive) {
@@ -120,7 +120,7 @@ def flatten-record-paths [separator: string, ctx?: string] {
 }
 
 #[test]
-def test_record_path [] {
+export def test_record_path [] {
     assert equal ({a: 1} | flatten record-paths) [{path: "a", value: 1}]
     assert equal ({a: 1, b: [2 3]} | flatten record-paths) [[path value]; [a 1] ["b.0" 2] ["b.1" 3]]
     assert equal ({a: 1, b: {c: 2}} | flatten record-paths) [[path value]; [a 1] ["b.c" 2]]
@@ -155,7 +155,7 @@ export def filter-map [mapping_fn: closure] {
 }
 
 #[test]
-def test_filtermap [] {
+export def test_filtermap [] {
     assert equal ({a: 42} | filter-map {|x| if ($x | describe) == "int" { $x * 2 } else { $x }}) {a: 84}
     assert equal ({a: 1, b: 2, c: {d: 3}} | filter-map {|x| if ($x | describe) == "int" { $x * 2 } else { $x }}) {a: 2, b: 4, c: {d: 6}}
     assert equal ({a: 1, b: "2", c: {d: 3}} | filter-map {|x| if ($x | describe) == "int" { $x * 2 } else { $x }}) {a: 2, b: "2", c: {d: 6}}

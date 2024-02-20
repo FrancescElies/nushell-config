@@ -1,13 +1,13 @@
 # https://github.com/nushell/nu_scripts/blob/main/modules/system/mod.nu
 
 # print a command name as dimmed and italic
-def pretty-command [] {
+export def pretty-command [] {
     let command = $in
     return $"(ansi default_dimmed)(ansi default_italic)($command)(ansi reset)"
 }
 
 # give a hint error when the clip command is not available on the system
-def check-clipboard [
+export def check-clipboard [
     clipboard: string  # the clipboard command name
     --system: string  # some information about the system running, for better error
 ] {

@@ -2,7 +2,7 @@
 #
 # version = "0.87.1"
 
-def create_left_prompt [] {
+export def create_left_prompt [] {
     let home =  $nu.home-path
 
     # Perform tilde substitution on dir
@@ -28,7 +28,7 @@ def create_left_prompt [] {
     $path_segment | str replace --all (char path_sep) $"($separator_color)(char path_sep)($path_color)"
 }
 
-def create_right_prompt [] {
+export def create_right_prompt [] {
     # create a right prompt in magenta with green separators and am/pm underlined
     let time_segment = ([
         (ansi reset)

@@ -150,7 +150,7 @@ export def --env brd [] {
 
 
 # returns a configuration file path with which you can select an entry with the enter key
-def create-or-get-selectdir-json [] {
+export def create-or-get-selectdir-json [] {
   let select_hjson = ( match $nu.os-info.name { 
     "windows" => $"($env.APPDATA)/dystroy/broot/config/selectdir.hjson", 
     _ => $"~/.config/broot/config/selectdir.hjson" 
@@ -171,7 +171,7 @@ def create-or-get-selectdir-json [] {
   return $select_hjson
 }
 
-def create-or-get-select-json [] {
+export def create-or-get-select-json [] {
   let select_hjson = ( match $nu.os-info.name { 
     "windows" => $"($env.APPDATA)/dystroy/broot/config/select.hjson", 
     _ => $"~/.config/broot/config/select.hjson" 

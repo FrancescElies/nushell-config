@@ -28,7 +28,7 @@
 # We also add the --window-memory limit of 1 gig, which helps protect
 # us from a window that has very large objects such as binary blobs.
 #
-def "git repack-repos" [
+export def "git repack-repos" [
   path: path = .
   --prune
 ] {
@@ -42,20 +42,20 @@ def "git repack-repos" [
         ^git repack -a -d -f --depth=300 --window=300 --window-memory=1g
     }
 }
-alias grepack = git repack-repos
+export alias grepack = git repack-repos
 
 # Delete git merged branches (loal and remote)
-def "git gone" [] {
+export def "git gone" [] {
     git branch -vl  
       | lines  
       | split column " " BranchName Hash Status --collapse-empty 
       | where Status == '[gone]' 
       | each { |it| git branch -D $it.BranchName }
 }
-alias ggone = git gone
+export alias ggone = git gone
 
 #  View git committer activity as a histogram
-def "git activity" [
+export def "git activity" [
   path: path = .  # e.g. '*.rs', ./src ...
   --since: string = '1 year ago'  
 ] {
@@ -66,14 +66,14 @@ def "git activity" [
   | sort-by merger 
   | reverse
 }
-alias gactivity = git activity
+export alias gactivity = git activity
 
 
 # https://stackoverflow.com/questions/46704572/git-error-encountered-7-files-that-should-have-been-pointers-but-werent
-def "git lfs-fix-everything" [] {
+export def "git lfs-fix-everything" [] {
   git lfs migrate import --fixup --everything
 }
-alias glfsfixeverything = git lfs-fix-everything
+export alias glfsfixeverything = git lfs-fix-everything
 
 # https://stackoverflow.com/questions/46704572/git-error-encountered-7-files-that-should-have-been-pointers-but-werent
 # This "migrates" files to git lfs which should be in lfs as per .gitattributes, but aren't at the moment (which is the reason for your error message).
@@ -81,7 +81,7 @@ alias glfsfixeverything = git lfs-fix-everything
 # --no-rewrite prevents git from applying this to older commits, it creates a single new commit instead.
 #
 # Use -m "commitmessage" to set a commitmessage for that commit.
-def git-lfs-fix [...paths: path] {
+export def git-lfs-fix [...paths: path] {
   git lfs migrate import --no-rewrite $paths
 }
-alias glfsfix = git lfs-fix
+export alias glfsfix = git lfs-fix

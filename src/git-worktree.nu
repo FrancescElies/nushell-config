@@ -2,14 +2,14 @@
 # --------
 
 # git worktree
-alias gw = git worktree 
+export alias gw = git worktree 
 # git worktree list
 export def gwl [] {
   ^git worktree list | lines | parse --regex `(?P<path>.+?) +(?P<commit>\w+) \[(?P<branch>.+)\]`
 }
 
 # gwa -B emergency-fix ../emergency-fix master
-alias gwa = git worktree add
+export alias gwa = git worktree add
 
 def "nu-complete git worktree paths" [] { gwl | get path }
 
@@ -52,9 +52,9 @@ export def --env "gwremove" [
   if $force { git worktree remove --force $path } else { git worktree remove $path }
 }
 
-alias gwprune = git worktree prune 
+export alias gwprune = git worktree prune 
 # git worktree repair
-alias gwrepair = git worktree repair
+export alias gwrepair = git worktree repair
 
 export def "git worktree bare-path" [] {
   ^git worktree list | parse --regex `(?P<path>.+?) +\(bare\)` | get 0?.path?

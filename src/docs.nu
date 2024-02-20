@@ -1,4 +1,4 @@
-def download-python-docs [py_version: string] {
+export def download-python-docs [py_version: string] {
     let zipfile = 'python-' + $py_version + '-docs-text.zip'
     echo $zipfile
     if not ($zipfile | path exists) { 
@@ -14,7 +14,7 @@ def download-python-docs [py_version: string] {
     
 }
 
-def 'docs python' [] {
+export def 'docs python' [] {
   mkdir '~/src/python-docs' 
   cd '~/src/python-docs' 
   let py_version = '3.12.0'

@@ -1,5 +1,5 @@
 # https://github.com/nushell/nushell/blob/main/crates/nu-utils/src/sample_config/default_config.nu
-source ~/src/nushell-config/src/this-machine.nu
+use ~/src/nushell-config/src/this-machine.nu *
 
 use ~/src/nushell-config/src/task.nu
 
@@ -7,16 +7,16 @@ use ~/src/nushell-config/src/symlinks.nu *
 use ~/src/nushell-config/src/my-functions.nu *
 use ~/src/nushell-config/src/my-configs.nu *
 use ~/src/nushell-config/src/maxmsp-functions.nu *
-source ~/src/nushell-config/src/git.nu
-source ~/src/nushell-config/src/hosts.nu
-source ~/src/nushell-config/src/az.nu
-source ~/src/nushell-config/src/docs.nu
+use ~/src/nushell-config/src/git.nu *
+use ~/src/nushell-config/src/hosts.nu *
+use ~/src/nushell-config/src/az.nu *
+use ~/src/nushell-config/src/docs.nu *
 use ~/src/nushell-config/src/broot-helpers.nu *
-source ~/src/nushell-config/src/rust.nu
-source ~/src/nushell-config/src/just.nu
-source ~/src/nushell-config/src/toolbox.nu
-source ~/src/nushell-config/src/clip.nu
-source ~/src/nushell-config/src/nvim.nu
+use ~/src/nushell-config/src/rust.nu *
+use ~/src/nushell-config/src/just-completions.nu *
+use ~/src/nushell-config/src/toolbox.nu *
+use ~/src/nushell-config/src/clipboard.nu *
+use ~/src/nushell-config/src/neovim.nu *
 
 if $nu.os-info.name == "windows" {
     chcp 65001 

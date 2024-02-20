@@ -1,4 +1,4 @@
-source ~/src/nushell-config/symlink.nu
+use ~/src/nushell-config/symlink.nu *
 
 
 let config_folder = if $nu.os-info.name == "windows" {

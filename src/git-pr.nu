@@ -1,14 +1,14 @@
 
 # Pull requests
 
-def "pr create" [
+export def "pr create" [
   --target-branch (-t): string = 'master'  
 ] {
   git push
   az repos pr create --draft --open --auto-complete -t $target_branch -o table
 }
 
-def "commit" [ 
+export def "commit" [ 
   title: string 
   body: string = ""
 ] {
@@ -21,13 +21,13 @@ def "commit" [
   git commit --message $"($title)" --message $"($body)" ...$args
 }
 
-def "pr diff" [path: path = .] {
+export def "pr diff" [path: path = .] {
   let this_branch = (git rev-parse --abbrev-ref HEAD)
   git diff $this_branch ( git merge-base $this_branch origin/master ) 
 }
 
 # opens files modified by pr in nvim
-def "pr files" [
+export def "pr files" [
   path: path = .
   --extension: string = ""  # ts, py, rs ... (no dot), default matches everything
   --target-branch: string = "origin/master"  # pr's target branch (normally main, master, ...)
@@ -44,7 +44,7 @@ def "pr files" [
 }
 
 # Opens current branch and target branch maxpats to comparison
-def "pr review-maxpats" [
+export def "pr review-maxpats" [
   --target-branch: string = "origin/master"  # pr's target branch (normally main, master, ...)
   --dry-run
 ] {

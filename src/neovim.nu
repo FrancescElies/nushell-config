@@ -38,16 +38,16 @@ export extern nvim [
   --startuptime: string  # Write startup timing messages to <file>
 ]
 
-alias e = nvim
+export alias e = nvim
 
-def "nvim clean-swap" [] {
+export def "nvim clean-swap" [] {
     match $nu.os-info.name {
         "windows" => { fd swp ~/AppData/Local/nvim-data/swap -x rm },
         _ => { fd swp ~/.local/share/nvim/swap -x rm },
     }
 }
 
-def "nvim pr-files" [] { nvim (pr files) }
-def "nvim server" [] { nvim --listen /tmp/nvim.pipe --headless }
-def "nvim client" [...file: path] { nvim --remote --server ~/.cache/nvim/server.pipe ...$file }
+export def "nvim pr-files" [] { nvim (pr files) }
+export def "nvim server" [] { nvim --listen /tmp/nvim.pipe --headless }
+export def "nvim client" [...file: path] { nvim --remote --server ~/.cache/nvim/server.pipe ...$file }
 

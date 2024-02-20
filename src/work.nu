@@ -6,7 +6,7 @@
 
 
 
-def maxmsp [maxpat: string = ""] {
+export def maxmsp [maxpat: string = ""] {
     let max_exe = match $nu.os-info.name { 
       "windows" => `C:/Program Files/Cycling '74/Max 8/Max.exe` 
       "macos" => "/Applications/Max.app/Contents/MacOS/Max", 

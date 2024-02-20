@@ -1,6 +1,6 @@
 # Machines
 # Get azure devops machines having a certain capability
-def "az machines-usercapabilities" [
+export def "az machines-usercapabilities" [
   has_capability: string = 'Python311',
   --output (-o): string = 'yaml'  # json, jsonc, none, table, tsv, yaml, yamlc.
 ] {
@@ -11,7 +11,7 @@ def "az machines-usercapabilities" [
 }
 
 # Get azure devops machines
-def "az machines" [
+export def "az machines" [
   --output (-o): string = 'yaml'  # json, jsonc, none, table, tsv, yaml, yamlc.
 ] {
   (  az pipelines agent list 
@@ -20,12 +20,12 @@ def "az machines" [
   )
 }
 
-def "build queue" [ definition_id: int = 42 ] {
+export def "build queue" [ definition_id: int = 42 ] {
   az pipelines build queue --open --branch (git rev-parse --abbrev-ref HEAD) --definition-id $definition_id
 }
 
 
-def "build download" [
+export def "build download" [
   build_id: int
 ] {
   az pipelines runs artifact download --artifact-name Installer --path ~/Downloads --run-id $build_id

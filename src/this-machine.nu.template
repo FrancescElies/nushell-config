@@ -4,3 +4,8 @@
 # source ~/src/nushell-config/src/os-mac.nu
 # source ~/src/nushell-config/src/os-windows.nu
 # source ~/src/nushell-config/src/os-linux.nu
+
+export def "work browse" [] {
+  start https://work.com/_pulls
+  start https://work.com/_work
+}
