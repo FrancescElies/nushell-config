@@ -119,6 +119,8 @@ if $nu.os-info.name == "windows" {
     $env.PATH = ($env.PATH | split row (char esep)
         | prepend '~/bin'
         | prepend '/usr/local/bin'
+        | prepend '/var/lib/flatpak/exports/share'
+        | prepend '~/.local/share/flatpak/exports/share'	
         | prepend '/home/linuxbrew/.linuxbrew/bin'
         | prepend '~/src/radare2/prefix/bin'
         | prepend '~/go/bin')
