@@ -20,16 +20,21 @@ export def --env "gwcd" [
   cd $path
 }
 
+# convenience wrapper around `git worktree add`
 export def --env "gwstart" [
-  branch?: string@"nu-complete git worktree paths"  # branch to create or checkout
+  branch: string@"nu-complete git worktree paths"  # branch to create or checkout
+  path?: string  # path to create worktree, e.g. ../emergency-fix
   --upstream(-u): string = "origin"  # sets upstream
   --startingat(-@): string = ""  # create a new branch starting at <commit-ish> e.g. master, 
 ] {
   let repo_name = pwd | path basename | str replace ".git" ""
-  let branch = if $branch == null { input "target branch: " } else { $branch }
   # make sure path has no slashes coming from branch name
   let branch_folder = $branch | str replace -a -r `[\\/]` "-"
-  let path = ".." | path join $"($repo_name)-($branch_folder)"
+  let path = if $path == null { 
+    ".." | path join $"($repo_name)-($branch_folder)" 
+  } else { 
+    $path 
+  }
 
   # create a new branch named $branch starting at <commit-ish>, 
   # e.g.
@@ -42,6 +47,7 @@ export def --env "gwstart" [
   }
   cd $path
   git pull --set-upstream $upstream $branch
+  gl5
 }
 
 # git worktree remove
