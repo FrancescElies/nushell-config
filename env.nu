@@ -103,6 +103,7 @@ if $nu.os-info.name == "windows" {
     $env.Path = ($env.Path | split row (char esep) 
         | prepend '~/AppData/Roaming/Python/Python312/Scripts'
         | prepend '~/AppData/Roaming/Python/Scripts'
+        | prepend '~/AppData/Local/bob/nvim-bin'
         | prepend '~/src/radare2/prefix/bin'
         | prepend '~/go/bin'
         | prepend (ls ~/bin | where type == dir | get name)
