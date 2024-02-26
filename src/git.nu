@@ -4,6 +4,7 @@
 #
 # Give me all my pull requests as local refs
 # git config remote.origin.fetch '+refs/pull/*:refs/remotes/origin/pull/*'
+#
 # Conditional ~/.gitconfig
 #
 # [includelf "gitdir:~/projects/work/"]
@@ -11,10 +12,35 @@
 # [includelf "gitdir:~/src/oss/"]
 #   path = ~/projects/oss/.gitconfig
 #
+# Accidentally cloned http repo version?
+# [url "git@github.com:"]
+#   insteadOf = "https://github.com/"
 # git maintenance start
 
 # apply my defaults
 export def "git my-defaults" [] {
+  # https://jvns.ca/blog/2024/02/16/popular-git-config-options/#help-autocorrect-10
+  git config --global push.autosetupremote true
+  git config --global init.defaultBranch main
+  git config --global pull.rebase true
+  git config --global merge.conflictstyle zdiff3
+  git config --global rebase.autosquash true
+  git config --global push.default current
+  git config --global commit.verbose true
+  git config --global help.autocorrect 10
+  git config --global interactive.diffFilter delta --color-only
+  git config --global diff.algorithm histogram
+  git config --global branch.sort -committerdate
+  git config --global fetch.prune true
+  git config --global log.date iso
+  git config --global rebase.missingCommitsCheck error
+  git config --global rebase.updateRefs true
+
+  # Avoid data corruption
+  git config --global transfer.fsckobjects true
+  git config --global fetch.fsckobjects true
+  git config --global receive.fsckObjects true
+
   # REuse REordered REsolution, tells git to remember conflicts so if it sees them again he won't ask about it.
   git config --global rerere.enabted true
   git config --global branch.sort -committerdate
@@ -32,8 +58,8 @@ export def "git my-defaults" [] {
   # git maintenance start will also write the commit-graph
   git config --global fetch.writeCommitGraph true
   # file system monitory
-  git config core.untrackedcache true
-  git config core.fsmonitor true
+  git config --global core.untrackedcache true
+  git config --global core.fsmonitor true
 }
 
 # start a new topic
