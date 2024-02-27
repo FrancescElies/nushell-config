@@ -3,8 +3,12 @@
 ## Install
 ```nu
 git clone https://github.com/FrancescElies/nushell-config ~/src/nushell-config
-cd ~/src/nushell-config
+# Linux
 ln -s ~/src/nushell-config/ ~/.config/nushell
+# Mac
+ln -s ~/src/nushell-config/ ~/Library/Application\ Support/nushell
+# Windows
+mklink /D ~/AppData/Roaming/nushell ~/src/nushell-config
 ```
 ## Links
 - https://www.nushell.sh/blog/2023-08-23-happy-birthday-nushell-4.html
