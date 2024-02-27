@@ -13,7 +13,7 @@ nu install.nu
     # or install with cargo
     cargo install cargo-binstall
 
-    cargo binstall amber ast-grep bacon bat broot btm delta difftastic diskonaut fastmod fnm huniq hwatch just mdbook mprocs nu ouch pgen py-spy tealdeer tokei xh pueue 
+    cargo binstall amber ast-grep bacon bat broot btm git-delta difftastic diskonaut fastmod fnm huniq hwatch just mdbook mprocs nu ouch pgen py-spy tealdeer tokei xh pueue 
     cargo install coreutils
 
 ## Links
