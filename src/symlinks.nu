@@ -5,7 +5,11 @@ export def symlink [
     --force(-f)     # if target exists moves it to
 ] {
     let existing = ($existing | path expand --strict | path split | path join)
-    let link_name = ($link_name | path expand --no-symlink | path split | path join)
+    let $link_name = if ($link_name | path exists) { 
+        ($link_name | path expand --strict --no-symlink | path split | path join)
+    } else {
+        $link_name
+    }
 
     if ($force and ($link_name | path exists)) { 
        rm --trash --recursive $link_name
