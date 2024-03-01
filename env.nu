@@ -101,30 +101,33 @@ $env.NU_PLUGIN_DIRS = [
 # $env.Path = ($env.Path | split row (char esep) | prepend '/some/path')
 if $nu.os-info.name == "windows" { 
     $env.Path = ($env.Path | split row (char esep) 
+        | prepend '~/AppData/Local/bob/nvim-bin'
         | prepend '~/AppData/Roaming/Python/Python312/Scripts'
         | prepend '~/AppData/Roaming/Python/Scripts'
-        | prepend '~/AppData/Local/bob/nvim-bin'
-        | prepend '~/src/radare2/prefix/bin'
         | prepend '~/go/bin'
+        | prepend '~/src/radare2/prefix/bin'
         | prepend (ls ~/bin | where type == dir | get name)
     )
 } else if $nu.os-info.name == "macos" {
     $env.PATH = ($env.PATH | split row (char esep)
-        | prepend '~/bin'
-        | prepend '~/Library/Python/3.12/bin'
-        | prepend '/usr/local/bin'
         | prepend '/opt/homebrew/bin'
-        | prepend '~/src/radare2/prefix/bin'
+        | prepend '/usr/local/bin'
+        | prepend '~/Library/Python/3.12/bin'
+        | prepend '~/bin'
         | prepend '~/go/bin')
+        | prepend '~/src/radare2/prefix/bin'
 } else if $nu.os-info.name == "linux" {
     $env.PATH = ($env.PATH | split row (char esep)
-        | prepend '~/bin'
-        | prepend '/usr/local/bin'
-        | prepend '/var/lib/flatpak/exports/share'
-        | prepend '~/.local/share/flatpak/exports/share'	
         | prepend '/home/linuxbrew/.linuxbrew/bin'
-        | prepend '~/src/radare2/prefix/bin'
+        | prepend '/usr/local/bin'
+        | prepend '/usr/local/go/bin'
+        | prepend '/var/lib/flatpak/exports/share'
+        | prepend '~/.cargo/bin'
+        | prepend '~/.local/share/bob/nvim-bin'	
+        | prepend '~/.local/share/flatpak/exports/share'	
+        | prepend '~/bin'
         | prepend '~/go/bin')
+        | prepend '~/src/radare2/prefix/bin'
 } else {
     $env.PATH = $env.PATH 
 }
