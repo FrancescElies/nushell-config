@@ -159,5 +159,7 @@ export def lldbb-attach-windows-process [processid: int] {
   }
 }
 
-
+export def "youtube download-mp3" [url: string] {
+   python3  ~/bin/yt-dlp -x --audio-format mp3 $url
+}
 
