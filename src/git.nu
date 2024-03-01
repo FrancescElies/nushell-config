@@ -168,7 +168,7 @@ export alias grba = git rebase --abort
 export alias grbc = git rebase --continue
 
 
-use ~\src\nushell-config\src\git-worktree.nu 'git worktree bare-path'
+use ~/src/nushell-config/src/git-worktree.nu 'git worktree bare-path'
 # git cd to root (bare or worktree)
 def --env groot [] {
  if ((git worktree bare-path) == null) { 
