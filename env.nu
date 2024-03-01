@@ -126,6 +126,7 @@ if $nu.os-info.name == "windows" {
         | prepend '~/.local/share/bob/nvim-bin'	
         | prepend '~/.local/share/flatpak/exports/share'	
         | prepend '~/bin'
+        | prepend '~/bin/zig'
         | prepend '~/go/bin')
         | prepend '~/src/radare2/prefix/bin'
 } else {
