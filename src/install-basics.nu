@@ -26,7 +26,13 @@ export def "install-basics rust" [] {
   # or install with cargo
   cargo install cargo-binstall
 
-  let cargo_pkgs = [amber ast-grep bacon bat broot btm git-delta difftastic diskonaut fastmod fnm huniq hwatch just mdbook mprocs nu ouch pgen py-spy skim tealdeer tokei watchexec-cli xh pueue bob-nvim]
+  let cargo_pkgs = [
+    amber ast-grep fastmod skim tealdeer tokei
+    bat broot just bob-nvim
+    nu pueue 
+    btm git-delta difftastic diskonaut fnm huniq mdbook mprocs ouch pgen py-spy xh 
+    bacon checkexec watchexec-cli hwatch 
+  ]
   echo $"cargo will install: ($cargo_pkgs | path join ' ')"
   cargo binstall -y ...$cargo_pkgs
 
