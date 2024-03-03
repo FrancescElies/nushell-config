@@ -1,3 +1,6 @@
+mkdir ~/src/work
+mkdir ~/src/oss
+
 use src/symlinks.nu symlink
 
 let target = match $nu.os-info.name {
