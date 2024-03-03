@@ -124,6 +124,7 @@ if $nu.os-info.name == "windows" {
         | prepend '/var/lib/flatpak/exports/share'
         | prepend '~/.cargo/bin'
         | prepend '~/.local/share/bob/nvim-bin'	
+        | prepend "~/.rye/shims")
         | prepend '~/.local/share/flatpak/exports/share'	
         | prepend '~/bin'
         | prepend '~/bin/zig'
