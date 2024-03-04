@@ -15,4 +15,5 @@ symlink --force ~/src/nushell-config/ $target
 use src/install-basics.nu *
 
 if ("/etc/debian_version" | path exists) { install for-debian }
+install python
 install rust

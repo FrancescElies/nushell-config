@@ -41,6 +41,13 @@ def "install cargo-binstall" [] {
   mv cargo-binstall* ~/bin/
 }
 
+export def "install python" [] {
+  match $nu.os-info.name {
+    "windows" => { input $"(ansi purple_bold)Install https://rye-up.com/(ansi reset) once done press enter." },
+    _ => { curl -sSf https://rye-up.com/get | bash },
+  }
+}
+
 export def "install rust" [] {
 
   let filename = match $nu.os-info.name {
@@ -61,7 +68,6 @@ export def "install rust" [] {
   bob use nightly
 
   cargo install coreutils
-  cargo install --git https://github.com/astral-sh/rye rye
 
 }
 
