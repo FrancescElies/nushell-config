@@ -1,4 +1,4 @@
-export def "install-basics debian" [] {
+export def "install for-debian" [] {
   let debian_pkgs = [
     build-essential clang-16 cmake golang nodejs npm
     curl fail2ban rsync vim vlc wget restic
@@ -19,20 +19,42 @@ export def "install-basics debian" [] {
   chmod +x wezterm
 }
 
-export def "install-basics rust" [] {
-  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+# https://github.com/cargo-bins/cargo-binstall?tab=readme-ov-file#manually
+def "install cargo-binstall" [] {
+  cd (mktemp -d)
+  let os_arch =  $nu.os-info.arch # e.g. x86_64
+  let url_base = $"https://github.com/cargo-bins/cargo-binstall/releases/download/v1.6.3/"
+  let filename = match $nu.os-info.name {
+      "windows" => { $"cargo-binstall-($os_arch)-pc-windows-msvc.zip" },
+      "linux" => { $"cargo-binstall-($os_arch)-unknown-linux-musl.tgz" },
+      "macos" => { $"cargo-binstall-universal-apple-darwin.zip" },
+      _ => { error make {msg: "download binstall: os not supported"} },
+  }
+  let extension = ($filename | path parse | get extension)
+  let disk_file = $"tmp.($extension)"
+  http get $"($url_base)($filename)" | save -f $disk_file
+  match $extension { 
+    "zip" => {unzip $disk_file}, 
+    _ => {tar -xvzf $disk_file} 
+  }
+  mkdir ~/bin
+  mv cargo-binstall* ~/bin/
+}
 
-  # https://github.com/cargo-bins/cargo-binstall?tab=readme-ov-file#manually
-  # or install with cargo
-  cargo install cargo-binstall
+export def "install rust" [] {
+
+  let filename = match $nu.os-info.name {
+      "windows" => { input $"(ansi purple_bold)Install https://rustup.rs/(ansi reset) once done press enter." },
+      _ => { curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh },
+  }
+
+  install cargo-binstall
 
   let cargo_pkgs = [
-    amber ast-grep fastmod skim tealdeer tokei
-    bat broot just bob-nvim
-    nu pueue 
-    btm git-delta difftastic diskonaut fnm huniq mdbook mprocs ouch pgen py-spy xh 
-    bacon checkexec watchexec-cli hwatch 
+    tealdeer bat broot bob-nvim diskonaut
+    nu pueue btm ouch pgen xh mprocs
   ]
+  # py-spy
   echo $"cargo will install: ($cargo_pkgs | path join ' ')"
   cargo binstall -y ...$cargo_pkgs
 
@@ -41,5 +63,17 @@ export def "install-basics rust" [] {
   cargo install coreutils
   cargo install --git https://github.com/astral-sh/rye rye
 
+}
+
+export def "install rust-devtools" [] {
+  let cargo_pkgs = [
+    amber ast-grep fastmod tokei
+    just 
+    git-delta difftastic  fnm huniq mdbook 
+    bacon checkexec watchexec-cli hwatch 
+  ]
+  # py-spy
+  echo $"cargo will install: ($cargo_pkgs | path join ' ')"
+  cargo binstall -y ...$cargo_pkgs
 }
 
