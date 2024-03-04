@@ -106,6 +106,7 @@ if $nu.os-info.name == "windows" {
         | prepend '~/AppData/Roaming/Python/Scripts'
         | prepend '~/go/bin'
         | prepend '~/src/radare2/prefix/bin'
+        | prepend 'c:/Program Files/Neovim/bin'
         | prepend (ls ~/bin | where type == dir | get name)
     )
 } else if $nu.os-info.name == "macos" {
