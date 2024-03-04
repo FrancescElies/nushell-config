@@ -17,3 +17,7 @@ use src/install-basics.nu *
 if ("/etc/debian_version" | path exists) { install for-debian }
 install python
 install rust
+match (input $"(ansi purple_bold)Install rust dev tools?(ansi reset) This might take long [y/n]") {
+    "y" | "yes" | "Y" => { install rust-devtools },
+    _ => {}
+}
