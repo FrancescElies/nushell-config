@@ -67,7 +67,10 @@ export def "install rust" [] {
 
   bob use nightly
 
-  cargo install coreutils
+  match (input $"(ansi purple_bold)Install rust coreutils?(ansi reset) This might take long [y/n]") {
+    "y" | "yes" | "Y" => { cargo install coreutils },
+    _ => {}
+  }
 
 }
 
