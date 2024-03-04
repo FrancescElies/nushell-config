@@ -1,3 +1,5 @@
+use utils.nu ask_yes_no
+
 export def "install for-debian" [] {
   let debian_pkgs = [
     build-essential clang-16 cmake golang nodejs npm
@@ -57,30 +59,21 @@ export def "install rust" [] {
 
   install cargo-binstall
 
-  let cargo_pkgs = [
-    tealdeer bat broot bob-nvim diskonaut
-    nu pueue btm ouch pgen xh mprocs
-  ]
+  let cargo_pkgs = [ tealdeer bat broot bob-nvim diskonaut nu pueue btm ouch pgen xh mprocs ]
   # py-spy
   echo $"cargo will install: ($cargo_pkgs | path join ' ')"
   cargo binstall -y ...$cargo_pkgs
 
   bob use nightly
 
-  match (input $"(ansi purple_bold)Install rust coreutils?(ansi reset) This might take long [y/n]") {
-    "y" | "yes" | "Y" => { cargo install coreutils },
-    _ => {}
-  }
+  if (ask_yes_no "Install rust coreutils?", "This might take long") { cargo install coreutils }
 
 }
 
 export def "install rust-devtools" [] {
-  let cargo_pkgs = [
-    amber ast-grep fastmod tokei
-    just 
-    git-delta difftastic  fnm huniq mdbook 
-    bacon checkexec watchexec-cli hwatch 
-  ]
+  let cargo_pkgs = [ amber ast-grep fastmod tokei just 
+                     git-delta difftastic fnm huniq mdbook 
+                     bacon checkexec watchexec-cli hwatch ]
   # py-spy
   echo $"cargo will install: ($cargo_pkgs | path join ' ')"
   cargo binstall -y ...$cargo_pkgs

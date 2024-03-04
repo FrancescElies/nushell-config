@@ -22,6 +22,7 @@ use ~/src/nushell-config/src/toolbox.nu *
 use ~/src/nushell-config/src/clipboard.nu *
 use ~/src/nushell-config/src/neovim.nu *
 use ~/src/nushell-config/src/cargo-completions.nu *
+use ~/src/nushell-config/src/utils.nu *
 
 if $nu.os-info.name == "windows" {
     chcp 65001 
