@@ -8,7 +8,7 @@ export def "install for-debian" [] {
     ffmpeg libasound2-dev rfkill
     printer-driver-splix
     nginx 
-    python3.11-full python3-pipdeptree python3-pip virtualenv
+    python3.11-full python3-pipdeptree python3-pip
   ]
   
   echo $"apt will install: ($debian_pkgs | path join ' ')"
@@ -48,6 +48,15 @@ export def "install python" [] {
     "windows" => { input $"(ansi purple_bold)Install https://rye-up.com/(ansi reset) once done press enter." },
     _ => { curl -sSf https://rye-up.com/get | bash },
   }
+  mkdir ~/.pip/
+
+  # prevent pip from installing packages in the global installation
+  "
+  [install]
+  require-virtualenv = true
+  [uninstall]
+  require-virtualenv = true
+  " | save ~/.pip/pip.conf
 }
 
 export def "install rust" [] {
