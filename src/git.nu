@@ -26,7 +26,6 @@ export def "git my-defaults" [] {
   git config --global merge.conflictstyle zdiff3
   git config --global rebase.autosquash true
   git config --global push.default current
-  git config --global commit.verbose true
   git config --global help.autocorrect 10
   git config --global interactive.diffFilter delta --color-only
   git config --global diff.algorithm histogram
