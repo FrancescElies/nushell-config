@@ -98,42 +98,58 @@ $env.NU_PLUGIN_DIRS = [
 ]
 
 # To add entries to PATH (on Windows you might use Path), you can use the following pattern:
-# $env.Path = ($env.Path | split row (char esep) | prepend '/some/path')
-if $nu.os-info.name == "windows" { 
-    $env.Path = ($env.Path | split row (char esep) 
-        | prepend '~/AppData/Local/bob/nvim-bin'
-        | prepend '~/AppData/Roaming/Python/Python312/Scripts'
-        | prepend '~/AppData/Roaming/Python/Scripts'
-        | prepend '~/go/bin'
-        | prepend '~/src/radare2/prefix/bin'
-        | prepend 'c:/Program Files/Neovim/bin'
-        | prepend (ls ~/bin | where type == dir | get name)
-    )
-} else if $nu.os-info.name == "macos" {
-    $env.PATH = ($env.PATH | split row (char esep)
-        | prepend '/opt/homebrew/bin'
-        | prepend '/usr/local/bin'
-        | prepend '~/Library/Python/3.12/bin'
-        | prepend '~/bin'
-        | prepend '~/go/bin')
-        | prepend '~/src/radare2/prefix/bin'
-} else if $nu.os-info.name == "linux" {
-    $env.PATH = ($env.PATH | split row (char esep)
-        | prepend '/home/linuxbrew/.linuxbrew/bin'
-        | prepend '/usr/local/bin'
-        | prepend '/usr/local/go/bin'
-        | prepend '/var/lib/flatpak/exports/share'
-        | prepend '~/.cargo/bin'
-        | prepend '~/.local/share/bob/nvim-bin'	
-        | prepend "~/.rye/shims")
-        | prepend '~/.local/share/flatpak/exports/share'	
-        | prepend '~/bin'
-        | prepend '~/bin/zig'
-        | prepend '~/go/bin')
-        | prepend '~/src/radare2/prefix/bin'
-} else {
-    $env.PATH = $env.PATH 
+# $env.PATH = ($env.PATH | split row (char esep) | prepend '/some/path')
+# An alternate way to add entries to $env.PATH is to use the custom command `path add`
+# which is built into the nushell stdlib:
+use std "path add"
+# path add /some/path
+# path add ($env.CARGO_HOME | path join "bin")
+# path add ($env.HOME | path join ".local" "bin")
+# $env.PATH = ($env.PATH | uniq)
+
+match $nu.os-info.name { 
+    "windows" => { 
+        path add '~/AppData/Local/bob/nvim-bin'
+        path add '~/AppData/Roaming/Python/Python312/Scripts'
+        path add '~/AppData/Roaming/Python/Scripts'
+        path add '~/go/bin'
+        path add '~/src/radare2/prefix/bin'
+        path add 'c:/Program Files/Neovim/bin'
+        path add (ls ~/bin | where type == dir | get name)
+    },
+    "macos" => {
+        path add '/opt/homebrew/bin'
+        path add '/usr/local/bin'
+        path add '~/Library/Python/3.12/bin'
+        path add '~/bin'
+        path add '~/go/bin')
+        path add '~/src/radare2/prefix/bin'
+    },
+    "linux" => { 
+        path add '/home/linuxbrew/.linuxbrew/bin'
+        path add '/usr/local/bin'
+        path add '/usr/local/go/bin'
+        path add '/var/lib/flatpak/exports/share'
+        path add '~/.cargo/bin'
+        path add '~/.local/share/bob/nvim-bin'	
+        path add "~/.rye/shims")
+        path add '~/.local/share/flatpak/exports/share'	
+        path add '~/bin'
+        path add '~/src/radare2/prefix/bin'
+    },
+    _ => { $env.PATH = $env.PATH },
 }
+
+# add all ~/bin/* to PATH
+path add (ls ~/bin | where type == dir | get name)
+# add all ~/bin/*/bin to PATH
+path add ( ls ~/bin/*/* | where type == dir | get name | filter {$in|str ends-with "bin"} )
+
+match $nu.os-info.name { 
+    "windows" => { $env.Path = ($env.Path | uniq) },
+    _ => { $env.PATH = ($env.PATH | uniq) },
+}
+
 
 $env.EDITOR = "nvim"
 $env.PYTHONUNBUFFERED = 1
