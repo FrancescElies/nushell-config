@@ -16,6 +16,7 @@ export def "install for-debian" [] {
 
   # https://wezfurlong.org/wezterm/install/linux.html#__tabbed_1_2
   mkdir ~/bin
+  cd ~/bin
   wget https://github.com/wez/wezterm/releases/download/20240203-110809-5046fc22/WezTerm-20240203-110809-5046fc22-Ubuntu20.04.AppImage
   mv WezTerm-20240203-110809-5046fc22-Ubuntu20.04.AppImage wezterm
   chmod +x wezterm
