@@ -283,7 +283,7 @@ $env.config = {
                     ) }
                     code: "overlay use env.nu"
                 }
-                # {|before, after| print (lsg) }
+                {|before, after| ( if ((ls | length) < 20) { print (lsg) } else { print "folder has +20 files" } ) }
                 {
                     condition: {|before, after| ($after | path join "venv/bin/activate.nu" | path exists) }
                     code: 'overlay use venv/bin/activate.nu'
