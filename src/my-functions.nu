@@ -163,3 +163,7 @@ export def "youtube download-mp3" [url: string] {
    python3  ~/bin/yt-dlp -x --audio-format mp3 $url
 }
 
+# more robust rsync (works with FAT usbs too) :(-c) checksum, (-r) recursive, (-t) preserve modification times, (-P) keep partially transferred files and show progress
+export def "rsync" [source: path, destination: path] {
+  ^rsync -rtcvP --update $source $destination
+}
