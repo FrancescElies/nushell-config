@@ -130,6 +130,7 @@ match $nu.os-info.name {
     _ => { $env.PATH = $env.PATH },
 }
 
+mkdir ~/bin/dummy/bin
 # add all ~/bin/* to PATH
 path add (ls ~/bin | where type == dir | get name)
 # add all ~/bin/*/bin to PATH
