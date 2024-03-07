@@ -102,34 +102,30 @@ match $nu.os-info.name {
         path add '~/AppData/Local/bob/nvim-bin'
         path add '~/AppData/Roaming/Python/Python312/Scripts'
         path add '~/AppData/Roaming/Python/Scripts'
-        path add '~/go/bin'
-        path add '~/src/radare2/prefix/bin'
         path add 'c:/Program Files/Neovim/bin'
-        path add (ls ~/bin | where type == dir | get name)
     },
     "macos" => {
         path add '/opt/homebrew/bin'
         path add '/usr/local/bin'
         path add '~/Library/Python/3.12/bin'
-        path add '~/bin'
-        path add '~/go/bin')
-        path add '~/src/radare2/prefix/bin'
     },
     "linux" => { 
         path add '/home/linuxbrew/.linuxbrew/bin'
         path add '/usr/local/bin'
         path add '/usr/local/go/bin'
         path add '/var/lib/flatpak/exports/share'
-        path add '~/.cargo/bin'
         path add '~/.local/share/bob/nvim-bin'	
         path add "~/.rye/shims")
         path add '~/.local/share/flatpak/exports/share'	
-        path add '~/bin'
-        path add '~/src/radare2/prefix/bin'
     },
     _ => { $env.PATH = $env.PATH },
 }
 
+# common paths
+path add '~/src/radare2/prefix/bin'
+path add '~/bin'
+path add '~/go/bin'
+path add '~/.cargo/bin'
 mkdir ~/bin/dummy/bin
 # add all ~/bin/* to PATH
 path add (ls ~/bin | where type == dir | get name)
