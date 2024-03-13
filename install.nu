@@ -10,12 +10,19 @@ let target = match $nu.os-info.name {
     _ => "~/.config/nushell" ,
 }
 
-symlink --force ~/src/nushell-config/ $target
+mkdir $target
+symlink --force ~\src\nushell-config\env.nu $target
+symlink --force ~\src\nushell-config\config.nu $target
 
 
 use src/install-basics.nu *
 
-if ("/etc/debian_version" | path exists) { install for-debian }
-install python
-install rust
+# debian
+if ("/etc/debian_version" | path exists) { 
+    if (ask_yes_no "Install apt packages?", "rye") { install for-debian }
+}
+
+# cross platform
+if (ask_yes_no "Install python?", "rye") { install python }
+if (ask_yes_no "Install rustup?", "rye") { install rust }
 if (ask_yes_no "Install rust dev tools?", "This might take long") {  install rust-devtools  }
