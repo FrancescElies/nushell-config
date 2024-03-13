@@ -5,15 +5,11 @@ export def symlink [
     --force(-f)     # if target exists moves it to
 ] {
     let existing = ($existing | path expand --strict | path split | path join)
-    let $link_name = if ($link_name | path exists) { 
-        ($link_name | path expand --strict --no-symlink | path split | path join)
-    } else {
-        $link_name
-    }
+    let $link_name = ($link_name | path expand --strict --no-symlink | path split | path join)
 
     if ($force and ($link_name | path exists)) { 
+       echo $"Moving ($link_name) to trash"
        rm --trash --recursive $link_name
-       echo $"($link_name) moved to trash"
     }
 
     if $nu.os-info.family == 'windows' {

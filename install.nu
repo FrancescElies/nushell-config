@@ -5,14 +5,14 @@ use src/symlinks.nu symlink
 use src/utils.nu ask_yes_no
 
 let target = match $nu.os-info.name {
-    "windows" => "~/AppData/Roaming/nushell" ,
+    "windows" => '~\AppData\Roaming\nushell' ,
     "macos" => "~/Library/Application Support/nushell" ,
     _ => "~/.config/nushell" ,
 }
 
-mkdir $target
-symlink --force ~\src\nushell-config\env.nu $target
-symlink --force ~\src\nushell-config\config.nu $target
+if not ($target | path exists) { mkdir $target }
+symlink --force ~\src\nushell-config\env.nu ($target | path join "env.nu")
+symlink --force ~\src\nushell-config\config.nu ($target | path join "config.nu")
 
 
 use src/install-basics.nu *
