@@ -17,12 +17,22 @@ symlink --force ~\src\nushell-config\config.nu ($target | path join "config.nu")
 
 use src/install-basics.nu *
 
-# debian
-if ("/etc/debian_version" | path exists) { 
-    if (ask_yes_no "Install apt packages?") { install for-debian }
+match $nu.os-info.name {
+    "windows" => {
+        if (ask_yes_no "Install winget packages?") { install for-windows }
+    },
+    "macos" => {
+        if (ask_yes_no "Install brew packages?") { install for-mac }
+    },
+    _ => {
+        # debian
+        if ("/etc/debian_version" | path exists) { 
+            if (ask_yes_no "Install apt packages?") { install for-debian }
+        }
+    },
 }
 
 # cross platform
-if (ask_yes_no "Install python?", "rye") { install python }
+if (ask_yes_no "Install python (rye)?") { install python }
 if (ask_yes_no "Install rustup?") { install rust }
-if (ask_yes_no "Install rust dev tools?", "This might take long") {  install rust-devtools  }
+if (ask_yes_no "Install rust dev tools? (might take long)") {  install rust-devtools  }

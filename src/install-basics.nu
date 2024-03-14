@@ -1,5 +1,19 @@
 use utils.nu ask_yes_no
 
+export def "install for-windows" [] {
+ try {
+   winget install --silent --id Git.Git
+   winget install --silent --id GitHub.cli 
+   winget install --silent --id GitHub.GitHubDesktop
+ }
+}
+
+export def "install for-mac" [] {
+ try {
+   brew install gh vlc git neovim restic fd-find ripgrep
+ }
+}
+
 export def "install for-debian" [] {
   let debian_pkgs = [
     build-essential clang-16 cmake golang nodejs npm
@@ -76,7 +90,7 @@ export def "install rust" [] {
 
   bob use nightly
 
-  if (ask_yes_no "Install rust coreutils?", "This might take long") { cargo install coreutils }
+  if (ask_yes_no "Install rust coreutils (might take long)?") { cargo install coreutils }
 
 }
 

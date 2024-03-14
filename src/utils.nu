@@ -1,7 +1,7 @@
 
-export def ask_yes_no [question: string, message: string = ""] {
+export def ask_yes_no [question: string] {
   return ( 
-      match (input $"(ansi purple_bold)($question)(ansi reset) ($message) [y/n]") {
+      match (input $"(ansi purple_bold)($question)(ansi reset) [y/n]") {
         "y" | "yes" | "Y" => true,
         _ => false,
       } 
