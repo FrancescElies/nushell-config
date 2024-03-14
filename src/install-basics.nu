@@ -9,9 +9,8 @@ export def "install for-windows" [] {
 }
 
 export def "install for-mac" [] {
- try {
-   brew install gh vlc git neovim restic fd-find ripgrep
- }
+ try { brew install gh vlc git neovim restic fd-find ripgrep }
+ try { brew install --cask wezterm }
 }
 
 export def "install for-debian" [] {
