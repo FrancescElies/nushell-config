@@ -19,7 +19,7 @@ use src/install-basics.nu *
 
 # debian
 if ("/etc/debian_version" | path exists) { 
-    if (ask_yes_no "Install apt packages?", "rye") { install for-debian }
+    if (ask_yes_no "Install apt packages?") { install for-debian }
 }
 
 # cross platform
