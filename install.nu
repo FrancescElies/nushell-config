@@ -24,5 +24,5 @@ if ("/etc/debian_version" | path exists) {
 
 # cross platform
 if (ask_yes_no "Install python?", "rye") { install python }
-if (ask_yes_no "Install rustup?", "rye") { install rust }
+if (ask_yes_no "Install rustup?") { install rust }
 if (ask_yes_no "Install rust dev tools?", "This might take long") {  install rust-devtools  }
