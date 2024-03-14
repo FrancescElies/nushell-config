@@ -1,11 +1,11 @@
 use utils.nu ask_yes_no
 
 export def "install for-windows" [] {
- try {
-   winget install --silent --id Git.Git
-   winget install --silent --id GitHub.cli 
-   winget install --silent --id GitHub.GitHubDesktop
- }
+  # winget upgrade --slient --all
+  try { winget install --silent --id Git.Git }
+  try { winget install --silent --id GitHub.cli  }
+  try { winget install --silent --id GitHub.GitHubDesktop }
+  try { winget install --silent --id wez.wezterm }
 }
 
 export def "install for-mac" [] {
