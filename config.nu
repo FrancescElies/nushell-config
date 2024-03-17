@@ -13,6 +13,7 @@ use ~/src/nushell-config/src/git-worktree.nu *
 use ~/src/nushell-config/src/git-pr.nu *
 use ~/src/nushell-config/src/git-misc.nu *
 use ~/src/nushell-config/src/hosts.nu
+use ~/src/nushell-config/src/wgphys.nu
 use ~/src/nushell-config/src/az.nu *
 use ~/src/nushell-config/src/docs.nu *
 use ~/src/nushell-config/src/broot-helpers.nu *
