@@ -61,8 +61,12 @@ export module container {
     }
 
     # run app's traffic throughvpn
+    #
+    # Examples:
+    #   Get ip and geolocation of vpn
+    #   > vpn container exec curl https://ipinfo.io
     export def exec [...command: string] {
-        sudo -E ip netns exec container sudo -E -u $"#(id -u)" -g $"#(id -g)" ...$command
+            sudo -E ip netns exec container sudo -E -u $"#(id -u)" -g $"#(id -g)" ...$command
     }
 }
 
