@@ -35,15 +35,19 @@ export module container {
         echo_purple create wireguard interface in init namespace
         sudo ip link add wg0 type wireguard
 
+        # needs to be done before moving wg0 to container otherwise dns resolution won't work
+        echo_purple setconf wg0
+        sudo wg setconf wg0 /etc/wireguard/wg0.conf
+
         echo_purple move it to container netns
         sudo ip link set wg0 netns container
 
         echo_purple configure wg0
         sudo ip -n container addr add $addr dev wg0
-        echo_purple setconf wg0
-        sudo ip netns exec container wg setconf wg0 /etc/wireguard/wg0.conf
+
         echo_purple wg0 up
         sudo ip -n container link set wg0 up
+
         echo_purple adding default route
         sudo ip -n container route add default dev wg0
     }
