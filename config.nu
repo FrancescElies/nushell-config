@@ -25,15 +25,15 @@ use ~/src/nushell-config/src/neovim.nu *
 use ~/src/nushell-config/src/cargo-completions.nu *
 use ~/src/nushell-config/src/utils.nu *
 
-use std "path add"
-if not (which fnm | is-empty) {
-  ^fnm env --json | from json | load-env
-  let node_path = match $nu.os-info.name {
-    "windows" => $"($env.FNM_MULTISHELL_PATH)",
-    _ => $"($env.FNM_MULTISHELL_PATH)/bin",
-  }
-  path add $node_path
-}
+# use std "path add"
+# if not (which fnm | is-empty) {
+#   ^fnm env --json | from json | load-env
+#   let node_path = match $nu.os-info.name {
+#     "windows" => $"($env.FNM_MULTISHELL_PATH)",
+#     _ => $"($env.FNM_MULTISHELL_PATH)/bin",
+#   }
+#   path add $node_path
+# }
 
 if $nu.os-info.name == "windows" {
     chcp 65001 
