@@ -25,15 +25,15 @@ use ~/src/nushell-config/src/neovim.nu *
 use ~/src/nushell-config/src/cargo-completions.nu *
 use ~/src/nushell-config/src/utils.nu *
 
-# use std "path add"
-# if not (which fnm | is-empty) {
-#   ^fnm env --json | from json | load-env
-#   let node_path = match $nu.os-info.name {
-#     "windows" => $"($env.FNM_MULTISHELL_PATH)",
-#     _ => $"($env.FNM_MULTISHELL_PATH)/bin",
-#   }
-#   path add $node_path
-# }
+use std "path add"
+if not (which fnm | is-empty) {
+  ^fnm env --json | from json | load-env
+  let node_path = match $nu.os-info.name {
+    "windows" => $"($env.FNM_MULTISHELL_PATH)",
+    _ => $"($env.FNM_MULTISHELL_PATH)/bin",
+  }
+  path add $node_path
+}
 
 if $nu.os-info.name == "windows" {
     chcp 65001 
@@ -299,6 +299,10 @@ $env.config = {
                 {
                     condition: {|before, after| ($after | path join "venv/bin/activate.nu" | path exists) }
                     code: 'overlay use venv/bin/activate.nu'
+                }
+                {
+                    condition: {|before, after| [.nvmrc .node-version] | path exists | any { |it| $it }}
+                    code: {|before, after| if ('FNM_DIR' in $env) { fnm use } }
                 }
         ]
         }
