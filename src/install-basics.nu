@@ -1,3 +1,4 @@
+# NOTE: other easy installations https://webinstall.dev/trip/
 use utils.nu ask_yes_no
 
 export def "install for-windows" [] {
@@ -83,7 +84,7 @@ export def "install rust" [] {
 
   install cargo-binstall
 
-  let cargo_pkgs = [ tealdeer bat broot bob-nvim diskonaut nu pueue bottom ouch pgen xh mprocs ]
+  let cargo_pkgs = [ tealdeer bat broot bob-nvim diskonaut nu pueue bottom ouch pgen xh mprocs grype trippy]
   # py-spy
   echo $"cargo will install: ($cargo_pkgs | path join ' ')"
   cargo binstall -y ...$cargo_pkgs
