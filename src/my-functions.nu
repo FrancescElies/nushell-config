@@ -169,3 +169,9 @@ export def "youtube download-mp3" [url: string] {
 export def "rsync" [source: path, destination: path] {
   ^rsync -rtcvP --update $source $destination
 }
+
+export def "myip" [] {
+  curl https://ipinfo.io
+  # http get https://api.ipify.org
+  # http get https://api6.ipify.org
+}
