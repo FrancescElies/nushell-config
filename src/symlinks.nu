@@ -1,25 +1,28 @@
 # Create a symlink
 export def symlink [
     existing: path   # The existing file
-    link_name: path  # The name of the symlink
+    new_link_name: path  # The name of the symlink
     --force(-f)     # if target exists moves it to
 ] {
+    echo $"(ansi purple_bold)Creating symlink(ansi reset) ($existing) --> ($new_link_name)"
     let existing = ($existing | path expand --strict | path split | path join)
-    let $link_name = ($link_name | path expand --strict --no-symlink | path split | path join)
-    echo $"(ansi purple_bold)Creating symlink(ansi reset) ($existing) --> ($link_name)"
+    let $new_link_name = ($new_link_name | path expand --strict --no-symlink | path split | path join)
 
-    if ($force and ($link_name | path exists)) { 
-       echo $"Moving ($link_name) to trash"
-       rm --trash --recursive $link_name
+    if ($force and ($new_link_name | path exists)) { 
+       echo $"Moving ($new_link_name) to trash"
+       rm --trash --recursive $new_link_name
     }
 
     if $nu.os-info.family == 'windows' {
         if ($existing | path type) == 'dir' {
-            mklink /D $link_name $existing
+            echo $"mklink dir ($new_link_name)"
+            mklink /D $new_link_name $existing
         } else {
-            mklink $link_name $existing
+            echo $"mklink ($new_link_name)"
+            mklink $new_link_name $existing
         }
     } else {
-        ln -s $existing $link_name | ignore
+        echo $"ln ($new_link_name)"
+        ln -s $existing $new_link_name | ignore
     }
 }

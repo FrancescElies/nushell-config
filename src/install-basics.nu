@@ -17,7 +17,29 @@ export def "install for-mac" [] {
  try { brew install --cask wezterm }
 }
 
-export def "install for-debian" [] {
+export def "install wezterm for-debian" [] {
+  let desktop_entry = "
+[Desktop Entry]
+Type=Application
+Encoding=UTF-8
+Name=Wezterm
+Comment=Wezterm
+Icon=~/src/nushell-config/src/wezterm.svg
+Exec=~/bin/wezterm
+Terminal=false
+Categories=Terminal;
+"
+  mkdir ~/.local/share/applications
+  $desktop_entry | save -f ~/.local/share/applications/wezterm.desktop
+  # https://wezfurlong.org/wezterm/install/linux.html#__tabbed_1_2
+  mkdir ~/bin
+  cd ~/bin
+  wget https://github.com/wez/wezterm/releases/download/20240203-110809-5046fc22/WezTerm-20240203-110809-5046fc22-Ubuntu20.04.AppImage
+  mv WezTerm-20240203-110809-5046fc22-Ubuntu20.04.AppImage wezterm
+  chmod +x wezterm
+  
+}
+export def "install pkgs for-debian" [] {
   echo "Easy scrollable window tiling: https://github.com/paperwm/PaperWM"
 
   let debian_pkgs = [
@@ -32,13 +54,6 @@ export def "install for-debian" [] {
   
   echo $"apt will install: ($debian_pkgs | path join ' ')"
   sudo apt install -y ...$debian_pkgs
-
-  # https://wezfurlong.org/wezterm/install/linux.html#__tabbed_1_2
-  mkdir ~/bin
-  cd ~/bin
-  wget https://github.com/wez/wezterm/releases/download/20240203-110809-5046fc22/WezTerm-20240203-110809-5046fc22-Ubuntu20.04.AppImage
-  mv WezTerm-20240203-110809-5046fc22-Ubuntu20.04.AppImage wezterm
-  chmod +x wezterm
 }
 
 # https://github.com/cargo-bins/cargo-binstall?tab=readme-ov-file#manually
