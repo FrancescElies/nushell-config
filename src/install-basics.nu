@@ -8,6 +8,7 @@ export def "install for-windows" [] {
   try { winget install --silent --id GitHub.GitHubDesktop }
   try { winget install --silent --id wez.wezterm }
   try { winget install --silent --id Microsoft.AzureCLI }
+  try { winget install --silent --id gerardog.gsudo }
 }
 
 export def "install for-mac" [] {
