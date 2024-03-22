@@ -2,6 +2,7 @@
 use utils.nu ask_yes_no
 
 export def "install for-windows" [] {
+  echo "window manager https://github.com/LGUG2Z/komorebi"
   # winget upgrade --slient --all
   try { winget install --silent --id Git.Git }
   try { winget install --silent --id GitHub.cli  }
@@ -17,6 +18,8 @@ export def "install for-mac" [] {
 }
 
 export def "install for-debian" [] {
+  echo "Easy scrollable window tiling: https://github.com/paperwm/PaperWM"
+
   let debian_pkgs = [
     build-essential clang-16 cmake golang nodejs npm
     curl fail2ban rsync vim vlc wget restic
