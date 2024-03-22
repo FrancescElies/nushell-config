@@ -47,7 +47,7 @@ export def --env "gwstart" [
   }
   cd $path
   git pull --set-upstream $upstream $branch
-  gl5
+  gl
 }
 
 # git worktree remove
