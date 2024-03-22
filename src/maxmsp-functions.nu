@@ -51,6 +51,15 @@ export def --env "maxmsp packages" [] {
   br
 }
 
+export def "maxmsp download-installers" [] {
+  let dir = '~/src/work/installers-exe'
+  mkdir $dir
+  cd $dir
+  if not ("Max862_240319.zip" | path exists) { wget https://downloads.cdn.cycling74.com/max8/Max862_240319.zip }
+  if not ("Max833_221006.zip" | path exists) { wget https://downloads.cdn.cycling74.com/max8/Max833_221006.zip }
+  
+}
+
 # greps for something max related in all known locations where something interesting might be found
 export def "maxmsp grep" [pattern: string] {
   let locations = [
