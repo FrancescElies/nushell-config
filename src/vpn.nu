@@ -5,13 +5,13 @@
 # sudo systemctl restart/start/stop wg-quick@wg0
 # sudo journalctl -xeu wg-quick@wg0.service
 
-# Put private key in /et/wireguard/wg0.conf
+# Put private key in /et/wireguard/wg-xx.conf
 # wg genkey | save private
 # open private
 # open private | wg pubkey
 
 # Config file needed for these functions to work
-# /etc/wireguard/wg0.conf
+# /etc/wireguard/wg-xx.conf
 #
 # [Interface]
 # # To get pubkey save privatekey in file and run `open private | wg pubkey`
@@ -26,7 +26,8 @@ use utils.nu echo_purple
 
 export module container { 
     export def up [
-      addr: string = "10.14.0.2/16",
+      --addr: string = "10.14.0.2/16",
+	  --conf: path = /etc/wireguard/wg-ch.conf
     ] {
 
         echo_purple create netns called container
@@ -37,7 +38,7 @@ export module container {
 
         # needs to be done before moving wg0 to container otherwise dns resolution won't work
         echo_purple setconf wg0
-        sudo wg setconf wg0 /etc/wireguard/wg0.conf
+        sudo wg setconf wg0 $conf
 
         echo_purple move it to container netns
         sudo ip link set wg0 netns container
@@ -74,9 +75,10 @@ export module route-all-traffic {
 
     # ensures all traffic goes through vpn
     export def up [
-      iface_eth: string = "eno1",
-      iface_wlan: string = "wlp2s0",
-      addr: string = "10.14.0.2/16",
+      --iface_eth: string = "eno1",
+      --iface_wlan: string = "wlp2s0",
+      --addr: string = "10.14.0.2/16",
+	  --conf: path = /etc/wireguard/wg-ch.conf
     ] {
         echo_purple "killing wpa_supplicant & dhcpd"
         try { sudo killall wpa_supplicant dhcpcd }
@@ -92,7 +94,7 @@ export module route-all-traffic {
         sudo ip -n physical link set wg0 netns 1
 
         echo_purple "configuring wg0"
-        sudo wg setconf wg0 /etc/wireguard/wg0.conf
+        sudo wg setconf wg0 $conf
         sudo ip addr add $addr dev wg0
 
         echo_purple $"moving ($iface_eth) to netns"
