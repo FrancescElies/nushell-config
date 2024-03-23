@@ -159,10 +159,17 @@ export def lldbb-attach-windows-process [processid: int] {
   }
 }
 
-export def "youtube download-mp3" [url: string] {
+export def "youtube download" [
+  url: string
+  --audio-only     #
+] {
    let yt_dlp = "~/bin/yt-dlp" | path expand
    if not ($yt_dlp | path exists) { http get https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp | save $yt_dlp }
-   python $yt_dlp -x --audio-format mp3 $url
+   if $audio_only {
+     python $yt_dlp -x --audio-format mp3 $url
+   } else {
+     python $yt_dlp $url
+   }
 }
 
 # more robust rsync (works with FAT usbs too) :(-c) checksum, (-r) recursive, (-t) preserve modification times, (-P) keep partially transferred files and show progress
