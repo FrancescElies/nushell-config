@@ -24,8 +24,8 @@ Type=Application
 Encoding=UTF-8
 Name=Wezterm
 Comment=Wezterm
-Icon=~/src/nushell-config/src/wezterm.svg
-Exec=~/bin/wezterm
+Icon=/home/cesc/src/nushell-config/src/wezterm.svg
+Exec=/home/cesc/bin/wezterm
 Terminal=false
 Categories=Terminal;
 "
