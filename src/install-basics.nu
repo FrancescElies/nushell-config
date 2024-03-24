@@ -27,19 +27,30 @@ export def "install custom-pkgs for-debian" [] {
   | each { |it| symlink $it ("~/.local/share/applications" | path join ($it | path basename))}
   )
 
-  
-  # TODO: dowload localsend
-  # TODO: checksums for localsend and wezterm
-
-  $desktop_entry | save -f ~/.local/share/applications/wezterm.desktop
-  # https://wezfurlong.org/wezterm/install/linux.html#__tabbed_1_2
   mkdir ~/bin
   cd ~/bin
-  wget https://github.com/wez/wezterm/releases/download/20240203-110809-5046fc22/WezTerm-20240203-110809-5046fc22-Ubuntu20.04.AppImage
-  mv WezTerm-20240203-110809-5046fc22-Ubuntu20.04.AppImage wezterm
+
+  # NOTE: dowload localsend
+  wget https://github.com/localsend/localsend/releases/download/v1.14.0/LocalSend-1.14.0-linux-x86-64.AppImage
+  mv LocalSend-1.14.0-linux-x86-64.AppImage localsend
+  let sha256 = (open localsend | hash sha256)
+  if ($sha256 != "e89e885a1de2122dbe5b2b7ec439dca00accee1e63237d4685946a48a35ca8d2") { 
+    rm localsend 
+    error make {msg: "localsend hash missmatch"}
+  }
+
+  # NOTE: dowload wezterm
+  # https://wezfurlong.org/wezterm/install/linux.html#__tabbed_1_2
+  wget https://github.com/wez/wezterm/releases/download/20240203-110809-5046fc22/wezterm-20240203-110809-5046fc22-ubuntu20.04.appimage
+  mv wezterm-20240203-110809-5046fc22-ubuntu20.04.appimage wezterm
+  let sha256 = (open wezterm | hash sha256)
+  if ($sha256 != "34010a07076d2272c4d4f94b5e0dae608a679599e8d729446323f88f956c60f0") { 
+    rm wezterm 
+    error make {msg: "wezterm hash missmatch"}
+  }
   chmod +x wezterm
-  
 }
+
 export def "install pkgs for-debian" [] {
   echo "Easy scrollable window tiling: https://github.com/paperwm/PaperWM"
 
