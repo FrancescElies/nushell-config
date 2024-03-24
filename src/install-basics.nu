@@ -1,5 +1,6 @@
 # NOTE: other easy installations https://webinstall.dev/trip/
-use utils.nu ask_yes_no
+use utils.nu ask_yes_no 
+use symlinks.nu symlink
 
 export def "install for-windows" [] {
   echo "window manager https://github.com/LGUG2Z/komorebi"
@@ -17,19 +18,19 @@ export def "install for-mac" [] {
  try { brew install --cask wezterm }
 }
 
-export def "install wezterm for-debian" [] {
-  let desktop_entry = "
-[Desktop Entry]
-Type=Application
-Encoding=UTF-8
-Name=Wezterm
-Comment=Wezterm
-Icon=/home/cesc/src/nushell-config/src/wezterm.svg
-Exec=/home/cesc/bin/wezterm
-Terminal=false
-Categories=Terminal;
-"
+export def "install custom-pkgs for-debian" [] {
   mkdir ~/.local/share/applications
+  
+  # gnome apps
+  (ls ~/src/nushell-config/src/linux/gnome-apps/*.desktop 
+  | get name 
+  | each { |it| symlink $it ("~/.local/share/applications" | path join ($it | path basename))}
+  )
+
+  
+  # TODO: dowload localsend
+  # TODO: checksums for localsend and wezterm
+
   $desktop_entry | save -f ~/.local/share/applications/wezterm.desktop
   # https://wezfurlong.org/wezterm/install/linux.html#__tabbed_1_2
   mkdir ~/bin

@@ -28,7 +28,7 @@ export def all [] {
         _ => {
             # debian
             if ("/etc/debian_version" | path exists) { 
-                if (ask_yes_no "Install wezterm?") { install wezterm for-debian }
+                if (ask_yes_no "Install custom pkgs (wezterm, localsend)?") { install custom-pkgs for-debian }
                 if (ask_yes_no "Install apt packages?") { install pkgs for-debian }
             }
         },

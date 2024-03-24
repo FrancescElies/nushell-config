@@ -6,7 +6,7 @@ export def symlink [
 ] {
     echo $"(ansi purple_bold)Creating symlink(ansi reset) ($existing) --> ($new_link_name)"
     let existing = ($existing | path expand --strict | path split | path join)
-    let $new_link_name = ($new_link_name | path expand --strict --no-symlink | path split | path join)
+    let $new_link_name = ($new_link_name | path expand --no-symlink | path split | path join)
 
     if ($force and ($new_link_name | path exists)) { 
        echo $"Moving ($new_link_name) to trash"
