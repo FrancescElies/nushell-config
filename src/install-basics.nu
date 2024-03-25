@@ -1,4 +1,6 @@
 # NOTE: other easy installations https://webinstall.dev/trip/
+
+# fast reverse proxy https://github.com/fatedier/frp?tab=readme-ov-file#p2p-mode
 use utils.nu ask_yes_no 
 use symlinks.nu symlink
 

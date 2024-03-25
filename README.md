@@ -1,6 +1,8 @@
 # nushell-config
 
 ## Install
+Install just https://github.com/casey/just?tab=readme-ov-file#packages
+
 ```
 mkdir ~/src
 git clone https://github.com/FrancescElies/nushell-config ~/src/nushell-config
