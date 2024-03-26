@@ -118,7 +118,11 @@ export def "install rust" [] {
 
   install cargo-binstall
 
-  let cargo_pkgs = [ tealdeer bat broot bob-nvim diskonaut nu pueue bottom ouch pgen xh mprocs trippy miniserve rustscan]
+  let cargo_pkgs = [ 
+    kondo tealdeer bat broot bob-nvim diskonaut 
+    nu pueue bottom ouch pgen mprocs 
+    trippy miniserve rustscan xh 
+  ]
   # py-spy
   echo $"cargo will install: ($cargo_pkgs | path join ' ')"
   cargo binstall -y ...$cargo_pkgs
