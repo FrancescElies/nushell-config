@@ -99,6 +99,7 @@ use std "path add"
 
 match $nu.os-info.name { 
     "windows" => { 
+        $env.HOME = ('~' | path expand)
         path add '~/AppData/Local/bob/nvim-bin'
         path add '~/AppData/Roaming/Python/Python312/Scripts'
         path add '~/AppData/Roaming/Python/Scripts'
