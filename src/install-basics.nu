@@ -5,9 +5,12 @@ use utils.nu ask_yes_no
 use symlinks.nu symlink
 
 export def "install for-windows" [] {
+
   echo "window manager https://github.com/LGUG2Z/komorebi"
   echo "sysinternals https://learn.microsoft.com/en-us/sysinternals/downloads/"
   # winget upgrade --slient --all
+  try { winget install --silent --id bmatzelle.Gow }
+  try { winget install --silent --id VideoLAN.VLC }
   try { winget install --silent --id Git.Git }
   try { winget install --silent --id GitHub.cli  }
   try { winget install --silent --id GitHub.GitHubDesktop }
