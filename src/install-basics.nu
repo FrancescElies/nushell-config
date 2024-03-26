@@ -109,7 +109,7 @@ export def "install python" [] {
   require-virtualenv = true
   [uninstall]
   require-virtualenv = true
-  " | save ~/.pip/pip.conf
+  " | save -f ~/.pip/pip.conf
 }
 
 export def "install rust" [] {
