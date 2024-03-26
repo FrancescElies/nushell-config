@@ -11,6 +11,7 @@ export def "install for-windows" [] {
   # winget upgrade --slient --all
   try { winget install --silent --id bmatzelle.Gow }
   try { winget install --silent --id VideoLAN.VLC }
+  try { winget install --silent --id GitHub.cli }
   try { winget install --silent --id Git.Git }
   try { winget install --silent --id GitHub.cli  }
   try { winget install --silent --id GitHub.GitHubDesktop }
@@ -137,7 +138,7 @@ export def "install rust" [] {
 }
 
 export def "install rust-devtools" [] {
-  let cargo_pkgs = [ amber ast-grep fastmod tokei just 
+  let cargo_pkgs = [ amber ast-grep fastmod tokei just secure_remove
                      git-delta difftastic fnm huniq mdbook 
                      bacon checkexec watchexec-cli hwatch ]
   # py-spy
