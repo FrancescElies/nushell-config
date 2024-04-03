@@ -116,7 +116,7 @@ match $nu.os-info.name {
         path add '/usr/local/go/bin'
         path add '/var/lib/flatpak/exports/share'
         path add '~/.local/share/bob/nvim-bin'	
-        path add "~/.rye/shims")
+        path add "~/.rye/shims"
         path add '~/.local/share/flatpak/exports/share'	
     },
     _ => { $env.PATH = $env.PATH },

@@ -124,7 +124,7 @@ export def "install rust" [] {
 
   let cargo_pkgs = [ 
     kondo tealdeer bat broot bob-nvim diskonaut 
-    nu pueue bottom ouch pgen mprocs 
+    nu pueue bottom ouch pgen mprocs fclones
     trippy miniserve rustscan xh 
   ]
   # py-spy
