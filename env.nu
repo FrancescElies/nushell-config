@@ -124,9 +124,9 @@ match $nu.os-info.name {
 
 # common paths
 path add '~/src/radare2/prefix/bin'
-path add '~/bin'
 path add '~/go/bin'
 path add '~/.cargo/bin'
+path add '~/bin'
 mkdir ~/bin/dummy/bin
 # add all ~/bin/* to PATH
 path add (ls ~/bin | where type == dir | get name)
