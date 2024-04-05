@@ -9,15 +9,17 @@ export def "install for-windows" [] {
   echo "window manager https://github.com/LGUG2Z/komorebi"
   echo "sysinternals https://learn.microsoft.com/en-us/sysinternals/downloads/"
   # winget upgrade --slient --all
-  try { winget install --silent --id bmatzelle.Gow }
-  try { winget install --silent --id VideoLAN.VLC }
-  try { winget install --silent --id GitHub.cli }
-  try { winget install --silent --id Git.Git }
-  try { winget install --silent --id GitHub.cli  }
-  try { winget install --silent --id GitHub.GitHubDesktop }
-  try { winget install --silent --id wez.wezterm }
-  try { winget install --silent --id Microsoft.AzureCLI }
-  try { winget install --silent --id gerardog.gsudo }
+
+  [ 
+    wez.wezterm bmatzelle.Gow gerardog.gsudo 
+    VideoLAN.VLC GitHub.cli SumatraPDF.SumatraPDF 
+    Python.Python.3.12 junegunn.fzf Nushell.Nushell Rustlang.Rustup
+    Git.Git GitHub.cli  GitHub.GitHubDesktop GitHub.GitLFS Microsoft.AzureCLI 
+    OBSProject.OBSStudio Neovide.Neovide GIMP.GIMP 7zip.7zip Audacity.Audacity
+  ] | each {
+    try { winget install --silent --id $in }
+  }
+  
 }
 
 export def "install for-mac" [] {
