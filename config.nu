@@ -297,15 +297,21 @@ $env.config = {
                     code: "overlay use env.nu"
                 }
                 {|before, after| ( if ((ls | length) < 20) { print (lsg) } else { print "folder has +20 files" } ) }
+                # windows activate venv
                 {
-                    condition: {|before, after| ($after | path join "venv/bin/activate.nu" | path exists) }
-                    code: 'overlay use venv/bin/activate.nu'
+                    condition: {|before, after| ($after | path join ".venv/Scripts/activate.nu" | path exists) }
+                    code: 'overlay use .venv/Scripts/activate.nu'
+                }
+                # unix like activate venv
+                {
+                    condition: {|before, after| ($after | path join ".venv/bin/activate.nu" | path exists) }
+                    code: 'overlay use .venv/bin/activate.nu'
                 }
                 {
                     condition: {|before, after| [.nvmrc .node-version] | path exists | any { |it| $it }}
                     code: {|before, after| if ('FNM_DIR' in $env) { fnm use } }
                 }
-        ]
+            ]
         }
         display_output: "if (term size).columns >= 100 { table -e } else { table }" # run to display the output of a pipeline
         command_not_found: { null } # return an error message when a command is not found
