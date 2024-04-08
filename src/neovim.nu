@@ -47,7 +47,7 @@ export def "nvim clean-swap" [] {
     }
 }
 
-export def "nvim pr-files" [] { nvim (pr files) }
+export def "nvim pr-files" [] { nvim ...(pr files) }
 export def "nvim server" [] { nvim --listen /tmp/nvim.pipe --headless }
 export def "nvim client" [...file: path] { nvim --remote --server ~/.cache/nvim/server.pipe ...$file }
 
