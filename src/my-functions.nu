@@ -58,37 +58,6 @@ export def `7zmax` [
   }
 }
 
-#translate text using mymemmory api
-export def trans [
-  ...search:string  #search query]
-  --from:string     #from which language you are translating (default english)
-  --to:string       #to which language you are translating (default spanish)
-  #
-  #Use ISO standar names for the languages, for example:
-  #english: en-US
-  #spanish: es-ES
-  #italian: it-IT
-  #swedish: sv-SV
-  #
-  #More in: https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
-] {
-
-  if ($search | is-empty) {
-    echo "no search query provided"
-  } else {
-    let key = "api_kei"
-    let user = "user_email"
-
-    let from = if ($from | is-empty) {"en-US"} else {$from}
-    let to = if ($to | is-empty) {"es-ES"} else {$to}
-
-    let to_translate = ($search | str join "%20")
-
-    let url = $"https://api.mymemory.translated.net/get?q=($to_translate)&langpair=($from)%7C($to)&of=json&key=($key)&de=($user)"
-
-    http get $url | get responseData | get translatedText
-  }
-}
 # convert SVGs to PDFs
 export def svgs-to-pdfs [path: path] {
   for file in (ls *svg) {
