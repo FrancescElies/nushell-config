@@ -16,7 +16,7 @@ export def "install for-windows" [] {
     BurntSushi.ripgrep.MSVC sharkdp.fd junegunn.fzf Nushell.Nushell 
     Git.Git GitHub.cli  GitHub.GitHubDesktop GitHub.GitLFS Microsoft.AzureCLI 
     Python.Python.3.12 GoLang.Go Rustlang.Rustup
-    mesonbuild.meson Ninja-build.Ninja
+    mesonbuild.meson Ninja-build.Ninja Kitware.CMake
     OBSProject.OBSStudio Neovide.Neovide GIMP.GIMP 7zip.7zip Audacity.Audacity
   ] | each {
     try { winget install --silent --id $in }
