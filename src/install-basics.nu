@@ -15,6 +15,7 @@ export def "install for-windows" [] {
     VideoLAN.VLC GitHub.cli SumatraPDF.SumatraPDF 
     Python.Python.3.12 junegunn.fzf Nushell.Nushell Rustlang.Rustup
     Git.Git GitHub.cli  GitHub.GitHubDesktop GitHub.GitLFS Microsoft.AzureCLI 
+    mesonbuild.meson Ninja-build.Ninja
     OBSProject.OBSStudio Neovide.Neovide GIMP.GIMP 7zip.7zip Audacity.Audacity
   ] | each {
     try { winget install --silent --id $in }
