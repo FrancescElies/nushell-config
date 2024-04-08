@@ -299,12 +299,12 @@ $env.config = {
                 {|before, after| ( if ((ls | length) < 20) { print (lsg) } else { print "folder has +20 files" } ) }
                 # windows activate venv
                 {
-                    condition: {|before, after| ($after | path join ".venv/Scripts/activate.nu" | path exists) }
+                    condition: {|before, after| ((not ('activate' in (overlay list))) and ($after | path join ".venv/Scripts/activate.nu" | path exists)) }
                     code: 'overlay use .venv/Scripts/activate.nu'
                 }
                 # unix like activate venv
                 {
-                    condition: {|before, after| ($after | path join ".venv/bin/activate.nu" | path exists) }
+                    condition: {|before, after| ((not ('activate' in (overlay list))) and ($after | path join ".venv/bin/activate.nu" | path exists)) }
                     code: 'overlay use .venv/bin/activate.nu'
                 }
                 {
