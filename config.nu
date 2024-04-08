@@ -311,6 +311,15 @@ $env.config = {
                     condition: {|before, after| [.nvmrc .node-version] | path exists | any { |it| $it }}
                     code: {|before, after| if ('FNM_DIR' in $env) { fnm use } }
                 }
+                # https://github.com/nushell/nu_scripts/blob/main/nu-hooks/nu-hooks/rusty-paths/rusty-paths.nu
+                {
+                    condition: {|_, after| ($after | path join 'Cargo.lock' | path exists) }
+                    code: {
+                        use std "path add"
+                        path add ($env.PWD | path join 'target/debug')
+                        path add ($env.PWD | path join 'target/release')
+                    }
+                }
             ]
         }
         display_output: "if (term size).columns >= 100 { table -e } else { table }" # run to display the output of a pipeline
