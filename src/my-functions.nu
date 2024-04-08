@@ -4,8 +4,6 @@ export def notes [] {
   broot .
 }
 
-# radare2
-export alias r2 = radare2
 # lazygit
 export alias lg = lazygit
 # extracts archives with different extensions
