@@ -2,7 +2,7 @@
 
 # Nushell Environment Config File
 #
-# version = "0.91.0"
+# version = "0.92.2"
 
 def create_left_prompt [] {
     let dir = match (do --ignore-shell-errors { $env.PWD | path relative-to $nu.home-path }) {
@@ -13,7 +13,10 @@ def create_left_prompt [] {
 
     let path_color = (if (is-admin) { ansi red_bold } else { ansi green_bold })
     let separator_color = (if (is-admin) { ansi light_red_bold } else { ansi light_green_bold })
-    let path_segment = $"($path_color)($dir)"
+    # show path
+    # let path_segment = $"($path_color)($dir)"
+    # don't show path
+    let path_segment = $"($path_color)()"
 
     $path_segment | str replace --all (char path_sep) $"($separator_color)(char path_sep)($path_color)"
 }

@@ -296,7 +296,11 @@ $env.config = {
                     ) }
                     code: "overlay use env.nu"
                 }
-                {|before, after| ( if ((ls | length) < 20) { print (lsg) } else { print "folder has +20 files" } ) }
+                {
+                    |before, after|  
+                        print (pwd);
+                        if ((ls | length) < 30) { print (lsg) } else { print "folder has +30 files" } 
+                }
                 # windows activate venv
                 {
                     condition: {|before, after| ((not ('activate' in (overlay list))) and ($after | path join ".venv/Scripts/activate.nu" | path exists)) }
