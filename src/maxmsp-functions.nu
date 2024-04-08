@@ -27,6 +27,12 @@ export def --env "maxmsp dumps" [] {
   br
 }
 
+# opens Max examples
+export def --env "maxmsp examples" [] {
+  cd `~/src/oss/max-sdk/source`
+  br 
+}
+
 # opens Max's api
 export def "maxmsp api" [] {
   if not ("~/src/oss/max-sdk/source/max-sdk-base" | path exists) { 
