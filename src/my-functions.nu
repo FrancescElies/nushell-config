@@ -1,5 +1,9 @@
-# todos
-export alias todos = br ~/zettelkasten
+# my notes
+export def notes [] {
+  cd ~/src/zettelkasten
+  broot .
+}
+
 # radare2
 export alias r2 = radare2
 # lazygit
