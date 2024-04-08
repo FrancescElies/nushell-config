@@ -34,11 +34,12 @@ export def ymd [] { (date now | format date %Y-%m-%d) }
 # date string DD-MM-YYYY
 export def dmy [] { (date now | format date %d-%m-%Y) }
 
-# create directory and cd into it.
-export def --env md [dir] {
+# create directory and cd into it (alias md)
+export def --env mkdircd [dir] {
   mkdir $dir
   cd $dir
 }
+alias md = mkdircd
 
 #compress to 7z using max compression
 export def `7zmax` [
