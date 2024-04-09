@@ -26,8 +26,8 @@ export def "install for-windows" [] {
 }
 
 export def "install for-mac" [] {
- try { brew install gh vlc git neovim restic fd-find ripgrep }
- try { brew install --cask wezterm }
+ try { brew install gh vlc git neovim restic fd-find ripgrep lazygit cmake fzf meson ninja }
+ try { brew install --cask wezterm gimp vlc obs neovide neovim nushell }
 }
 
 export def "install custom-pkgs for-debian" [] {
