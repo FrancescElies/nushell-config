@@ -12,9 +12,10 @@ export def "install for-windows" [] {
 
   [ 
     wez.wezterm bmatzelle.Gow gerardog.gsudo 
-    VideoLAN.VLC GitHub.cli SumatraPDF.SumatraPDF 
+    VideoLAN.VLC SumatraPDF.SumatraPDF 
     BurntSushi.ripgrep.MSVC sharkdp.fd junegunn.fzf Nushell.Nushell 
-    Git.Git GitHub.cli  GitHub.GitHubDesktop GitHub.GitLFS Microsoft.AzureCLI 
+    JesseDuffield.lazygit Git.Git GitHub.GitHubDesktop GitHub.GitLFS 
+    Microsoft.AzureCLI GitHub.cli
     Python.Python.3.12 GoLang.Go Rustlang.Rustup
     mesonbuild.meson Ninja-build.Ninja Kitware.CMake
     OBSProject.OBSStudio Neovide.Neovide GIMP.GIMP 7zip.7zip Audacity.Audacity
