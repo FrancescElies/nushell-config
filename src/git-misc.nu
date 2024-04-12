@@ -75,13 +75,14 @@ export def "git lfs-fix-everything" [] {
 }
 export alias glfsfixeverything = git lfs-fix-everything
 
-# https://stackoverflow.com/questions/46704572/git-error-encountered-7-files-that-should-have-been-pointers-but-werent
-# This "migrates" files to git lfs which should be in lfs as per .gitattributes, but aren't at the moment (which is the reason for your error message).
+# This "migrates" files to git lfs which should be in lfs as per .gitattributes, 
+# but aren't at the moment (which is the reason for your error message).
 #
 # --no-rewrite prevents git from applying this to older commits, it creates a single new commit instead.
 #
 # Use -m "commitmessage" to set a commitmessage for that commit.
-export def git-lfs-fix [...paths: path] {
-  git lfs migrate import --no-rewrite $paths
+# https://stackoverflow.com/questions/46704572/git-error-encountered-7-files-that-should-have-been-pointers-but-werent
+export def "git lfs-fix" [...paths: path] {
+  git lfs migrate import --no-rewrite ...$paths
 }
 export alias glfsfix = git lfs-fix

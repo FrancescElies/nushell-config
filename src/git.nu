@@ -81,7 +81,7 @@ export def "git ignore-edit" [] {
     nvim $"(git rev-parse --show-toplevel)/.gitignore"
 }
 
-export def "git difft" [...rest] {
+export def --wrapped "git difft" [...rest] {
     with-env [GIT_EXTERNAL_DIFF 'difft'] { git diff ...$rest }
 }
 
