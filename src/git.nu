@@ -90,8 +90,6 @@ export def "git branches" [first: int = 5] { git branch --sort=-committerdate | 
 # aliases
 # -------
 export alias gbb = git branches
-# open git ui
-export alias gui = lazygit
 # git difft
 export alias gd = git difft
 # git add 
