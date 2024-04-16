@@ -15,7 +15,7 @@ export def "install for-windows" [] {
     VideoLAN.VLC SumatraPDF.SumatraPDF 
     BurntSushi.ripgrep.MSVC sharkdp.fd junegunn.fzf Nushell.Nushell 
     JesseDuffield.lazygit Git.Git GitHub.GitHubDesktop GitHub.GitLFS 
-    Microsoft.AzureCLI GitHub.cli
+    Microsoft.AzureCLI GitHub.cli DBBrowserForSQLite.DBBrowserForSQLite
     Python.Python.3.12 GoLang.Go Rustlang.Rustup
     mesonbuild.meson Ninja-build.Ninja Kitware.CMake Graphviz.Graphviz
     OBSProject.OBSStudio Neovide.Neovide GIMP.GIMP 7zip.7zip Audacity.Audacity
