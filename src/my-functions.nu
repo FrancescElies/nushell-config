@@ -70,6 +70,14 @@ export def psn [name: string] { ps | find $name }
 #kill specified process in name
 export def killn [name: string] { ps | find $name | each {|x| kill -f $x.pid} }
 
+# print worth watching speakers
+export def speakers [] {
+  return {
+    python: "David Beazley, Raymond Hettinger, Hynek Schlawack" 
+    rust: "Jon Gjengset" 
+  }
+}
+
 export def clang-commands-json [] {
   if not ("~/src/clang-power-tools" | path exists) { 
     cd ~/src
