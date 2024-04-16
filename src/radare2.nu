@@ -2,6 +2,8 @@
 # Book: https://book.rada.re/
 # https://monosource.gitbooks.io/radare2-explorations/content/introduction.html
 
+# https://github.com/capstone-engine/capstone?tab=readme-ov-file
+
 # radare2
 export alias r2 = radare2
 
