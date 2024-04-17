@@ -41,7 +41,7 @@ export def "git my-defaults" [] {
   git config --global receive.fsckObjects true
 
   # REuse REordered REsolution, tells git to remember conflicts so if it sees them again he won't ask about it.
-  git config --global rerere.enabted true
+  git config --global rerere.enabled true
   git config --global branch.sort -committerdate
   # git config gpg.format ssh
   # git config user.signingkey ~/.ssh/id_ed25519
