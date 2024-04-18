@@ -3,13 +3,18 @@
 ## Install
 Install just https://github.com/casey/just?tab=readme-ov-file#packages
 
-```
+```nu
 mkdir ~/src
 git clone https://github.com/FrancescElies/nushell-config ~/src/nushell-config
 cd ~/src/nushell-config
 nu install.nu
 ```
 
+Few scripts need python (optional)
+```nu
+uv venv
+uv pip sync requirements.txt
+```
 
 # Rust
 Doesn't belong here but who cares

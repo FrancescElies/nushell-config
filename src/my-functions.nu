@@ -9,7 +9,11 @@ export alias lg = lazygit
 # extracts archives with different extensions
 export alias extract = ouch decompress
 
-export alias time-today = python ~/src/nushell-config/time_spent_today.py
+export def time-today [] {
+  overlay use ~/src/nushell-config/.venv/Scripts/activate.nu
+  python ~/src/nushell-config/src/time_spent_today.py
+}
+
 
 # compact ls 
 export def lsg [] { ls | sort-by type name -i | grid -c | str trim }
