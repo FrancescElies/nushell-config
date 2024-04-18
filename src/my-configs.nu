@@ -22,3 +22,8 @@ export def "config broot" [] {
   }
 }
 
+export def "you-dont-know-js" [] {
+  # https://github.com/francescelies/You-Dont-Know-JS
+  cd ~/src/oss/You-Dont-Know-JS
+  just open
+}
