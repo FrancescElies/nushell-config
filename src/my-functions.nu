@@ -9,6 +9,15 @@ export alias lg = lazygit
 # extracts archives with different extensions
 export alias extract = ouch decompress
 
+# terrastruct/d2 diagram helper
+# echo 'x -> y -> z' | save -f diagram.d2
+export def diagram [name: path] {
+  let filename = $"($name).d2"
+  # wezterm cli split-pane --down --percent 30 -- watchexec -w $filename d2 $filename
+  wezterm cli split-pane --bottom --percent 30 -- d2 --watch $filename
+  nvim $filename
+}
+
 export def time-today [] {
   overlay use ~/src/nushell-config/.venv/Scripts/activate.nu
   python ~/src/nushell-config/src/time_spent_today.py
