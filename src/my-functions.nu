@@ -19,8 +19,7 @@ export def diagram [name: path] {
 }
 
 export def time-today [] {
-  overlay use ~/src/nushell-config/.venv/Scripts/activate.nu
-  python ~/src/nushell-config/src/time_spent_today.py
+  ~/src/nushell-config/.venv/bin/python ~/src/nushell-config/src/time_spent_today.py
 }
 
 
