@@ -2,10 +2,10 @@
 # https://github.com/nushell/nu_scripts/blob/main/sourced/update_hosts.nu
 
 def display_heads [old, new] {
-    echo "Current file:"
-    echo $old
-    echo "New file:"
-    echo $new
+    print "Current file:"
+    print $old
+    print "New file:"
+    print $new
     print ""
 }
 
@@ -33,7 +33,7 @@ export def update [
 
         display_heads $OLD_HEAD $TMP_HEAD
         if (not ((are_the_same $OLD_HEAD $TMP_HEAD) and (not $force))) {
-            echo "Do you want to update the /etc/hosts file? [Y/n]"
+            print "Do you want to update the /etc/hosts file? [Y/n]"
             let choice = (input)
             if $choice in ["" "Y" "y"] {
                 let TMP_FILE = if ($WHITELIST|is-empty) {
@@ -47,13 +47,13 @@ export def update [
                 $TMP_FILE | save /tmp/temphostsfile
                 if ($env.LAST_EXIT_CODE == 0) {
                     sudo mv /tmp/temphostsfile $OLD_FILE
-                    echo "Done!"
+                    print "Done!"
                 } else {
                     error make -u {msg: "Something went wrong while overwriting the /etc/hosts file"}
                 }
             }
         } else {
-            echo "No updates available."
+            print "No updates available."
         }
     } else {
         error make -u {msg: "Failed downloading the hosts file, try again."}

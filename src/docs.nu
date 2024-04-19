@@ -1,6 +1,6 @@
 export def download-python-docs [py_version: string] {
     let zipfile = 'python-' + $py_version + '-docs-text.zip'
-    echo $zipfile
+    print $zipfile
     if not ($zipfile | path exists) { 
       http get $'https://docs.python.org/3/archives/($zipfile)' | save $zipfile
       extract $zipfile

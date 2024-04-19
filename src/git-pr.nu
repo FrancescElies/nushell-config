@@ -48,10 +48,10 @@ export def "pr review-maxpats" [
   --target-branch: string = "origin/master"  # pr's target branch (normally main, master, ...)
   --dry-run
 ] {
-  echo $"target branch: ($target_branch)"
+  print $"target branch: ($target_branch)"
   let prfiles = (pr files --extension maxpat --target-branch $target_branch)
   if $dry_run {
-     echo $prfiles
+     print $prfiles
      return
   }
   let open_files = $prfiles | each { |x| (
@@ -69,12 +69,12 @@ export def "pr review-maxpats" [
     | filter {|x| $x.extension == "maxpat"} 
     | path join
   )
-  echo "untracked maxpats:"
-  echo $untracked_maxpats
+  print "untracked maxpats:"
+  print $untracked_maxpats
 
   if (input "remove untracked maxpat files (y/n)?") == "y" {  
     $untracked_maxpats | each { || rm $in }
   } 
-  echo "Once done cleanup: rm tmp_*maxpat"
+  print "Once done cleanup: rm tmp_*maxpat"
 
 }

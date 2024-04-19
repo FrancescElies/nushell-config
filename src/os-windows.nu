@@ -8,7 +8,7 @@ export def "msi silent-install" [msi_file: path] {
   # msiexec /i c:\path\to\package.msi /quiet /qn /norestart /log c:\path\to\install.log PROPERTY1=value1 PROPERTY2=value2
   let $logfile = $"($msi_file | path basename).XXXX.log"
   let $logfile = (mktemp $logfile)
-  echo $"Installing ($msi_file) see log at ($logfile)"
+  print $"Installing ($msi_file) see log at ($logfile)"
   msiexec.exe /i $msi_file /QN /L*V $logfile
 }
 
@@ -25,5 +25,5 @@ export def "msi uninstall" [
   pkg: string@"nu-complete installed-pkgs"  # call `msi refresh-list` if you feel not up to date
 ] {
   # example
-  echo wmic Product Where "Name='Max 8 (64-bit)'" Call Uninstall /NoInteractive
+  print wmic Product Where "Name='Max 8 (64-bit)'" Call Uninstall /NoInteractive
 }

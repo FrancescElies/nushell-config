@@ -6,8 +6,8 @@ use symlinks.nu symlink
 
 export def "install for-windows" [] {
 
-  echo "window manager https://github.com/LGUG2Z/komorebi"
-  echo "sysinternals https://learn.microsoft.com/en-us/sysinternals/downloads/"
+  print "window manager https://github.com/LGUG2Z/komorebi"
+  print "sysinternals https://learn.microsoft.com/en-us/sysinternals/downloads/"
   # winget upgrade --slient --all
 
   [ 
@@ -65,7 +65,7 @@ export def "install custom-pkgs for-debian" [] {
 }
 
 export def "install pkgs for-debian" [] {
-  echo "Easy scrollable window tiling: https://github.com/paperwm/PaperWM"
+  print "Easy scrollable window tiling: https://github.com/paperwm/PaperWM"
 
   let debian_pkgs = [
     build-essential clang-16 cmake golang nodejs npm
@@ -77,7 +77,7 @@ export def "install pkgs for-debian" [] {
     python3.11-full python3-pipdeptree python3-pip
   ]
   
-  echo $"apt will install: ($debian_pkgs | path join ' ')"
+  print $"apt will install: ($debian_pkgs | path join ' ')"
   sudo apt install -y ...$debian_pkgs
 }
 
@@ -134,7 +134,7 @@ export def "install rust" [] {
     trippy miniserve rustscan xh cargo-update
   ]
   # py-spy
-  echo $"cargo will install: ($cargo_pkgs | path join ' ')"
+  print $"cargo will install: ($cargo_pkgs | path join ' ')"
   cargo binstall -y ...$cargo_pkgs
 
   bob use nightly
@@ -148,7 +148,7 @@ export def "install rust-devtools" [] {
                      git-delta difftastic fnm huniq mdbook 
                      bacon checkexec watchexec-cli hwatch ]
   # py-spy
-  echo $"cargo will install: ($cargo_pkgs | path join ' ')"
+  print $"cargo will install: ($cargo_pkgs | path join ' ')"
   cargo binstall -y ...$cargo_pkgs
 }
 

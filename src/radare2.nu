@@ -26,6 +26,6 @@ export def "rabin2 quick" [file: path, ] {
   rabin2 -R  $file | save -f relocs.txt
   rabin2 -e  $file | save -f entry_point.txt
 
-  echo "see output:"
+  print "see output:"
   ls $folder
 }

@@ -62,7 +62,7 @@ export def `7zmax` [
 ] {
 
   if ($rest | is-empty) {
-    echo "no files to compress specified"
+    print "no files to compress specified"
   } else {
      7z a -t7z -m0=lzma2 -mx=9 -ms=on -mmt=on $"($filename).7z" $rest
   }
