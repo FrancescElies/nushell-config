@@ -22,7 +22,7 @@
 # AllowedIPs = 0.0.0.0/0, ::/0
 # Endpoint = CCC.CCC.CCC.CCC:51820
 
-use utils.nu echo_purple
+use utils.nu print_purple
 
 export module container { 
     export def up [
@@ -30,34 +30,34 @@ export module container {
 	  --conf: path = /etc/wireguard/wg-ch.conf
     ] {
 
-        echo_purple create netns called container
+        print_purple create netns called container
         sudo ip netns add container
 
-        echo_purple create wireguard interface in init namespace
+        print_purple create wireguard interface in init namespace
         sudo ip link add wg0 type wireguard
 
         # needs to be done before moving wg0 to container otherwise dns resolution won't work
-        echo_purple setconf wg0
+        print_purple setconf wg0
         sudo wg setconf wg0 $conf
 
-        echo_purple move it to container netns
+        print_purple move it to container netns
         sudo ip link set wg0 netns container
 
-        echo_purple configure wg0
+        print_purple configure wg0
         sudo ip -n container addr add $addr dev wg0
 
-        echo_purple wg0 up
+        print_purple wg0 up
         sudo ip -n container link set wg0 up
 
-        echo_purple adding default route
+        print_purple adding default route
         sudo ip -n container route add default dev wg0
     }
 
     export def down [ ] {
-        echo_purple "delete wg0"
+        print_purple "delete wg0"
         try { sudo ip -n container link del wg0 }
 
-        echo_purple "removing container netns"
+        print_purple "removing container netns"
         try { sudo ip netns del container }
     }
 
@@ -80,44 +80,44 @@ export module route-all-traffic {
       --addr: string = "10.14.0.2/16",
 	  --conf: path = /etc/wireguard/wg-ch.conf
     ] {
-        echo_purple "killing wpa_supplicant & dhcpd"
+        print_purple "killing wpa_supplicant & dhcpd"
         try { sudo killall wpa_supplicant dhcpcd }
 
-        echo_purple "adding physical netns"
+        print_purple "adding physical netns"
         sudo ip netns add physical
 
-        echo_purple "creating wg0"
+        print_purple "creating wg0"
         # The birthplace is now the "physical" namespace, 
         # which means the wireguard ciphertext UDP sockets will be assigned to devices like eth0 and wlan0
         sudo ip -n physical link add wg0 type wireguard
         # We can now move it into the "init" (1) namespace and it will still remember its birthplace for the sockets.
         sudo ip -n physical link set wg0 netns 1
 
-        echo_purple "configuring wg0"
+        print_purple "configuring wg0"
         sudo wg setconf wg0 $conf
         sudo ip addr add $addr dev wg0
 
-        echo_purple $"moving ($iface_eth) to netns"
+        print_purple $"moving ($iface_eth) to netns"
         sudo ip link set $iface_eth down
         sudo ip link set $iface_eth netns physical
 
-        echo_purple $"bringing up ($iface_eth)"
+        print_purple $"bringing up ($iface_eth)"
         sudo ip -n physical link set $iface_eth up
 
-        echo_purple $"moving ($iface_wlan) to netns"
+        print_purple $"moving ($iface_wlan) to netns"
         sudo ip link set $iface_wlan down
         sudo iw phy phy0 set netns name physical
 
-        #echo_purple $"bringing up ($iface_wlan)"
+        #print_purple $"bringing up ($iface_wlan)"
         #sudo ip -n physical link set $iface_wlan up
 
-        echo_purple $"start dhcpcd for ($iface_eth)"
+        print_purple $"start dhcpcd for ($iface_eth)"
         # add "export PATH=$PATH:/sbin:/usr/sbin" to .bashrc if dhcpcd not found
         sudo ip netns exec physical dhcpcd -b $iface_eth
         # sudo ip netns exec physical dhcpcd -b $iface_wlan
         # sudo ip netns exec physical wpa_supplicant -B -c/etc/wpa_supplicant/wpa_supplicant-wlan0.conf -i$iface_wlan
 
-        echo_purple $"setting wg0 up"
+        print_purple $"setting wg0 up"
         sudo ip link set wg0 up
         sudo ip route add default dev wg0
     }
@@ -126,24 +126,24 @@ export module route-all-traffic {
       iface_eth: string = "eno1",
       iface_wlan: string = "wlp2s0",
     ] {
-        echo_purple "killing processes"
+        print_purple "killing processes"
         try { killall wpa_supplicant dhcpcd }
 
-        echo_purple "removing eth from physical netns"
+        print_purple "removing eth from physical netns"
         try { sudo ip -n physical link set $iface_eth down }
         try { sudo ip -n physical link set $iface_eth netns 1 }
 
-        echo_purple "removing wlan from physical netns"
+        print_purple "removing wlan from physical netns"
         try { sudo ip -n physical link set $iface_wlan down }
         try { sudo ip netns exec physical iw phy phy0 set netns 1 }
 
-        echo_purple "delete wg0"
+        print_purple "delete wg0"
         try { sudo ip link del wg0 }
 
-        echo_purple "removing physical netns"
+        print_purple "removing physical netns"
         try { sudo ip netns del physical }
 
-        echo_purple $"start dhcpcd for ($iface_eth)"
+        print_purple $"start dhcpcd for ($iface_eth)"
         sudo dhcpcd -b $iface_eth
         # dhcpcd -b $iface_wlan
         # wpa_supplicant -B -c/etc/wpa_supplicant/wpa_supplicant-wlan0.conf -i$iface_wlan
