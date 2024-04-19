@@ -1,8 +1,46 @@
-def "nu-complete just" [] {
-    (^just --dump --unstable --dump-format json | from json).recipes | transpose recipe data | flatten | where {|row| $row.private == false } | select recipe doc parameters | rename value description
+# https://github.com/nushell/nu_scripts/blob/main/custom-completions/just/just-completions.nu
+
+def "nu-complete just recipes" [] {
+    ^just --unsorted --dump --dump-format json
+        | from json
+        | get recipes
+        | transpose k v
+        | each {|x|
+            {
+                value: $x.k,
+                description: ( $x.v.parameters
+                             | each {|y|
+                                    if ($y.default|is-empty) {
+                                        $y.name
+                                    } else {
+                                        $'($y.name)="($y.default)"'
+                                    }
+                                }
+                             | str join ' '
+                             )
+            }
+        }
 }
 
-# Just: A Command Runner
-export extern "just" [
-    ...recipe: string@"nu-complete just", # Recipe(s) to run, may be with argument(s)
-]
+def "nu-complete just args" [context: string, offset: int] {
+    let r = ($context | split row ' ')
+    ^just -u --dump --dump-format json
+        | from json
+        | get recipes
+        | get ($r.1)
+        | get body
+        | each {|x| {description: ($x | get 0) }}
+        | prepend ''
+
+}
+
+export def just [
+    recipes?: string@"nu-complete just recipes"
+    ...args: any@"nu-complete just args"
+] {
+    if ($recipes | is-empty) {
+        ^just
+    } else {
+        ^just $recipes ...$args
+    }
+}
