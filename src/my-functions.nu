@@ -63,8 +63,8 @@ alias md = mkdircd
 
 #compress to 7z using max compression
 export def `7zmax` [
-  filename: string  #filename without extension
-  ...rest:  string  #files to compress and extra flags for 7z (add flags between quotes)
+  outfile: string  # out filename without extension
+  ...rest:  string  # files to compress and extra flags for 7z (add flags between quotes)
   #
   # Example:
   # compress all files in current directory and delete them
@@ -74,7 +74,7 @@ export def `7zmax` [
   if ($rest | is-empty) {
     print "no files to compress specified"
   } else {
-     7z a -t7z -m0=lzma2 -mx=9 -ms=on -mmt=on $"($filename).7z" $rest
+     7z a -t7z -m0=lzma2 -mx=9 -ms=on -mmt=on $"($outfile).7z" ...$rest
   }
 }
 
