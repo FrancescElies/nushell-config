@@ -145,7 +145,7 @@ export def "install rust" [] {
 
 export def "install rust-devtools" [] {
   let cargo_pkgs = [ amber ast-grep fastmod tokei just secure_remove
-                     git-delta difftastic fnm huniq mdbook 
+                     git-delta biodiff difftastic fnm huniq mdbook 
                      bacon checkexec watchexec-cli hwatch ]
   # py-spy
   print $"cargo will install: ($cargo_pkgs | path join ' ')"
