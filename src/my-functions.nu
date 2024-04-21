@@ -179,8 +179,16 @@ export def "rsync" [source: path, destination: path] {
   ^rsync -rtcvP --update $source $destination
 }
 
-export def "myip" [] {
+export def "my ip" [] {
   curl https://ipinfo.io
   # http get https://api.ipify.org
   # http get https://api6.ipify.org
+}
+
+export def "my apps" [] {
+  let venv_pkgs = (python -c `from importlib.metadata import entry_points; print('\n'.join(x.name for x in entry_points()['console_scripts']))` | lines)
+  let bin_pkgs = (ls ~/bin/**/* | where type == file | get name)
+  let cargo_bin_pkgs = (ls ~/.cargo/bin/* | where type == file | get name)
+  let go_bin_pkgs = (ls ~/go/bin/* | where type == file | get name)
+  return ($venv_pkgs | append $bin_pkgs | append $cargo_bin_pkgs | append $go_bin_pkgs)
 }

@@ -10,4 +10,3 @@ export def ask_yes_no [question: string] {
         } 
     )
 }
-
