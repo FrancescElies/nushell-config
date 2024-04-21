@@ -33,6 +33,7 @@ deprecation==2.1.0
     # via aw-core
 executing==2.0.1
     # via stack-data
+honcho==1.1.0
 idna==3.7
     # via requests
 img2pdf==0.5.1
