@@ -4,6 +4,6 @@ Encoding=UTF-8
 Name=LocalSend
 Comment=LocalSend
 Icon=/home/cesc/src/nushell-config/src/linux/gnome-apps/localsend.png
-Exec=/home/cesc/bin/localsend
+Exec=/home/cesc/bin/localsend.AppImage
 Terminal=false
 Categories=SendFiles;
