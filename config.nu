@@ -1,5 +1,6 @@
 # https://github.com/nushell/nushell/blob/main/crates/nu-utils/src/sample_config/default_config.nu
-use ~/src/nushell-config/src/this-machine.nu *
+
+source ~/src/nushell-config/src/this-machine.nu
 
 use ~/src/nushell-config/src/task.nu
 
