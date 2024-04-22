@@ -113,13 +113,46 @@ export def where-dumpbin [] { vswhere -latest -find **/dumpbin.exe | str replace
 
 # Reduces video size and converts to mp4
 # See https://stackoverflow.com/questions/12026381/ffmpeg-converting-mov-files-to-mp4
-export def "reduce video-size" [input_video: path] {
+export def "reduce-size video" [input_video: path] {
   ffmpeg -i $input_video -vcodec libx265 -crf 28  $"($input_video).mp4"
 }
 
+# reduce any image file size
+export def "reduce-size image-quality" [
+  infile: path, # an image file supported by imagemagick
+  quality: int = 10, # JPEG(1=lowest, 100=highest) see https://imagemagick.org/script/command-line-options.php#quality for other formats
+  --outdir: path = './_reduced_images'
+] {
+  mkdir $outdir
+  cp -f $infile $outdir
+  let outfile = ($outdir | path join  ($infile | path basename))
+  mogrify -quality $quality $outfile
+}
+
+export def "reduce-size png" [
+  infile: path, # a jpg/jpeg file
+  --outdir: path = './_reduced_images'
+] {
+  mkdir $outdir
+  cp -f $infile $outdir
+  let outfile = ($outdir | path join ($infile | path basename))
+  pngcrush $infile $outfile
+}
+
+export def "reduce-size jpg" [
+  infile: path, # a jpg/jpeg file
+  --size: string = '100k', # 
+  --outdir: path = './_reduced_images'
+] {
+  mkdir $outdir
+  cp -f $infile $outdir
+  let outfile = ($outdir | path join ($infile | path basename))
+  jpegoptim --size $size $outfile
+}
+
 # reduces pdf size
-export def "reduce-size pdf-size" [
-  inputpdf: path, 
+export def "reduce-size pdf" [
+  infile: path, # a pdf file
   outputpdf: path = output.pdf,
   # -dPDFSETTINGS=/screen     lower quality and smaller size. (72 dpi)
   # -dPDFSETTINGS=/ebook      default,  slightly larger size (150 dpi)
@@ -128,7 +161,7 @@ export def "reduce-size pdf-size" [
   # -dPDFSETTINGS=/default    useful for multiple purposes. Can cause large PDFS.
   pdfsettings: string = "/ebook"
 ] {
-  ^gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 $"-dPDFSETTINGS=($pdfsettings)" -dNOPAUSE -dQUIET -dBATCH $"-sOutputFile=($outputpdf)" $inputpdf
+  ^gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 $"-dPDFSETTINGS=($pdfsettings)" -dNOPAUSE -dQUIET -dBATCH $"-sOutputFile=($outputpdf)" $infile
 }
 
 # One could download move parts like follows from some website
