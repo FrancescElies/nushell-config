@@ -37,10 +37,6 @@ if not (which fnm | is-empty) {
   path add $node_path
 }
 
-if $nu.os-info.name == "windows" {
-    chcp 65001 
-} 
-
 # Nushell Config File
 #
 # version = "0.91.0"
