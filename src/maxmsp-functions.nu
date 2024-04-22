@@ -48,6 +48,7 @@ export def "maxmsp api" [] {
 # opens latest .dmp file from Cycling '74/Logs
 export def "maxmsp latest-dump" [] {
   let latest_dump = (ls `~/AppData/Roaming/Cycling '74/Logs` | sort-by modified | last)
+  print $"opening ($latest_dump.name)" 
   start $latest_dump.name
 }
 
@@ -69,9 +70,9 @@ export def "maxmsp download-installers" [] {
 # greps for something max related in all known locations where something interesting might be found
 export def "maxmsp grep" [pattern: string] {
   let locations = [
-    (echo `~/src/oss/max-sdk` | path expand), 
-    (echo `C:/Program Files/Cycling '74` | path expand),
-    (echo `~/AppData/Roaming/Cycling '74`| path expand),
+    ("~/src/oss/max-sdk" | path expand), 
+    ("C:/Program Files/Cycling '74" | path expand),
+    ("~/AppData/Roaming/Cycling '74"| path expand),
   ]
   rg $pattern ...$locations
 }
