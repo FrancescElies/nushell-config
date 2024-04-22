@@ -2,7 +2,8 @@
 # chcp 65001
 # export alias vim = "c:/tools/vim/vim90/vim.exe"
 
-overlay use ~/src/nushell-config/.venv/scripts/activate.nu
+# NOTE: broken
+# overlay use ~/src/nushell-config/.venv/scripts/activate.nu
 
 # https://stackoverflow.com/questions/8560166/silent-installation-of-a-msi-package
 export def "msi silent-install" [msi_file: path] {

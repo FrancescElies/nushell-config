@@ -1,6 +1,8 @@
-default := "install"
+set shell := ["nu", "-c"]
 
-install:
+default := "bootstrap"
+
+bootstrap:
   nu install.nu
 
 # create a python virtual environment
