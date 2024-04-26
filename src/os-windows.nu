@@ -30,3 +30,12 @@ export def "msi uninstall" [
   # example
   print wmic Product Where "Name='Max 8 (64-bit)'" Call Uninstall /NoInteractive
 }
+
+export def open-in-windbg [executable: path] {
+   ~/AppData/Local/Microsoft/WindowsApps/WinDbgX.exe $executable
+}
+
+export def --wrapped "cargo test-windbg" [...args: string] {
+  let executable = (cargo t ...$args --no-run e>| parse --regex 'Executable.*\((?<name>.+)\)' | get 0.name)
+  open-in-windbg $executable
+}
