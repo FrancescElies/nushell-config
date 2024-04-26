@@ -144,7 +144,7 @@ export def "install rust" [] {
 }
 
 export def "install rust-devtools" [] {
-  let cargo_pkgs = [ amber ast-grep fastmod tokei just secure_remove
+  let cargo_pkgs = [ amber amp ast-grep fastmod tokei just secure_remove
                      git-delta biodiff difftastic fnm huniq mdbook 
                      bacon checkexec watchexec-cli hwatch ]
   # py-spy
