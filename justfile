@@ -3,7 +3,7 @@ set shell := ["nu", "-c"]
 default := "bootstrap"
 
 bootstrap:
-  nu install.nu
+  nu bootstrap.nu
 
 # create a python virtual environment
 venv:

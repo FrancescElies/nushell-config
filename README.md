@@ -7,7 +7,7 @@ Install just https://github.com/casey/just?tab=readme-ov-file#packages
 mkdir ~/src
 git clone https://github.com/FrancescElies/nushell-config ~/src/nushell-config
 cd ~/src/nushell-config
-nu install.nu
+just bootstrap
 ```
 
 Few scripts need python (optional)
