@@ -94,13 +94,9 @@ def "install cargo-binstall" [] {
   }
   let extension = ($filename | path parse | get extension)
   let disk_file = $"tmp.($extension)"
+  cd ~/.cargo/bin
   http get $"($url_base)($filename)" | save -f $disk_file
-  match $extension { 
-    "zip" => {unzip $disk_file}, 
-    _ => {tar -xvzf $disk_file} 
-  }
-  mkdir ~/bin
-  mv cargo-binstall* ~/bin/
+  tar -xvzf $disk_file
 }
 
 export def "install python" [] {
