@@ -133,6 +133,7 @@ export def "install rust" [] {
   print $"cargo will install: ($cargo_pkgs | path join ' ')"
   cargo binstall -y ...$cargo_pkgs
 
+  cp ~/.cargo/bin/nu* ~/bin
   bob use nightly
 
   if (ask_yes_no "Install rust coreutils (might take long)?") { cargo install coreutils }
