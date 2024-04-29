@@ -4,9 +4,9 @@ export def symlink [
     new_link_name: path  # The name of the symlink
     --force(-f)     # if target exists moves it to
 ] {
-    print $"(ansi purple_bold)Creating symlink(ansi reset) ($existing) --> ($new_link_name)"
     let existing = ($existing | path expand --strict | path split | path join)
     let $new_link_name = ($new_link_name | path expand --no-symlink | path split | path join)
+    print $"(ansi purple_bold)Creating symlink(ansi reset) ($existing) --> ($new_link_name)"
 
     if ($force and ($new_link_name | path exists)) { 
        print $"Moving ($new_link_name) to trash"
