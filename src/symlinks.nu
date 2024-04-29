@@ -8,6 +8,10 @@ export def symlink [
     let $new_link_name = ($new_link_name | path expand --no-symlink | path split | path join)
     print $"(ansi purple_bold)Creating symlink(ansi reset) ($existing) --> ($new_link_name)"
 
+
+    # create parent folder if it doesn't exist
+    mkdir ($new_link_name | path dirname)
+
     if ($force and ($new_link_name | path exists)) { 
        print $"Moving ($new_link_name) to trash"
        rm --trash --recursive $new_link_name
