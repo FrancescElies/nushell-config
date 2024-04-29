@@ -13,7 +13,7 @@ export def "install for-windows" [] {
   [ 
     wez.wezterm bmatzelle.Gow gerardog.gsudo 
     VideoLAN.VLC SumatraPDF.SumatraPDF 
-    BurntSushi.ripgrep.MSVC sharkdp.fd junegunn.fzf Nushell.Nushell 
+    Casey.Just BurntSushi.ripgrep.MSVC sharkdp.fd junegunn.fzf Nushell.Nushell 
     JesseDuffield.lazygit Git.Git GitHub.GitHubDesktop GitHub.GitLFS 
     Microsoft.AzureCLI GitHub.cli DBBrowserForSQLite.DBBrowserForSQLite
     Terrastruct.D2
@@ -126,7 +126,7 @@ export def "install rust" [] {
 
   let cargo_pkgs = [ 
     kondo tealdeer bat broot fd-find bob-nvim diskonaut 
-    nu pueue bottom ouch pgen mprocs fclones
+    nu pueue bottom ouch pgen mprocs fclones just 
     trippy miniserve rustscan xh cargo-update
   ]
   # py-spy
@@ -140,7 +140,7 @@ export def "install rust" [] {
 }
 
 export def "install rust-devtools" [] {
-  let cargo_pkgs = [ amber amp ast-grep fastmod tokei just secure_remove
+  let cargo_pkgs = [ amber amp ast-grep fastmod tokei secure_remove
                      git-delta biodiff difftastic fnm huniq mdbook 
                      bacon checkexec watchexec-cli hwatch ]
   # py-spy
