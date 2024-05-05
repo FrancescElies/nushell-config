@@ -19,8 +19,8 @@ export def diagram [name: path] {
 }
 
 # ask something to chat gpt
-export def "can you" [...words: string] {
-  tgpt $"can you ($words | str join ' ')"
+export def "could you" [...words: string] {
+  tgpt $"could you ($words | str join ' ')"
 }
 
 # ask something to chat gpt
