@@ -127,7 +127,7 @@ export def "install rust" [] {
   let cargo_pkgs = [ 
     kondo tealdeer bat broot fd-find bob-nvim diskonaut 
     nu pueue bottom ouch pgen mprocs fclones just 
-    trippy miniserve rustscan xh cargo-update
+    pastel trippy miniserve rustscan xh cargo-update
   ]
   # py-spy
   print $"cargo will install: ($cargo_pkgs | path join ' ')"
