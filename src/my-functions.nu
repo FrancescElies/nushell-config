@@ -89,8 +89,14 @@ export def svgs-to-pdfs [path: path] {
 #search for specific process
 export def psn [name: string] { ps | find $name }
 
+
+def "nu-complete list-process-names" [] {
+  ps | get name | uniq
+}
+
 #kill specified process in name
-export def killn [name: string] { ps | find $name | each {|x| kill -f $x.pid} }
+export def killn [name: string@"nu-complete list-process-names"] { ps | find $name | each {|x| kill -f $x.pid} }
+export alias k = killn
 
 # print worth watching speakers
 export def speakers [] {
