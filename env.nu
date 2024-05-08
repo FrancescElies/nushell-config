@@ -107,6 +107,8 @@ match $nu.os-info.name {
         path add '~/AppData/Roaming/Python/Python312/Scripts'
         path add '~/AppData/Roaming/Python/Scripts'
         path add 'c:/Program Files/Neovim/bin'
+        path add ('/Program Files/WIBU-SYSTEMS/AxProtector/Devkit/bin' | path expand)
+        path add ('/Program Files/CodeMeter/DevKit/bin' | path expand)
     },
     "macos" => {
         path add '/opt/homebrew/bin'
