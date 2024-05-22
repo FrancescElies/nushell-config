@@ -89,6 +89,8 @@ export def "git branches" [first: int = 5] { git branch --sort=-committerdate | 
 
 # aliases
 # -------
+# git whatchanged
+export alias gwch = git whatchanged -p --abbrev-commit --pretty=medium
 export alias gbb = git branches
 # git difft
 export alias gd = git difft
