@@ -121,6 +121,8 @@ export alias gfa = git fetch --all --prune
 export alias gca = git commit --amend 
 # git commit amend, don't edit meesage
 export alias gcane = git commit --amend --no-edit
+# git commit ammend and push it
+def goshit [] = {gcane ; gpush}
 # git commit
 export alias gcm = git commit -m
 # git checkout
