@@ -4,6 +4,8 @@ export def notes [] {
   broot .
 }
 
+export alias pipx = python ~/bin/pipx.pyz
+
 # lazygit
 export alias lg = lazygit
 # extracts archives with different extensions

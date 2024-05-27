@@ -23,3 +23,13 @@ export def "rust libraries" [] {
         ["Open Versus Closed: A Cautionary Tale" bench "https://www.usenix.org/legacy/event/nsdi06/tech/full_papers/schroeder/schroeder.pdf"]
     ]
 }
+export def "rust links" [] {
+
+    return [
+        [name link];
+        [comprehensive-rust https://google.github.io/comprehensive-rust/error-handling/thiserror-and-anyhow.html]
+        [rust-cookbook https://rust-lang-nursery.github.io/rust-cookbook/]
+        [rust-by-example https://doc.rust-lang.org/rust-by-example/]
+    ]
+
+}
