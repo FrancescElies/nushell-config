@@ -20,6 +20,8 @@ export def diagram [name: path] {
   nvim $filename
 }
 
+export alias chat = elia
+
 # ask something to chat gpt
 export def "could you" [...words: string] {
   tgpt $"could you ($words | str join ' ')"
