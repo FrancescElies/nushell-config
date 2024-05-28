@@ -131,6 +131,9 @@ match $nu.os-info.name {
 path add '~/src/radare2/prefix/bin'
 path add '~/go/bin'
 path add '~/.cargo/bin'
+# pipx puts binaries in .local/bin
+path add '~/.local/bin'
+
 path add '~/bin'
 mkdir ~/bin/dummy/bin
 # add all ~/bin/* to PATH
