@@ -27,9 +27,12 @@ export def "rust links" [] {
 
     return [
         [name link];
+        [nextest https://nexte.st/]
         [comprehensive-rust https://google.github.io/comprehensive-rust/error-handling/thiserror-and-anyhow.html]
         [rust-cookbook https://rust-lang-nursery.github.io/rust-cookbook/]
         [rust-by-example https://doc.rust-lang.org/rust-by-example/]
+        [cross-compiling https://actually.fyi/posts/zig-makes-rust-cross-compilation-just-work/]
+        [ytb-logan-smith https://www.youtube.com/@_noisecode]
     ]
 
 }
