@@ -21,9 +21,3 @@ export def "config broot" [] {
     nvim "~/.config/broot/config/conf.hjson" "~/.config/broot/config/verbs.hjson"
   }
 }
-
-export def "you-dont-know-js" [] {
-  # https://github.com/francescelies/You-Dont-Know-JS
-  cd ~/src/oss/You-Dont-Know-JS
-  just open
-}

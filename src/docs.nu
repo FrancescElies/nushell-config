@@ -1,21 +1,17 @@
+use ~/src/nushell-config/src/rust.nu *
+
 def download-python-docs [py_version: string] {
     let zipfile = 'python-' + $py_version + '-docs-text.zip'
-    print $zipfile
     if not ($zipfile | path exists) { 
-      print here
       http get $'https://docs.python.org/3/archives/($zipfile)' | save $zipfile
       extract $zipfile
     }
-    print her3
 
     let zipfile = 'python-' + $py_version + '-docs-html.zip'
     if not ($zipfile | path exists) { 
-      print here2
       http get $'https://docs.python.org/3/archives/($zipfile)' | save $zipfile
       extract $zipfile
     }
-    print her4
-    
 }
 
 export def 'docs python' [] {
@@ -27,4 +23,17 @@ export def 'docs python' [] {
   ^broot $dir
 }
 
+export def "docs js" [] {
+  if not (~/src/oss/You-Dont-Know-JS | path exists) { 
+    cd ~/src/oss
+    git clone https://github.com/francescelies/You-Dont-Know-JS
+  }
+  cd ~/src/oss/You-Dont-Know-JS
+  just open
+}
+export alias you-dont-know-js = docs js
 
+export def "docs rust" [] {
+  rustup doc
+  rust links
+}

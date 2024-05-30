@@ -1,14 +1,3 @@
-
-export alias cbr = cargo build --release
-export alias cbd = cargo build --debug
-
-export def "config ra-multiplex" [] {
-    match $nu.os-info.name {
-        "windows" => { nvim ~/AppData/Roaming/ra-multiplex/config/config.toml },
-        _ => { nvim ~/.config/ra-multiplex/config.toml },
-    }
-}
-
 export def "rust libraries" [] {
     return [
         [name type description];
@@ -23,8 +12,8 @@ export def "rust libraries" [] {
         ["Open Versus Closed: A Cautionary Tale" bench "https://www.usenix.org/legacy/event/nsdi06/tech/full_papers/schroeder/schroeder.pdf"]
     ]
 }
-export def "rust links" [] {
 
+export def "rust links" [] {
     return [
         [name link];
         [nextest https://nexte.st/]

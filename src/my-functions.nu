@@ -10,7 +10,7 @@ export alias pipx = python ~/bin/pipx.pyz
 def ports [] {
   match $nu.os-info.name { 
       "windows" => { error make {msg: "netstat -tulnp ???"} },
-      _ => { netstat -tulnp | lines | skip 1 | to text | detect columns },
+      _ => { netstat -tulnp | tail -n +2 | detect columns },
   }
 }
 
@@ -36,18 +36,13 @@ export def "could you" [...words: string] {
 }
 
 # ask something to chat gpt
-export def "how do i" [...words: string] {
-  tgpt $"how do i ($words | str join ' ')"
-}
+export def "how do i" [...words: string] { tgpt $"how do i ($words | str join ' ')" }
 
-export def time-today [] {
-  ~/src/nushell-config/.venv/bin/python ~/src/nushell-config/src/time_spent_today.py
-}
+export def time-today [] { ~/src/nushell-config/.venv/bin/python ~/src/nushell-config/src/time_spent_today.py }
 
 
 # compact ls 
 export def lsg [] { ls | sort-by type name -i | grid -c | str trim }
-export alias l = lsg
 
 # jdownloader downloads info (requires a jdown python script)
 export def jd [] {
@@ -67,10 +62,7 @@ export def ymd [] { (date now | format date %Y-%m-%d) }
 export def dmy [] { (date now | format date %d-%m-%Y) }
 
 # create directory and cd into it (alias md)
-export def --env mkdircd [dir] {
-  mkdir $dir
-  cd $dir
-}
+export def --env mkdircd [dir] { mkdir $dir; cd $dir }
 alias md = mkdircd
 
 #compress to 7z using max compression
@@ -102,9 +94,7 @@ export def svgs-to-pdfs [path: path] {
 export def psn [name: string] { ps | find $name }
 
 
-def "nu-complete list-process-names" [] {
-  ps | get name | uniq
-}
+def "nu-complete list-process-names" [] { ps | get name | uniq }
 
 #kill specified process in name
 export def killn [name: string@"nu-complete list-process-names"] { ps | find $name | each {|x| kill -f $x.pid} }
@@ -192,9 +182,7 @@ export def concat-videos-in-folder [folder: path] {
 }
 
 
-export def watch-cwd [] {
-  watch . { |op, path, new_path| $"($op) ($path) ($new_path)"}
-}
+export def watch-cwd [] { watch . { |op, path, new_path| $"($op) ($path) ($new_path)"} }
 
 export def who-locks [path: path] {
   if $nu.os-info.name == "windows" {
@@ -226,16 +214,16 @@ export def "youtube download" [
 }
 
 # more robust rsync (works with FAT usbs too) :(-c) checksum, (-r) recursive, (-t) preserve modification times, (-P) keep partially transferred files and show progress
-export def "rsync" [source: path, destination: path] {
-  ^rsync -rtcvP --update $source $destination
-}
+export def "rsync" [source: path, destination: path] { ^rsync -rtcvP --update $source $destination }
 
+# what is my public ip
 export def "my ip" [] {
   curl https://ipinfo.io
   # http get https://api.ipify.org
   # http get https://api6.ipify.org
 }
 
+# which apps do I have
 export def "my apps" [] {
   let venv_pkgs = (python -c `from importlib.metadata import entry_points; print('\n'.join(x.name for x in entry_points()['console_scripts']))` | lines)
   let bin_pkgs = (ls ~/bin/**/* | where type == file | get name)
