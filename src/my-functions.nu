@@ -6,6 +6,14 @@ export def notes [] {
 
 export alias pipx = python ~/bin/pipx.pyz
 
+# list open listening ports
+def ports [] {
+  match $nu.os-info.name { 
+      "windows" => { error make {msg: "netstat -tulnp ???"} },
+      _ => { netstat -tulnp | lines | skip 1 | to text | detect columns },
+  }
+}
+
 # lazygit
 export alias lg = lazygit
 # extracts archives with different extensions
