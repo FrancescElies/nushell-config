@@ -17,6 +17,7 @@ use ~/src/nushell-config/src/hosts.nu
 use ~/src/nushell-config/src/vpn.nu
 use ~/src/nushell-config/src/az.nu *
 use ~/src/nushell-config/src/docs.nu *
+use ~/src/nushell-config/src/fix.nu *
 use ~/src/nushell-config/src/broot-helpers.nu *
 use ~/src/nushell-config/src/rust.nu *
 use ~/src/nushell-config/src/just-completions.nu *
