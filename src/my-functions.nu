@@ -202,10 +202,11 @@ export def lldbb-attach-windows-process [processid: int] {
 
 export def "youtube download" [
   url: string
-  --audio-only     #
+  --audio-only  # downloads mp3 only
+  --update      # updates yt_dlp
 ] {
    let yt_dlp = "~/bin/yt-dlp" | path expand
-   if not ($yt_dlp | path exists) { http get https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp | save $yt_dlp }
+   if (not ($yt_dlp | path exists) or $update) { http get https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp | save -f $yt_dlp }
    if $audio_only {
      python $yt_dlp -x --audio-format mp3 $url
    } else {
