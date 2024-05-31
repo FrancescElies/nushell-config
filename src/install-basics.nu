@@ -125,7 +125,7 @@ export def "install rust" [] {
   install cargo-binstall
 
   let cargo_pkgs = [ 
-    kondo tealdeer bat broot fd-find bob-nvim diskonaut 
+    kondo tealdeer bat broot fd-find bob-nvim diskonaut killport
     nu pueue bottom ouch pgen mprocs fclones just hexyl
     pastel trippy miniserve rustscan xh cargo-update
   ]
