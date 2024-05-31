@@ -1,3 +1,7 @@
+export def "fix js" [] {
+  # check = format & lint
+  npx @biomejs/biome check --apply .
+}
 
 export def "fix python" [] {
     ruff check --fix
