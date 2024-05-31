@@ -7,10 +7,12 @@ export def notes [] {
 export alias pipx = python ~/bin/pipx.pyz
 
 # list open listening ports
-def ports [] {
+export def ports [] {
   match $nu.os-info.name { 
       "windows" => { error make {msg: "netstat -tulnp ???"} },
-      _ => { netstat -tulnp | tail -n +2 | detect columns },
+      # netstat columns in unix
+      # Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID Program name
+      _ => { netstat -tulnp | str replace -a "/" " " | str replace "Program name" " program-name" | tail -n +2 | detect columns },
   }
 }
 
