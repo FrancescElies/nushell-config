@@ -27,7 +27,7 @@ use ~/src/nushell-config/src/clipboard.nu *
 use ~/src/nushell-config/src/neovim.nu *
 use ~/src/nushell-config/src/cargo-completions.nu *
 use ~/src/nushell-config/src/utils.nu *
-use ~/src/nushell-config/src/radare2.nu *
+use ~/src/nushell-config/src/reverse-eng.nu *
 
 use ~/src/nushell-config/src/fnm.nu *
 fnm-setup

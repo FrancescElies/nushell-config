@@ -1,3 +1,7 @@
+# ghidra
+# pwndbg: make gdb debugging easier, e.g. adds hexdump instead of x/g30x $esp
+# x64dbg: debugger for windows
+
 # Official website: https://www.radare.org/n/
 # Book: https://book.rada.re/
 # https://monosource.gitbooks.io/radare2-explorations/content/introduction.html
@@ -29,3 +33,4 @@ export def "rabin2 quick" [file: path, ] {
   print "see output:"
   ls $folder
 }
+
