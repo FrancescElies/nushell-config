@@ -22,6 +22,7 @@ export def "rust links" [] {
         [rust-by-example https://doc.rust-lang.org/rust-by-example/]
         [cross-compiling https://actually.fyi/posts/zig-makes-rust-cross-compilation-just-work/]
         [ytb-logan-smith https://www.youtube.com/@_noisecode]
+        [unsafe-rust-and-zig https://zackoverflow.dev/writing/unsafe-rust-vs-zig]
     ]
 
 }
