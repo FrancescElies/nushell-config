@@ -4,6 +4,7 @@ source ~/src/nushell-config/src/this-machine.nu
 
 use ~/src/nushell-config/src/task.nu
 
+use ~/src/nushell-config/src/miniserve-completions.nu *
 use ~/src/nushell-config/src/symlinks.nu *
 use ~/src/nushell-config/src/my-functions.nu *
 use ~/src/nushell-config/src/my-configs.nu *
