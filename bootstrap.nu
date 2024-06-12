@@ -36,6 +36,6 @@ export def main [] {
 
     # cross platform
     if (ask_yes_no "Install python (rye)?") { install python }
-    if (ask_yes_no "Install rustup?") { install rust }
+    if (ask_yes_no "Install rust basics?") { install rust }
     if (ask_yes_no "Install rust dev tools? (might take long)") {  install rust-devtools  }
 }

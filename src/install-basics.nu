@@ -134,6 +134,11 @@ export def "install rust" [] {
   cargo binstall -y ...$cargo_pkgs
 
   cp ~/.cargo/bin/nu* ~/bin
+  let wormhole_url = match $nu.os-info.name {
+      "windows" => { cd ~/bin; http get https://github.com/magic-wormhole/magic-wormhole.rs/releases/download/0.6.1/wormhole-rs | save -f wormhole },
+      "linux" => { cd ~/bin; http get https://github.com/magic-wormhole/magic-wormhole.rs/releases/download/0.6.1/wormhole-rs.exe | save -f wormwhole; chmod +x wormhole },
+      _ => {  },
+  }
   bob use nightly
 
   if (ask_yes_no "Install rust coreutils (might take long)?") { cargo install coreutils }
