@@ -55,7 +55,7 @@ export def --env "gwr" [
   path: string@"nu-complete git worktree paths"
   --force(-f)
 ] {
-  if $force { git worktree remove --force $path } else { git worktree remove $path }
+  if $force { gcleanest; git worktree remove --force $path } else { git worktree remove $path }
 }
 
 export alias gwprune = git worktree prune 
