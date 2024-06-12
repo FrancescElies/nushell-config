@@ -23,6 +23,7 @@ export def "rust links" [] {
         [cross-compiling https://actually.fyi/posts/zig-makes-rust-cross-compilation-just-work/]
         [ytb-logan-smith https://www.youtube.com/@_noisecode]
         [dystroy "https://dystroy.org/blog/how-not-to-learn-rust/#mistake-1-not-be-prepared-for-the-first-high-step"]
+        [half-hour https://fasterthanli.me/articles/a-half-hour-to-learn-rust]
         [unsafe-rust-and-zig https://zackoverflow.dev/writing/unsafe-rust-vs-zig]
     ]
 }
