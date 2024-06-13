@@ -126,7 +126,7 @@ export def "install rust" [] {
 
   let cargo_pkgs = [ 
     kondo tealdeer bat broot fd-find bob-nvim diskonaut killport
-    nu pueue bottom ouch pgen mprocs fclones just hexyl dysk du-dust
+    nu pueue bottom ouch pgen mprocs fclones just hexyl du-dust
     pastel trippy miniserve rustscan xh cargo-update
   ]
   # py-spy
@@ -135,9 +135,18 @@ export def "install rust" [] {
 
   cp ~/.cargo/bin/nu* ~/bin
   let wormhole_url = match $nu.os-info.name {
-      "windows" => { cd ~/bin; http get https://github.com/magic-wormhole/magic-wormhole.rs/releases/download/0.6.1/wormhole-rs | save -f wormhole },
-      "linux" => { cd ~/bin; http get https://github.com/magic-wormhole/magic-wormhole.rs/releases/download/0.6.1/wormhole-rs.exe | save -f wormwhole; chmod +x wormhole },
-      _ => {  },
+      "windows" => { 
+        cd ~/bin
+        http get https://github.com/magic-wormhole/magic-wormhole.rs/releases/download/0.6.1/wormhole-rs | save -f wormhole-rs 
+      },
+      "linux" => { 
+        cd ~/bin
+        http get https://github.com/magic-wormhole/magic-wormhole.rs/releases/download/0.6.1/wormhole-rs.exe | save -f wormwhole-rs
+        chmod +x wormhole-rs 
+      },
+      _ => {  
+        print "wormwhole-rs not available (compile it from source)"
+      },
   }
   bob use nightly
 
