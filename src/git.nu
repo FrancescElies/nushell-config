@@ -82,7 +82,7 @@ export def "git ignore-edit" [] {
 }
 
 export def --wrapped "git difft" [...rest] {
-    with-env [GIT_EXTERNAL_DIFF 'difft'] { git diff ...$rest }
+    with-env {GIT_EXTERNAL_DIFF: difft} { git diff ...$rest }
 }
 
 export def "git branches" [first: int = 5] { git branch --sort=-committerdate | lines | first $first }
