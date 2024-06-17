@@ -1,5 +1,5 @@
 export def "rust libraries" [] {
-    return [
+    [
         [name type description];
         [turmoil testing "async chaos"]
         [shuttle testing "sync chaos"]
@@ -10,11 +10,12 @@ export def "rust libraries" [] {
         [ai-callgrind bench "runs measurement through valgrind and reports number of instructions executed (dont use time or ops/sec, this depends on external processes)"]
         [tango bench "runs the old code and the new one interleaved"]
         ["Open Versus Closed: A Cautionary Tale" bench "https://www.usenix.org/legacy/event/nsdi06/tech/full_papers/schroeder/schroeder.pdf"]
-    ]
+        [proptest testing "https://github.com/proptest-rs/proptest"]
+    ] | sort-by type
 }
 
 export def "rust links" [] {
-    return [
+    [
         [name link];
         [nextest https://nexte.st/]
         [comprehensive-rust https://google.github.io/comprehensive-rust/error-handling/thiserror-and-anyhow.html]
