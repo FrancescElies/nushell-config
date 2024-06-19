@@ -11,5 +11,6 @@ export def "fix python" [] {
 
 export def "fix rust" [] {
   cargo fmt --all
+  cargo fix
   cargo clippy --fix --allow-dirty --allow-staged
 }

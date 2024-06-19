@@ -1,3 +1,25 @@
+export def "rust commands" [] {
+    [
+        [command  description];
+        ["cargo nextest" "executs tests faster and other goodies"]
+        ["cargo outdated" "shows outdated deps"]
+        ["cargo sort" "sorts cargo.toml deps alphabetically"]
+        ["cargo sweep" "removes built artifacts matching certain properties"]
+        ["cargo +nightly udeps" "finds unused dependencies"]
+        ["cargo run" "executes your only program"]
+        ["cargo run --bin foo" "executes the foo binary"]
+        ["cargo build --bins" "builds all binaries"]
+        ["cargo build --timings" "generates report of build times"]
+        ["cargo test" "runs all tests"]
+        ["cargo fix" "automatically fixes compiler warnings"]
+        ["cargo clippy --fix" "automatically fixes clippy warnings"]
+        ["cargo add/remove" "adds/removes dependencies"]
+        ["cargo update" "updates cargo.lock file entries"]
+        ["cargo tree" "renders the dependency tree"]
+        ["cargo tree --duplicates" "shows duplicate dependencies"]
+    ]
+
+}
 export def "rust libraries" [] {
     [
         [name type description];
