@@ -1,6 +1,8 @@
 use src/symlinks.nu symlink
 use src/utils.nu ask_yes_no
 
+# debian/ubuntu: https://omakub.org/ opinionated setup
+
 export def main [] {
     mkdir ~/src/work
     mkdir ~/src/oss
