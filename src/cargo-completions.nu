@@ -168,7 +168,7 @@ export extern "cargo clean" [
 # Build a package's documentation
 export extern "cargo doc" [
   --open                    # Open the docs in a browser after building them
-  --no-deps                 # Do not build documentation for dependencie
+  --no-deps                 # Do not build documentation for dependency
   --document-private-items  # Include non-public items in the documentation
   --package(-p): string@"nu-complete cargo packages" # Document only the specified packages
   --workspace               # Document all members in the workspace
@@ -308,7 +308,7 @@ export extern "cargo test" [
 
 # Execute benchmarks of a package
 export extern "cargo bench" [
-  bench_option_seperator?: string
+  bench_option_separator?: string
   ...options: any # Options to be passed to the benchmarks
   --no-run # Compile, but don't run benchmarks
   --no-fail-fast # Run all benchmarks regardless of failure
@@ -585,3 +585,17 @@ export extern "cargo add" [
   --target                # Add as dependency to the given target platform
   ...args
 ]
+
+# cargo structured search
+export def "cargo ssearch" [ query: string, --limit=10] {
+    ^cargo search $query --limit $limit
+    | lines
+    | each {
+        |line| if ($line | str contains "#") {
+            $line | parse --regex '(?P<name>.+) = "(?P<version>.+)" +# (?P<description>.+)'
+        } else {
+            $line | parse --regex '(?P<name>.+) = "(?P<version>.+)"'
+        }
+    }
+    | flatten
+}
