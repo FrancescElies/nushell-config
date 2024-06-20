@@ -45,7 +45,7 @@ export def "git my-defaults" [] {
   git config --global branch.sort -committerdate
   # git config gpg.format ssh
   # git config user.signingkey ~/.ssh/id_ed25519
-  
+
   # Big repository stuff
   #
   # git clone filters:
@@ -63,8 +63,8 @@ export def "git my-defaults" [] {
 
 # start a new topic
 export def "git topic-begin" [
-  ...topic: string 
-  --startingat(-@): string = "master"  # create a new branch starting at <commit-ish>, 
+  ...topic: string
+  --startingat(-@): string = "master"  # create a new branch starting at <commit-ish>,
 ] {
     let newbranch = $topic | str join "-"
     let newbranch = $"cesc/($newbranch)"
@@ -94,7 +94,7 @@ export alias gwch = git whatchanged -p --abbrev-commit --pretty=medium
 export alias gbb = git branches
 # git difft
 export alias gd = git difft
-# git add 
+# git add
 export alias ga = git add
 # git add all
 export alias gaa = git add --all
@@ -115,19 +115,19 @@ export alias glL = git log -L
 # git log all
 export alias gla = git log --graph --topo-order --date=short --abbrev-commit --decorate --all --boundary --pretty=format:'%Cgreen%ad %Cred%h%Creset -%C(yellow)%d%Creset %s %Cblue[%cn]%Creset %Cblue%G?%Creset'
 # git fetch all, prune remote branches
-export alias gf = git fetch 
+export alias gf = git fetch
 export alias gfa = git fetch --all --prune
-# git commit amend 
-export alias gca = git commit --amend 
+# git commit amend
+export alias gca = git commit --amend
 # git commit amend, don't edit meesage
 export alias gcane = git commit --amend --no-edit
 # git commit ammend and push it
 def goshit [] = {gcane ; gpush}
 # git commit
-export alias gcm = git commit -m
+export def gcm [...title: string] { git commit -m $"($title | str join ' ')" }
 # git checkout
 export alias gco = git checkout
-# git cherry pick 
+# git cherry pick
 export alias gcp = git cherry-pick
 # git cherry pick abort
 export alias gcpa = git cherry-pick --abort
@@ -141,7 +141,7 @@ export alias guncommit = git reset --soft HEAD~1
 export alias gunadd = git reset HEAD
 # Discard changes in path
 export alias gdiscard = git checkout --
-# git clean into a pristine working directory 
+# git clean into a pristine working directory
 export alias gcleanest = git clean -dffx
 # Clean (also untracked) and checkout.
 def gcleanout [] = {git clean -df ; git checkout -- .}
@@ -154,13 +154,13 @@ export def gpush [
   mut args = []
   if $force_with_lease != null { $args = ($args | append $'--force-with-lease') }
   if $force != null { $args = ($args | append $'--force') }
-  git push ...$args --set-upstream $upstream (git rev-parse --abbrev-ref HEAD) 
+  git push ...$args --set-upstream $upstream (git rev-parse --abbrev-ref HEAD)
 }
 export def gpull [--upstream(-u): string = "origin"] {
-  git pull --set-upstream $upstream (git rev-parse --abbrev-ref HEAD) 
+  git pull --set-upstream $upstream (git rev-parse --abbrev-ref HEAD)
 }
-# git rebase 
-export alias grb = git rebase 
+# git rebase
+export alias grb = git rebase
 # git rebase interactive
 export alias grbi = git rebase --interactive
 # git rebase abort
@@ -172,11 +172,11 @@ export alias grbc = git rebase --continue
 use ~/src/nushell-config/src/git-worktree.nu 'git worktree bare-path'
 # git cd to root (bare or worktree)
 def --env groot [] {
- if ((git worktree bare-path) == null) { 
-   cd (git rev-parse --show-toplevel) 
+ if ((git worktree bare-path) == null) {
+   cd (git rev-parse --show-toplevel)
  } else {
-   cd (git worktree bare-path) 
- } 
+   cd (git worktree bare-path)
+ }
 }
 # git cd to root (bare or worktree)
-export alias cdroot = groot 
+export alias cdroot = groot
