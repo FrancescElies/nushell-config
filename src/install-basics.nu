@@ -159,10 +159,14 @@ export def "install rust-devtools" [] {
     # amp
     amber ast-grep fastmod tokei secure_remove
     cargo-show-asm cargo-info cargo-watch cargo-expand cargo-miri
-    cargo-mutants cargo-udeps cargo-sweep
+    cargo-mutants cargo-udeps cargo-sweep cargo-binutils
     git-delta biodiff difftastic fnm huniq mdbook porsmo
     bacon checkexec watchexec-cli hwatch
   ]
+
+  # needed by cargo-binutils
+  rustup component add llvm-tools
+
   # py-spy
   print $"cargo will install: ($cargo_pkgs | path join ' ')"
   cargo binstall -y ...$cargo_pkgs
