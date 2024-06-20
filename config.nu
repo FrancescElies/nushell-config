@@ -9,6 +9,7 @@ use ~/src/nushell-config/src/symlinks.nu *
 use ~/src/nushell-config/src/my-functions.nu *
 use ~/src/nushell-config/src/my-configs.nu *
 use ~/src/nushell-config/src/maxmsp-functions.nu *
+use ~/src/nushell-config/src/history-utils.nu *
 use ~/src/nushell-config/src/wibu.nu *
 use ~/src/nushell-config/src/git.nu *
 use ~/src/nushell-config/src/git-worktree.nu *
