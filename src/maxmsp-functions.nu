@@ -4,11 +4,11 @@ export alias rg-max = rg --type-add 'max:*.{maxhelp,maxpat,json}' -t max
 # Cycling '74 Max cli wrap
 export def maxmsp [maxpat?: path] {
     let max_exe = match $nu.os-info.name {
-      "windows" => `C:/Program Files/Cycling '74/Max 8/Max.exe`
+      "windows" => "C:/Program Files/Cycling '74/Max 8/Max.exe"
       "macos" => "/Applications/Max.app/Contents/MacOS/Max",
       _ => { error make {msg: "not implemented" } }
     }
-    if ($maxpat == null) { ^$max_exe } else { ^$max_exe ($maxpat | path expand) }
+    if ($maxpat == null) { run-external $max_exe } else { run-external $max_exe ($maxpat | path expand) }
 }
 
 # opens maxpreferences.maxpref

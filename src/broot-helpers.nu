@@ -1,5 +1,3 @@
-# broot only dirs and cd into it
-
 # Launch broot
 #
 # Examples:
@@ -86,7 +84,11 @@ export def --env br [
     if $whale_spotting { $args = ($args | append $'--whale-spotting') }
     if $write_default_conf != null { $args = ($args | append $'--write-default-conf=($write_default_conf)') }
 
-    let cmd_file = ([ $nu.temp-path, $"broot-(random chars).tmp" ] | path join)
+    let cmd_file = (
+        if ($env.XDG_RUNTIME_DIR? | is-not-empty) { $env.XDG_RUNTIME_DIR } else { $nu.temp-path }
+        | path join $"broot-(random chars).tmp"
+    )
+
     touch $cmd_file
     if ($file == null) {
         ^broot --outcmd $cmd_file ...$args
@@ -142,18 +144,20 @@ export extern broot [
     file?: path                     # Root Directory
 ]
 
+# broot only dirs and cd into it
 export def --env brd [] {
   let selectdir_hjson = create-or-get-selectdir-json
   let dir = ^broot --only-folders --conf $selectdir_hjson
   cd $dir
 }
+export alias d = brd
 
 
 # returns a configuration file path with which you can select an entry with the enter key
 export def create-or-get-selectdir-json [] {
-  let select_hjson = ( match $nu.os-info.name { 
-    "windows" => $"($env.APPDATA)/dystroy/broot/config/selectdir.hjson", 
-    _ => $"~/.config/broot/config/selectdir.hjson" 
+  let select_hjson = ( match $nu.os-info.name {
+    "windows" => $"($env.APPDATA)/dystroy/broot/config/selectdir.hjson",
+    _ => $"~/.config/broot/config/selectdir.hjson"
   } | path expand )
   if not ($select_hjson | path exists) {
     echo '
@@ -172,9 +176,9 @@ export def create-or-get-selectdir-json [] {
 }
 
 export def create-or-get-select-json [] {
-  let select_hjson = ( match $nu.os-info.name { 
-    "windows" => $"($env.APPDATA)/dystroy/broot/config/select.hjson", 
-    _ => $"~/.config/broot/config/select.hjson" 
+  let select_hjson = ( match $nu.os-info.name {
+    "windows" => $"($env.APPDATA)/dystroy/broot/config/select.hjson",
+    _ => $"~/.config/broot/config/select.hjson"
   } | path expand )
   if not ($select_hjson | path exists) {
     echo '

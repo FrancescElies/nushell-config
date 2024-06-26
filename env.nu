@@ -100,8 +100,8 @@ use std "path add"
 # path add ($env.HOME | path join ".local" "bin")
 # $env.PATH = ($env.PATH | uniq)
 
-match $nu.os-info.name { 
-    "windows" => { 
+match $nu.os-info.name {
+    "windows" => {
         $env.HOME = ('~' | path expand)
         path add '~/AppData/Local/bob/nvim-bin'
         path add '~/AppData/Roaming/Python/Python312/Scripts'
@@ -115,14 +115,14 @@ match $nu.os-info.name {
         path add '/usr/local/bin'
         path add '~/Library/Python/3.12/bin'
     },
-    "linux" => { 
+    "linux" => {
         path add '/home/linuxbrew/.linuxbrew/bin'
         path add '/usr/local/bin'
         path add '/usr/local/go/bin'
         path add '/var/lib/flatpak/exports/share'
-        path add '~/.local/share/bob/nvim-bin'	
+        path add '~/.local/share/bob/nvim-bin'
         path add "~/.rye/shims"
-        path add '~/.local/share/flatpak/exports/share'	
+        path add '~/.local/share/flatpak/exports/share'
     },
     _ => { $env.PATH = $env.PATH },
 }
@@ -141,7 +141,7 @@ path add (ls ~/bin | where type == dir | get name)
 # add all ~/bin/*/bin to PATH
 path add ( ls ~/bin/*/* | where type == dir | get name | filter {$in|str ends-with "bin"} )
 
-match $nu.os-info.name { 
+match $nu.os-info.name {
     "windows" => { $env.Path = ($env.Path | uniq) },
     _ => { $env.PATH = ($env.PATH | uniq) },
 }
@@ -153,4 +153,4 @@ $env.PYTHONBREAKPOINT = "ipdb.set_trace"
 $env.RUST_BACKTRACE = 1
 $env.RIPGREP_CONFIG_PATH  = ("~/src/nushell-config/src/.ripgreprc" | path expand)
 
-
+$env.RUSTC_WRAPPER = 'sccache'
