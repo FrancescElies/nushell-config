@@ -10,7 +10,10 @@ export def "fix python" [] {
 }
 
 export def "fix rust" [] {
+  print "formatting"
   cargo fmt --all
-  cargo fix
+  print "fix"
+  cargo fix --allow-dirty --allow-staged
+  print "clippy fix"
   cargo clippy --fix --allow-dirty --allow-staged
 }

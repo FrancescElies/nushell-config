@@ -2,16 +2,25 @@ use ~/src/nushell-config/src/rust.nu *
 
 def download-python-docs [py_version: string] {
     let zipfile = 'python-' + $py_version + '-docs-text.zip'
-    if not ($zipfile | path exists) { 
+    if not ($zipfile | path exists) {
       http get $'https://docs.python.org/3/archives/($zipfile)' | save $zipfile
       extract $zipfile
     }
 
     let zipfile = 'python-' + $py_version + '-docs-html.zip'
-    if not ($zipfile | path exists) { 
+    if not ($zipfile | path exists) {
       http get $'https://docs.python.org/3/archives/($zipfile)' | save $zipfile
       extract $zipfile
     }
+}
+
+export def 'docs vim' [] {
+  if not ("~/src/oss/vim-galore" | path exists) {
+    cd ~/src/oss
+    git clone https://github.com/mhinz/vim-galore
+  }
+  cd ~/src/oss/vim-galore
+  nvim *.md
 }
 
 export def 'docs python' [] {
@@ -24,7 +33,7 @@ export def 'docs python' [] {
 }
 
 export def "docs js" [] {
-  if not (~/src/oss/You-Dont-Know-JS | path exists) { 
+  if not ("~/src/oss/You-Dont-Know-JS" | path exists) {
     cd ~/src/oss
     git clone https://github.com/francescelies/You-Dont-Know-JS
   }
