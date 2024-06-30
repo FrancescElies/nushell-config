@@ -115,6 +115,38 @@ export def "install python" [] {
   " | save -f ~/.pip/pip.conf
 }
 
+const basic_cargo_pkgs = [
+  [name description];
+  [bat "cat clone"]
+  [bandwhich "display current network utilization by process, connection and remote host"]
+  [bob-nvim ""]
+  [bottom "graphical process/system monitor for the terminal."]
+  [broot "explore file hierarchies with a tree-like view,"]
+  # [caliguda "nicer dd replacement, burning tool"]
+  [cargo-update "update dependencies as recorded in local lock file"]
+  [diskonaut "find whale files that eat up disk space"]
+  [fclones "finds and removes duplicate files"]
+  [fd-find "find entries in your filesystem"]
+  [gimoji "copy emoji to clipboard, or add them to commit messages"]
+  [hexyl "hex viewer"]
+  [just "just a command runner https://github.com/casey/just"]
+  [killport "kill processes running on specied port"]
+  [kondo "Kondo recursively cleans project directories."]
+  [miniserve "serve some files over HTTP right now!"]
+  [mprocs "tui for running multiple processes"]
+  [nu "nushell language and shell"]
+  [ouch "extract/compress files"]
+  [pastel "generate, analyze, convert and manipulate colors"]
+  [pgen "passphrase generator"]
+  [pueue "run tasks in the background"]
+  [rustscan ""]
+  [sscache "build caching tool"]
+  [tealdeer "TLDR client"]
+  # tenki tty-clock with weather effect written by Rust, tty-clock with weather effect written by Rust
+  [trippy "network diagnostic tool"]
+  [xh "http requests"]
+]
+
 export def "install rust" [] {
 
   let filename = match $nu.os-info.name {
@@ -124,14 +156,9 @@ export def "install rust" [] {
 
   install cargo-binstall
 
-  let cargo_pkgs = [
-    kondo tealdeer bat broot fd-find bob-nvim diskonaut killport
-    nu pueue bottom ouch pgen mprocs fclones just hexyl du-dust
-    pastel trippy miniserve rustscan xh cargo-update
-  ]
   # py-spy
-  print $"cargo will install: ($cargo_pkgs | path join ' ')"
-  cargo binstall -y ...$cargo_pkgs
+  print $"cargo will install: ($basic_cargo_pkgs | path join ' ')"
+  cargo binstall -y ...($basic_cargo_pkgs | get name)
 
   cp ~/.cargo/bin/nu* ~/bin
   let wormhole_url = match $nu.os-info.name {
@@ -154,21 +181,43 @@ export def "install rust" [] {
 
 }
 
+const dev_cargo_pkgs = [
+  [name description];
+  # amp
+  [amber "replace things in files (sed like tool)"]
+  [ast-grep "Search and Rewrite code at large scale using precise AST pattern"]
+  [fastmod ""]
+  [tokei "count lines of code"]
+  [secure_remove ""]
+  [cargo-show-asm ""]
+  [cargo-info ""]
+  [cargo-watch ""]
+  [cargo-expand ""]
+  [cargo-miri ""]
+  [cargo-mutants ""]
+  [cargo-udeps ""]
+  [cargo-sweep ""]
+  [cargo-binutils ""]
+  [git-delta ""]
+  [biodiff ""]
+  [difftastic ""]
+  [fnm ""]
+  [huniq ""]
+  [mdbook ""]
+  [porsmo "pomodoro"]
+  [bacon "watches your rust project and runs jobs in background"]
+  [checkexec ""]
+  [watchexec-cli ""]
+  [hwatch ""]
+]
+
 export def "install rust-devtools" [] {
-  let cargo_pkgs = [
-    # amp
-    amber ast-grep fastmod tokei secure_remove
-    cargo-show-asm cargo-info cargo-watch cargo-expand cargo-miri
-    cargo-mutants cargo-udeps cargo-sweep cargo-binutils
-    git-delta biodiff difftastic fnm huniq mdbook porsmo
-    bacon checkexec watchexec-cli hwatch
-  ]
 
   # needed by cargo-binutils
-  rustup component add llvm-tools
+  rustup component add llvm-tools -y
 
   # py-spy
-  print $"cargo will install: ($cargo_pkgs | path join ' ')"
-  cargo binstall -y ...$cargo_pkgs
+  print $"cargo will install: ($dev_cargo_pkgs | path join ' ')"
+  cargo binstall -y ...$dev_cargo_pkgs
 }
 
