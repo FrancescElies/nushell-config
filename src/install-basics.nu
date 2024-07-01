@@ -140,7 +140,7 @@ const basic_cargo_pkgs = [
   [pgen "passphrase generator"]
   [pueue "run tasks in the background"]
   [rustscan ""]
-  [sscache "build caching tool"]
+  [sccache "build caching tool"]
   [tealdeer "TLDR client"]
   # tenki tty-clock with weather effect written by Rust, tty-clock with weather effect written by Rust
   [trippy "network diagnostic tool"]
@@ -157,10 +157,10 @@ export def "install rust" [] {
   install cargo-binstall
 
   # py-spy
-  print $"cargo will install: ($basic_cargo_pkgs | path join ' ')"
+  print $"cargo will install: ($basic_cargo_pkgs | get name | path join ' ')"
   cargo binstall -y ...($basic_cargo_pkgs | get name)
 
-  cp ~/.cargo/bin/nu* ~/bin
+  try{ cp ~/.cargo/bin/nu* ~/bin }
   let wormhole_url = match $nu.os-info.name {
       "windows" => {
         cd ~/bin
@@ -217,7 +217,7 @@ export def "install rust-devtools" [] {
   rustup component add llvm-tools -y
 
   # py-spy
-  print $"cargo will install: ($dev_cargo_pkgs | path join ' ')"
+  print $"cargo will install: ($dev_cargo_pkgs | get name | path join ' ')"
   cargo binstall -y ...$dev_cargo_pkgs
 }
 

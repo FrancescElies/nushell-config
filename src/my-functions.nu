@@ -235,3 +235,10 @@ export def "my apps" [] {
   let go_bin_pkgs = (ls ~/go/bin/* | where type == file | get name)
   return ($venv_pkgs | append $bin_pkgs | append $cargo_bin_pkgs | append $go_bin_pkgs)
 }
+
+# https://youtu.be/YXrb-DqsBNU?feature=shared&t=546
+# https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html#available-checks
+def compiler-flags [] {
+  print "-Werror -Wall -Wextra -fsanitize=address,undefined,float-divide-by-zero,unsigned-integer-overflow,implicit-conversion,local-bounds,nullability" 
+}
+

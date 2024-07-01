@@ -1,3 +1,5 @@
+# https://github.com/nushell/nu_scripts/blob/main/modules/history-utils/mod.nu
+
 def quote [...t] {
     $"'($t | str join '')'"
 }
