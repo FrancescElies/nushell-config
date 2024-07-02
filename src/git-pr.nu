@@ -8,19 +8,6 @@ export def "pr create" [
   az repos pr create --draft --open --auto-complete -t $target_branch -o table
 }
 
-export def "commit" [
-  title: string
-  body: string = ""
-] {
-  let branch = (git rev-parse --abbrev-ref HEAD)
-  let story = ($branch | parse -r '[Ss]tory(?<story>\d+)' | get story?.0? )
-  let task = ($branch | parse -r '[Tt]ask(?<task>\d+)' | get task?.0? )
-  mut args = []
-  if $story != null { $args = ($args | append $'--message="story #($story)"') }
-  if $task != null { $args = ($args | append $'--message="task #($task)"') }
-  git commit --message $"($title)" --message $"($body)" ...$args
-}
-
 export def "pr diff" [path: path = .] {
   let this_branch = (git rev-parse --abbrev-ref HEAD)
   git diff $this_branch ( git merge-base $this_branch origin/master )
