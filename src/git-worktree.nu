@@ -22,13 +22,32 @@ export def --env "gwcd" [
   cd $path
 }
 
+export def "git map-branch-with-task" [
+  --story(-s): int  # story number
+  --task(-t): int   # task number
+] {
+  let file = ("~/.gitconfig-branch-tickets.toml" | path expand)
+  if not ($file | path exists) { touch $file }
+  let branch_name = (git rev-parse --abbrev-ref HEAD)
+  let branches = (open $file
+  | get --ignore-errors branches
+  | append [{name: $branch_name, story: $story, task: $task}]
+  | uniq)
+  {branches: $branches} | save -f $file
+}
+
 # git worktree add, convenience wrapper around
 export def "gwadd" [
   branch: string@"nu-complete git worktree paths"  # branch to create or checkout
   path?: string  # path to create worktree, e.g. ../emergency-fix
   --upstream(-u): string = "origin"  # sets upstream
   --startingat(-@): string = ""  # create a new branch starting at <commit-ish> e.g. master,
+  # custom stuff
+  --story(-s): int  # story number
+  --task(-t): int   # task number
 ] {
+  git map-branch-with-task -s $story -t $task
+
   let repo_name = pwd | path basename | str replace ".git" ""
   # make sure path has no slashes coming from branch name
   let branch_folder = $branch | str replace -a -r `[\\/]` "-"
