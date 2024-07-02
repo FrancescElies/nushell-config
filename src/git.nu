@@ -1,3 +1,4 @@
+use utils.nu print_purple
 # https://www.youtube.com/watch?v=aolI_Rz0ZqY
 # Apply some useful defaults
 # git my-defaults
@@ -110,16 +111,18 @@ export def "gcm" [
   title: string
   body: string = ""
 ] {
-  let current_branch = (git rev-parse --show-toplevel)
-  let branch = (git rev-parse --abbrev-ref HEAD)
-  let story = ( open ~\.gitconfig-branch-tickets.toml
+  let current_branch = (git rev-parse --abbrev-ref HEAD)
+  print_purple $"current_branch ($current_branch)"
+  let tickets = (open ~\.gitconfig-branch-tickets.toml)
+  print_purple $"($tickets)"
+  let story = ( $tickets
               | get branches
               | where name == $current_branch
-              | get --ignore-errors story )
-  let task = ( open ~\.gitconfig-branch-tickets.toml
-              | get branches
-              | where name == $current_branch
-              | get --ignore-errors task )
+              | get story.0 )
+  let task = ( $tickets
+             | get branches
+             | where name == $current_branch
+             | get task.0 )
 
   mut rest = []
   if $story != null { $rest = ($rest | append $'--message="story #($story)"') }
