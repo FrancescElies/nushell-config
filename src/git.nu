@@ -122,8 +122,8 @@ export def "gcm" [
               | get --ignore-errors task )
 
   mut rest = []
-  if $story != null { $rest = ($args | append $'--message="story #($story)"') }
-  if $task != null { $rest = ($args | append $'--message="task #($task)"') }
+  if $story != null { $rest = ($rest | append $'--message="story #($story)"') }
+  if $task != null { $rest = ($rest | append $'--message="task #($task)"') }
 
   git commit --message $title --message $body ...$rest
 }

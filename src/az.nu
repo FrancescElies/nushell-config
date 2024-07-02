@@ -30,3 +30,29 @@ export def "build download" [
 ] {
   az pipelines runs artifact download --artifact-name Installer --path ~/Downloads --run-id $build_id
 }
+
+# NOTE: https://learn.microsoft.com/en-us/azure/devops/boards/queries/wiql-syntax?view=azure-devops#where-clause
+
+# list my open stories
+export def "az my-stories" [] {
+  (az boards query --output table --wiql "SELECT [System.Id], [System.Title], [System.State], [System.IterationPath] FROM workitems WHERE [system.assignedto] = @me AND [System.WorkItemType] <> 'Task' AND [system.state] NOT IN ('Closed', 'Obsolete') ORDER BY [Microsoft.VSTS.Common.Priority], [System.ChangedDate] DESC" -o json
+  | from json
+  | select fields | flatten
+  )
+}
+
+# list my open tasks
+export def "az my-tasks" [] {
+  (az boards query --output table --wiql "SELECT [System.Id], [System.Title], [System.State], [System.IterationPath] FROM workitems WHERE [system.assignedto] = @me AND [System.WorkItemType] = 'Task' AND [system.state] NOT IN ('Closed', 'Obsolete') ORDER BY [Microsoft.VSTS.Common.Priority], [System.ChangedDate] DESC" -o json
+  | from json
+  | select fields | flatten
+  )
+}
+
+# list open items
+export def "az my-items" [] {
+  (az boards query --output table --wiql "SELECT [System.Id], [System.Title], [System.State], [System.IterationPath] FROM workitems WHERE [system.assignedto] = @me AND [system.state] NOT IN ('Closed', 'Obsolete') ORDER BY [Microsoft.VSTS.Common.Priority], [System.ChangedDate] DESC" -o json
+  | from json
+  | select fields | flatten
+  )
+}

@@ -1,4 +1,5 @@
 use utils.nu print_purple
+use az.nu *
 
 # worktree
 # --------
@@ -11,6 +12,16 @@ export def gwtl [] {
 
 def "nu-complete git worktree paths" [] { gwtl | get path }
 
+
+def "nu-complete my-tasks" [] {
+  (az my-tasks) | rename -c {System.Id: value,  System.Title: description} | select value description
+}
+
+def "nu-complete my-stories" [] {
+  (az my-stories) | rename -c {System.Id: value,  System.Title: description} | select value description
+}
+
+
 # git worktree change directory
 export def --env "gwtcd" [
   path?: string@"nu-complete git worktree paths"  # branch to create or checkout
@@ -20,8 +31,8 @@ export def --env "gwtcd" [
 
 export def "git map-branch-with-task" [
   --branch(-b): string  # branch name
-  --story(-s): int  # story number
-  --task(-t): int   # task number
+  --story(-s): int@"nu-complete my-stories"  # story number
+  --task(-t): int@"nu-complete my-tasks"   # task number
 ] {
   let file = ("~/.gitconfig-branch-tickets.toml" | path expand)
   if not ($file | path exists) { touch $file }
@@ -42,8 +53,8 @@ export def "gwtadd" [
   --upstream(-u): string = "origin"  # sets upstream
   --startingat(-@): string = ""  # create a new branch starting at <commit-ish> e.g. master,
   # custom stuff
-  --story(-s): int  # story number
-  --task(-t): int   # task number
+  --story(-s): int@"nu-complete my-stories"  # story number
+  --task(-t): int@"nu-complete my-tasks"   # task number
 ] {
   git map-branch-with-task -b $branch -s $story -t $task
 
