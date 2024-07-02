@@ -4,8 +4,8 @@ export def "az machines-usercapabilities" [
   has_capability: string = 'Python311',
   --output (-o): string = 'yaml'  # json, jsonc, none, table, tsv, yaml, yamlc.
 ] {
-  (  az pipelines agent list 
-     --pool-id 1 --include-capabilities -o $output 
+  (  az pipelines agent list
+     --pool-id 1 --include-capabilities -o $output
      --query $"[?userCapabilities.($has_capability)!=null].{capabilities: userCapabilities, name: name}"
   )
 }
@@ -14,8 +14,8 @@ export def "az machines-usercapabilities" [
 export def "az machines" [
   --output (-o): string = 'yaml'  # json, jsonc, none, table, tsv, yaml, yamlc.
 ] {
-  (  az pipelines agent list 
-     --pool-id 1 --include-capabilities -o $output 
+  (  az pipelines agent list
+     --pool-id 1 --include-capabilities -o $output
      --query "[*]"
   )
 }

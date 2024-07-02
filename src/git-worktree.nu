@@ -3,15 +3,11 @@ use utils.nu print_purple
 # worktree
 # --------
 
-# git worktree
-export alias gwt = git worktree
 # git worktree list
 export def gwtl [] {
   ^git worktree list | lines | parse --regex `(?P<path>.+?) +(?P<commit>\w+) \[(?P<branch>.+)\]`
 }
 
-# gwta -B emergency-fix ../emergency-fix master
-export alias gwta = git worktree add
 
 def "nu-complete git worktree paths" [] { gwtl | get path }
 
@@ -23,12 +19,15 @@ export def --env "gwtcd" [
 }
 
 export def "git map-branch-with-task" [
+  --branch(-b): string  # branch name
   --story(-s): int  # story number
   --task(-t): int   # task number
 ] {
   let file = ("~/.gitconfig-branch-tickets.toml" | path expand)
   if not ($file | path exists) { touch $file }
-  let branch_name = (git rev-parse --abbrev-ref HEAD)
+
+  let branch_name = if ($branch | is-empty) { (git rev-parse --abbrev-ref HEAD) } else { $branch }
+
   print_purple $"mapping ($branch_name) to story=($story) task=($task) in ($file)"
   let branches = (open $file
   | get --ignore-errors branches
@@ -37,36 +36,34 @@ export def "git map-branch-with-task" [
   {branches: $branches} | save -f $file
 }
 
-# git worktree add, convenience wrapper around
+# git worktree add, convenience wrapper around git worktree add -b emergency-fix ../emergency-fix master
 export def "gwtadd" [
-  branch: string # branch to create or checkout
+  branch: string # branch to create or checkout, e.g. cesc/1234-my-description
   --upstream(-u): string = "origin"  # sets upstream
   --startingat(-@): string = ""  # create a new branch starting at <commit-ish> e.g. master,
   # custom stuff
   --story(-s): int  # story number
   --task(-t): int   # task number
 ] {
-  git map-branch-with-task -s $story -t $task
+  git map-branch-with-task -b $branch -s $story -t $task
 
   let repo_name = pwd | path basename | str replace ".git" ""
   # make sure path has no slashes coming from branch name
   let branch_folder = $branch | str replace -a -r `[\\/]` "-"
   let path = (".." | path join $"($repo_name)-($branch_folder)")
 
-  # create a new branch named $branch starting at <commit-ish>,
-  # e.g.
-  # git worktree add -b emergency-fix ../emergency-fix master
   if $startingat == "" {
     print_purple $"git worktree add -B ($branch) ($path)"
-    git worktree add -b $branch $path
+    git worktree add -B $branch $path
   } else {
     print_purple $"git worktree add -B ($branch) ($path) ($startingat)"
-    git worktree add -b $branch $path $startingat
+    git worktree add -B $branch $path $startingat
   }
 
-  print_purple "set-upstream"
+  print_purple $"set-upstream ($upstream) for ($branch)"
   cd $path
-  git pull --set-upstream $upstream $branch
+  git push --set-upstream $upstream $branch
+
   print_purple "gl -n 3"
   gl -n 3
 }
