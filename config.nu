@@ -1,5 +1,5 @@
 # https://github.com/nushell/nushell/blob/main/crates/nu-utils/src/sample_config/default_config.nu
-
+use ~/.cache/starship/init.nu
 source ~/src/nushell-config/src/this-machine.nu
 
 use ~/src/nushell-config/src/my-configs.nu *

@@ -69,11 +69,10 @@ export def "gwtadd" [
   } else {
     print_purple $"git worktree add -B ($branch) ($path) ($startingat)"
     git worktree add -B $branch $path $startingat
+    print_purple $"set-upstream ($upstream) for ($branch)"
+    cd $path
+    git pull --set-upstream $upstream $branch
   }
-
-  print_purple $"set-upstream ($upstream) for ($branch)"
-  cd $path
-  git push --set-upstream $upstream $branch
 
   print_purple "gl -n 3"
   gl -n 3

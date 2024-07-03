@@ -56,3 +56,8 @@ export def "az my-items" [] {
   | select fields | flatten
   )
 }
+
+# list my pull requests
+export def "az my-prs" [] {
+  az repos pr list -ojson --query "[].{title: title,createdby: createdBy.displayName, status: status, repo: repository.name, id: pullRequestId}" | from json | where createdby =~ "Francesc" | select id status title
+}

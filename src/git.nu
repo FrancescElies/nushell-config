@@ -125,8 +125,8 @@ export def "gcm" [
              | get task.0 )
 
   mut rest = []
-  if $story != null { $rest = ($rest | append $'--message="story #($story)"') }
-  if $task != null { $rest = ($rest | append $'--message="task #($task)"') }
+  if $story != null { $rest = ($rest | append [-m $"story #($story)"]) }
+  if $task != null { $rest = ($rest | append [-m $"task #($task)"]) }
 
   git commit --message $title --message $body ...$rest
 }
