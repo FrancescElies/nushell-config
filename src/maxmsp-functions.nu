@@ -13,23 +13,23 @@ export def maxmsp [maxpat?: path] {
 
 # opens maxpreferences.maxpref
 export def "maxmsp maxpreferences" [] {
-  nvim `~/AppData/Roaming/Cycling '74/Max 8/Settings/maxpreferences.maxpref`
+  nvim "~/AppData/Roaming/Cycling '74/Max 8/Settings/maxpreferences.maxpref"
 }
 
 # opens maxinterface.json
 export def "maxmsp maxinterface" [] {
-  nvim `C:/Program Files/Cycling '74/Max 8/resources/interfaces/maxinterface.json`
+  nvim "C:/Program Files/Cycling '74/Max 8/resources/interfaces/maxinterface.json"
 }
 
 # goes to Cycling '74/Logs, where .dmp files are
 export def --env "maxmsp dumps" [] {
-  cd `~/AppData/Roaming/Cycling '74/Logs`
+  cd "~/AppData/Roaming/Cycling '74/Logs"
   br
 }
 
 # opens Max examples
 export def --env "maxmsp examples" [] {
-  cd `~/src/oss/max-sdk/source`
+  cd "~/src/oss/max-sdk/source"
   br
 }
 
@@ -40,21 +40,21 @@ export def "maxmsp api" [] {
     cd ~/src/oss
     git clone https://github.com/Cycling74/max-sdk
   }
-  cd `~/src/oss/max-sdk/source/max-sdk-base/c74support/max-includes`
+  cd "~/src/oss/max-sdk/source/max-sdk-base/c74support/max-includes"
   br
 }
 
 
 # opens latest .dmp file from Cycling '74/Logs
 export def "maxmsp latest-dump" [] {
-  let latest_dump = (ls `~/AppData/Roaming/Cycling '74/Logs` | sort-by modified | last)
+  let latest_dump = (ls "~/AppData/Roaming/Cycling '74/Logs" | sort-by modified | last)
   print $"opening ($latest_dump.name)"
   start $latest_dump.name
 }
 
 # opens Max 8 Packages folder
 export def --env "maxmsp packages" [] {
-  cd `~/Documents/Max 8/Packages`
+  cd "~/Documents/Max 8/Packages"
   br
 }
 
