@@ -147,11 +147,16 @@ const basic_cargo_pkgs = [
   [xh "http requests"]
 ]
 
-export def "install rust" [] {
+export def "install-or-upgrade rust" [] {
 
-  let filename = match $nu.os-info.name {
-      "windows" => { input $"(ansi purple_bold)Install https://rustup.rs/(ansi reset) once done press enter." },
-      _ => { curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh },
+  if (which rustup | is-empty ) {
+    let filename = match $nu.os-info.name {
+        "windows" => { input $"(ansi purple_bold)Install https://rustup.rs/(ansi reset) once done press enter." },
+        _ => { curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh },
+    }
+  } else {
+    print "rustup already installed"
+    rustup upgrade
   }
 
   install cargo-binstall
@@ -214,10 +219,10 @@ const dev_cargo_pkgs = [
 export def "install rust-devtools" [] {
 
   # needed by cargo-binutils
-  rustup component add llvm-tools -y
+  rustup component add llvm-tools
 
   # py-spy
   print $"cargo will install: ($dev_cargo_pkgs | get name | path join ' ')"
-  cargo binstall -y ...$dev_cargo_pkgs
+  cargo binstall -y ...($dev_cargo_pkgs | get name)
 }
 
