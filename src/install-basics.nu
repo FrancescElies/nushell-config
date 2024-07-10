@@ -160,7 +160,7 @@ export def "install rust" [] {
   print $"cargo will install: ($basic_cargo_pkgs | get name | path join ' ')"
   cargo binstall -y ...($basic_cargo_pkgs | get name)
 
-  try{ cp ~/.cargo/bin/nu* ~/bin }
+  cp ~/.cargo/bin/nu* ~/bin
   let wormhole_url = match $nu.os-info.name {
       "windows" => {
         cd ~/bin
