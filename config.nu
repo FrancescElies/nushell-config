@@ -33,6 +33,7 @@ use ~/src/nushell-config/src/utils.nu *
 use ~/src/nushell-config/src/vpn.nu
 use ~/src/nushell-config/src/wibu.nu *
 
+use ~/src/nushell-config/src/ssh-completions.nu *
 use ~/src/nushell-config/src/btm-completions.nu *
 use ~/src/nushell-config/src/cargo-completions.nu *
 use ~/src/nushell-config/src/git-completions.nu *
