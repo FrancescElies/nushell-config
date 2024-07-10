@@ -40,6 +40,7 @@ use ~/src/nushell-config/src/git-completions.nu *
 use ~/src/nushell-config/src/just-completions.nu *
 use ~/src/nushell-config/src/miniserve-completions.nu *
 use ~/src/nushell-config/src/rg-completions.nu *
+use ~/src/nushell-config/src/bat-completions.nu *
 use ~/src/nushell-config/src/rustup-completions.nu *
 use ~/src/nushell-config/src/vscode-completions.nu *
 
