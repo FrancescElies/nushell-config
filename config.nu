@@ -1,5 +1,10 @@
 # https://github.com/nushell/nushell/blob/main/crates/nu-utils/src/sample_config/default_config.nu
+
+# cargo binstall starship
+# mkdir ~/.cache/starship
+# starship init nu | save -f ~/.cache/starship/init.nu
 use ~/.cache/starship/init.nu
+
 source ~/src/nushell-config/src/this-machine.nu
 
 use ~/src/nushell-config/src/my-configs.nu *
