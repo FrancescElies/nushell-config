@@ -7,13 +7,12 @@ export def main [] {
     mkdir ~/src/work
     mkdir ~/src/oss
 
-    let broot_dir = match $nu.os-info.name {
+    let broot_config_dir = match $nu.os-info.name {
         "windows" => '~\AppData\Roaming\dystroy\broot' ,
         _ => "~/.config/broot" ,
     }
-    if not ($broot_dir | path exists) { mkdir $broot_dir }
-    symlink --force ~/src/nushell-config/broot-config/conf.hjson ($broot_dir | path join "config" "verbs.hjson")
-    symlink --force ~/src/nushell-config/broot-config/verbs.hjson ($broot_dir | path join "config" "conf.hjson")
+    if not ($broot_config_dir | path exists) { mkdir $broot_config_dir }
+    symlink --force ~/src/nushell-config/broot-config $broot_config_dir
 
     let nushell_dir = match $nu.os-info.name {
         "windows" => '~\AppData\Roaming\nushell' ,

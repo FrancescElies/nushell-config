@@ -100,11 +100,11 @@ verbs: [
     #  to a destination you type.
     # It uses a star, which needs the shell for expansion. That's
     #  why such verb must have the `from_shell: true` parameter.
-    # {
-    #     invocation: "cpa {dest}"
-    #     external: "cp -r {directory}/* {dest}"
-    #     from_shell: true
-    # }
+    {
+        invocation: "cpa {dest}"
+        external: "cp -r {directory}/* {dest}"
+        from_shell: true
+    }
 
     # Here's an example of a shortcut bringing you to your home directory
     # {
@@ -114,29 +114,29 @@ verbs: [
     # }
 
     # Here's going to the work-dir root of the current git repository
-    # {
-    #     invocation: gtr
-    #     execution: ":focus {git-root}"
-    # }
+    {
+        invocation: gtr
+        execution: ":focus {git-root}"
+    }
 
     # A popular set of shortcuts for going up and down:
     #
-    # {
-    #     key: ctrl-k
-    #     execution: ":line_up"
-    # }
-    # {
-    #     key: ctrl-j
-    #     execution: ":line_down"
-    # }
-    # {
-    #     key: ctrl-u
-    #     execution: ":page_up"
-    # }
-    # {
-    #     key: ctrl-d
-    #     execution: ":page_down"
-    # }
+    {
+        key: ctrl-k
+        execution: ":line_up"
+    }
+    {
+        key: ctrl-j
+        execution: ":line_down"
+    }
+    {
+        key: ctrl-u
+        execution: ":page_up"
+    }
+    {
+        key: ctrl-d
+        execution: ":page_down"
+    }
 
     # If you develop using git, you might like to often switch
     # to the git status filter:

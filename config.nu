@@ -13,6 +13,8 @@ use ~/src/nushell-config/src/my-functions.nu *
 use ~/src/nushell-config/src/task.nu
 
 use ~/src/nushell-config/src/az.nu *
+
+use ~/src/nushell-config/broot-config/launcher/nushell/br *
 use ~/src/nushell-config/src/broot-helpers.nu *
 use ~/src/nushell-config/src/clipboard.nu *
 use ~/src/nushell-config/src/docs.nu *
