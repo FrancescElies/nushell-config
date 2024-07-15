@@ -32,7 +32,7 @@ default_flags: -hg
 # directory, set a terminal_title pattern by uncommenting one of
 # the examples below and tuning it to your taste.
 #
-# terminal_title: "[broot] {git-name}"
+terminal_title: "[broot] {git-name}"
 # terminal_title: "{file} 🐄"
 # terminal_title: "-= {file-name} =-"
 
@@ -171,10 +171,11 @@ special_paths: {
 # uncomment and modify the next section if you want to color
 # file name depending on their extension
 #
-# ext_colors: {
-#     png: rgb(255, 128, 75)
-#     rs: yellow
-# }
+ext_colors: {
+    rs: rgb(255, 128, 75)
+    py: rgb(255, 204, 5)
+    toml: "ansi(105)"
+}
 
 ###############################################################
 # Max file size for content search
