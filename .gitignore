@@ -2,4 +2,6 @@ history.txt
 src/this-machine.nu
 src/linux/gnome-apps/start-tor-browser.desktop
 src/linux/gnome-apps/Browser
-broot-config/launcher/bash/
+broot-config/launcher
+broot-config/config/
+broot-config/data/
