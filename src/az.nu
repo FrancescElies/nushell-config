@@ -38,6 +38,7 @@ export def "az my-stories" [] {
   (az boards query --output table --wiql "SELECT [System.Id], [System.Title], [System.State], [System.IterationPath] FROM workitems WHERE [system.assignedto] = @me AND [System.WorkItemType] <> 'Task' AND [system.state] NOT IN ('Closed', 'Obsolete') ORDER BY [Microsoft.VSTS.Common.Priority], [System.ChangedDate] DESC" -o json
   | from json
   | select fields | flatten
+  | sort-by System.State
   )
 }
 
@@ -46,6 +47,7 @@ export def "az my-tasks" [] {
   (az boards query --output table --wiql "SELECT [System.Id], [System.Title], [System.State], [System.IterationPath] FROM workitems WHERE [system.assignedto] = @me AND [System.WorkItemType] = 'Task' AND [system.state] NOT IN ('Closed', 'Obsolete') ORDER BY [Microsoft.VSTS.Common.Priority], [System.ChangedDate] DESC" -o json
   | from json
   | select fields | flatten
+  | sort-by System.State
   )
 }
 
@@ -54,6 +56,7 @@ export def "az my-items" [] {
   (az boards query --output table --wiql "SELECT [System.Id], [System.Title], [System.State], [System.IterationPath] FROM workitems WHERE [system.assignedto] = @me AND [system.state] NOT IN ('Closed', 'Obsolete') ORDER BY [Microsoft.VSTS.Common.Priority], [System.ChangedDate] DESC" -o json
   | from json
   | select fields | flatten
+  | sort-by System.State
   )
 }
 
