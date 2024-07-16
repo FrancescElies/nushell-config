@@ -156,4 +156,9 @@ $env.RIPGREP_CONFIG_PATH  = ("~/src/nushell-config/src/.ripgreprc" | path expand
 $env.BR_INSTALL = no
 $env.BROOT_CONFIG_DIR = ("~/src/nushell-config/broot-config" | path expand)
 
+# cd ~/src/oss; git clone https://github.com/microsoft/vcpkg.git
+# cd vcpkg; ./bootstrap-vcpkg
+$env.VCPKG_ROOT = ("~/src/oss/vcpkg" | path expand)
+path add $env.VCPKG_ROOT
+
 $env.RUSTC_WRAPPER = 'sccache'
