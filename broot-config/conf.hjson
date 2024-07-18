@@ -173,11 +173,11 @@ special_paths: {
 # uncomment and modify the next section if you want to color
 # file name depending on their extension
 #
-ext_colors: {
-    rs: rgb(255, 128, 45)
-    py: rgb(255, 204, 5)
-    toml: "ansi(105)"
-}
+# ext_colors: {
+#     rs: rgb(255, 128, 45)
+#     py: rgb(255, 204, 5)
+#     toml: "ansi(105)"
+# }
 
 ###############################################################
 # Max file size for content search

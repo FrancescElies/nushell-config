@@ -115,7 +115,7 @@ verbs: [
 
     # Here's going to the work-dir root of the current git repository
     {
-        invocation: gtr
+        invocation: cdroot
         execution: ":focus {git-root}"
     }
 
