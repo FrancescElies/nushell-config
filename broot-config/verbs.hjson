@@ -32,6 +32,37 @@ verbs: [
         execution: "nvim +{line} {file}"
         leave_broot: false
     }
+    {
+        name: edit-code
+        key: enter
+        extensions: [
+            js
+            ts
+            md
+            nu
+            py
+            rs
+            toml
+        ]
+        execution: "nvim +{line} {file}"
+        working_dir: "{root}"
+        leave_broot: false
+    }
+    {
+        name: open-maxpat
+        key: enter
+        extensions: [
+            maxpat
+        ]
+        execution: "wezterm cli split-pane --right -- nu -e \"maxmsp {file}\""
+        working_dir: "{root}"
+        leave_broot: false
+    }
+    {
+        invocation: "open"
+        key: ctrl-o
+        internal: ":open_stay"
+    }
 
     # Example 1: launching `tail -n` on the selected file (leaving broot)
     # {
@@ -109,8 +140,10 @@ verbs: [
     # Here's an example of a shortcut bringing you to your home directory
     {
         invocation: home
-        key: ctrl-home
-        execution: ":focus ~"
+        key: ctrl-h
+        #execution: ":focus ~"
+        cmd: ":toggle_files;:focus ~"
+
     }
 
     # Here's going to the work-dir root of the current git repository
@@ -136,6 +169,22 @@ verbs: [
     {
         key: ctrl-d
         execution: ":page_down"
+    }
+
+    { key: "ctrl-up", internal: ":focus .." }
+    { // make :go an alias of :focus
+        invocation: "go {path}",
+        internal: ":focus {path}"
+    }
+
+    # Only available when a directory is selected,
+    # Copies this directory with a name partially composed from
+    # the command and focus the new directory in a new panel
+    {
+        name: "backup"
+        invocation: "bu {name}"
+        cmd: ":cp {file}-back_{name};:!focus {file}-back_{name}"
+        apply_to: directory
     }
 
     # If you develop using git, you might like to often switch

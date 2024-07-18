@@ -147,6 +147,7 @@ match $nu.os-info.name {
 }
 
 
+$env.SHELL = "nu"  # makes broot open nu
 $env.EDITOR = "nvim"
 $env.PYTHONUNBUFFERED = 1
 $env.PYTHONBREAKPOINT = "ipdb.set_trace"
