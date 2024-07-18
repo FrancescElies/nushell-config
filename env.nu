@@ -156,9 +156,15 @@ $env.RIPGREP_CONFIG_PATH  = ("~/src/nushell-config/src/.ripgreprc" | path expand
 $env.BR_INSTALL = no
 $env.BROOT_CONFIG_DIR = ("~/src/nushell-config/broot-config" | path expand)
 
-# cd ~/src/oss; git clone https://github.com/microsoft/vcpkg.git
-# cd vcpkg; ./bootstrap-vcpkg
-$env.VCPKG_ROOT = ("~/src/oss/vcpkg" | path expand)
-path add $env.VCPKG_ROOT
+
+if $nu.os-info.name == "windows" {
+    # cd ~/src/oss; git clone https://github.com/microsoft/vcpkg.git
+    # cd vcpkg; ./bootstrap-vcpkg
+    $env.VCPKG_ROOT = ("~/src/oss/vcpkg" | path expand)
+    path add $env.VCPKG_ROOT
+    # https://github.com/sfackler/rust-openssl
+    # https://stackoverflow.com/questions/50625283/how-to-install-openssl-in-windows-10
+    $env.X86_64_PC_WINDOWS_MSVC_OPENSSL_DIR = 'C:\Program Files\OpenSSL-Win64'
+}
 
 $env.RUSTC_WRAPPER = 'sccache'
