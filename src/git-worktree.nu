@@ -63,6 +63,7 @@ export def "gwtadd" [
   let branch_folder = $branch | str replace -a -r `[\\/]` "-"
   let path = (".." | path join $"($repo_name)-($branch_folder)")
 
+  git fetch --all
   if $startingat == "" {
     print_purple $"git worktree add -B ($branch) ($path)"
     git worktree add -B $branch $path

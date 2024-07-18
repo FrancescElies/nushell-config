@@ -10,6 +10,7 @@ export def maxmsp [maxpat?: path] {
     }
     if ($maxpat == null) { run-external $max_exe } else { run-external $max_exe ($maxpat | path expand) }
 }
+export alias maxpats = br --cmd ".maxpat&t/"
 
 # opens maxpreferences.maxpref
 export def "maxmsp maxpreferences" [] {

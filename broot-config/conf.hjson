@@ -174,7 +174,7 @@ special_paths: {
 # file name depending on their extension
 #
 ext_colors: {
-    rs: rgb(255, 128, 75)
+    rs: rgb(255, 128, 45)
     py: rgb(255, 204, 5)
     toml: "ansi(105)"
 }
