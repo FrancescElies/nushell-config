@@ -8,7 +8,7 @@ export alias pipx = python ~/bin/pipx.pyz
 
 # list open listening ports
 export def ports [] {
-  match $nu.os-info.name { 
+  match $nu.os-info.name {
       "windows" => { error make {msg: "netstat -tulnp ???"} },
       # netstat columns in unix
       # Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID Program name
@@ -20,6 +20,14 @@ export def ports [] {
 export alias lg = lazygit
 # extracts archives with different extensions
 export alias extract = ouch decompress
+
+export def "wezterm logs" [] {
+  if $nu.os-info.name == "linux" {
+    br $env.XDG_RUNTIME_DIR/wezterm
+  } else {
+    wezterm-logs = br ~/.local/share/wezterm/
+  }
+}
 
 # terrastruct/d2 diagram helper
 # echo 'x -> y -> z' | save -f diagram.d2
@@ -43,7 +51,7 @@ export def "how do i" [...words: string] { tgpt $"how do i ($words | str join ' 
 export def time-today [] { ~/src/nushell-config/.venv/bin/python ~/src/nushell-config/src/time_spent_today.py }
 
 
-# compact ls 
+# compact ls
 export def lsg [] { ls | sort-by type name -i | grid -c | str trim }
 
 # jdownloader downloads info (requires a jdown python script)
@@ -87,7 +95,7 @@ export def `7zmax` [
 # convert SVGs to PDFs
 export def svgs-to-pdfs [path: path] {
   for file in (ls *svg) {
-    $file.name 
+    $file.name
     | inkscape -f ($in | path join) -A ($in | update extension ' pdf' | path join)
   }
 }
@@ -105,13 +113,13 @@ export alias k = killn
 # print worth watching speakers
 export def speakers [] {
   return {
-    python: "David Beazley, Raymond Hettinger, Hynek Schlawack" 
-    rust: "Jon Gjengset" 
+    python: "David Beazley, Raymond Hettinger, Hynek Schlawack"
+    rust: "Jon Gjengset"
   }
 }
 
 export def clang-commands-json [] {
-  if not ("~/src/clang-power-tools" | path exists) { 
+  if not ("~/src/clang-power-tools" | path exists) {
     cd ~/src
     git clone https://github.com/Caphyon/clang-power-tools
   }
@@ -151,7 +159,7 @@ export def "reduce-size png" [
 
 export def "reduce-size jpg" [
   infile: path, # a jpg/jpeg file
-  --size: string = '100k', # 
+  --size: string = '100k', #
   --outdir: path = './_reduced_images'
 ] {
   mkdir $outdir
@@ -189,16 +197,16 @@ export def watch-cwd [] { watch . { |op, path, new_path| $"($op) ($path) ($new_p
 export def who-locks [path: path] {
   if $nu.os-info.name == "windows" {
     # https://learn.microsoft.com/en-us/sysinternals/downloads/handle
-    handle $path 
+    handle $path
   } else {
     lsof $path
   }
 }
 
 export def lldbb-attach-windows-process [processid: int] {
-  with-env {Path: ($env.Path | prepend "C:/Python310") ,PYTHONHOME: `C:/Python310`, PYTHONPATH: "C:/Python310/Lib"} { 
+  with-env {Path: ($env.Path | prepend "C:/Python310") ,PYTHONHOME: `C:/Python310`, PYTHONPATH: "C:/Python310/Lib"} {
     python --version
-    lldb -p $processid 
+    lldb -p $processid
   }
 }
 
@@ -239,6 +247,6 @@ export def "my apps" [] {
 # https://youtu.be/YXrb-DqsBNU?feature=shared&t=546
 # https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html#available-checks
 def compiler-flags [] {
-  print "-Werror -Wall -Wextra -fsanitize=address,undefined,float-divide-by-zero,unsigned-integer-overflow,implicit-conversion,local-bounds,nullability" 
+  print "-Werror -Wall -Wextra -fsanitize=address,undefined,float-divide-by-zero,unsigned-integer-overflow,implicit-conversion,local-bounds,nullability"
 }
 

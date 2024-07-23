@@ -39,6 +39,9 @@ verbs: [
             js
             ts
             md
+            hjson
+            json
+            lua
             nu
             py
             rs
@@ -54,7 +57,7 @@ verbs: [
         extensions: [
             maxpat
         ]
-        execution: "wezterm cli split-pane --right -- nu -e \"maxmsp {file}\""
+        execution: "wezterm cli split-pane --bottom -- nu -e \"maxmsp {file}\""
         working_dir: "{root}"
         leave_broot: false
     }
