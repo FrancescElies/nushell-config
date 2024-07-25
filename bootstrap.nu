@@ -14,6 +14,14 @@ export def main [] {
     if not ($broot_config_dir | path exists) { mkdir $broot_config_dir }
     symlink --force ~/src/nushell-config/broot-config $broot_config_dir
 
+    let bacon_config_dir = match $nu.os-info.name {
+        "windows" => '~\AppData\Roaming\dystroy\bacon' ,
+        "macos" => '~/Library/Application Support/org.dystroy.bacon/' ,
+        _ => "~/.config/bacon" ,
+    }
+    if not ($bacon_config_dir | path exists) { mkdir $bacon_config_dir }
+    symlink --force ~/src/nushell-config/bacon-config $bacon_config_dir
+
     let nushell_dir = match $nu.os-info.name {
         "windows" => '~\AppData\Roaming\nushell' ,
         "macos" => "~/Library/Application Support/nushell" ,
