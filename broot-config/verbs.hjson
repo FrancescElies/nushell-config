@@ -36,16 +36,18 @@ verbs: [
         name: edit-code
         key: enter
         extensions: [
-            js
-            ts
-            md
             hjson
+            js
             json
             lua
+            md
             nu
             py
             rs
             toml
+            justfile
+            ts
+            txt
         ]
         execution: "nvim +{line} {file}"
         working_dir: "{root}"
