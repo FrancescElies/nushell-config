@@ -15,7 +15,7 @@ export def main [] {
     symlink --force ~/src/nushell-config/broot-config $broot_config_dir
 
     let bacon_config_dir = match $nu.os-info.name {
-        "windows" => '~\AppData\Roaming\dystroy\bacon' ,
+        "windows" => '~\AppData\Roaming\dystroy\bacon\config' ,
         "macos" => '~/Library/Application Support/org.dystroy.bacon/' ,
         _ => "~/.config/bacon" ,
     }
