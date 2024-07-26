@@ -48,5 +48,6 @@ export def "rust links" [] {
         [dystroy "https://dystroy.org/blog/how-not-to-learn-rust/#mistake-1-not-be-prepared-for-the-first-high-step"]
         [half-hour https://fasterthanli.me/articles/a-half-hour-to-learn-rust]
         [unsafe-rust-and-zig https://zackoverflow.dev/writing/unsafe-rust-vs-zig]
+        [negative-programming https://github.com/tigerbeetle/tigerbeetle/blob/main/docs/TIGER_STYLE.md]
     ]
 }
