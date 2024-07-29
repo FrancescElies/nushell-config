@@ -11,7 +11,7 @@ export def "install for-windows" [] {
   # winget upgrade --slient --all
 
   [
-    wez.wezterm bmatzelle.Gow gerardog.gsudo
+    wez.wezterm bmatzelle.Gow gerardog.gsudo charmbracelet.glow
     VideoLAN.VLC SumatraPDF.SumatraPDF
     Casey.Just BurntSushi.ripgrep.MSVC sharkdp.fd junegunn.fzf Nushell.Nushell
     JesseDuffield.lazygit Git.Git GitHub.GitHubDesktop GitHub.GitLFS
@@ -27,7 +27,7 @@ export def "install for-windows" [] {
 }
 
 export def "install for-mac" [] {
- try { brew install gh vlc git neovim restic fd-find ripgrep lazygit cmake fzf meson ninja }
+ try { brew install gh vlc git neovim restic fd-find ripgrep lazygit cmake fzf meson ninja glow }
  try { brew install --cask wezterm gimp vlc obs neovide neovim nushell }
 }
 
