@@ -168,4 +168,4 @@ if $nu.os-info.name == "windows" {
     $env.X86_64_PC_WINDOWS_MSVC_OPENSSL_DIR = 'C:\Program Files\OpenSSL-Win64'
 }
 
-$env.RUSTC_WRAPPER = 'sccache'
+# $env.RUSTC_WRAPPER = 'sccache'
