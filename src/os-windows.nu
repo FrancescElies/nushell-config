@@ -15,10 +15,10 @@ export def "msi silent-install" [msi_file: path] {
   msiexec.exe /i $msi_file /QN /L*V $logfile
 }
 
-def "nu-complete installed-pkgs" [] { 
-  ( open /tmp/installed-pkgs.txt | lines 
-  | each { $in | str trim } 
-  | filter {not ($in | is-empty) } 
+def "nu-complete installed-pkgs" [] {
+  ( open /tmp/installed-pkgs.txt | lines
+  | each { $in | str trim }
+  | filter {not ($in | is-empty) }
   )
 }
 
@@ -29,6 +29,15 @@ export def "msi uninstall" [
 ] {
   # example
   print wmic Product Where "Name='Max 8 (64-bit)'" Call Uninstall /NoInteractive
+}
+
+def "nu-complete processes" [] { ps | select pid name | sort-by name | rename -c {pid: value, name: description} }
+
+export def attach-to-process-with-windbg [
+  --pid(-p): int@"nu-complete processes"  # process-id
+] {
+
+   ~/AppData/Local/Microsoft/WindowsApps/WinDbgX.exe -p $pid
 }
 
 export def open-in-windbg [executable: path] {
