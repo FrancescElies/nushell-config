@@ -44,6 +44,7 @@ use ~/src/nushell-config/src/rg-completions.nu *
 use ~/src/nushell-config/src/bat-completions.nu *
 use ~/src/nushell-config/src/rustup-completions.nu *
 use ~/src/nushell-config/src/vscode-completions.nu *
+use ~/src/nushell-config/src/wezterm-completions.nu *
 
 use ~/src/nushell-config/src/fnm.nu *
 fnm-setup
@@ -353,9 +354,9 @@ $env.config = {
                     code: "overlay use env.nu"
                 }
                 {
-                    |before, after|  
+                    |before, after|
                         print (pwd);
-                        if ((ls | length) < 30) { print (lsg) } else { print "folder has +30 files" } 
+                        if ((ls | length) < 30) { print (lsg) } else { print "folder has +30 files" }
                 }
                 # windows activate venv
                 {
