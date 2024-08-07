@@ -39,6 +39,8 @@ verbs: [
             hjson
             js
             json
+            yaml
+            yml
             lua
             md
             nu

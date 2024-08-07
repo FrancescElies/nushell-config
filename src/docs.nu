@@ -1,4 +1,11 @@
 use ~/src/nushell-config/src/rust.nu *
+# how to bug reports http://sscce.org/
+export def "docs bug-reports" [] {
+    [
+        [name link];
+        ["Short, Self Contained, Correct (Compilable), Example" http://sscce.org/]
+    ]
+}
 
 def download-python-docs [py_version: string] {
     let zipfile = 'python-' + $py_version + '-docs-text.zip'
