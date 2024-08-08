@@ -4,11 +4,10 @@ use az.nu *
 # worktree
 # --------
 
-# git worktree list
-export def gwtl [] {
-  ^git worktree list | lines | parse --regex `(?P<path>.+?) +(?P<commit>\w+) \[(?P<branch>.+)\]`
+# git worktree list as table
+export def --wrapped "git worktree listt" [...rest] {
+  ^git worktree list ...$rest | lines | parse --regex `(?P<path>.+?) +(?P<commit>\w+) \[(?P<branch>.+)\]`
 }
-
 
 def "nu-complete git worktree paths" [] { gwtl | get path }
 
@@ -21,9 +20,8 @@ def "nu-complete my-stories" [] {
   (az my-stories) | rename -c {System.Id: value,  System.Title: description} | select value description
 }
 
-
 # git worktree change directory
-export def --env "gwtcd" [
+export def --env "git worktree cd" [
   path?: string@"nu-complete git worktree paths"  # branch to create or checkout
 ] {
   cd $path
@@ -47,10 +45,10 @@ export def "git map-branch-with-task" [
   {branches: $branches} | save -f $file
 }
 
-# git worktree add, convenience wrapper around git worktree add -b emergency-fix ../emergency-fix master
-export def "gwtadd" [
+# git worktree add - convenience wrapper
+export def "git worktree add-work" [
   branch: string # branch to create or checkout, e.g. cesc/1234-my-description
-  --upstream(-u): string = "origin"  # sets upstream
+  path: path # checkout location
   --startingat(-@): string = ""  # create a new branch starting at <commit-ish> e.g. master,
   # custom stuff
   --story(-s): int@"nu-complete my-stories"  # story number
@@ -60,8 +58,8 @@ export def "gwtadd" [
 
   let repo_name = pwd | path basename | str replace ".git" ""
   # make sure path has no slashes coming from branch name
-  let branch_folder = $branch | str replace -a -r `[\\/]` "-"
-  let path = (".." | path join $"($repo_name)-($branch_folder)")
+  # let branch_folder = $branch | str replace -a -r `[\\/]` "-"
+  # let path = (".." | path join $"($repo_name)-($branch_folder)")
 
   git fetch --all
   if $startingat == "" {
@@ -70,27 +68,17 @@ export def "gwtadd" [
   } else {
     print_purple $"git worktree add -B ($branch) ($path) ($startingat)"
     git worktree add -B $branch $path $startingat
-    print_purple $"set-upstream ($upstream) for ($branch)"
-    cd $path
-    git pull --set-upstream $upstream $branch
   }
-
-  print_purple "gl -n 3"
-  gl -n 3
 }
 
 # git worktree remove
-export def --env "gwtr" [
+export def --env "git worktree remove2" [
   path: string@"nu-complete git worktree paths"
   --force(-f)
 ] {
-  if $force { git clean -fdx; git worktree remove --force $path } else { git worktree remove $path }
+  if $force { git clean -fdx; git worktree remove --force $path }
+  else { git worktree remove $path }
 }
-
-# git worktree prune
-export alias gwtprune = git worktree prune
-# git worktree repair
-export alias gwtrepair = git worktree repair
 
 export def "git worktree bare-path" [] {
   ^git worktree list | parse --regex `(?P<path>.+?) +\(bare\)` | get 0?.path?
