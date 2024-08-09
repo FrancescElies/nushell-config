@@ -9,7 +9,7 @@ export def --wrapped "git worktree listt" [...rest] {
   ^git worktree list ...$rest | lines | parse --regex `(?P<path>.+?) +(?P<commit>\w+) \[(?P<branch>.+)\]`
 }
 
-def "nu-complete git worktree paths" [] { gwtl | get path }
+def "nu-complete git worktree paths" [] { git worktree listt | get path }
 
 
 def "nu-complete my-tasks" [] {
