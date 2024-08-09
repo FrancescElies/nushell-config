@@ -118,6 +118,7 @@ export def "install python" [] {
 const basic_cargo_pkgs = [
   [name description];
   [bat "cat clone"]
+  [mdcat "cat for markdown"]
   [bandwhich "display current network utilization by process, connection and remote host"]
   [bob-nvim ""]
   [bottom "graphical process/system monitor for the terminal."]
