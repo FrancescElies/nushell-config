@@ -500,6 +500,7 @@ $env.config = {
     keybindings: [
         # Custom commands
         # ---------------
+        # ctrl-h    : go [h]ome
         # ctrl-f    : [f]ind file with broot
         # ctrl-g    : open lazy[g]it
         # ctrl-u    : go [u]p to repo root directory
@@ -535,6 +536,16 @@ $env.config = {
              event: {
                send: executehostcommand,
                cmd: "br"
+             }
+        }
+        {
+             name: go_Home
+             modifier: control
+             keycode: char_h
+             mode: [vi_normal, vi_insert]
+             event: {
+               send: executehostcommand,
+               cmd: "cd ~"
              }
         }
         {
