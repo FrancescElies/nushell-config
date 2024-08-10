@@ -498,6 +498,14 @@ $env.config = {
     ]
 
     keybindings: [
+        # Custom commands
+        # ---------------
+        # ctrl-f    : [f]ind file with broot
+        # ctrl-g    : open lazy[g]it
+        # ctrl-u    : go [u]p to repo root directory
+        # ctrl-j    : [j]ump to folder using broot
+        # ctrl-space: expand abbreviation
+
         # https://www.nushell.sh/blog/2024-05-15-top-nushell-hacks.html
         {
             name: abbr
@@ -510,6 +518,46 @@ $env.config = {
             ]
         }
         {
+             name: open_lazyGit
+             modifier: control
+             keycode: char_g
+             mode: [vi_normal, vi_insert]
+             event: {
+               send: executehostcommand,
+               cmd: "lazygit"
+             }
+        }
+        {
+             name: Find_file_with_broot
+             modifier: control
+             keycode: char_f
+             mode: [vi_normal, vi_insert]
+             event: {
+               send: executehostcommand,
+               cmd: "br"
+             }
+        }
+        {
+             name: go_Up_to_root_dir
+             modifier: control
+             keycode: char_u
+             mode: [vi_normal, vi_insert]
+             event: {
+               send: executehostcommand,
+               cmd: "cdroot"
+             }
+        }
+        {
+             name: change_dir_with_broot
+             modifier: control
+             keycode: char_j
+             mode: [vi_normal, vi_insert]
+             event: {
+               send: executehostcommand,
+               cmd: "cd (^broot --only-folders --conf ~/src/nushell-config/broot-config/selectdir.hjson)"
+             }
+       }
+       {
             name: completion_menu
             modifier: none
             keycode: tab
