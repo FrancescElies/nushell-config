@@ -250,6 +250,13 @@ preview_transformers: [
         mode: text
         command: [ "jq" ]
     }
+
+    {
+        input_extensions: [ "md" ]
+        output_extension: md
+        mode: text
+        command: [ "mdcat" ]
+    }
 ]
 
 ###############################################################
