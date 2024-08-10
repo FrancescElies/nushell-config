@@ -147,9 +147,15 @@ verbs: [
     # Here's an example of a shortcut bringing you to your home directory
     {
         invocation: home
+        key: ctrl-f
+        cmd: ":toggle_files"
+
+    }
+
+    {
+        invocation: home
         key: ctrl-h
-        #execution: ":focus ~"
-        cmd: ":toggle_files;:focus ~"
+        cmd: ":focus ~"
 
     }
 
