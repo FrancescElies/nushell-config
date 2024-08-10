@@ -107,12 +107,23 @@ verbs: [
     # and {file-dot-extension} and the auto_exec verb property which
     # allows verbs to stay unexecuted until you hit enter
     {
-        invocation: "backup {version}"
-        key: ctrl-b
-        leave_broot: false
+        invocation: "backup {version}",
+        key: "ctrl-b",
+        leave_broot: false,
         auto_exec: false
-        execution: "cp -r {file} {parent}/{file-stem}-{version}{file-dot-extension}"
+        execution: "cp -r {file} {parent}/{file-stem}-back_{version}{file-dot-extension}"
     }
+
+    # Only available when a directory is selected,
+    # Copies this directory with a name partially composed from
+    # the command and focus the new directory in a new panel
+    {
+        name: "backup"
+        invocation: "bu {version}"
+        cmd: ":cp {file}-back_{name};:!focus {file}-back_{version}"
+        apply_to: directory
+    }
+
 
     # By default, `rm` does the system rm, and completely removes
     # the file. If you prefer to have the file moved to the system
@@ -125,39 +136,19 @@ verbs: [
 
     # This verb lets you launch a terminal on ctrl-T
     # (on exit you'll be back in broot)
-    {
-        invocation: terminal
-        key: ctrl-t
-        execution: "$SHELL"
-        set_working_dir: true
-        leave_broot: false
-    }
+    { invocation: "terminal", key: "ctrl-t", execution: "$SHELL", set_working_dir: true, leave_broot: false }
 
     # Here's an example of a verb needing the shell capabilities.
     # It copies all children of the currently selected directory
     #  to a destination you type.
     # It uses a star, which needs the shell for expansion. That's
     #  why such verb must have the `from_shell: true` parameter.
-    {
-        invocation: "cpa {dest}"
-        external: "cp -r {directory}/* {dest}"
-        from_shell: true
-    }
+    { invocation: "cpa {dest}", external: "cp -r {directory}/* {dest}", from_shell: true }
 
     # Here's an example of a shortcut bringing you to your home directory
-    {
-        invocation: home
-        key: ctrl-f
-        cmd: ":toggle_files"
+    { invocation: "home", key: "ctrl-f", cmd: ":toggle_files" }
 
-    }
-
-    {
-        invocation: home
-        key: ctrl-h
-        cmd: ":focus ~"
-
-    }
+    { invocation: "home", key: "ctrl-h", cmd: ":focus ~" }
 
     # Here's going to the work-dir root of the current git repository
     {
@@ -177,16 +168,6 @@ verbs: [
     { // make :go an alias of :focus
         invocation: "go {path}",
         internal: ":focus {path}"
-    }
-
-    # Only available when a directory is selected,
-    # Copies this directory with a name partially composed from
-    # the command and focus the new directory in a new panel
-    {
-        name: "backup"
-        invocation: "bu {name}"
-        cmd: ":cp {file}-back_{name};:!focus {file}-back_{name}"
-        apply_to: directory
     }
 
     # If you develop using git, you might like to often switch
