@@ -2,8 +2,16 @@
 # chcp 65001
 # export alias vim = "c:/tools/vim/vim90/vim.exe"
 
+# https://github.com/winsiderss/systeminformer
+
 # NOTE: broken
 # overlay use ~/src/nushell-config/.venv/scripts/activate.nu
+
+# https://learn.microsoft.com/en-us/sysinternals/downloads/procdump
+export extern "procdump" [
+  ...args: any                              # Arguments to be passed to your program
+  # command?: string@"nu-complete rustup"
+]
 
 # https://stackoverflow.com/questions/8560166/silent-installation-of-a-msi-package
 export def "msi silent-install" [msi_file: path] {
