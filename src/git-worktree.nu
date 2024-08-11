@@ -76,8 +76,11 @@ export def --env "git worktree remove2" [
   path: string@"nu-complete git worktree paths"
   --force(-f)
 ] {
-  if $force { git clean -fdx; git worktree remove --force $path }
-  else { git worktree remove $path }
+  if $force {
+    git clean -fdx; git worktree remove --force $path
+  } else {
+    git worktree remove $path
+  }
 }
 
 export def "git worktree bare-path" [] {
