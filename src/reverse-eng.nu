@@ -8,6 +8,8 @@
 
 # https://github.com/capstone-engine/capstone?tab=readme-ov-file
 
+# https://blog.devit.co/diving-into-radare2/
+
 # radare2
 export alias r2 = radare2
 
@@ -17,7 +19,7 @@ export def "rabin2 quick" [file: path, ] {
   let folder = ($file | path basename)
   mkdir $folder
   cd $folder
-  let file = ($file | path expand) 
+  let file = ($file | path expand)
 
   rabin2 -I  $file | save -f file-type.txt
   rabin2 -i  $file | save -f imports.txt
@@ -34,3 +36,13 @@ export def "rabin2 quick" [file: path, ] {
   ls $folder
 }
 
+# https://github.com/DynamoRIO/drmemory
+
+# binary instrumentation
+#
+# https://github.com/DynamoRIO/dynamorio
+#
+# https://medium.com/@schirrmacher/analyzing-whatsapp-calls-176a9e776213
+# frida-trace -U WhatsApp -m "*[* *Secret*]" -m "*[* *secret*]"
+# frida-trace -U WhatsApp -m "*[* *crypt*]" -i "*crypt*"
+# frida-trace -U WhatsApp -i “*signal*”
