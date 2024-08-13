@@ -4,6 +4,10 @@ export def notes [] {
   broot .
 }
 
+# create big file
+# use std
+# "a" | std repeat (128kib | into int) | str join "" o> bigfile.txt
+
 export alias pipx = python ~/bin/pipx.pyz
 
 # list open listening ports
