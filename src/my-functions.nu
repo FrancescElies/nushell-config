@@ -7,6 +7,7 @@ export def notes [] {
 # create big file
 # use std
 # "a" | std repeat (128kib | into int) | str join "" o> bigfile.txt
+# 1..(128kib | into int) | each { 'a' } | save -f bigfile.txt
 
 export alias pipx = python ~/bin/pipx.pyz
 
