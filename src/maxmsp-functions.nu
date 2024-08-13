@@ -18,6 +18,32 @@ export def --env "Max settings" [] {
   br
 }
 
+# sets Max Audio Status
+export def "Max set-audio-status" [] {
+  let path = ("~/AppData/Roaming/Cycling '74/Max 8/Settings/admme@.txt" | path expand)
+  print "Before"
+  bat --paging never $path
+
+  let contents = [
+    'max v2;'
+    'dsp prefsr 44100;'
+    'dsp prefiovs 512;'
+    'dsp prefsigvs 256;'
+    'dsp takeover 0;'
+    'dsp cpulimit 0;'
+    'dsp optimize 1;'
+    '#AD version 20030520;'
+    '#AD mmeinputdevicepref "Microphone Array (Realtek(R) Au";'
+    '#AD mmeoutputdevicepref "Lautsprecher (Realtek(R) Audio)";'
+    '#AD threadpriority 3;'
+    '#AD mme_latency 7;'
+  ]
+  $contents | to text | save -f $path
+  print "Now"
+  bat --paging never $path
+}
+
+
 # opens maxpreferences.maxpref
 export def "Max maxpreferences" [] {
   cd "~/AppData/Roaming/Cycling '74/Max 8/Settings"
