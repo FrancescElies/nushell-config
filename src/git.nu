@@ -114,7 +114,7 @@ export def "gcm" [
   let current_branch = (git rev-parse --abbrev-ref HEAD)
   print_purple $"current_branch ($current_branch)"
   let tickets = (open ~\.gitconfig-branch-tickets.toml)
-  print_purple $"($tickets)"
+  print_purple "~/.gitconfig-branch-tickets.toml 👀"
   let story = ( $tickets
               | get branches
               | where name == $current_branch

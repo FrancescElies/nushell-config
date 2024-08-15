@@ -49,7 +49,7 @@ verbs: [
             maxpat
             maxhelp
         ]
-        execution: "wezterm cli split-pane --bottom -- nu -e \"maxmsp {file}\""
+        execution: "wezterm cli split-pane --bottom -- nu -e \"Max {file}\""
         working_dir: "{root}"
         leave_broot: false
     }
