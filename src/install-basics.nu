@@ -10,6 +10,11 @@ export def "install for-windows" [] {
   print "sysinternals https://learn.microsoft.com/en-us/sysinternals/downloads/"
   # winget upgrade --slient --all
 
+  # random list for windows:
+  # Ditto Eartrumpet Xmousebuttoncontrol
+  # sketchup8 dupeguru winmerge handbrake
+
+  # available packages at https://github.com/microsoft/winget-pkgs/
   [
     wez.wezterm bmatzelle.Gow gerardog.gsudo charmbracelet.glow
     VideoLAN.VLC SumatraPDF.SumatraPDF
@@ -17,6 +22,7 @@ export def "install for-windows" [] {
     JesseDuffield.lazygit Git.Git GitHub.GitHubDesktop GitHub.GitLFS
     Microsoft.AzureCLI GitHub.cli DBBrowserForSQLite.DBBrowserForSQLite
     Terrastruct.D2
+    Flameshot.Flameshot
     Python.Python.3.12 GoLang.Go Rustlang.Rustup
     mesonbuild.meson Ninja-build.Ninja Kitware.CMake Graphviz.Graphviz
     OBSProject.OBSStudio Neovide.Neovide GIMP.GIMP 7zip.7zip Audacity.Audacity
@@ -28,7 +34,7 @@ export def "install for-windows" [] {
 
 export def "install for-mac" [] {
  try { brew install gh vlc git neovim restic fd-find ripgrep lazygit cmake fzf meson ninja glow }
- try { brew install --cask wezterm gimp vlc obs neovide neovim nushell }
+ try { brew install --cask wezterm gimp vlc obs neovide neovim nushell flameshot }
 }
 
 export def "install custom-pkgs for-debian" [] {
@@ -74,6 +80,7 @@ export def "install pkgs for-debian" [] {
     ffmpeg libasound2-dev rfkill
     printer-driver-splix
     nginx
+    flameshot
     python3.11-full python3-pipdeptree python3-pip
   ]
 

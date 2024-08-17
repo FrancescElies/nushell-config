@@ -73,6 +73,8 @@ export extern "sigcheck" [
 ]
 
 # https://learn.microsoft.com/en-us/sysinternals/downloads/procdump
+# Examples:
+# > prodcump -ma
 export extern "procdump" [
   ...args: any                              # Arguments to be passed to your program
   # command?: string@"nu-complete rustup"
