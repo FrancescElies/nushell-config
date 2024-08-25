@@ -211,13 +211,6 @@ export def which-process-locks [path: path] {
   }
 }
 
-export def lldbb-attach-windows-process [processid: int] {
-  with-env {Path: ($env.Path | prepend "C:/Python310") ,PYTHONHOME: `C:/Python310`, PYTHONPATH: "C:/Python310/Lib"} {
-    python --version
-    lldb -p $processid
-  }
-}
-
 export def "youtube download" [
   url: string
   --audio-only  # downloads mp3 only
