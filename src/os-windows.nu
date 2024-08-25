@@ -108,22 +108,22 @@ export def "msi uninstall" [
 
 def "nu-complete processes" [] { ps | select pid name | sort-by name | rename -c {pid: value, name: description} }
 
-export def "attach to-process-with-windbg" [
+export def "windbg attach-to-process" [
   --pid(-p): int@"nu-complete processes"  # process-id
 ] {
 
    ~/AppData/Local/Microsoft/WindowsApps/WinDbgX.exe -p $pid
 }
 
-export def "attach to-process-with-lldbb" [processid: int] {
+export def "windbg open-exe" [executable: path] {
+   ~/AppData/Local/Microsoft/WindowsApps/WinDbgX.exe $executable
+}
+
+export def "lldb attach-to-process" [processid: int] {
   with-env {Path: ($env.Path | prepend "C:/Python310") ,PYTHONHOME: `C:/Python310`, PYTHONPATH: "C:/Python310/Lib"} {
     python --version
     lldb -p $processid
   }
-}
-
-export def open-in-windbg [executable: path] {
-   ~/AppData/Local/Microsoft/WindowsApps/WinDbgX.exe $executable
 }
 
 export def --wrapped "cargo test-windbg" [
