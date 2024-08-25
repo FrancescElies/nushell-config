@@ -24,10 +24,10 @@
 
 use utils.nu print_purple
 
-export module container { 
+export module container {
     export def up [
       --addr: string = "10.14.0.2/16",
-	  --conf: path = /etc/wireguard/wg-ch.conf
+      --conf: path = /etc/wireguard/wg-ch.conf
     ] {
 
         print_purple create netns called container
@@ -71,7 +71,7 @@ export module container {
     }
 }
 
-export module route-all-traffic { 
+export module route-all-traffic {
 
     # ensures all traffic goes through vpn
     export def up [
@@ -87,7 +87,7 @@ export module route-all-traffic {
         sudo ip netns add physical
 
         print_purple "creating wg0"
-        # The birthplace is now the "physical" namespace, 
+        # The birthplace is now the "physical" namespace,
         # which means the wireguard ciphertext UDP sockets will be assigned to devices like eth0 and wlan0
         sudo ip -n physical link add wg0 type wireguard
         # We can now move it into the "init" (1) namespace and it will still remember its birthplace for the sockets.
