@@ -141,7 +141,7 @@ export def "reduce-size video" [input_video: path] {
   ffmpeg -i $input_video -vcodec libx265 -crf 28  $"($input_video).mp4"
 }
 
-# reduce any image file size
+# reduces jpg size using mogrify from imagemagick
 export def "reduce-size image-quality" [
   infile: path, # an image file supported by imagemagick
   quality: int = 10, # JPEG(1=lowest, 100=highest) see https://imagemagick.org/script/command-line-options.php#quality for other formats
@@ -153,6 +153,7 @@ export def "reduce-size image-quality" [
   mogrify -quality $quality $outfile
 }
 
+# reduces jpg size using pngcrush
 export def "reduce-size png" [
   infile: path, # a jpg/jpeg file
   --outdir: path = './_reduced_images'
@@ -163,6 +164,7 @@ export def "reduce-size png" [
   pngcrush $infile $outfile
 }
 
+# reduces jpg size using jpegoptim
 export def "reduce-size jpg" [
   infile: path, # a jpg/jpeg file
   --size: string = '100k', #
@@ -174,7 +176,7 @@ export def "reduce-size jpg" [
   jpegoptim --size $size $outfile
 }
 
-# reduces pdf size
+# reduces pdf size using gs
 export def "reduce-size pdf" [
   infile: path, # a pdf file
   outputpdf: path = output.pdf,
@@ -200,7 +202,7 @@ export def concat-videos-in-folder [folder: path] {
 
 export def watch-cwd [] { watch . { |op, path, new_path| $"($op) ($path) ($new_path)"} }
 
-export def who-locks [path: path] {
+export def which-process-locks [path: path] {
   if $nu.os-info.name == "windows" {
     # https://learn.microsoft.com/en-us/sysinternals/downloads/handle
     handle $path
