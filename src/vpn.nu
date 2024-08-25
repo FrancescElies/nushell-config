@@ -49,6 +49,9 @@ export module container {
         print_purple wg0 up
         sudo ip -n container link set wg0 up
 
+        print_purple bring up loopback interface for container netns
+        sudo ip netns exec container ip link set dev lo up
+
         print_purple adding default route
         sudo ip -n container route add default dev wg0
     }
