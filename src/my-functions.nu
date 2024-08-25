@@ -30,7 +30,7 @@ export def "wezterm logs" [] {
   if $nu.os-info.name == "linux" {
     br $env.XDG_RUNTIME_DIR/wezterm
   } else {
-    wezterm-logs = br ~/.local/share/wezterm/
+    br ~/.local/share/wezterm/
   }
 }
 

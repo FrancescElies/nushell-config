@@ -159,7 +159,7 @@ $env.PYTHONBREAKPOINT = "ipdb.set_trace"
 $env.RUST_BACKTRACE = 1
 $env.RIPGREP_CONFIG_PATH  = ("~/src/nushell-config/src/.ripgreprc" | path expand)
 
-$env.BR_INSTALL = no
+$env.BR_INSTALL = "no"
 $env.BROOT_CONFIG_DIR = ("~/src/nushell-config/broot-config" | path expand)
 
 
