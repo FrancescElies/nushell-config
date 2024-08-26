@@ -27,6 +27,7 @@ export def "rust libraries" [] {
         [shuttle testing "sync chaos"]
         ["quickcheck/proptest" testing "(hypothesis like): value chaos (fuzzing, figure out inputs with erroneous behaviour)"]
         [cargo-mutants testing "logic chaos, e.g. switches sign of +/- boundary conditions"]
+        [criterion testing "detect and measure performance improvements "]
         [loom testing "interleaves all possible permutation of thread interactions"]
         [kani testing "symbolic execution, interprets the code and sees which values to set to execute other branches"]
         [ai-callgrind bench "runs measurement through valgrind and reports number of instructions executed (dont use time or ops/sec, this depends on external processes)"]
