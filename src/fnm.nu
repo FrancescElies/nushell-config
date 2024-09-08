@@ -6,7 +6,6 @@ export def --env "fnm-setup" [] {
       "windows" => $"($env.FNM_MULTISHELL_PATH)",
       _ => $"($env.FNM_MULTISHELL_PATH)/bin",
     }
-    print "fnm setup"
     path add $node_path
   }
-} 
+}
