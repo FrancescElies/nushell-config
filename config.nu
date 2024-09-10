@@ -498,15 +498,6 @@ $env.config = {
     ]
 
     keybindings: [
-        # Custom commands
-        # ---------------
-        # ctrl-h    : go [h]ome
-        # ctrl-f    : [f]ind file with broot
-        # ctrl-g    : open lazy[g]it
-        # ctrl-u    : go [u]p to repo root directory
-        # ctrl-j    : [j]ump to folder using broot
-        # ctrl-space: expand abbreviation
-
         # https://www.nushell.sh/blog/2024-05-15-top-nushell-hacks.html
         {
             name: abbr
@@ -845,3 +836,14 @@ $env.config = {
         }
     ]
 }
+
+const custom_banner = [
+    [keybinging  description];
+    [ctrl-g      "open lazy[g]it"]
+    [ctrl-h      "go [h]ome"]
+    [ctrl-f      "[f]ind file with broot"]
+    [ctrl-j      "[j]ump to folder using broot"]
+    [ctrl-u      "go [u]p to repo root directory"]
+    [ctrl-space  "expand abbreviation"]
+]
+print $custom_banner
