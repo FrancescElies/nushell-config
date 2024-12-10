@@ -213,17 +213,23 @@ export def which-process-locks [path: path] {
 
 export def "youtube download" [
   url: string
-  --audio-only  # downloads mp3 only
-  --update      # updates yt_dlp
+  --audio-only        # downloads mp3 only
+  --sub-lang: string  # with subtitles language, e.g. de, tr, es, en
+  --update            # updates yt_dlp
 ] {
   # alternative https://github.com/iawia002/lux
-   let yt_dlp = "~/bin/yt-dlp" | path expand
-   if (not ($yt_dlp | path exists) or $update) { http get https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp | save -f $yt_dlp }
-   if $audio_only {
-     python $yt_dlp -x --audio-format mp3 $url
-   } else {
-     python $yt_dlp $url
-   }
+  let yt_dlp = "~/bin/yt-dlp" | path expand
+  if (not ($yt_dlp | path exists) or $update) { http get https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp | save -f $yt_dlp }
+
+  mut args = []
+  if $audio_only != null { $args = ($args | append '-x' | append '--audio-format' | append 'mp3') }
+  if $sub_lang != null { $args = ($args | append $'--write-sub --sub-lang ($sub_lang)' ) }
+
+  let bin_python = match $nu.os-info.name {
+      "windows" => "python",
+      _ => "python3",
+  }
+  ^$"($bin_python)" $yt_dlp  ...$args $url
 }
 
 # more robust rsync (works with FAT usbs too) :(-c) checksum, (-r) recursive, (-t) preserve modification times, (-P) keep partially transferred files and show progress

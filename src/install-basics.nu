@@ -33,7 +33,7 @@ export def "install for-windows" [] {
 }
 
 export def "install for-mac" [] {
- try { brew install gh vlc git neovim restic fd-find ripgrep lazygit cmake fzf meson ninja glow }
+ try { brew install gh vlc git neovim restic fd ripgrep lazygit cmake fzf meson ninja glow }
  try { brew install --cask wezterm gimp vlc obs neovide neovim nushell flameshot }
 }
 
@@ -107,10 +107,6 @@ def "install cargo-binstall" [] {
 }
 
 export def "install python" [] {
-  match $nu.os-info.name {
-    "windows" => { input $"(ansi purple_bold)Install https://rye-up.com/(ansi reset) once done press enter." },
-    _ => { curl -sSf https://rye-up.com/get | bash },
-  }
   mkdir ~/.pip/
 
   # prevent pip from installing packages in the global installation
