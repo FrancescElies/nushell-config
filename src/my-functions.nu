@@ -72,14 +72,14 @@ export def --env which-cd [program] {
 }
 
 # date string YYYY-MM-DD
-export def ymd [] { (date now | format date %Y-%m-%d) }
+export def "date format-ymd" [] { (date now | format date %Y-%m-%d) }
 
 # date string DD-MM-YYYY
-export def dmy [] { (date now | format date %d-%m-%Y) }
+export def "date format-dmy" [] { (date now | format date %d-%m-%Y) }
 
-# create directory and cd into it (alias md)
+# create directory and cd into it (alias mcd)
 export def --env mkdircd [dir] { mkdir $dir; cd $dir }
-alias md = mkdircd
+alias mcd = mkdircd
 
 #compress to 7z using max compression
 export def `7zmax` [
@@ -250,6 +250,8 @@ export def "my apps" [] {
   let go_bin_pkgs = (ls ~/go/bin/* | where type == file | get name)
   return ($venv_pkgs | append $bin_pkgs | append $cargo_bin_pkgs | append $go_bin_pkgs)
 }
+
+export def todos [] { mkdircd ~/src/zettelkasten ; nvim todos.md }
 
 # https://youtu.be/YXrb-DqsBNU?feature=shared&t=546
 # https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html#available-checks

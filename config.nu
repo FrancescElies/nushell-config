@@ -182,8 +182,6 @@ $env.config.keybindings = [
    }
 ]
 
-# ^$"([btm lazygit broot todos] | input list --fuzzy)"
-
 const custom_banner = [
     [keybinging  description];
     [ctrl-g      "open lazy[g]it"]
