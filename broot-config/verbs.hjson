@@ -124,7 +124,7 @@ verbs: [
     # Here's an example of a shortcut bringing you to your home directory
     { key: "ctrl-f", cmd: ":toggle_files" }
 
-    { key: "ctrl-h", cmd: ":focus ~", invocation: "home" }
+    { invocation: "home", cmd: ":focus ~"  }
 
     # Here's going to the work-dir root of the current git repository
     { invocation: "cdroot", execution: ":focus {git-root}" }
@@ -136,8 +136,8 @@ verbs: [
     { key: "ctrl-u", execution: ":page_up" }
     { key: "ctrl-d", execution: ":page_down" }
 
-    { key: "ctrl-i", execution: ":panel_left_no_open" }
-    { key: "ctrl-o", execution: ":panel_right" }
+    { key: "ctrl-h", execution: ":panel_left_no_open" }
+    { key: "ctrl-l", execution: ":panel_right" }
 
     { key: "ctrl-r", execution: ":focus {initial-root}" }
     { key: "ctrl-up", internal: ":focus .." }
