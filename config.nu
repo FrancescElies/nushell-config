@@ -82,11 +82,11 @@ $env.config.hooks = {
                 ) }
                 code: "overlay use env.nu"
             }
-            {
-                |before, after|
-                    print (pwd);
-                    if ((ls | length) < 15) { print (lsg) } else { print "folder has +15 files" }
-            }
+            # {
+            #     |before, after|
+            #         print (pwd);
+            #         if ((ls | length) < 15) { print (lsg) } else { print "folder has +15 files" }
+            # }
             # windows activate venv
             {
                 condition: {|before, after| ((not ('activate' in (overlay list))) and ($after | path join ".venv/Scripts/activate.nu" | path exists)) }
@@ -182,13 +182,4 @@ $env.config.keybindings = [
    }
 ]
 
-const custom_banner = [
-    [keybinging  description];
-    [ctrl-g      "open lazy[g]it"]
-    [ctrl-h      "go [h]ome"]
-    [ctrl-b      "open [b]root"]
-    [ctrl-j      "[j]ump to folder using broot"]
-    [ctrl-u      "go [u]p to repo root directory"]
-    [ctrl-space  "expand abbreviation"]
-]
-print $custom_banner
+print $"(ansi purple_bold)ctrl(ansi reset)+[(ansi purple_bold)?(ansi reset)]: lazy[(ansi purple_bold)g(ansi reset)]it, [(ansi purple_bold)h(ansi reset)]ome, [(ansi purple_bold)f(ansi reset)]ilepicker, [(ansi purple_bold)j(ansi reset)]ump, go [(ansi purple_bold)u(ansi reset)]p, [(ansi purple_bold)space(ansi reset)] expand-abbrev"
