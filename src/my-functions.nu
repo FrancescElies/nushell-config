@@ -134,6 +134,8 @@ export def clang-commands-json [] {
 
 export def where-dumpbin [] { vswhere -latest -find **/dumpbin.exe | str replace -a '\\' '/' }
 
+#
+# ffmpeg -i VIDEO.mp4 -vf unsharp=13:13:5 VIDEO-unsharp.mp4
 
 # Reduces video size and converts to mp4
 # See https://stackoverflow.com/questions/12026381/ffmpeg-converting-mov-files-to-mp4
