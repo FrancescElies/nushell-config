@@ -1,4 +1,6 @@
 # my notes
+use utils.nu print_purple
+
 export def notes [] {
   cd ~/src/zettelkasten
   broot .
@@ -224,14 +226,13 @@ export def "youtube download" [
   if (not ($yt_dlp | path exists) or $update) { http get https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp | save -f $yt_dlp }
 
   mut args = []
-  if $audio_only != null { $args = ($args | append '-x' | append '--audio-format' | append 'mp3') }
-  if $sub_lang != null { $args = ($args | append $'--write-sub --sub-lang ($sub_lang)' ) }
 
-  let bin_python = match $nu.os-info.name {
-      "windows" => "python",
-      _ => "python3",
-  }
-  ^$"($bin_python)" $yt_dlp  ...$args $url
+  if $audio_only { $args = ($args | append '-x' | append '--audio-format' | append 'mp3') }
+
+  if $sub_lang { $args = ($args | append $'--write-sub --sub-lang ($sub_lang)' ) }
+
+  print_purple python $yt_dlp  ...$args $url
+  python $yt_dlp  ...$args $url
 }
 
 # more robust rsync (works with FAT usbs too) :(-c) checksum, (-r) recursive, (-t) preserve modification times, (-P) keep partially transferred files and show progress

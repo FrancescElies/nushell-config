@@ -1,4 +1,4 @@
-# https://github.com/nushell/nushell/blob/main/crates/nu-utils/src/sample_config/default_config.nu
+# https://github.com/nushell/nushell/blob/main/crates/nu-utils/src/default_files/default_config.nu
 
 # cargo binstall starship
 # mkdir ~/.cache/starship
