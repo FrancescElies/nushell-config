@@ -135,6 +135,16 @@ $env.config.keybindings = [
          }
     }
     {
+         name: eXecute
+         modifier: control
+         keycode: char_x
+         mode: [emacs, vi_normal, vi_insert]
+         event: {
+           send: executehostcommand,
+           cmd: "^$'([nvim lazygit broot btm fclones miniserve pastel diskonaut ouch hexyl killport xh pgen trip] | input list --fuzzy)'"
+         }
+    }
+    {
          name: find_file_with_Broot
          modifier: control
          keycode: char_b
