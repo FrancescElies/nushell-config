@@ -144,6 +144,16 @@ $env.config.keybindings = [
          }
     }
     {
+         name: insert_File_with_Broot
+         modifier: control
+         keycode: char_f
+         mode: [emacs, vi_normal, vi_insert]
+         event: {
+           send: executehostcommand,
+           cmd: "commandline edit --insert (bro)"
+         }
+    }
+    {
          name: go_Home
          modifier: control
          keycode: char_h
@@ -175,4 +185,4 @@ $env.config.keybindings = [
    }
 ]
 
-print $"(ansi purple_bold)ctrl(ansi reset): lazy[(ansi purple_bold)g(ansi reset)]it, [(ansi purple_bold)h(ansi reset)]ome, [(ansi purple_bold)b(ansi reset)]root, [(ansi purple_bold)j(ansi reset)]ump, go [(ansi purple_bold)u(ansi reset)]p, [(ansi purple_bold)space(ansi reset)] expand-abbrev"
+print $"(ansi purple_bold)ctrl(ansi reset): lazy[(ansi purple_bold)g(ansi reset)]it, [(ansi purple_bold)h(ansi reset)]ome, [(ansi purple_bold)f(ansi reset)]ilepicker, [(ansi purple_bold)b(ansi reset)]root, [(ansi purple_bold)j(ansi reset)]ump, go [(ansi purple_bold)u(ansi reset)]p, [(ansi purple_bold)space(ansi reset)] expand-abbrev"
