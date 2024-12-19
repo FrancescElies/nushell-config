@@ -171,7 +171,7 @@ $env.config.keybindings = [
          mode: [emacs, vi_normal, vi_insert]
          event: {
            send: executehostcommand,
-           cmd: "commandline edit --insert (bro)"
+           cmd: "commandline edit --insert (bro | path relative-to ('.' | path expand))"
          }
     }
     {
