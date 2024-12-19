@@ -125,6 +125,7 @@ verbs: [
     { key: "ctrl-f", cmd: ":toggle_files" }
 
     { invocation: "home", cmd: ":focus ~"  }
+    { invocation: "~", cmd: ":focus ~"  }
 
     # Here's going to the work-dir root of the current git repository
     { invocation: "cdroot", execution: ":focus {git-root}" }
