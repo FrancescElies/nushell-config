@@ -175,6 +175,16 @@ $env.config.keybindings = [
          }
     }
     {
+         name: go_Project
+         modifier: alt
+         keycode: char_p
+         mode: [emacs, vi_normal, vi_insert]
+         event: {
+           send: executehostcommand,
+           cmd: "cd ( '~/src' | path join ( (ls ~/src | append (try {ls ~/src/work}) | append (try {ls ~/src/oss})) | where type == dir | get name | path relative-to ~/src | input list --fuzzy 'Select project in ~/src' ) )"
+         }
+    }
+    {
          name: go_Home
          modifier: control
          keycode: char_h
@@ -207,4 +217,4 @@ $env.config.keybindings = [
 ]
 
 print $"(ansi purple_bold)ctrl(ansi reset): [(ansi purple_bold)h(ansi reset)]ome, [(ansi purple_bold)a(ansi reset)]bsolute-[(ansi purple_bold)f(ansi reset)]ilepicker, [(ansi purple_bold)j(ansi reset)]ump, go [(ansi purple_bold)u(ansi reset)]p, [(ansi purple_bold)space(ansi reset)] expand"
-print $"(ansi purple_bold)alt(ansi reset): [(ansi purple_bold)b(ansi reset)]root, lazy[(ansi purple_bold)g(ansi reset)]it"
+print $"(ansi purple_bold)alt(ansi reset): [(ansi purple_bold)b(ansi reset)]root, lazy[(ansi purple_bold)g(ansi reset)]it, goto [(ansi purple_bold)p(ansi reset)]roject"
