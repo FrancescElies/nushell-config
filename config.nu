@@ -125,6 +125,16 @@ $env.config.keybindings = [
         ]
     }
     {
+         name: open_broot
+         modifier: alt
+         keycode: char_b
+         mode: [emacs, vi_normal, vi_insert]
+         event: {
+           send: executehostcommand,
+           cmd: "br"
+         }
+    }
+    {
          name: open_lazyGit
          modifier: control
          keycode: char_g
@@ -197,3 +207,4 @@ $env.config.keybindings = [
 ]
 
 print $"(ansi purple_bold)ctrl(ansi reset): lazy[(ansi purple_bold)g(ansi reset)]it, [(ansi purple_bold)h(ansi reset)]ome, [(ansi purple_bold)a(ansi reset)]bsolute-[(ansi purple_bold)f(ansi reset)]ilepicker, [(ansi purple_bold)b(ansi reset)]root, [(ansi purple_bold)j(ansi reset)]ump, go [(ansi purple_bold)u(ansi reset)]p, [(ansi purple_bold)space(ansi reset)] expand"
+print $"(ansi purple_bold)alt(ansi reset): [(ansi purple_bold)b(ansi reset)]root"
