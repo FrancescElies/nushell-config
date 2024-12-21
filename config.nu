@@ -216,5 +216,5 @@ $env.config.keybindings = [
    }
 ]
 
-print $"(ansi purple_bold)ctrl(ansi reset): [(ansi purple_bold)h(ansi reset)]ome, [(ansi purple_bold)a(ansi reset)]bsolute-[(ansi purple_bold)f(ansi reset)]ilepicker, [(ansi purple_bold)j(ansi reset)]ump, go [(ansi purple_bold)u(ansi reset)]p, [(ansi purple_bold)space(ansi reset)] expand"
-print $"(ansi purple_bold)alt(ansi reset): [(ansi purple_bold)b(ansi reset)]root, lazy[(ansi purple_bold)g(ansi reset)]it, goto [(ansi purple_bold)p(ansi reset)]roject"
+print $"(ansi pi)ctrl(ansi reset): [(ansi pi)h(ansi reset)]ome, [(ansi pi)a(ansi reset)]bsolute-[(ansi pi)f(ansi reset)]ilepicker, [(ansi pi)j(ansi reset)]ump, go [(ansi pi)u(ansi reset)]p, [(ansi pi)space(ansi reset)] expand"
+print $"(ansi pi)alt(ansi reset) \((ansi wi)good for chaining after new panel alt-n\)(ansi reset): [(ansi pi)b(ansi reset)]root, lazy[(ansi pi)g(ansi reset)]it, goto [(ansi pi)p(ansi reset)]roject"
