@@ -112,7 +112,11 @@ verbs: [
 
     # This verb lets you launch a terminal on ctrl-T
     # (on exit you'll be back in broot)
-    { invocation: "terminal", key: "ctrl-t", execution: "$SHELL", set_working_dir: true, leave_broot: false }
+    # { invocation: "terminal", key: "ctrl-t", execution: "$SHELL", set_working_dir: true, leave_broot: false }
+
+    # Add to stage and move
+    { invocation: "stage_go_next", key: "ctrl-j", cmd: ":toggle_stage;:next_match" }
+    { invocation: "stage_go_next", key: "ctrl-k", cmd: ":toggle_stage;:previous_match" }
 
     # Here's an example of a verb needing the shell capabilities.
     # It copies all children of the currently selected directory
