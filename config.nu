@@ -50,6 +50,16 @@ use ~/src/nushell-config/src/fnm.nu *
 fnm-setup
 
 
+# https://www.nushell.sh/blog/2024-12-04-configuration_preview.html
+#
+# Finding overriden values
+#
+# let defaults = nu -n -c "$env.config = {}; $env.config | reject color_config keybindings menus | to nuon" | from nuon | transpose key default
+# let current = $env.config | reject color_config keybindings menus | transpose key current
+# $current | merge $defaults | where $it.current != $it.default
+
+# learning about configuration options
+# config nu --default  | nu-highlight
 
 $env.config.show_banner = false
 # $env.config.shell_integration.osc133 = false
