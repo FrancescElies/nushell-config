@@ -62,6 +62,7 @@ fnm-setup
 # config nu --default  | nu-highlight
 
 $env.config.show_banner = false
+$env.config.buffer_editor = ["nvim" "-u" "~/src/kickstart.nvim/minimal-vimrc.vim"]
 # $env.config.shell_integration.osc133 = false
 
 $env.config.history = {
