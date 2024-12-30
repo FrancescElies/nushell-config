@@ -6,4 +6,7 @@ verbs: [
       execution: ":print_path"
       apply_to: "file"
   }
+  { key: "ctrl-h", invocation: "home", cmd: ":focus ~"  }
+  { key: "ctrl-r", execution: ":focus {initial-root}" }
+  { key: "ctrl-up", internal: ":focus .." }
 ]
