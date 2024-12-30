@@ -127,6 +127,7 @@ const basic_cargo_pkgs = [
   [bob-nvim     ""]
   [bottom       "graphical process/system monitor for the terminal."]
   [broot        "explore file hierarchies with a tree-like view,"]
+  [rathole      "expose a service NAT to the Internet (like ngrok)"]
   # [caliguda   "nicer dd replacement, burning tool"]
   [cargo-update "update dependencies as recorded in local lock file"]
   [diskonaut    "find whale files that eat up disk space"]
