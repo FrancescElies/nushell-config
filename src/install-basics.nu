@@ -201,6 +201,7 @@ const dev_cargo_pkgs = [
   [tokei "count lines of code"]
   [secure_remove ""]
   [cargo-show-asm ""]
+  [cargo-edit ""]
   [cargo-info ""]
   [cargo-watch ""]
   [cargo-expand ""]
