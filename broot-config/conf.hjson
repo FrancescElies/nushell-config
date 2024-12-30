@@ -162,11 +162,11 @@ special_paths: {
 # More information on
 #  https://dystroy.org/broot/input/#the-filtering-pattern
 #
-search_modes: {
-    <empty>: tokens path
+# search_modes: {
+#     <empty>: tokens path
 #     <empty>: fuzzy name
 #     /: regex name
-}
+# }
 
 ###############################################################
 # File Extension Colors
