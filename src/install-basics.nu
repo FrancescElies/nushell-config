@@ -120,13 +120,14 @@ export def "install python" [] {
 
 const basic_cargo_pkgs = [
   [name         description];
+  # [coreutils    "Cross-platform rewrite of GNU coreutils"]
   [bat          "cat clone"]
-  [uv           "fast Python package and project manager"]
   [mdcat        "cat for markdown"]
   [bandwhich    "display current network utilization by process, connection and remote host"]
   [bob-nvim     ""]
   [bottom       "graphical process/system monitor for the terminal."]
-  [broot        "explore file hierarchies with a tree-like view,"]
+  [heatseeker   "fuzzy selector, a selecta clone"]
+  [broot        "explore file hierarchies with a tree-like view"]
   [rathole      "expose a service NAT to the Internet (like ngrok)"]
   # [caliguda   "nicer dd replacement, burning tool"]
   [cargo-update "update dependencies as recorded in local lock file"]
@@ -157,8 +158,14 @@ export def "install-or-upgrade rust" [] {
 
   if (which rustup | is-empty ) {
     let filename = match $nu.os-info.name {
-        "windows" => { input $"(ansi purple_bold)Install https://rustup.rs/(ansi reset) once done press enter." },
-        _ => { curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh },
+        "windows" => {
+            powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+            input $"(ansi purple_bold)Install https://rustup.rs/(ansi reset) once done press enter."
+        },
+        _ => {
+            curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+            curl -LsSf https://astral.sh/uv/install.sh | sh
+        },
     }
   } else {
     print "rustup already installed"
@@ -187,8 +194,6 @@ export def "install-or-upgrade rust" [] {
       },
   }
   bob use nightly
-
-  if (ask_yes_no "Install rust coreutils (might take long)?") { cargo install coreutils }
 
 }
 

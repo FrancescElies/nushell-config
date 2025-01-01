@@ -149,7 +149,7 @@ export alias gdiscard = git checkout --
 # git clean into a pristine working directory
 export alias gcleanest = git clean -dffx
 # Clean (also untracked) and checkout.
-def gcleanout [] = {git clean -df ; git checkout -- .}
+def gcleanout [] { git clean -df ; git checkout -- . }
 # git push
 export def gpush [
   --upstream(-u): string = "origin"
