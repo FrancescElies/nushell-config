@@ -152,6 +152,7 @@ const basic_cargo_pkgs = [
   # tenki tty-clock with weather effect written by Rust, tty-clock with weather effect written by Rust
   [trippy       "network diagnostic tool"]
   [xh           "http requests"]
+  [hurl         "run HTTP requests defined in a simple plain text format"]
 ]
 
 export def "install-or-upgrade rust" [] {
