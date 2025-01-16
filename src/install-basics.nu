@@ -138,6 +138,7 @@ const basic_cargo_pkgs = [
   [hexyl        "hex viewer"]
   [just         "just a command runner https://github.com/casey/just"]
   [gitu         "git client inspired by Magit"]
+  [ripgrep_all  "ripgrep, but also search in PDFs, E-Books, Office documents, zip, tar.gz, etc."]
   [killport     "kill processes running on specied port"]
   [kondo        "Kondo recursively cleans project directories."]
   [miniserve    "serve some files over HTTP right now!"]
