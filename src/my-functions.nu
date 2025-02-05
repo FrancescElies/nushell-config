@@ -229,7 +229,7 @@ export def "youtube download" [
 
   if $audio_only { $args = ($args | append '-x' | append '--audio-format' | append 'mp3') }
 
-  if $sub_lang { $args = ($args | append $'--write-sub --sub-lang ($sub_lang)' ) }
+  if ($sub_lang | is-not-empty) { $args = ($args | append $'--write-sub --sub-lang ($sub_lang)' ) }
 
   print_purple python $yt_dlp  ...$args $url
   python $yt_dlp  ...$args $url
