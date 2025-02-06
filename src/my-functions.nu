@@ -232,7 +232,12 @@ export def "youtube download" [
   if ($sub_lang | is-not-empty) { $args = ($args | append $'--write-sub --sub-lang ($sub_lang)' ) }
 
   print_purple python $yt_dlp  ...$args $url
-  python $yt_dlp  ...$args $url
+
+  match $nu.os-info.name {
+      "windows" => { python  $yt_dlp  ...$args $url },
+      _ =>         { python3 $yt_dlp  ...$args $url },
+  }
+
 }
 
 # more robust rsync (works with FAT usbs too) :(-c) checksum, (-r) recursive, (-t) preserve modification times, (-P) keep partially transferred files and show progress
