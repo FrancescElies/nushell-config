@@ -275,19 +275,20 @@ imports: [
     # can also add another files for your personal verbs
     verbs.hjson
 
+    skins/dark-blue.hjson
     # This file contains the skin to use when the terminal
     # is dark (or when this couldn't be determined)
-    {
-        luma: [
-            dark
-            unknown
-        ]
-        file: skins/dark-blue.hjson
-    }
+    # {
+    #     luma: [
+    #         dark
+    #         unknown
+    #     ]
+    #     file: skins/dark-blue.hjson
+    # }
 
     # This skin is imported when your terminal is light
-    {
-        luma: light
-        file: skins/white.hjson
-    }
+    # {
+    #     luma: light
+    #     file: skins/white.hjson
+    # }
 ]
