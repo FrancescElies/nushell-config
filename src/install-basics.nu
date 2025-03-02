@@ -190,7 +190,6 @@ export def "install-or-upgrade rust" [] {
       "linux" => {
         cd ~/bin
         http get https://github.com/magic-wormhole/magic-wormhole.rs/releases/download/0.6.1/wormhole-rs.exe | save -f wormwhole-rs
-        chmod +x wormhole-rs
       },
       _ => {
         print "wormwhole-rs not available (compile it from source)"
@@ -213,7 +212,6 @@ const dev_cargo_pkgs = [
   [cargo-info ""]
   [cargo-watch ""]
   [cargo-expand ""]
-  [cargo-miri ""]
   [cargo-mutants ""]
   [cargo-udeps ""]
   [cargo-sweep ""]
