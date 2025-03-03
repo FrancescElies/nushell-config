@@ -240,8 +240,8 @@ export def "youtube download" [
 
 }
 
-# more robust rsync (works with FAT usbs too) :(-c) checksum, (-r) recursive, (-t) preserve modification times, (-P) keep partially transferred files and show progress
-export def "rsync" [source: path, destination: path] { ^rsync -rtcvP --update $source $destination }
+# more robust rsync that works with FAT usbs too, it adds (-c) checksum, (-r) recursive, (-t) preserve modification times, (-P) keep partially transferred files and show progress
+export def "rsync-fat" [source: path, destination: path] { ^rsync -rtcvP --update $source $destination }
 
 # what is my public ip
 export def "my ip" [] {
