@@ -137,7 +137,7 @@ $env.config.keybindings = [
     }
     {
          name: open_broot
-         modifier: alt
+         modifier: control
          keycode: char_b
          mode: [emacs, vi_normal, vi_insert]
          event: {
@@ -147,7 +147,7 @@ $env.config.keybindings = [
     }
     {
          name: open_lazyGit
-         modifier: alt
+         modifier: control
          keycode: char_g
          mode: [emacs, vi_normal, vi_insert]
          event: {
@@ -187,7 +187,7 @@ $env.config.keybindings = [
     }
     {
          name: go_Project
-         modifier: alt
+         modifier: control
          keycode: char_p
          mode: [emacs, vi_normal, vi_insert]
          event: {
@@ -227,5 +227,6 @@ $env.config.keybindings = [
    }
 ]
 
-print $"(ansi pi)ctrl(ansi reset): [(ansi pi)h(ansi reset)]ome, [(ansi pi)a(ansi reset)]bsolute-[(ansi pi)f(ansi reset)]ilepicker, [(ansi pi)j(ansi reset)]ump, go [(ansi pi)u(ansi reset)]p, [(ansi pi)space(ansi reset)] expand"
-print $"(ansi pi)alt(ansi reset): [(ansi pi)b(ansi reset)]root, [(ansi pi)g(ansi reset)]it, goto [(ansi pi)p(ansi reset)]roject \((ansi ui)good for chaining after new panel [alt-n](ansi reset)\)"
+print $"(ansi pi)ctrl(ansi reset): [(ansi pi)b(ansi reset)]root, [(ansi pi)g(ansi reset)]it, goto-[(ansi pi)p(ansi reset)]roject [(ansi pi)h(ansi reset)]ome, insert-[(ansi pi)a(ansi reset)]bsolute-[(ansi pi)f(ansi reset)]ilepath, [(ansi pi)j(ansi reset)]ump, go [(ansi pi)u(ansi reset)]p, [(ansi pi)space(ansi reset)] expand"
+
+use '/home/cesc/src/nushell-config/broot-config/launcher/nushell/br' *
