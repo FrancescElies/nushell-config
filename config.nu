@@ -186,26 +186,6 @@ $env.config.keybindings = [
          }
     }
     {
-         name: go_Project
-         modifier: control
-         keycode: char_p
-         mode: [emacs, vi_normal, vi_insert]
-         event: {
-           send: executehostcommand,
-           cmd: "cd ( '~/src' | path join ( (ls ~/src | append (try {ls ~/src/work}) | append (try {ls ~/src/oss})) | where type == dir | get name | path relative-to ~/src | input list --fuzzy 'Select project in ~/src' ) )"
-         }
-    }
-    {
-         name: go_Home
-         modifier: control
-         keycode: char_h
-         mode: [emacs, vi_normal, vi_insert]
-         event: {
-           send: executehostcommand,
-           cmd: "cd ~"
-         }
-    }
-    {
          name: go_Up_to_root_dir
          modifier: control
          keycode: char_u
@@ -227,6 +207,6 @@ $env.config.keybindings = [
    }
 ]
 
-print $"(ansi pi)ctrl(ansi reset): [(ansi pi)b(ansi reset)]root, [(ansi pi)g(ansi reset)]it, goto-[(ansi pi)p(ansi reset)]roject [(ansi pi)h(ansi reset)]ome, insert-[(ansi pi)a(ansi reset)]bsolute-[(ansi pi)f(ansi reset)]ilepath, [(ansi pi)j(ansi reset)]ump, go [(ansi pi)u(ansi reset)]p, [(ansi pi)space(ansi reset)] expand"
+print $"(ansi pi)ctrl(ansi reset): [(ansi pi)b(ansi reset)]root, [(ansi pi)g(ansi reset)]it, insert-[(ansi pi)a(ansi reset)]bsolute-[(ansi pi)f(ansi reset)]ilepath, [(ansi pi)j(ansi reset)]ump, go [(ansi pi)u(ansi reset)]p, [(ansi pi)space(ansi reset)] expand"
 
 use '/home/cesc/src/nushell-config/broot-config/launcher/nushell/br' *
