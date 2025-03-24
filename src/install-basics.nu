@@ -214,6 +214,7 @@ const dev_cargo_pkgs = [
   [cargo-expand ""]
   [cargo-mutants ""]
   [cargo-udeps ""]
+  [git-absorb "git commit --fixup, but automatic"]
   [cargo-sweep ""]
   [cargo-binutils ""]
   [git-delta ""]
