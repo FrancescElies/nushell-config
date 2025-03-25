@@ -227,7 +227,7 @@ export def "youtube download" [
 
   mut args = []
 
-  if $audio_only { $args = ($args | append '-x' | append '--audio-format' | append 'mp3') }
+  if $audio_only { $args = ($args | append '-x' | append '--audio-format' | append 'vorbis') }
 
   if ($sub_lang | is-not-empty) { $args = ($args | append $'--write-sub --sub-lang ($sub_lang)' ) }
 
