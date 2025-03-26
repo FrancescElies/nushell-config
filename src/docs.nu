@@ -47,7 +47,6 @@ export def "docs js" [] {
   cd ~/src/oss/You-Dont-Know-JS
   just open
 }
-export alias you-dont-know-js = docs js
 
 export def "docs rust" [] {
   rustup doc
