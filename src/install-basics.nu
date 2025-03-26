@@ -223,7 +223,6 @@ const dev_cargo_pkgs = [
   [fnm ""]
   [huniq ""]
   [mdbook ""]
-  [porsmo "pomodoro"]
   [bacon "watches your rust project and runs jobs in background"]
   [checkexec ""]
   [watchexec-cli ""]
