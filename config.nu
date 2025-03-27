@@ -91,11 +91,11 @@ $env.config.hooks.env_change = {
             ) }
             code: "overlay use env.nu"
         }
-        # {
-        #     |before, after|
-        #         print (pwd);
-        #         if ((ls | length) < 15) { print (lsg) } else { print "folder has +15 files" }
-        # }
+        {
+            |before, after|
+                print (pwd);
+                if ((ls | length) < 15) { print (lsg) } else { print "folder has +15 files" }
+        }
         # windows activate venv
         {
             condition: {|before, after| ((not ('activate' in (overlay list))) and ($after | path join ".venv/Scripts/activate.nu" | path exists)) }

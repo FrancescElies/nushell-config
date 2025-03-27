@@ -60,7 +60,7 @@ export def time-today [] { ~/src/nushell-config/.venv/bin/python ~/src/nushell-c
 
 
 # compact ls
-export def lsg [] { ls | sort-by type name -i | grid -c | str trim }
+export def lsg [] { try { ls | sort-by type name -r | grid --icons --color | str trim } catch { ls | get name | to text} }
 
 # jdownloader downloads info (requires a jdown python script)
 export def jd [] {
