@@ -25,6 +25,11 @@ export def main [] {
     if not ($bacon_config_dir | path exists) { mkdir $bacon_config_dir }
     symlink --force ~/src/nushell-config/bacon-config $bacon_config_dir
 
+    match $nu.os-info.name {
+        "windows" => { powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex" }
+        _ => { curl -LsSf https://astral.sh/uv/install.sh | sh },
+    }
+
     let nushell_dir = match $nu.os-info.name {
         "windows" => '~\AppData\Roaming\nushell' ,
         "macos" => "~/Library/Application Support/nushell" ,
