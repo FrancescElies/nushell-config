@@ -585,3 +585,9 @@ export extern "cargo add" [
   --target                # Add as dependency to the given target platform
   ...args
 ]
+
+# Build and install a Rust binary
+export extern "cargo binstall" [
+  crate?: string # The crate to install
+  ...args
+]

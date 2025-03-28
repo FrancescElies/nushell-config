@@ -15,3 +15,9 @@ compile-requirements:
 
 sync-requirements:
   uv pip sync requirements.txt
+
+install-rust-pkgs:
+  cargo binstall -y ...(open packages.toml | get cargo-pkgs | transpose | get column0)
+
+install-rust-dev-pkgs:
+  cargo binstall -y ...(open packages.toml | get dev-cargo-pkgs | transpose | get column0)

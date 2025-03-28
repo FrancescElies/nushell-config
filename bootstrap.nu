@@ -56,5 +56,4 @@ export def main [] {
     # cross platform
     config python
     if (ask_yes_no "Install rust basics?") { install-or-upgrade rust }
-    if (ask_yes_no "Install rust dev tools? (might take long)") {  install rust-devtools  }
 }

@@ -115,44 +115,6 @@ export def "config python" [] {
   " | save -f ~/.pip/pip.conf
 }
 
-const basic_cargo_pkgs = [
-  [name         description];
-  # [coreutils    "Cross-platform rewrite of GNU coreutils"]
-  [bat          "cat clone"]
-  [mdcat        "cat for markdown"]
-  [bandwhich    "display current network utilization by process, connection and remote host"]
-  [bob-nvim     ""]
-  [bottom       "graphical process/system monitor for the terminal."]
-  [heatseeker   "fuzzy selector, a selecta clone"]
-  [broot        "explore file hierarchies with a tree-like view"]
-  [rathole      "expose a service NAT to the Internet (like ngrok)"]
-  # [caliguda   "nicer dd replacement, burning tool"]
-  [cargo-update "update dependencies as recorded in local lock file"]
-  [diskonaut    "find whale files that eat up disk space"]
-  [fclones      "finds and removes duplicate files"]
-  [fd-find      "find entries in your filesystem"]
-  [gimoji       "copy emoji to clipboard, or add them to commit messages"]
-  [hexyl        "hex viewer"]
-  [just         "just a command runner https://github.com/casey/just"]
-  [gitu         "git client inspired by Magit"]
-  [ripgrep_all  "ripgrep, but also search in PDFs, E-Books, Office documents, zip, tar.gz, etc."]
-  [killport     "kill processes running on specied port"]
-  [kondo        "Kondo recursively cleans project directories."]
-  [miniserve    "serve some files over HTTP right now!"]
-  [mprocs       "tui for running multiple processes"]
-  [nu           "nushell language and shell"]
-  [ouch         "extract/compress files"]
-  [pastel       "generate, analyze, convert and manipulate colors"]
-  [pgen         "passphrase generator"]
-  [pueue        "run tasks in the background"]
-  [rustscan     ""]
-  [sccache      "build caching tool"]
-  [tealdeer     "TLDR client"]
-  # tenki tty-clock with weather effect written by Rust, tty-clock with weather effect written by Rust
-  [trippy       "network diagnostic tool"]
-  [xh           "http requests"]
-  [hurl         "run HTTP requests defined in a simple plain text format"]
-]
 
 export def "install-or-upgrade rust" [] {
 
@@ -171,68 +133,8 @@ export def "install-or-upgrade rust" [] {
     print "rustup already installed"
     rustup upgrade
   }
-
+  rustup component add llvm-tools
   install cargo-binstall
 
-  # py-spy
-  print $"cargo will install: ($basic_cargo_pkgs | get name | path join ' ')"
-  cargo binstall -y ...($basic_cargo_pkgs | get name)
-
-  cp ~/.cargo/bin/nu* ~/bin
-  let wormhole_url = match $nu.os-info.name {
-      "windows" => {
-        cd ~/bin
-        http get https://github.com/magic-wormhole/magic-wormhole.rs/releases/download/0.6.1/wormhole-rs | save -f wormhole-rs
-      },
-      "linux" => {
-        cd ~/bin
-        http get https://github.com/magic-wormhole/magic-wormhole.rs/releases/download/0.6.1/wormhole-rs.exe | save -f wormwhole-rs
-      },
-      _ => {
-        print "wormwhole-rs not available (compile it from source)"
-      },
-  }
-  bob use nightly
-
-}
-
-const dev_cargo_pkgs = [
-  [name description];
-  # amp
-  [amber "replace things in files (sed like tool)"]
-  [ast-grep "Search and Rewrite code at large scale using precise AST pattern"]
-  [fastmod ""]
-  [tokei "count lines of code"]
-  [secure_remove ""]
-  [cargo-show-asm ""]
-  [cargo-edit ""]
-  [cargo-info ""]
-  [cargo-watch ""]
-  [cargo-expand ""]
-  [cargo-mutants ""]
-  [cargo-udeps ""]
-  [git-absorb "git commit --fixup, but automatic"]
-  [cargo-sweep ""]
-  [cargo-binutils ""]
-  [git-delta ""]
-  [biodiff ""]
-  [difftastic ""]
-  [fnm ""]
-  [huniq ""]
-  [mdbook ""]
-  [bacon "watches your rust project and runs jobs in background"]
-  [checkexec ""]
-  [watchexec-cli ""]
-  [hwatch ""]
-]
-
-export def "install rust-devtools" [] {
-
-  # needed by cargo-binutils
-  rustup component add llvm-tools
-
-  # py-spy
-  print $"cargo will install: ($dev_cargo_pkgs | get name | path join ' ')"
-  cargo binstall -y ...($dev_cargo_pkgs | get name)
 }
 
