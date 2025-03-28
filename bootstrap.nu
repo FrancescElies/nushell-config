@@ -8,7 +8,7 @@ export def main [] {
     mkdir ~/src/oss
 
     let yt_dlp = "~/bin/yt-dlp" | path expand
-    if (not ($yt_dlp | path exists) or $update) { http get https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp | save -f $yt_dlp }
+    if (not ($yt_dlp | path exists)) { http get https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp | save -f $yt_dlp }
 
     let broot_config_dir = match $nu.os-info.name {
         "windows" => '~\AppData\Roaming\dystroy\broot' ,
@@ -54,7 +54,7 @@ export def main [] {
     }
 
     # cross platform
-    install python-config
+    config python
     if (ask_yes_no "Install rust basics?") { install-or-upgrade rust }
     if (ask_yes_no "Install rust dev tools? (might take long)") {  install rust-devtools  }
 }

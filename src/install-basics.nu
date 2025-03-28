@@ -106,7 +106,7 @@ def "install cargo-binstall" [] {
   tar -xvzf $disk_file
 }
 
-export def "config python-config" [] {
+export def "config python" [] {
   mkdir ~/.pip/
 
   # prevent pip from installing packages in the global installation
