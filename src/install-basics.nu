@@ -74,14 +74,11 @@ export def "install pkgs for-debian" [] {
   print "Easy scrollable window tiling: https://github.com/paperwm/PaperWM"
 
   let debian_pkgs = [
-    build-essential clang-16 cmake golang nodejs npm
-    curl fail2ban rsync vim vlc wget restic
+    build-essential curl fail2ban rsync vim vlc wget restic
     fd-find fzf ripgrep bat gh git neovim
     ffmpeg libasound2-dev rfkill
     printer-driver-splix
-    nginx
     flameshot
-    python3.11-full python3-pipdeptree python3-pip
   ]
 
   print $"apt will install: ($debian_pkgs | path join ' ')"
