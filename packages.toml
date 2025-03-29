@@ -1,3 +1,14 @@
+[python]
+litecli = "CLI for SQLite Databases with auto-completion and syntax highlighting "
+ipython = "repl"
+img2pdf = "lossless conversion of rater images to pdf"
+honcho = "Foreman clone, manage Procfile apps"
+ipdb = "better pdb"
+chardet = "character encoding detector"
+yt-dlp = "audo video downloader"
+# memray
+python-benedict = "dict subclass with keylist/keypath support, built-in I/O operations (base64, csv, html, ini, json, pickle, plist, query-string, toml, xls, xml, yaml), s3 support and many utilities."
+
 [cargo-pkgs]
 coreutils = "Cross-platform rewrite of GNU coreutils"
 # caliguda = "nicer dd replacement, burning tool"
@@ -34,7 +45,6 @@ trippy = "network diagnostic tool"
 xh = "http requests"
 # hurl = "run HTTP requests defined in a simple plain text format"
 
-
 [dev-cargo-pkgs]
 # py-spy = "python sample profiler"
 # amp
@@ -63,4 +73,104 @@ bacon = "watches your rust project and runs jobs in background"
 checkexec = ""
 watchexec-cli = ""
 hwatch = ""
+
+[fedora]
+cascadia-mono-nf-fonts = "cascadia with nerdfont"
+curl = "cli data transfer"
+fd-find = "a better find"
+gh = "github cli"
+git = "git"
+just = "command runner"
+neovim = "nvim"
+ocrmypdf = "adds OCR layer to scanned PDF files, allowing them to be searched"
+restic = "backup  things"
+ripgrep = "a better grep"
+rustup = "manage rust toolchains"
+sshfs = "mount remote locations via ssh"
+tealdeer = "tldr commands"
+thunderbird = "mail reader"
+wireguard-tools = "vpn"
+
+[debian]
+# https://omakub.org/ opinionated setup
+# "Easy scrollable window tiling: https://github.com/paperwm/PaperWM"
+bat = "better cat"
+build-essential = ""
+curl = "cli data transfer"
+fail2ban = ""
+fd-find = "a better find"
+ffmpeg = "format media conversion"
+flameshot = ""
+gh = "github cli"
+git = "git"
+neovim = "nvim"
+printer-driver-splix = "samsung drivers"
+restic = "backup things"
+rfkill = ""
+ripgrep = "a better grep"
+rsync = "backup things"
+vlc = "media player"
+
+[windows]
+# https://xournalpp.github.io/installation/windows/
+#
+# "sysinternals https://learn.microsoft.com/en-us/sysinternals/downloads/"
+# winget upgrade --slient --all
+#
+# random list for windows:
+# Ditto Eartrumpet Xmousebuttoncontrol
+# sketchup8 dupeguru winmerge handbrake
+#
+# available packages at https://github.com/microsoft/winget-pkgs/
+7zip.7zip = ""
+Audacity.Audacity = ""
+BurntSushi.ripgrep.MSVC = ""
+Casey.Just = ""
+DBBrowserForSQLite.DBBrowserForSQLite = ""
+Flameshot.Flameshot = ""
+GIMP.GIMP = ""
+Git.Git = ""
+GitHub.GitHubDesktop = ""
+GitHub.GitLFS = ""
+GitHub.cli = ""
+GoLang.Go = ""
+Graphviz.Graphviz = ""
+JesseDuffield.lazygit = ""
+Kitware.CMake = ""
+Microsoft.AzureCLI = ""
+Neovide.Neovide = ""
+Ninja-build.Ninja = ""
+Nushell.Nushell = ""
+OBSProject.OBSStudio = ""
+Python.Python.3.12 = ""
+Rustlang.Rustup = ""
+SumatraPDF.SumatraPDF = ""
+Terrastruct.D2 = ""
+VideoLAN.VLC = ""
+bmatzelle.Gow = ""
+charmbracelet.glow = ""
+gerardog.gsudo = ""
+junegunn.fzf = ""
+mesonbuild.meson = ""
+sharkdp.fd = ""
+wez.wezterm = ""
+
+[mac]
+gh = ""
+vlc = ""
+git = ""
+neovim = ""
+restic = ""
+fd = ""
+ripgrep = ""
+lazygit = ""
+
+[mac-cask]
+wezterm = ""
+gimp = ""
+vlc = ""
+obs = ""
+neovim = ""
+nushell = ""
+flameshot = ""
 
