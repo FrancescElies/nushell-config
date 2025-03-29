@@ -21,6 +21,10 @@ sync-requirements:
 install-windows-pkgs:
  (open packages.toml | get windows | transpose | get column0) | each { try { winget install --silent --id $in } }
 
+# https://askubuntu.com/questions/645681/samsung-m2020-on-ubuntu#645949
+install-samsung-M2026-printer:
+  echo "add ppd file to /etc/cups/ppd/ or open printer's configuration and add ppd file manually"
+
 install-debian-pkgs:
   sudo apt install -y ...(open packages.toml | get debian | transpose | get column0)
 
