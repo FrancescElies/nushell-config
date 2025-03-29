@@ -118,6 +118,9 @@ rsync = "backup things"
 sshfs = "mount remote locations via ssh"
 syncthing = "continuous file synchronization"
 vlc = "media player"
+# printer
+printer-driver-all = "many printer drivers"
+openprinting-ppds = "printer drivers"
 
 [windows]
 # https://xournalpp.github.io/installation/windows/
