@@ -6,34 +6,33 @@ bootstrap:
   nu bootstrap.nu
 
 # create a python virtual environment
-venv-home:
+home-venv:
   cd ~
   uv venv
   uv pip install ...(open packages.toml | get python | transpose | get column0)
 
-# requirements.in
-compile-requirements:
-  uv pip compile requirements.in -o requirements.txt
 
-sync-requirements:
-  uv pip sync requirements.txt
-
+[windows]
 install-windows-pkgs:
  (open packages.toml | get windows | transpose | get column0) | each { try { winget install --silent --id $in } }
 
 # see https://askubuntu.com/questions/645681/samsung-m2020-on-ubuntu#645949
+[unix]
 install-printer-driver-samsung-M2026:
   sudo cp drivers/Samsung_M2020_Series.ppd /etc/cups/ppd/
   print "you might need to open printer's configuration and add ppd file manually"
 
+[unix]
 dont-suspend-ignore-laptop-lid:
   print "see logind.conf -> HandleLidSwitch=ignore"
 
-install-debian-pkgs:
+[unix]
+install-debian-pkgs: home-venv
   sudo apt remove -y nano
   sudo apt install -y ...(open packages.toml | get debian | transpose | get column0)
 
-install-fedora-pkgs:
+[unix]
+install-fedora-pkgs: home-venv
   sudo dnf remove -y nano
   sudo dnf install -y ...(open packages.toml | get fedora | transpose | get column0)
 
