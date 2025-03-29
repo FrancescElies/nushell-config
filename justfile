@@ -32,11 +32,13 @@ dont-suspend-ignore-laptop-lid:
 debian-pkgs: home-venv
   sudo apt remove -y nano
   sudo apt install -y ...(open packages.toml | get debian | transpose | get column0)
+  sudo systemctl enable syncthing@cesc.service
 
 [unix]
 fedora-pkgs: home-venv
   sudo dnf remove -y nano
   sudo dnf install -y ...(open packages.toml | get fedora | transpose | get column0)
+  sudo systemctl enable syncthing@cesc.service
 
 [private]
 [windows]
