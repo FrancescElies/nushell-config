@@ -78,6 +78,7 @@ viddy = "modern watch command, time machine and pager"
 watchexec-cli = ""
 
 [fedora]
+bat = "better cat"
 cascadia-mono-nf-fonts = "cascadia with nerdfont"
 curl = "cli data transfer"
 fd-find = "a better find"
