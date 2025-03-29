@@ -13,7 +13,7 @@ home-venv:
 
 
 [windows]
-install-windows-pkgs:
+install-windows-pkgs: home-venv
  (open packages.toml | get windows | transpose | get column0) | each { try { winget install --silent --id $in } }
 
 # see https://askubuntu.com/questions/645681/samsung-m2020-on-ubuntu#645949
