@@ -8,11 +8,9 @@ bootstrap:
   print $"Later on e.g. (ansi lyu)just rust-pkgs(ansi reset) and/or (ansi lyu)just rust-dev-pkgs(ansi reset)"
 
 # create a python virtual environment
-[private]
 home-venv: bootstrap
-  cd ~
-  uv venv
-  uv pip install ...(open packages.toml | get python | transpose | get column0)
+  # NOTE: cd not honored between lines, thus everything in one line
+  let pkgs = (open packages.toml | get python | transpose | get column0); cd ~; uv venv; uv pip install ...$pkgs
 
 
 [windows]
