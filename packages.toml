@@ -109,6 +109,7 @@ restic = "backup things"
 rfkill = ""
 ripgrep = "a better grep"
 rsync = "backup things"
+sshfs = "mount remote locations via ssh"
 vlc = "media player"
 
 [windows]
