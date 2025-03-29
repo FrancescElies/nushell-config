@@ -4,6 +4,8 @@ default := "bootstrap"
 
 bootstrap:
   nu bootstrap.nu
+  print $"Now you can e.g. (ansi lyu)just fedora-pkgs(ansi reset) or (ansi lyu)just debian-pkgs(ansi reset) or (ansi lyu)just windows-pkgs(ansi reset)"
+  print $"Later on e.g. (ansi lyu)just rust-pkgs(ansi reset) and/or (ansi lyu)just rust-dev-pkgs(ansi reset)"
 
 # create a python virtual environment
 home-venv:
@@ -14,7 +16,7 @@ home-venv:
 
 [windows]
 windows-pkgs: home-venv
- (open packages.toml | get windows | transpose | get column0) | each { try { winget install --silent --id $in } }
+  (open packages.toml | get windows | transpose | get column0) | each { try { winget install --silent --id $in } }
 
 # see https://askubuntu.com/questions/645681/samsung-m2020-on-ubuntu#645949
 [unix]
@@ -36,8 +38,25 @@ fedora-pkgs: home-venv
   sudo dnf remove -y nano
   sudo dnf install -y ...(open packages.toml | get fedora | transpose | get column0)
 
-rust-pkgs:
+[private]
+[windows]
+rustup:
+  if (which ^rustup | is-empty ) { input $"(ansi purple_bold)Install https://rustup.rs/(ansi reset) once done press enter." }
+
+[private]
+[unix]
+rustup:
+  if (which ^rustup | is-empty ) { curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh }
+
+[private]
+rustup-tooling: rustup
+  rustup component add llvm-tools rust-analyzer
+
+cargo-binstall: rustup-tooling
+  if (which ^cargo-binstall | is-empty ) { cargo install cargo-binstall }
+
+rust-pkgs: cargo-binstall
   cargo binstall -y ...(open packages.toml | get rust-pkgs | transpose | get column0)
 
-rust-dev-pkgs:
+rust-dev-pkgs: cargo-binstall
   cargo binstall -y ...(open packages.toml | get rust-dev-pkgs | transpose | get column0)

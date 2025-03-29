@@ -28,9 +28,11 @@ export def main [] {
     symlink --force ~/src/nushell-config/bacon-config $bacon_config_dir
 
     # uv
-    match $nu.os-info.name {
-        "windows" => { powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex" }
-        _ => { curl -LsSf https://astral.sh/uv/install.sh | sh },
+    if (which ^uv | is-empty ) {
+        match $nu.os-info.name {
+            "windows" => { powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex" }
+            _ => { curl -LsSf https://astral.sh/uv/install.sh | sh },
+        }
     }
 
     # nushell
@@ -43,10 +45,20 @@ export def main [] {
     symlink --force ~/src/nushell-config/env.nu ($nushell_dir | path join "env.nu")
     symlink --force ~/src/nushell-config/config.nu ($nushell_dir | path join "config.nu")
 
-
-    use src/install-it.nu *
-
-    # cross platform
+    # python
     config python
-    if (ask_yes_no "Install rust basics?") { install-or-upgrade rust }
 }
+
+def "config python" [] {
+  mkdir ~/.pip/
+
+  # prevent pip from installing packages in the global installation
+  "
+  [install]
+  require-virtualenv = true
+  [uninstall]
+  require-virtualenv = true
+  " | save -f ~/.pip/pip.conf
+}
+
+
