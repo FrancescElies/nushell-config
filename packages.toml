@@ -160,7 +160,7 @@ mesonbuild.meson = ""
 sharkdp.fd = ""
 wez.wezterm = ""
 
-[mac]
+[mac-brew]
 fd = ""
 gh = ""
 git = ""
@@ -170,7 +170,7 @@ restic = ""
 ripgrep = ""
 vlc = ""
 
-[mac-cask]
+[mac-brew-cask]
 flameshot = ""
 gimp = ""
 neovim = ""

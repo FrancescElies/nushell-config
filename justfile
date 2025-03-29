@@ -18,6 +18,12 @@ home-venv:
 windows-pkgs: home-venv
   (open packages.toml | get windows | transpose | get column0) | each { try { winget install --silent --id $in } }
 
+# https://blog.xoria.org/macos-tips/
+[macos]
+mac-pkgs: home-venv
+  brew install ...(open packages.toml | get mac-brew | transpose | get column0)
+  brew install --cask ...(open packages.toml | get mac-brew-cask | transpose | get column0)
+
 # see https://askubuntu.com/questions/645681/samsung-m2020-on-ubuntu#645949
 [unix]
 printer-driver-samsung-M2026:
