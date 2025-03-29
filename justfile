@@ -8,7 +8,8 @@ bootstrap:
   print $"Later on e.g. (ansi lyu)just rust-pkgs(ansi reset) and/or (ansi lyu)just rust-dev-pkgs(ansi reset)"
 
 # create a python virtual environment
-home-venv:
+[private]
+home-venv: bootstrap
   cd ~
   uv venv
   uv pip install ...(open packages.toml | get python | transpose | get column0)
@@ -60,6 +61,7 @@ rustup:
 rustup-tooling: rustup
   rustup component add llvm-tools rust-analyzer
 
+[private]
 cargo-binstall: rustup-tooling
   if (which ^cargo-binstall | is-empty ) { cargo install cargo-binstall }
 
