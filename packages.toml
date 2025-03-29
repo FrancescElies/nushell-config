@@ -157,21 +157,21 @@ sharkdp.fd = ""
 wez.wezterm = ""
 
 [mac]
+fd = ""
 gh = ""
-vlc = ""
 git = ""
+lazygit = ""
 neovim = ""
 restic = ""
-fd = ""
 ripgrep = ""
-lazygit = ""
+vlc = ""
 
 [mac-cask]
-wezterm = ""
+flameshot = ""
 gimp = ""
-vlc = ""
-obs = ""
 neovim = ""
 nushell = ""
-flameshot = ""
+obs = ""
+vlc = ""
+wezterm = ""
 
