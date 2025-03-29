@@ -36,8 +36,7 @@ export def "wezterm logs" [] {
   }
 }
 
-# terrastruct/d2 diagram helper
-# echo 'x -> y -> z' | save -f diagram.d2
+# terrastruct/d2 diagram helper: echo 'x -> y -> z' | save -f diagram.d2
 export def diagram [name: path] {
   let filename = $"($name).d2"
   # wezterm cli split-pane --down --percent 30 -- watchexec -w $filename d2 $filename

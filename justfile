@@ -21,14 +21,20 @@ sync-requirements:
 install-windows-pkgs:
  (open packages.toml | get windows | transpose | get column0) | each { try { winget install --silent --id $in } }
 
-# https://askubuntu.com/questions/645681/samsung-m2020-on-ubuntu#645949
-install-samsung-M2026-printer:
-  echo "add ppd file to /etc/cups/ppd/ or open printer's configuration and add ppd file manually"
+# see https://askubuntu.com/questions/645681/samsung-m2020-on-ubuntu#645949
+install-printer-driver-samsung-M2026:
+  sudo cp drivers/Samsung_M2020_Series.ppd /etc/cups/ppd/
+  print "you might need to open printer's configuration and add ppd file manually"
+
+dont-suspend-ignore-laptop-lid:
+  print "see logind.conf -> HandleLidSwitch=ignore"
 
 install-debian-pkgs:
+  sudo apt remove -y nano
   sudo apt install -y ...(open packages.toml | get debian | transpose | get column0)
 
 install-fedora-pkgs:
+  sudo dnf remove -y nano
   sudo dnf install -y ...(open packages.toml | get fedora | transpose | get column0)
 
 install-rust-pkgs:
