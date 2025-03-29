@@ -1,5 +1,6 @@
 set shell := ["nu", "-c"]
 
+alias b := bootstrap
 default := "bootstrap"
 
 bootstrap:
@@ -67,8 +68,18 @@ rustup-tooling: rustup
 cargo-binstall: rustup-tooling
   if (which ^cargo-binstall | is-empty ) { cargo install cargo-binstall }
 
+[windows]
 rust-pkgs: cargo-binstall
   cargo binstall -y ...(open packages.toml | get rust-pkgs | transpose | get column0)
 
-rust-dev-pkgs: cargo-binstall
+[unix]
+rust-pkgs: cargo-binstall
+  cargo binstall -y ...(open packages.toml | get rust-pkgs | transpose | get column0)
+  sudo cp ~/.cargo/bin/broot /usr/local/bin/
+  sudo cp ~/.cargo/bin/tldr  /usr/local/bin/
+  sudo cp ~/.cargo/bin/btm   /usr/local/bin/
+  sudo cp ~/.cargo/bin/ouch  /usr/local/bin/
+
+rust-pkgs-dev: cargo-binstall
   cargo binstall -y ...(open packages.toml | get rust-dev-pkgs | transpose | get column0)
+
