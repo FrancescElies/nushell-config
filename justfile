@@ -27,8 +27,8 @@ mac-pkgs: home-venv
 # see https://askubuntu.com/questions/645681/samsung-m2020-on-ubuntu#645949
 [unix]
 fix-printer-driver-samsung-M2026:
-  sudo cp fixes/Samsung_M2020_Series.ppd /etc/cups/ppd/
-  print "you might need to open printer's configuration and add ppd file manually"
+  git clone https://github.com/francescElies/samsung-uld-copy
+  cd samsung-uld-copy; just
 
 [unix]
 fix-wifi-after-sleep:
