@@ -77,6 +77,7 @@ rust-pkgs: cargo-binstall
   cargo binstall -y ...(open packages.toml | get rust-pkgs | transpose | get column0)
   sudo cp ~/.cargo/bin/broot /usr/local/bin/
   sudo cp ~/.cargo/bin/tldr  /usr/local/bin/
+  sudo cp ~/.cargo/bin/difft  /usr/local/bin/
   sudo cp ~/.cargo/bin/btm   /usr/local/bin/
   sudo cp ~/.cargo/bin/ouch  /usr/local/bin/
 
