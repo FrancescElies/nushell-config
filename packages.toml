@@ -45,6 +45,8 @@ tealdeer = "TLDR client"
 trippy = "network diagnostic tool"
 xh = "http requests"
 # hurl = "run HTTP requests defined in a simple plain text format"
+hwatch = "watch command"
+viddy = "modern watch command, time machine and pager"
 
 [rust-dev-pkgs]
 # py-spy = "python sample profiler"
@@ -69,12 +71,10 @@ fnm = ""
 git-absorb = "git commit --fixup, but automatic"
 git-delta = ""
 huniq = "remove duplicates from input"
-hwatch = "watch command"
 mdbook = ""
 sccache = "build caching tool"
 secure_remove = ""
 tokei = "count lines of code"
-viddy = "modern watch command, time machine and pager"
 watchexec-cli = ""
 
 [fedora]
