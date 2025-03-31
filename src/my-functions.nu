@@ -247,8 +247,8 @@ export def "youtube download-video" [
   python $yt_dlp  ...$args $url
 }
 
-# more robust rsync that works with FAT usbs too, it adds (-c) checksum, (-r) recursive, (-t) preserve modification times, (-P) keep partially transferred files and show progress
-export def "rsync-fat" [source: path, destination: path] { ^rsync -rtcvP --update $source $destination }
+# rsync that works with FAT formatted usbs, (-c) checksum, (-r) recursive, (-t) preserve modification times, (-P) keep partially transferred files and show progress
+export alias rsync-fat = ^rsync -rtcvP --update
 
 # what is my public ip
 export def "my ip" [] {
