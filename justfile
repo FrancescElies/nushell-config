@@ -57,7 +57,7 @@ rustup:
 
 [private]
 [unix]
-rustup:
+rustup: bootstrap
   if (which ^rustup | is-empty ) { curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh }
 
 [private]
@@ -75,6 +75,7 @@ rust-pkgs: cargo-binstall
 [unix]
 rust-pkgs: cargo-binstall
   cargo binstall -y ...(open packages.toml | get rust-pkgs | transpose | get column0)
+  ~/.cargo/bin/broot --install
   sudo cp ~/.cargo/bin/broot /usr/local/bin/
   sudo cp ~/.cargo/bin/tldr  /usr/local/bin/
   sudo cp ~/.cargo/bin/difft  /usr/local/bin/
