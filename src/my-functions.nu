@@ -57,12 +57,20 @@ export def "what" [...words: string] { tgpt $"what ($words | str join ' ')" }
 
 export def time-today [] { ~/src/nushell-config/.venv/bin/python ~/src/nushell-config/src/time_spent_today.py }
 
-# list services with avahi-browse (printers, scanners ...) in local network
-export def network-services [] {
+# list services (printers, scanners...) in local network with avahi-browse
+export def "network services" [] {
  avahi-browse --all --terminate --parsable
   | from csv --separator ";" --noheaders
   | rename status net IPvX ip service-type domain
 }
+
+# list printers in local network with avahi-browse
+export def "network printers" [] {
+ avahi-browse --terminate --parsable _ipp._tcp
+  | from csv --separator ";" --noheaders
+  | rename status net IPvX ip service-type domain
+}
+
 
 # compact ls
 export def lsg [] { try { ls | sort-by type name -r | grid --icons --color | str trim } catch { ls | get name | to text} }
