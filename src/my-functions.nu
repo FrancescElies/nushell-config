@@ -57,6 +57,10 @@ export def "what" [...words: string] { tgpt $"what ($words | str join ' ')" }
 
 export def time-today [] { ~/src/nushell-config/.venv/bin/python ~/src/nushell-config/src/time_spent_today.py }
 
+# list printers in local network
+export alias network-printers = avahi-browse -rt _ipp._tcp
+# list services in local network
+export alias network-services = avahi-browse -art
 
 # compact ls
 export def lsg [] { try { ls | sort-by type name -r | grid --icons --color | str trim } catch { ls | get name | to text} }

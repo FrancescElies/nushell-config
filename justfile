@@ -67,16 +67,19 @@ rustup-tooling: rustup
 [private]
 cargo-binstall: rustup-tooling
   if (which ^cargo-binstall | is-empty ) { cargo install cargo-binstall }
+  cargo binstall -y ...(open packages.toml | get rust-pkgs | transpose | get column0)
+  ~/.cargo/bin/broot --install
 
 [windows]
 rust-pkgs: cargo-binstall
-  cargo binstall -y ...(open packages.toml | get rust-pkgs | transpose | get column0)
+   print done
 
 [unix]
 rust-pkgs: cargo-binstall
-  cargo binstall -y ...(open packages.toml | get rust-pkgs | transpose | get column0)
   ~/.cargo/bin/broot --install
+  print install binaries
   sudo cp ~/.cargo/bin/broot /usr/local/bin/
+  sudo cp ~/.cargo/bin/hs /usr/local/bin/
   sudo cp ~/.cargo/bin/tldr  /usr/local/bin/
   sudo cp ~/.cargo/bin/difft  /usr/local/bin/
   sudo cp ~/.cargo/bin/btm   /usr/local/bin/
