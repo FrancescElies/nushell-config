@@ -57,7 +57,7 @@ export def "what" [...words: string] { tgpt $"what ($words | str join ' ')" }
 
 export def time-today [] { ~/src/nushell-config/.venv/bin/python ~/src/nushell-config/src/time_spent_today.py }
 
-# list services (printers, scanners ...) in local network
+# list services with avahi-browse (printers, scanners ...) in local network
 export def network-services [] {
  avahi-browse --all --terminate --parsable
   | from csv --separator ";" --noheaders
