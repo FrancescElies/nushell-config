@@ -60,14 +60,14 @@ export def time-today [] { ~/src/nushell-config/.venv/bin/python ~/src/nushell-c
 # list services (printers, scanners...) in local network with avahi-browse
 export def "network services" [] {
  avahi-browse --all --terminate --parsable
-  | from csv --separator ";" --noheaders
+  | from csv --separator ";" --noheaders --flexible
   | rename status net IPvX ip service-type domain
 }
 
 # list printers in local network with avahi-browse
 export def "network printers" [] {
  avahi-browse --terminate --parsable _ipp._tcp
-  | from csv --separator ";" --noheaders
+  | from csv --separator ";" --noheaders --flexible
   | rename status net IPvX ip service-type domain
 }
 
