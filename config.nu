@@ -62,7 +62,7 @@ fnm-setup
 $env.config.show_banner = false
 # $env.config.buffer_editor = ["nvim" "-u" "~/src/kickstart.nvim/minimal-vimrc.vim"]
 $env.config.buffer_editor = ["nvim"]
-# $env.config.shell_integration.osc133 = false
+$env.config.shell_integration.osc133 = false
 
 $env.config.history = {
   file_format: sqlite
@@ -208,4 +208,3 @@ $env.config.keybindings = [
 
 print $"(ansi pi)ctrl(ansi reset): [(ansi pi)b(ansi reset)]root, [(ansi pi)g(ansi reset)]it, insert-[(ansi pi)a(ansi reset)]bsolute-[(ansi pi)f(ansi reset)]ilepath, [(ansi pi)j(ansi reset)]ump, go [(ansi pi)u(ansi reset)]p, [(ansi pi)space(ansi reset)] expand"
 
-use '/home/cesc/src/nushell-config/broot-config/launcher/nushell/br' *
