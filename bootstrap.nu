@@ -47,6 +47,8 @@ export def main [] {
 
     # python
     config python
+
+    if $nu.os-info.name == 'linux' { linux-key-remap }
 }
 
 def "config python" [] {
@@ -61,4 +63,29 @@ def "config python" [] {
   " | save -f ~/.pip/pip.conf
 }
 
+def linux-key-remap [] {
+    if (not ('~/src/oss/keyd' | path exists)) {
+        cd src
+        git clone https://github.com/rvaiya/keyd
+        cd ~/src/oss/keyd
+        make
+        sudo make install
+        "
+[ids]
 
+*
+
+[main]
+
+# Maps capslock to escape when pressed and control when held.
+capslock = overload(control, esc)
+
+# Remaps the escape key to capslock
+esc = capslock
+" | sudo save -f /etc/keyd/default.conf:
+
+        sudo systemctl enable --now keyd
+    }
+
+
+}
