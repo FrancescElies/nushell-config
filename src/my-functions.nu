@@ -268,12 +268,20 @@ export def "my apps" [] {
 
 export def todos [] { mkdircd ~/src/zettelkasten ; nvim todos.md }
 
-export def --env "goto project" [] {
-    cd ( '~/src' | path join ((ls ~/src | append (try {ls ~/src/work}) | append (try {ls ~/src/oss}))
-       | where type == dir | get name | path relative-to ~/src
-       | input list --fuzzy 'Select project in ~/src'))
+def projects [] {
+    {
+        options: {
+            case_sensitive: false,
+            completion_algorithm: fuzzy, # fuzzy or prefix
+            positional: false,
+            sort: false,
+        },
+        completions: (ls ~/src | append (try {ls ~/src/work}) | append (try {ls ~/src/oss}) | get name | path relative-to ~/src)
+    }
 }
-export alias p = goto project
+
+# cd into project
+export def --env cdp [project: path@projects] { cd $project }
 
 
 # https://youtu.be/YXrb-DqsBNU?feature=shared&t=546
