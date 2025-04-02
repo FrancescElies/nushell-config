@@ -9,6 +9,7 @@ source ~/src/nushell-config/src/this-machine.nu
 
 use ~/src/nushell-config/src/my-configs.nu *
 use ~/src/nushell-config/src/my-functions.nu *
+use ~/src/nushell-config/src/pueue-completions.nu *
 
 use ~/src/nushell-config/src/az.nu *
 
