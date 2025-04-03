@@ -53,6 +53,7 @@ viddy = "modern watch command, time machine and pager"
 [rust-dev-pkgs]
 # py-spy = "python sample profiler"
 # amp
+samply = "cli sampling profiler, check performance, something hangs?"
 amber = "replace things in files (sed like tool)"
 ast-grep = "Search and Rewrite code at large scale using precise AST pattern"
 bacon = "watches your rust project and runs jobs in background"
