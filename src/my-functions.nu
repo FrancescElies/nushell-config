@@ -274,12 +274,12 @@ def "nu-complete projects" [] {
             case_sensitive: false,
             completion_algorithm: fuzzy, # fuzzy or prefix
             positional: false,
-            sort: truee,
+            sort: true,
         },
         completions: (
           ls ~/src
           | append (try {ls ~/src/work})
-          | append (try {ls ~/src/work/*-worktrees})
+          | append (try {ls ~/src/work/*-worktrees/*})
           | append (try {ls ~/src/oss})
           | where type == dir | get name
           | path relative-to ~/src)
