@@ -72,9 +72,14 @@ export extern "sigcheck" [
 #
 ]
 
-# https://learn.microsoft.com/en-us/sysinternals/downloads/procdump
+# https://learn.microsoft.com/en-us/sysinternals/downloads/procdump#using-procdump
+#
 # Examples:
-# > prodcump -ma
+#   Install ProcDump as the (AeDebug) postmortem debugger:
+#   procdump -ma -i c:\dumps
+#
+#   Uninstall ProcDump as the (AeDebug) postmortem debugger:
+#   procdump -u
 export extern "procdump" [
   ...args: any                              # Arguments to be passed to your program
   # command?: string@"nu-complete rustup"
