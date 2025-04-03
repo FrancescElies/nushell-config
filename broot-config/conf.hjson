@@ -26,7 +26,7 @@ capture_mouse: false
 # you can launch broot with `br -H`).
 # A popular flag is the `g` one which displays git related info.
 #
-default_flags: -hg
+default_flags: -h
 
 ###############################################################
 # Terminal's title
