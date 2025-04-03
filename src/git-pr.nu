@@ -1,7 +1,7 @@
 
 # Pull requests
 
-export def "pr create" [
+export def "pr create-az" [
   --target-branch (-t): string = 'master'
 ] {
   git push
