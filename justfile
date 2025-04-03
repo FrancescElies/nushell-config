@@ -35,8 +35,9 @@ fix-wifi-after-sleep:
   sudo cp fixes/wifi_rand_mac.conf /etc/NetworkManager/conf.d/
 
 [unix]
-dont-suspend-ignore-laptop-lid:
-  print "see logind.conf -> HandleLidSwitch=ignore"
+fix-closed-laptop-lid-should-not-suspend:
+  sudo mkdir /etc/systemd/logind.conf.d/
+  sudo cp fixes/ignore-closed-lid.conf /etc/systemd/logind.conf.d/ignore-closed-lid.conf
 
 [unix]
 debian-pkgs: home-venv
