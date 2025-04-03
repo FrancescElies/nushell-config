@@ -9,7 +9,7 @@ export def --wrapped "git worktree listt" [...rest] {
   ^git worktree list ...$rest | lines | parse --regex `(?P<path>.+?) +(?P<commit>\w+) \[(?P<branch>.+)\]`
 }
 
-def "nu-complete git worktree paths" [] { git worktree listt | get path }
+def "nu-complete gw-paths" [] { git worktree listt | get path }
 
 
 def "nu-complete my-tasks" [] {
@@ -22,7 +22,7 @@ def "nu-complete my-stories" [] {
 
 # git worktree change directory
 export def --env "git worktree cd" [
-  path?: string@"nu-complete git worktree paths"  # branch to create or checkout
+  path?: string@"nu-complete gw-paths"  # branch to create or checkout
 ] {
   cd $path
 }
@@ -72,15 +72,8 @@ export def "git worktree add-work" [
 }
 
 # git worktree remove
-export def --env "git worktree remove2" [
-  path: string@"nu-complete git worktree paths"
-  --force(-f)
-] {
-  if $force {
-    git clean -fdx; git worktree remove --force $path
-  } else {
-    git worktree remove $path
-  }
+export def --env "git worktree remove-with-force" [path: string@"nu-complete gw-paths"] {
+  git clean -fdx; git worktree remove --force $path
 }
 
 export def "git worktree bare-path" [] {
