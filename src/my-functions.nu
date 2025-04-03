@@ -268,20 +268,25 @@ export def "my apps" [] {
 
 export def todos [] { mkdircd ~/src/zettelkasten ; nvim todos.md }
 
-def projects [] {
+def "nu-complete projects" [] {
     {
         options: {
             case_sensitive: false,
             completion_algorithm: fuzzy, # fuzzy or prefix
             positional: false,
-            sort: false,
+            sort: truee,
         },
-        completions: (ls ~/src | append (try {ls ~/src/work}) | append (try {ls ~/src/oss}) | get name | path relative-to ~/src)
-    }
-}
+        completions: (
+          ls ~/src
+          | append (try {ls ~/src/work})
+          | append (try {ls ~/src/oss})
+          | where type == dir | get name
+          | path relative-to ~/src)
+      }
+  }
 
 # cd into project
-export def --env cdp [project: path@projects] { cd $project }
+export def --env cdp [project: string@"nu-complete projects"] { cd ('~/src' | path expand | path join $project ) }
 
 
 # https://youtu.be/YXrb-DqsBNU?feature=shared&t=546
