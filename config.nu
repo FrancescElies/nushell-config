@@ -98,12 +98,16 @@ $env.config.hooks.env_change = {
         }
         # windows activate venv
         {
-            condition: {|before, after| ((not ('activate' in (overlay list))) and ($after | path join ".venv/Scripts/activate.nu" | path exists)) }
+            condition: {|before, after|
+                (not ('activate' in (overlay list))) and ($after | path join ".venv/Scripts/activate.nu" | path exists)
+            }
             code: 'overlay use .venv/Scripts/activate.nu'
         }
         # unix like activate venv
         {
-            condition: {|before, after| ((not ('activate' in (overlay list))) and ($after | path join ".venv/bin/activate.nu" | path exists)) }
+            condition: {|before, after|
+                (not ('activate' in (overlay list))) and ($after | path join ".venv/bin/activate.nu" | path exists)
+            }
             code: 'overlay use .venv/bin/activate.nu'
         }
         {
