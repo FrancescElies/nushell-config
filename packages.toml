@@ -1,4 +1,5 @@
 [python]
+hypothesis = "find edge cases in your code"
 MechanicalSoup = "automate interaction with websites, (no Javascript, for js see Selenium)"
 frida-tools = "dynamic instrumentation toolkit for devs"
 magic-wormhole = "get things from one computer to another, safely"
