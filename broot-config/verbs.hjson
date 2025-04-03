@@ -131,8 +131,7 @@ verbs: [
     # Here's an example of a shortcut bringing you to your home directory
     { key: "ctrl-f", cmd: ":toggle_files" }
 
-    { key: "ctrl-h", invocation: "home", cmd: ":focus ~"  }
-    { invocation: "~", cmd: ":focus ~"  }
+    { invocation: "~", internal: ":focus ~"  }
 
     # Here's going to the work-dir root of the current git repository
     { invocation: "cdroot", execution: ":focus {git-root}" }
