@@ -127,7 +127,7 @@ export def "windbg open-exe" [executable: path] {
 }
 
 
-export alias dumps = broot --sort-by-date /dumps
+export alias dumps = broot --sort-by-date c:/dumps
 
 # https://lldb.llvm.org/use/tutorial.html, `br set -n myfunction`
 export def "lldb attach-to-process" [process_name: string = "", processid: int = 0] {
