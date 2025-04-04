@@ -33,10 +33,20 @@ export def "build download" [
 
 # NOTE: https://learn.microsoft.com/en-us/azure/devops/boards/queries/wiql-syntax?view=azure-devops#where-clause
 
+def "board query" [wiql: string] {
+    az boards query --output table --wiql $wiql -o json
+    | from json
+    | select fields | flatten
+    | rename --column {System.State: state, System.Id: id, System.IterationPath: iteration_path, System.Title: title}
+    | sort-by state
+
+}
 # az boards query --output table --wiql "SELECT [System.Id], [System.Title], [System.State], [System.IterationPath] FROM workitems WHERE [system.assignedto] contains 'cesc' AND [system.state] NOT IN ('Closed', 'Obsolete') ORDER BY [Microsoft.VSTS.Common.Priority], [System.ChangedDate] DESC" -o json | from json | get fields
 # list my open stories
 export def "az my-stories" [] {
-  let wiql = "SELECT [System.Id], [System.Title], [System.State], [System.IterationPath] FROM workitems WHERE [system.assignedto] = @me AND [System.WorkItemType] <> 'Task' AND [system.state] NOT IN ('Closed', 'Obsolete') ORDER BY [Microsoft.VSTS.Common.Priority], [System.ChangedDate] DESC"
+  let wiql = [ "SELECT [System.Id], [System.Title], [System.State], [System.IterationPath] FROM workitems"
+               "WHERE [system.assignedto] = @me AND [System.WorkItemType] <> 'Task' AND [system.state] NOT IN ('Closed', 'Obsolete')"
+               "ORDER BY [Microsoft.VSTS.Common.Priority], [System.ChangedDate] DESC" ] | str join ' '
   (az boards query --output table --wiql $wiql -o json
   | from json
   | select fields | flatten
@@ -47,31 +57,34 @@ export def "az my-stories" [] {
 
 # list my open tasks
 export def "az my-tasks" [] {
-  let wiql = "SELECT [System.Id], [System.Title], [System.State], [System.IterationPath] FROM workitems WHERE [system.assignedto] = @me AND [System.WorkItemType] = 'Task' AND [system.state] NOT IN ('Closed', 'Obsolete') ORDER BY [Microsoft.VSTS.Common.Priority], [System.ChangedDate] DESC"
-  (az boards query --output table --wiql $wiql -o json
-  | from json
-  | select fields | flatten
-  | rename --column {System.State: state, System.Id: id, System.IterationPath: iteration_path, System.Title: title}
-  | sort-by state
-  )
-}
+  let wiql = [ "SELECT [System.Id], [System.Title], [System.State], [System.IterationPath] FROM workitems"
+               "WHERE [system.assignedto] = @me AND [System.WorkItemType] = 'Task' AND [system.state] NOT IN ('Closed', 'Obsolete')"
+               " ORDER BY [Microsoft.VSTS.Common.Priority], [System.ChangedDate] DESC" ] | str join ' '
+    board query $wiql
+  }
 
 # list open items
 export def "az assigned-to-me" [] {
-  let wiql = "SELECT [System.Id], [System.Title], [System.State], [System.IterationPath] FROM workitems WHERE [system.assignedto] = @me AND [system.state] NOT IN ('Closed', 'Obsolete') ORDER BY [Microsoft.VSTS.Common.Priority], [System.ChangedDate] DESC"
-  az boards query --output table --wiql $wiql -o json
-  | from json
-  | select fields | flatten
-  | rename --column {System.State: state, System.Id: id, System.IterationPath: iteration_path, System.Title: title}
-  | sort-by state
+  let wiql = [ "SELECT [System.Id], [System.Title], [System.State], [System.IterationPath] FROM workitems"
+               "WHERE [system.assignedto] = @me AND [system.state] NOT IN ('Closed', 'Obsolete')"
+               "ORDER BY [Microsoft.VSTS.Common.Priority], [System.ChangedDate] DESC"] | str join " "
+  board query $wiql
 }
 
 export def "az created-by-me" [] {
-  let wiql = " SELECT [System.Id], [System.WorkItemType], [System.Title], [System.State], [System.AreaPath], [System.IterationPath] FROM workitems WHERE [System.CreatedBy] = @me ORDER BY [System.ChangedDate] DESC"
-  # let wiql = "SELECT [System.Id], [System.Title], [System.State], [System.IterationPath] FROM workitems WHERE [system.CreatedBy] = @me AND [system.state] NOT IN ('Closed', 'Obsolete') ORDER BY [System.ChangedDate] DESC"
-  az boards query --output table --wiql $wiql -o json | from json | select fields | flatten
-  | rename --column {System.State: state, System.Id: id, System.IterationPath: iteration_path, System.Title: title}
-  | sort-by state
+  let cols = "[System.Id], [System.WorkItemType], [System.Title], [System.State], [System.AreaPath], [System.IterationPath]"
+  let wiql = [ $"SELECT ($cols) FROM workitems"
+               "WHERE [System.CreatedBy] = @me AND [system.state]  NOT IN ('Closed', 'Obsolete')"
+               "ORDER BY [System.ChangedDate] DESC" ] | str join ' '
+  board query $wiql
+}
+
+export def "az following" [] {
+  let cols = "[System.Id], [System.WorkItemType], [System.Title], [System.State], [System.AreaPath], [System.IterationPath]"
+  let wiql = [ $"SELECT ($cols) FROM workitems"
+               "WHERE [System.ID] IN (@Follows) AND [system.state]  NOT IN ('Closed', 'Obsolete')"
+               "ORDER BY [System.ChangedDate] DESC" ] | str join ' '
+  board query $wiql
 }
 
 # list my pull requests
