@@ -12,21 +12,21 @@ export def symlink [
     # create parent folder if it doesn't exist
     mkdir ($new_link_name | path dirname)
 
-    if ($force and ($new_link_name | path exists)) { 
+    if ($force and ($new_link_name | path exists)) {
        print $"Moving ($new_link_name) to trash"
        rm --trash --recursive $new_link_name
     }
 
     if $nu.os-info.family == 'windows' {
         if ($existing | path type) == 'dir' {
-            print $"mklink dir ($new_link_name)"
+            print $"dir link created ($new_link_name)"
             mklink /D $new_link_name $existing
         } else {
-            print $"mklink ($new_link_name)"
+            print $"file link created ($new_link_name)"
             mklink $new_link_name $existing
         }
     } else {
-        print $"ln ($new_link_name)"
+        print $"link created ($new_link_name)"
         ln -s $existing $new_link_name | ignore
     }
 }
