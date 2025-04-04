@@ -1,7 +1,14 @@
 module completions {
 
   export alias q = pueue
-  export alias qd = pueued -d
+
+  # pueued --daemonize
+  export def qd [] {
+    match $nu.os-info.name {
+        "windows" => { ^start /min pueued },
+        _ => { pueued -d },
+    }
+  }
 
   def "nu-complete pueue color" [] {
     [ "auto" "never" "always" ]
