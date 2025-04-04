@@ -128,7 +128,10 @@ export def psn [name: string] { ps | find $name }
 def "nu-complete list-process-names" [] { ps | get name | uniq }
 
 #kill specified process in name
-export def killn [name: string@"nu-complete list-process-names"] { ps | find $name | each {|x| kill -f $x.pid} }
+export def killn [name: string@"nu-complete list-process-names"] {
+  print "Following processes were killed"
+  ps | find $name | each {|x| try {kill -f $x.pid}; echo $x }
+}
 export alias k = killn
 
 # print worth watching speakers
