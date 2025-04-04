@@ -126,6 +126,10 @@ export def "windbg open-exe" [executable: path] {
    ~/AppData/Local/Microsoft/WindowsApps/WinDbgX.exe $executable
 }
 
+
+export alias dumps = broot --sort-by-date /dumps
+
+# https://lldb.llvm.org/use/tutorial.html, `br set -n myfunction`
 export def "lldb attach-to-process" [process_name: string = "", processid: int = 0] {
   let processid = if $process_name != "" {
     ps | where name =~ $"\(?i\)($process_name)" | get pid.0
