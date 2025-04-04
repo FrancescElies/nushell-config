@@ -4,6 +4,8 @@
 
 # https://github.com/winsiderss/systeminformer
 
+use utils.nu print_purple
+
 # NOTE: broken
 # overlay use ~/src/nushell-config/.venv/scripts/activate.nu
 
@@ -130,7 +132,11 @@ export def "lldb attach-to-process" [process_name: string = "", processid: int =
   } else {
     if $processid == 0 {  ps | input list -d name --fuzzy  | get pid } else { $processid }
   }
-  with-env {Path: ($env.Path | prepend "C:/Python310") ,PYTHONHOME: `C:/Python310`, PYTHONPATH: "C:/Python310/Lib"} {
+
+  let python_dir = (py -3.10 -c "import sys; print(sys.base_exec_prefix)")
+  print_purple $"pythond_dir ($python_dir)"
+
+  with-env {Path: ($env.Path | prepend $python_dir) ,PYTHONHOME: $python_dir, PYTHONPATH: $"($python_dir)/Lib"} {
     python --version
     lldb -p $processid
   }
