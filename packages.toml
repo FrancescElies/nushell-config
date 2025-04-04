@@ -168,6 +168,7 @@ gerardog.gsudo = ""
 # junegunn.fzf = ""
 mesonbuild.meson = ""
 sharkdp.fd = ""
+x64dbg.x64dbg = "debugger"
 wez.wezterm = ""
 
 [mac-brew]
