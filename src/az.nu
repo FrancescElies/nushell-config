@@ -41,8 +41,7 @@ def "board query" [wiql: string] {
     | sort-by state
 
 }
-# az boards query --output table --wiql "SELECT [System.Id], [System.Title], [System.State], [System.IterationPath] FROM workitems WHERE [system.assignedto] contains 'cesc' AND [system.state] NOT IN ('Closed', 'Obsolete') ORDER BY [Microsoft.VSTS.Common.Priority], [System.ChangedDate] DESC" -o json | from json | get fields
-# list my open stories
+
 export def "az my-stories" [] {
   let wiql = [ "SELECT [System.Id], [System.Title], [System.State], [System.IterationPath] FROM workitems"
                "WHERE [system.assignedto] = @me AND [System.WorkItemType] <> 'Task' AND [system.state] NOT IN ('Closed', 'Obsolete')"
@@ -55,7 +54,6 @@ export def "az my-stories" [] {
   )
 }
 
-# list my open tasks
 export def "az my-tasks" [] {
   let wiql = [ "SELECT [System.Id], [System.Title], [System.State], [System.IterationPath] FROM workitems"
                "WHERE [system.assignedto] = @me AND [System.WorkItemType] = 'Task' AND [system.state] NOT IN ('Closed', 'Obsolete')"
@@ -63,7 +61,6 @@ export def "az my-tasks" [] {
     board query $wiql
   }
 
-# list open items
 export def "az assigned-to-me" [] {
   let wiql = [ "SELECT [System.Id], [System.Title], [System.State], [System.IterationPath] FROM workitems"
                "WHERE [system.assignedto] = @me AND [system.state] NOT IN ('Closed', 'Obsolete')"
