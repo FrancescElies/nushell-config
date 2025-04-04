@@ -107,7 +107,7 @@ export alias gfa = git fetch --all --prune
 export alias gca = git commit --amend
 # git commit amend, don't edit meesage
 export alias gcane = git commit --amend --no-edit
-export def "gcm" [
+export def "gcommit" [
   title: string
   body: string = ""
 ] {
@@ -115,20 +115,25 @@ export def "gcm" [
   print_purple $"current_branch ($current_branch)"
   let tickets = (open ~\.gitconfig-branch-tickets.toml)
   print_purple "~/.gitconfig-branch-tickets.toml 👀"
-  let story = ( $tickets
-              | get branches
-              | where name == $current_branch
-              | get story.0 )
-  let task = ( $tickets
-             | get branches
-             | where name == $current_branch
-             | get task.0 )
 
   mut rest = []
-  if $story != "<Nothing>" { $rest = ($rest | append [-m $"story #($story)"]) }
-  if $task != "<Nothing>" { $rest = ($rest | append [-m $"task #($task)"]) }
+  if $body != "" { $rest = ($rest | append [-m $"($body)"]) }
 
-  git commit --message $title --message $body ...$rest
+  try {
+    let story = ( $tickets
+                | get branches
+                | where name == $current_branch
+                | get story.0 )
+    let task = ( $tickets
+               | get branches
+               | where name == $current_branch
+               | get task.0 )
+
+    if $story != "<Nothing>" { $rest = ($rest | append [-m $"story #($story)"]) }
+    if $task != "<Nothing>" { $rest = ($rest | append [-m $"task #($task)"]) }
+  }
+
+  git commit --message $title ...$rest
 }
 # git checkout
 export alias gco = git checkout
