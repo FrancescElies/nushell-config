@@ -1,13 +1,6 @@
 
 # Pull requests
 
-export def "pr create-az" [
-  --target-branch (-t): string = 'master'
-] {
-  git push
-  az repos pr create --draft --open --auto-complete -t $target_branch -o table
-}
-
 export def "pr diff" [path: path = .] {
   let this_branch = (git rev-parse --abbrev-ref HEAD)
   git diff $this_branch ( git merge-base $this_branch origin/master )

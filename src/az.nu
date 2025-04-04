@@ -1,4 +1,9 @@
-# Machines
+export def "az create-pr" [ --target-branch (-t): string = 'master' ] {
+  git push
+  az repos pr create --draft --open --auto-complete -t $target_branch -o table
+}
+
+
 # Get azure devops machines having a certain capability
 export def "az machines-usercapabilities" [
   has_capability: string = 'Python311',
