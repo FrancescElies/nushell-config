@@ -4,7 +4,7 @@ export alias rg-max = rg --type-add 'max:*.{maxhelp,maxpat,json}' -t max
 # Cycling '74 Max cli wrap
 export def Max [maxpat?: path] {
     let max_exe = match $nu.os-info.name {
-      "windows" => "C:/Program Files/Cycling '74/Max 8/Max.exe"
+      "windows" => "C:/Program Files/Cycling '74/Max 9/Max.exe"
       "macos" => "/Applications/Max.app/Contents/MacOS/Max",
       _ => { error make {msg: "not implemented" } }
     }
@@ -14,13 +14,13 @@ export alias maxpats = br --cmd ".maxpat&t/"
 
 # opens Max settings
 export def --env "Max settings" [] {
-  cd "~/AppData/Roaming/Cycling '74/Max 8/Settings"
+  cd "~/AppData/Roaming/Cycling '74/Max 9/Settings"
   br
 }
 
 # sets Max Audio Status
 export def "Max set-audio-status" [] {
-  let path = ("~/AppData/Roaming/Cycling '74/Max 8/Settings/admme@.txt" | path expand)
+  let path = ("~/AppData/Roaming/Cycling '74/Max 9/Settings/admme@.txt" | path expand)
   print "Before"
   bat --paging never $path
 
@@ -46,13 +46,13 @@ export def "Max set-audio-status" [] {
 
 # opens maxpreferences.maxpref
 export def "Max maxpreferences" [] {
-  cd "~/AppData/Roaming/Cycling '74/Max 8/Settings"
-  nvim "~/AppData/Roaming/Cycling '74/Max 8/Settings/maxpreferences.maxpref"
+  cd "~/AppData/Roaming/Cycling '74/Max 9/Settings"
+  nvim "~/AppData/Roaming/Cycling '74/Max 9/Settings/maxpreferences.maxpref"
 }
 
 # opens maxinterface.json
 export def "Max maxinterface" [] {
-  nvim "C:/Program Files/Cycling '74/Max 8/resources/interfaces/maxinterface.json"
+  nvim "C:/Program Files/Cycling '74/Max 9/resources/interfaces/maxinterface.json"
 }
 
 # goes to Cycling '74/Logs, where .dmp files are
@@ -86,9 +86,9 @@ export def "Max latest-dump" [] {
   start $latest_dump.name
 }
 
-# opens Max 8 Packages folder
+# opens Max 9 Packages folder
 export def --env "Max packages" [] {
-  cd "~/Documents/Max 8/Packages"
+  cd "~/Documents/Max 9/Packages"
   br
 }
 
