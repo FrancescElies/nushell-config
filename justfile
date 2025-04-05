@@ -80,6 +80,8 @@ rust-pkgs: cargo-binstall
   ~/.cargo/bin/broot --install
   print install binaries
   sudo cp ~/.cargo/bin/broot /usr/local/bin/
+  sudo cp ~/.cargo/bin/biodiff /usr/local/bin/
+  sudo cp ~/.cargo/bin/git-biodiff /usr/local/bin/
   sudo cp ~/.cargo/bin/hs /usr/local/bin/
   sudo cp ~/.cargo/bin/tldr  /usr/local/bin/
   sudo cp ~/.cargo/bin/difft  /usr/local/bin/
