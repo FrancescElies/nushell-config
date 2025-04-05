@@ -1,7 +1,6 @@
 set shell := ["nu", "-c"]
 
 alias b := bootstrap
-default := "bootstrap"
 
 bootstrap:
   nu bootstrap.nu
