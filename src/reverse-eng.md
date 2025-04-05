@@ -37,9 +37,11 @@ $ r2 /bin/ls
 > aaa    # analyze all the things
 > is     # list symbols
 > afl    # list functions found
-> pdf    # disassemble function
+> pdf    # disassemble function, e.g. pdf @ sym.main
 > s <tab># seek to address
 > v      # enter visual panels mode
+> p      # cycle modes visual modes (visual mode)
+> ood    # reload program
 ```
 
 ## plugins
@@ -52,6 +54,7 @@ $ r2pm -i r2ghidra r2dec r2frida
 ```
 $ r2 frida:///bin/ls
 > :dc         # continue the execution
+> :dcu        # continue the execution until
 > :dd         # list file descriptors
 > :dm         # show process memory maps
 > :dmm        # show modules mapped
@@ -73,6 +76,7 @@ $ r2 -d gdb://127.0.0.1
 > dr rax=33   # change value of register
 > pxr@rsp     # inspect stack
 > drr         # periscoped register values
+> S           # step over
 
 ```
 
