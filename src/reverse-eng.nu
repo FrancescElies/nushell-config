@@ -14,9 +14,6 @@ export def "docs r2" [] {
   r2 -Qc'?*~...' --
 }
 
-# radare2
-export alias r2 = radare2
-
 # retrieves basic binary info (imports, strings, libraries, relocs, entry-point, symbols)
 # https://book.rada.re/tools/rabin2
 export def "rabin2 quick" [file: path, ] {
