@@ -10,6 +10,10 @@
 
 # https://blog.devit.co/diving-into-radare2/
 
+export def "docs r2" [] {
+  r2 -Qc'?*~...' --
+}
+
 # radare2
 export alias r2 = radare2
 
