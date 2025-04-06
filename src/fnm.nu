@@ -9,5 +9,3 @@ export def --env "fnm-setup" [] {
     path add $node_path
   }
 }
-
-fnm-setup

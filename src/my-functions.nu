@@ -113,14 +113,6 @@ export def `7zmax` [
   }
 }
 
-# convert SVGs to PDFs
-export def svgs-to-pdfs [path: path] {
-  for file in (ls *svg) {
-    $file.name
-    | inkscape -f ($in | path join) -A ($in | update extension ' pdf' | path join)
-  }
-}
-
 #search for specific process
 export def psn [name: string] { ps | find $name }
 

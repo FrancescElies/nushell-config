@@ -2,10 +2,26 @@ set shell := ["nu", "-c"]
 
 alias b := bootstrap
 
-bootstrap:
+bootstrap: secret-nu-file
   nu bootstrap.nu
   print $"Now you can e.g. (ansi lyu)just fedora-pkgs(ansi reset) or (ansi lyu)just debian-pkgs(ansi reset) or (ansi lyu)just windows-pkgs(ansi reset)"
   print $"Later on e.g. (ansi lyu)just rust-pkgs(ansi reset) and/or (ansi lyu)just rust-dev-pkgs(ansi reset)"
+
+
+[private]
+[windows]
+secret-nu-file:
+  cp --no-clobber src/os-windows.nu src/os-this-machine.nu
+
+[private]
+[macos]
+secret-nu-file:
+  cp --no-clobber src/os-mac.nu src/os-this-machine.nu
+
+[private]
+[linux]
+secret-nu-file:
+  cp --no-clobber src/os-linux.nu src/os-this-machine.nu
 
 # create a python virtual environment
 home-venv: bootstrap
