@@ -7,46 +7,55 @@ use ~/.cache/starship/init.nu
 
 source ~/src/nushell-config/src/this-machine.nu
 
-use ~/src/nushell-config/src/my-configs.nu *
-use ~/src/nushell-config/src/my-functions.nu *
-use ~/src/nushell-config/src/pueue-completions.nu *
-
-use ~/src/nushell-config/src/az.nu *
-
-use ~/src/nushell-config/src/broot-helpers.nu *
-use ~/src/nushell-config/src/clipboard.nu *
-use ~/src/nushell-config/src/docs.nu *
-use ~/src/nushell-config/src/fix.nu *
-
-use ~/src/nushell-config/src/git.nu *
-use ~/src/nushell-config/src/git-pr.nu *
-use ~/src/nushell-config/src/git-worktree.nu *
-
-use ~/src/nushell-config/src/history-utils.nu *
+# cog -r config.nu
+#
+# [[[cog
+# import cog
+# import os, glob
+# from pathlib import Path
+# nu_files = sorted(Path(x) for x in glob.glob('src/*.nu') if not Path(x).name.startswith("os-"))
+# for file in nu_files:
+#     this_repo = Path("~/src/nushell-config")
+#     cog.outl(f"use {this_repo / file}")
+# ]]]*/
+use ~/src/nushell-config/src/az.nu
+use ~/src/nushell-config/src/bat-completions.nu
+use ~/src/nushell-config/src/broot-helpers.nu
+use ~/src/nushell-config/src/btm-completions.nu
+use ~/src/nushell-config/src/cargo-completions.nu
+use ~/src/nushell-config/src/clipboard.nu
+use ~/src/nushell-config/src/docs.nu
+use ~/src/nushell-config/src/fix.nu
+use ~/src/nushell-config/src/fnm.nu
+use ~/src/nushell-config/src/git-completions.nu
+use ~/src/nushell-config/src/git-pr.nu
+use ~/src/nushell-config/src/git-worktree.nu
+use ~/src/nushell-config/src/git.nu
+use ~/src/nushell-config/src/history-utils.nu
 use ~/src/nushell-config/src/hosts.nu
-use ~/src/nushell-config/src/maxmsp-functions.nu *
-use ~/src/nushell-config/src/neovim.nu *
-use ~/src/nushell-config/src/reverse-eng.nu *
-use ~/src/nushell-config/src/rust.nu *
-use ~/src/nushell-config/src/symlinks.nu *
-use ~/src/nushell-config/src/utils.nu *
+use ~/src/nushell-config/src/just-completions.nu
+use ~/src/nushell-config/src/maxmsp-functions.nu
+use ~/src/nushell-config/src/miniserve-completions.nu
+use ~/src/nushell-config/src/my-configs.nu
+use ~/src/nushell-config/src/my-functions.nu
+use ~/src/nushell-config/src/neovim.nu
+use ~/src/nushell-config/src/parse-help.nu
+use ~/src/nushell-config/src/pueue-completions.nu
+use ~/src/nushell-config/src/reverse-eng.nu
+use ~/src/nushell-config/src/rg-completions.nu
+use ~/src/nushell-config/src/rust.nu
+use ~/src/nushell-config/src/rustup-completions.nu
+use ~/src/nushell-config/src/ssh-completions.nu
+use ~/src/nushell-config/src/symlinks.nu
+use ~/src/nushell-config/src/this-machine.nu
+use ~/src/nushell-config/src/utils.nu
 use ~/src/nushell-config/src/vpn.nu
-use ~/src/nushell-config/src/wibu.nu *
-
-use ~/src/nushell-config/src/ssh-completions.nu *
-use ~/src/nushell-config/src/btm-completions.nu *
-use ~/src/nushell-config/src/cargo-completions.nu *
-use ~/src/nushell-config/src/git-completions.nu *
-use ~/src/nushell-config/src/just-completions.nu *
-use ~/src/nushell-config/src/miniserve-completions.nu *
-use ~/src/nushell-config/src/rg-completions.nu *
-use ~/src/nushell-config/src/bat-completions.nu *
-use ~/src/nushell-config/src/rustup-completions.nu *
-use ~/src/nushell-config/src/vscode-completions.nu *
-use ~/src/nushell-config/src/wezterm-completions.nu *
-
-use ~/src/nushell-config/src/fnm.nu *
-fnm-setup
+use ~/src/nushell-config/src/vscode-completions.nu
+use ~/src/nushell-config/src/wezterm-completions.nu
+use ~/src/nushell-config/src/wibu.nu
+use ~/src/nushell-config/src/work.nu
+use ~/src/nushell-config/src/zig.nu
+# [[[end]]]
 
 
 # https://www.nushell.sh/blog/2024-12-04-configuration_preview.html

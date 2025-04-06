@@ -12,6 +12,8 @@ home-venv: bootstrap
   # NOTE: cd not honored between lines, thus everything in one line
   let pkgs = (open packages.toml | get python | transpose | get column0); cd ~; uv venv; uv pip install ...$pkgs
 
+update-imports:
+  cog -r config.nu
 
 [windows]
 windows-pkgs: home-venv
