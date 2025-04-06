@@ -44,11 +44,13 @@ $ r2 /bin/ls
 
 ## plugins
 ```
-$ r2pm update
-$ r2pm -i r2ghidra r2dec r2frida
+$ r2pm -U # init or update database (-f clean clone)
+# sudo dnf install zlib-devel patch
+$ r2pm -ci r2ghidra r2dec r2frida
 ```
 
 ## frida
+Type short commands instead of writing javascript
 ```
 $ r2 frida:///bin/ls
 > :dc         # continue the execution
