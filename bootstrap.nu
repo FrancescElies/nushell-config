@@ -65,8 +65,7 @@ def "config python" [] {
 
 def linux-key-remap [] {
     if (not ('~/src/oss/keyd' | path exists)) {
-        cd src
-        git clone https://github.com/rvaiya/keyd
+        git clone https://github.com/rvaiya/keyd ~/src/oss/keyd
         cd ~/src/oss/keyd
         make
         sudo make install
@@ -82,7 +81,7 @@ capslock = overload(control, esc)
 
 # Remaps the escape key to capslock
 esc = capslock
-" | sudo save -f /etc/keyd/default.conf:
+" | sudo tee /etc/keyd/default.conf
 
         sudo systemctl enable --now keyd
     }
