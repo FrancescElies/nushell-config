@@ -151,7 +151,7 @@ export alias guncommit = git reset --soft HEAD~1
 export alias gunadd = git reset HEAD
 # Discard changes in path
 export alias gdiscard = git checkout --
-# git clean into a pristine working directory
+# git clean into a pristine working directory (-ff removes untracked directories)
 export alias gcleanest = git clean -dffx
 # Clean (also untracked) and checkout.
 def gcleanout [] { git clean -df ; git checkout -- . }
