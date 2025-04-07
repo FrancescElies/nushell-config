@@ -35,6 +35,13 @@ update-imports:
 windows-pkgs: home-venv
   (open packages.toml | get windows | transpose | get column0) | each { try { winget install --silent --id $in } }
 
+
+[windows]
+windows-fix-long-paths:
+  input $'(ansi pb)open regedit set HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem LongPathsEnabled to 1.(ansi reset) Done? press enter'
+  git config --system core.longpaths true
+
+
 # https://blog.xoria.org/macos-tips/
 [macos]
 mac-pkgs: home-venv
