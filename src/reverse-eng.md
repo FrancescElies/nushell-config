@@ -2,6 +2,12 @@
 https://rada.re/n/radare2.html
 https://www.radare.org/advent/07.html
 
+https://github.com/pgosar/ChatGDB
+https://github.com/bootleg/ret-sync
+https://github.com/DerekSelander/LLDB
+https://github.com/snare/voltron/wiki/Installation
+https://github.com/foundryzero/llef
+
 ```
 # ~/.radare2rc
 

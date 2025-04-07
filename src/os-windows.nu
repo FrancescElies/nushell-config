@@ -129,7 +129,7 @@ export def "windbg open-exe" [executable: path] {
 
 export alias dumps = broot --sort-by-date c:/dumps
 
-# https://lldb.llvm.org/use/tutorial.html, `br set -n myfunction`
+# https://lldb.llvm.org/use/tutorial.html, `br set -n myfunction` , wa set var ret
 export def "lldb attach-to-process" [process_name: string = "", processid: int = 0] {
   let processid = if $process_name != "" {
     ps | where name =~ $"\(?i\)($process_name)" | get pid.0
