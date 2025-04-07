@@ -16,7 +16,7 @@ source ~/src/nushell-config/src/os-this-machine.nu
 # nu_files = sorted(Path(x) for x in glob.glob('src/*.nu') if not Path(x).name.startswith("os-"))
 # for file in nu_files:
 #     this_repo = Path("~/src/nushell-config")
-#     cog.outl(f"use {this_repo / file} *")
+#     cog.outl(f"use {this_repo / file} *".replace('\\', '/'))
 # ]]]*/
 use ~/src/nushell-config/src/az.nu *
 use ~/src/nushell-config/src/bat-completions.nu *
