@@ -114,13 +114,19 @@ export def `7zmax` [
 }
 
 # grep for specific process names
-export def psn [name: string = ] { ps | find $name }
+export def psn [name: string = "" ] {
+  if ($name | is-empty) {
+    ps | sort-by -in name | input list -d name --fuzzy
+  } else {
+    ps | find $name
+  }
+ }
 
 # fuzzy select find process pid
-export def pid [] { ps | input list -d name --fuzzy  | get pid }
+export def pid [] { ps | sort-by -in name | input list -d name --fuzzy  | get pid }
 
 
-def "nu-complete list-process-names" [] { ps | get name | uniq }
+def "nu-complete list-process-names" [] { ps | get name | sort | uniq }
 
 #kill specified process in name
 export def killn [name: string@"nu-complete list-process-names"] {
