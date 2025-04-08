@@ -91,6 +91,6 @@ export def "az following" [] {
 
 # list my pull requests
 export def "az my-prs" [] {
-  let my_query = "[].{title: title,createdby: createdBy.displayName, status: status, repo: repository.name, id: pullRequestId}"
-  az repos pr list -ojson --query $my_query | from json | where createdby =~ "Francesc" | select id status title
+  let my_query = "[].{title: title, createdby: createdBy.displayName, status: status, repo: repository.name, id: pullRequestId, draft: isDraft }"
+  az repos pr list -ojson --query $my_query | from json | where createdby =~ "Francesc" | select id status title draft
 }
