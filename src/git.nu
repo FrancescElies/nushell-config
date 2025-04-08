@@ -1,4 +1,14 @@
 use utils.nu print_purple
+
+export def "git pull-my-configs" [] {
+  [~/src/nushell-config/ ~/src/wezterm-config/] | each {
+    cd $in
+    git stash
+    git pull
+    git stash pop | ignore
+  }
+}
+
 # https://www.youtube.com/watch?v=aolI_Rz0ZqY
 # Apply some useful defaults
 # git my-defaults

@@ -39,7 +39,12 @@ export def "build download" [
 # NOTE: https://learn.microsoft.com/en-us/azure/devops/boards/queries/wiql-syntax?view=azure-devops#where-clause
 
 def "board query" [wiql: string] {
-    az boards query --output table --wiql $wiql -o json
+    let table = az boards query --output table --wiql $wiql -o json
+    if ($table | is-empty) {
+      print $"(ansi pb)Table empty(ansi reset)"
+      return
+    }
+    $table
     | from json
     | select fields | flatten
     | rename --column {System.State: state, System.Id: id, System.IterationPath: iteration_path, System.Title: title}
@@ -51,12 +56,7 @@ export def "az my-stories" [] {
   let wiql = [ "SELECT [System.Id], [System.Title], [System.State], [System.IterationPath] FROM workitems"
                "WHERE [system.assignedto] = @me AND [System.WorkItemType] <> 'Task' AND [system.state] NOT IN ('Closed', 'Obsolete')"
                "ORDER BY [Microsoft.VSTS.Common.Priority], [System.ChangedDate] DESC" ] | str join ' '
-  (az boards query --output table --wiql $wiql -o json
-  | from json
-  | select fields | flatten
-  | rename --column {System.State: state, System.Id: id, System.IterationPath: iteration_path, System.Title: title}
-  | sort-by state
-  )
+    board query $wiql
 }
 
 export def "az my-tasks" [] {
