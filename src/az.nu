@@ -90,19 +90,16 @@ export def "az following" [] {
 }
 
 # list my pull requests
-export def "az my prs" [] {
+export def "az my prs" [--draft] {
   let my_query = "[].{title: title, createdby: createdBy.displayName, status: status, repo: repository.name, id: pullRequestId, draft: isDraft }"
-  az repos pr list -ojson --query $my_query | from json | where createdby =~ "Francesc" | select id status title draft
+  let prs = az repos pr list -ojson --query $my_query | from json | where createdby =~ "Francesc" | select id status title draft
+  if $draft { $prs | where draft } else { $prs | where not draft }
 }
 
-# trigger ci for PR
-export def "az pr trigger-policies" [ pr_id: number = 0 ] {
-  let pr_id = if ($pr_id == 0 ) {
-    az my prs | where not draft | input list -d title --fuzzy | get id
-  } else {
-    $pr_id
-  }
+def "nu-complete pr-id" [] { (az my prs) | rename -c {id: value,  title: description} }
 
+# trigger ci for PR
+export def "az pr trigger-policies" [ pr_id: number@"nu-complete pr-id" ] {
   print $"(ansi pb)Build ids(ansi reset)"
   ( az repos pr policy list --id $pr_id -ojson | from json
   | filter {$in.configuration.isBlocking and $in.configuration.isEnabled}
