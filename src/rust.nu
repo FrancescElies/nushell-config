@@ -1,3 +1,5 @@
+# rustup override set stable
+
 export def "rust commands" [] {
     [
         [command                   description];

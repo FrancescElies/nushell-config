@@ -52,14 +52,14 @@ def "board query" [wiql: string] {
 
 }
 
-export def "az my-stories" [] {
+export def "az my stories" [] {
   let wiql = [ "SELECT [System.Id], [System.Title], [System.State], [System.IterationPath] FROM workitems"
                "WHERE [system.assignedto] = @me AND [System.WorkItemType] <> 'Task' AND [system.state] NOT IN ('Closed', 'Obsolete')"
                "ORDER BY [Microsoft.VSTS.Common.Priority], [System.ChangedDate] DESC" ] | str join ' '
     board query $wiql
 }
 
-export def "az my-tasks" [] {
+export def "az my tasks" [] {
   let wiql = [ "SELECT [System.Id], [System.Title], [System.State], [System.IterationPath] FROM workitems"
                "WHERE [system.assignedto] = @me AND [System.WorkItemType] = 'Task' AND [system.state] NOT IN ('Closed', 'Obsolete')"
                " ORDER BY [Microsoft.VSTS.Common.Priority], [System.ChangedDate] DESC" ] | str join ' '
@@ -90,7 +90,26 @@ export def "az following" [] {
 }
 
 # list my pull requests
-export def "az my-prs" [] {
+export def "az my prs" [] {
   let my_query = "[].{title: title, createdby: createdBy.displayName, status: status, repo: repository.name, id: pullRequestId, draft: isDraft }"
   az repos pr list -ojson --query $my_query | from json | where createdby =~ "Francesc" | select id status title draft
+}
+
+# trigger ci for PR
+export def "az pr trigger-policies" [ pr_id: number = 0 ] {
+  let pr_id = if ($pr_id == 0 ) {
+    az my prs | where not draft | input list -d title --fuzzy | get id
+  } else {
+    $pr_id
+  }
+
+  print $"(ansi pb)Build ids(ansi reset)"
+  ( az repos pr policy list --id $pr_id -ojson | from json
+  | filter {$in.configuration.isBlocking and $in.configuration.isEnabled}
+  | get evaluationId
+  | each {
+      az repos pr policy queue --id $pr_id -e $in -ojson | from json | select evaluationId status
+    }
+  )
+
 }
