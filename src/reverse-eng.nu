@@ -10,6 +10,8 @@
 
 # https://blog.devit.co/diving-into-radare2/
 
+use ./my-functions.nu pid
+
 export alias r2 = radare2
 
 export def "docs r2" [] {
@@ -43,9 +45,15 @@ export def "rabin2 quick" [file: path, ] {
 
 # binary instrumentation
 #
-# https://github.com/DynamoRIO/dynamorio
+# https://github.com/iddoeldor/frida-snippets
 #
 # https://medium.com/@schirrmacher/analyzing-whatsapp-calls-176a9e776213
 # frida-trace -U WhatsApp -m "*[* *Secret*]" -m "*[* *secret*]"
 # frida-trace -U WhatsApp -m "*[* *crypt*]" -i "*crypt*"
 # frida-trace -U WhatsApp -i “*signal*”
+# Which dlls will be loaded? Runtime linking makes use of LoadLibrary() WinAPI call from kernel32.dll
+# frida-trace -p (pid) -i LoadLibrary*
+
+export def "frida list modules-and-exports" [] {
+  frida -p (pid) --eval 'var x={};Process.enumerateModulesSync().forEach(function(m){x[m.name] = Module.enumerateExportsSync(m.name)});x' -q | from json | explore
+}

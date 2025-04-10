@@ -1,11 +1,11 @@
-export def "az create-pr" [ --target-branch (-t): string = 'master' ] {
+export def "az create pr" [ --target-branch (-t): string = 'master' ] {
   git push
   az repos pr create --draft --open --auto-complete -t $target_branch -o table
 }
 
 
 # Get azure devops machines having a certain capability
-export def "az machines-usercapabilities" [
+export def "az list machines-usercapabilities" [
   has_capability: string = 'Python311',
   --output (-o): string = 'yaml'  # json, jsonc, none, table, tsv, yaml, yamlc.
 ] {
@@ -16,7 +16,7 @@ export def "az machines-usercapabilities" [
 }
 
 # Get azure devops machines
-export def "az machines" [
+export def "az list machines" [
   --output (-o): string = 'yaml'  # json, jsonc, none, table, tsv, yaml, yamlc.
 ] {
   (  az pipelines agent list
@@ -25,12 +25,11 @@ export def "az machines" [
   )
 }
 
-export def "build queue" [ definition_id: int = 42 ] {
+export def "az queue build" [ definition_id: int = 42 ] {
   az pipelines build queue --open --branch (git rev-parse --abbrev-ref HEAD) --definition-id $definition_id
 }
 
-
-export def "build download" [
+export def "az download artifact" [
   build_id: int
 ] {
   az pipelines runs artifact download --artifact-name Installer --path ~/Downloads --run-id $build_id
@@ -52,28 +51,28 @@ def "board query" [wiql: string] {
 
 }
 
-export def "az my stories" [] {
+export def "az list my-stories" [] {
   let wiql = [ "SELECT [System.Id], [System.Title], [System.State], [System.IterationPath] FROM workitems"
                "WHERE [system.assignedto] = @me AND [System.WorkItemType] <> 'Task' AND [system.state] NOT IN ('Closed', 'Obsolete')"
                "ORDER BY [Microsoft.VSTS.Common.Priority], [System.ChangedDate] DESC" ] | str join ' '
     board query $wiql
 }
 
-export def "az my tasks" [] {
+export def "az list my-tasks" [] {
   let wiql = [ "SELECT [System.Id], [System.Title], [System.State], [System.IterationPath] FROM workitems"
                "WHERE [system.assignedto] = @me AND [System.WorkItemType] = 'Task' AND [system.state] NOT IN ('Closed', 'Obsolete')"
                " ORDER BY [Microsoft.VSTS.Common.Priority], [System.ChangedDate] DESC" ] | str join ' '
     board query $wiql
   }
 
-export def "az assigned-to-me" [] {
+export def "az list assigned-to-me" [] {
   let wiql = [ "SELECT [System.Id], [System.Title], [System.State], [System.IterationPath] FROM workitems"
                "WHERE [system.assignedto] = @me AND [system.state] NOT IN ('Closed', 'Obsolete')"
                "ORDER BY [Microsoft.VSTS.Common.Priority], [System.ChangedDate] DESC"] | str join " "
   board query $wiql
 }
 
-export def "az created-by-me" [] {
+export def "az list created-by-me" [] {
   let cols = "[System.Id], [System.WorkItemType], [System.Title], [System.State], [System.AreaPath], [System.IterationPath]"
   let wiql = [ $"SELECT ($cols) FROM workitems"
                "WHERE [System.CreatedBy] = @me AND [system.state]  NOT IN ('Closed', 'Obsolete')"
@@ -81,7 +80,7 @@ export def "az created-by-me" [] {
   board query $wiql
 }
 
-export def "az following" [] {
+export def "az list following" [] {
   let cols = "[System.Id], [System.WorkItemType], [System.Title], [System.State], [System.AreaPath], [System.IterationPath]"
   let wiql = [ $"SELECT ($cols) FROM workitems"
                "WHERE [System.ID] IN (@Follows) AND [system.state]  NOT IN ('Closed', 'Obsolete')"
@@ -90,21 +89,20 @@ export def "az following" [] {
 }
 
 # list my pull requests
-export def "az my prs" [--draft] {
+export def "az list my-prs" [--draft] {
   let my_query = "[].{title: title, createdby: createdBy.displayName, status: status, repo: repository.name, id: pullRequestId, draft: isDraft }"
   let prs = az repos pr list -ojson --query $my_query | from json | where createdby =~ "Francesc" | select id status title draft
   if $draft { $prs | where draft } else { $prs | where not draft }
 }
 
-def "nu-complete pr-id" [] { (az my prs) | rename -c {id: value,  title: description} }
+def "nu-complete pr-id" [] { (az list my-prs) | rename -c {id: value,  title: description} }
 
 # trigger ci for PR
-export def "az pr trigger-policies" [ pr_id: number@"nu-complete pr-id" ] {
-  print $"(ansi pb)Build ids(ansi reset)"
+export def "az trigger pr-ci" [ pr_id: number@"nu-complete pr-id" ] {
   ( az repos pr policy list --id $pr_id -ojson | from json
   | filter {$in.configuration.isBlocking and $in.configuration.isEnabled}
   | get evaluationId
-  | each {
+  | par-each --threads 8 {
       az repos pr policy queue --id $pr_id -e $in -ojson | from json | select evaluationId status
     }
   )
