@@ -11,17 +11,17 @@ bootstrap: secret-nu-file
 [private]
 [windows]
 secret-nu-file:
-  cp --no-clobber src/os-windows.nu src/os-this-machine.nu
+  if (not (open src/os-this-machine.nu | str contains "use src/os-windows.nu *")) {"use src/os-windows.nu *" | save --append src/os-this-machine.nu }
 
 [private]
 [macos]
 secret-nu-file:
-  cp --no-clobber src/os-mac.nu src/os-this-machine.nu
+  if (not (open src/os-this-machine.nu | str contains "use src/os-mac.nu *")) {"use src/os-mac.nu *" | save --append src/os-this-machine.nu }
 
 [private]
 [linux]
 secret-nu-file:
-  cp --no-clobber src/os-linux.nu src/os-this-machine.nu
+  if (not (open src/os-this-machine.nu | str contains "use src/os-linux.nu *")) {"use src/os-linux.nu *" | save --append src/os-this-machine.nu }
 
 # create a python virtual environment
 home-venv: bootstrap
