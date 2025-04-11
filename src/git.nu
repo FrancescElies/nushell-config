@@ -1,6 +1,6 @@
 use utils.nu print_purple
 
-const config_repos = [~/src/nushell-config/ ~/src/wezterm-config/]
+const config_repos = [~/src/nushell-config ~/src/kickstart.nvim ~/src/wezterm-config]
 
 export def "git push my-configs" [] { $config_repos | each { cd $in; git push --force-with-lease } }
 export def "git pull my-configs" [] { $config_repos | each { cd $in; git stash; git pull; git stash pop | ignore } }
