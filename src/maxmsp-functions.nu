@@ -44,11 +44,12 @@ export def "Max set audio-status" [] {
   bat --paging never $path
 }
 
+const maxpreferences = "~/AppData/Roaming/Cycling '74/Max 9/Settings/maxpreferences.maxpref"
 
 # opens maxpreferences.maxpref
 export def "Max preferences" [] {
   cd "~/AppData/Roaming/Cycling '74/Max 9/Settings"
-  nvim "~/AppData/Roaming/Cycling '74/Max 9/Settings/maxpreferences.maxpref"
+  nvim $maxpreferences
 }
 
 # opens maxinterface.json
@@ -100,6 +101,10 @@ export def "Max download-installers" [] {
   if not ("Max862_240319.zip" | path exists) { wget https://downloads.cdn.cycling74.com/max8/Max862_240319.zip }
   if not ("Max833_221006.zip" | path exists) { wget https://downloads.cdn.cycling74.com/max8/Max833_221006.zip }
 
+}
+
+export def "Max set no-crashrecovery" [] {
+  open $maxpreferences | from json | upsert preferences.crashrecovery Never | to json | save -f $maxpreferences
 }
 
 # greps for something max related in all known locations where something interesting might be found
