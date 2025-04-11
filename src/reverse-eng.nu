@@ -18,8 +18,7 @@ export def "docs r2" [] {
   r2 -Qc'?*~...' --
 }
 
-# retrieves basic binary info (imports, strings, libraries, relocs, entry-point, symbols)
-# https://book.rada.re/tools/rabin2
+# retrieves basic binary info (imports, strings, libraries, relocs, entry-point, symbols) https://book.rada.re/tools/rabin2
 export def "rabin2 quick" [file: path, ] {
   let folder = ($file | path basename)
   mkdir $folder
@@ -37,8 +36,7 @@ export def "rabin2 quick" [file: path, ] {
   rabin2 -R  $file | save -f relocs.txt
   rabin2 -e  $file | save -f entry_point.txt
 
-  print "see output:"
-  ls $folder
+  print $"see files in ($folder)"
 }
 
 # https://github.com/DynamoRIO/drmemory
@@ -55,5 +53,5 @@ export def "rabin2 quick" [file: path, ] {
 # frida-trace -p (pid) -i LoadLibrary*
 
 export def "frida list modules-and-exports" [] {
-  frida -p (pid) --eval 'var x={};Process.enumerateModulesSync().forEach(function(m){x[m.name] = Module.enumerateExportsSync(m.name)});x' -q | from json | explore
+  frida -p (pid) --eval 'var x={};Process.enumerateModulesSync().forEach(function(m){x[m.name] = Module.enumerateExportsSync(m.name)});x' -q | from json
 }

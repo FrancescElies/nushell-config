@@ -1,5 +1,4 @@
 use ~/src/nushell-config/src/broot-helpers.nu *
-export alias rg-max = rg --type-add 'max:*.{maxhelp,maxpat,json}' -t max
 
 # Cycling '74 Max cli wrap
 export def Max [maxpat?: path] {
@@ -10,7 +9,9 @@ export def Max [maxpat?: path] {
     }
     if ($maxpat == null) { run-external $max_exe } else { run-external $max_exe ($maxpat | path expand) }
 }
-export alias maxpats = br --cmd ".maxpat&t/"
+
+# broot Max stuff
+export alias "Max br" = br --cmd ".maxpat&t/"
 
 # opens Max settings
 export def --env "Max settings" [] {
@@ -19,7 +20,7 @@ export def --env "Max settings" [] {
 }
 
 # sets Max Audio Status
-export def "Max set-audio-status" [] {
+export def "Max set audio-status" [] {
   let path = ("~/AppData/Roaming/Cycling '74/Max 9/Settings/admme@.txt" | path expand)
   print "Before"
   bat --paging never $path
@@ -45,13 +46,13 @@ export def "Max set-audio-status" [] {
 
 
 # opens maxpreferences.maxpref
-export def "Max maxpreferences" [] {
+export def "Max preferences" [] {
   cd "~/AppData/Roaming/Cycling '74/Max 9/Settings"
   nvim "~/AppData/Roaming/Cycling '74/Max 9/Settings/maxpreferences.maxpref"
 }
 
 # opens maxinterface.json
-export def "Max maxinterface" [] {
+export def "Max interface" [] {
   nvim "C:/Program Files/Cycling '74/Max 9/resources/interfaces/maxinterface.json"
 }
 
@@ -61,7 +62,7 @@ export def --env "Max dumps" [] {
   br
 }
 
-# opens Max examples
+# show Max examples
 export def --env "Max examples" [] {
   cd "~/src/oss/max-sdk/source"
   br
@@ -102,7 +103,7 @@ export def "Max download-installers" [] {
 }
 
 # greps for something max related in all known locations where something interesting might be found
-export def "Max grep" [pattern: string] {
+export def "Max rg" [pattern: string] {
   let locations = [
     ("~/src/oss/max-sdk" | path expand),
     ("C:/Program Files/Cycling '74" | path expand),
@@ -110,4 +111,8 @@ export def "Max grep" [pattern: string] {
   ]
   rg $pattern ...$locations
 }
+
+# ripgrep Max stuff
+export alias "rg-max" = rg --type-add 'max:*.{maxhelp,maxpat,json}' -t max
+
 
