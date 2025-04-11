@@ -44,7 +44,7 @@ export def "Max set audio-status" [] {
   bat --paging never $path
 }
 
-const maxpreferences = "~/AppData/Roaming/Cycling '74/Max 9/Settings/maxpreferences.maxpref"
+const maxpreferences = ("~/AppData/Roaming/Cycling '74/Max 9/Settings/maxpreferences.maxpref" | path expand)
 
 # opens maxpreferences.maxpref
 export def "Max preferences" [] {
