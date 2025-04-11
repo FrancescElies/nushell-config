@@ -1,13 +1,9 @@
 use utils.nu print_purple
 
-export def "git pull-my-configs" [] {
-  [~/src/nushell-config/ ~/src/wezterm-config/] | each {
-    cd $in
-    git stash
-    git pull
-    git stash pop | ignore
-  }
-}
+const config_repos = [~/src/nushell-config/ ~/src/wezterm-config/]
+
+export def "git push my-configs" [] { $config_repos | each { cd $in; git push --force-with-lease } }
+export def "git pull my-configs" [] { $config_repos | each { cd $in; git stash; git pull; git stash pop | ignore } }
 
 # https://www.youtube.com/watch?v=aolI_Rz0ZqY
 # Apply some useful defaults
