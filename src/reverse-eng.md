@@ -36,6 +36,10 @@ $ rafind2 -x deadbeef bin
 Some common commands
 ```
 $ r2 /bin/ls
+> a?     # add ? to get help for any command
+> f?     # flags
+> $?     # variables
+> y?     # clipboard
 > aaa    # analyze all the things
 > is     # list symbols
 > ii     # list imported symbols

@@ -25,6 +25,7 @@ export def "rabin2 quick" [file: path, ] {
   cd $folder
   let file = ($file | path expand)
 
+  rabin2 -g  $file | save -f 01-all-info.txt
   rabin2 -I  $file | save -f file-type.txt
   rabin2 -i  $file | save -f imports.txt
   rabin2 -E  $file | save -f exports.txt
