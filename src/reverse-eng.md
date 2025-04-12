@@ -1,6 +1,7 @@
 # Radare2
 https://rada.re/n/radare2.html
 https://www.radare.org/advent/07.html
+https://github.com/ifding/radare2-tutorial
 
 https://github.com/pgosar/ChatGDB
 https://github.com/bootleg/ret-sync
@@ -44,12 +45,17 @@ $ r2 /bin/ls
 > is     # list symbols
 > ii     # list imported symbols
 > iE     # list exported symbols
+> ie     # list exported symbols
+> ie     # list exported symbols
 > afl    # list functions found
 > pdf    # disassemble function, e.g. pdf @ sym.main
 > s <tab># seek to address
 > v      # enter visual panels mode
 > p      # cycle modes visual modes (visual mode)
 > ood    # reload program
+
+> dp # debug process (attach, list ...)
+> axt sym.imp.printf # find references to a function
 ```
 
 ## plugins
