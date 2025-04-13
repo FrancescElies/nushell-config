@@ -116,9 +116,9 @@ export def `7zmax` [
 # grep for specific process names
 export def psn [name: string = "" ] {
   if ($name | is-empty) {
-    ps | sort-by -in name | input list -d name --fuzzy
+    ps --long | sort-by -in name | input list -d name --fuzzy
   } else {
-    ps | find $name
+    ps --long | find $name
   }
  }
 
