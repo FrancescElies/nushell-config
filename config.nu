@@ -31,6 +31,7 @@ use ~/src/nushell-config/src/git-completions.nu *
 use ~/src/nushell-config/src/git-pr.nu *
 use ~/src/nushell-config/src/git-worktree.nu *
 use ~/src/nushell-config/src/git.nu *
+use ~/src/nushell-config/src/gron.nu *
 use ~/src/nushell-config/src/history-utils.nu *
 use ~/src/nushell-config/src/hosts.nu *
 use ~/src/nushell-config/src/just-completions.nu *
