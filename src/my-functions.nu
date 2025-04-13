@@ -113,6 +113,13 @@ export def `7zmax` [
   }
 }
 
+export def magnets [] {
+  if (ps --long | where command =~  "3030:localhost:3030" | is-empty) {
+    ssh -L 3030:localhost:3030 intel-pc -fN
+  }
+  start http://localhost:3030/web
+}
+
 # grep for specific process names
 export def psn [name: string = "" ] {
   if ($name | is-empty) {
@@ -120,7 +127,7 @@ export def psn [name: string = "" ] {
   } else {
     ps --long | find $name
   }
- }
+}
 
 # fuzzy select find process pid
 export def pid [] { ps | sort-by -in name | input list -d name --fuzzy  | get pid }
