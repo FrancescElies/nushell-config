@@ -85,6 +85,7 @@ watchexec-cli = ""
 bat = "better cat"
 cascadia-mono-nf-fonts = "cascadia with nerdfont"
 curl = "cli data transfer"
+gron = "make json greppable"
 fd-find = "a better find"
 flameshot = "powerful yet simple screenshots"
 gh = "github cli"
@@ -114,6 +115,7 @@ ffmpeg = "format media conversion"
 flameshot = "powerful yet simple screenshots"
 gh = "github cli"
 git = "git"
+gron = "make json greppable"
 neovim = "nvim"
 printer-driver-splix = "samsung drivers"
 restic = "backup things"
@@ -138,7 +140,8 @@ avahi-utils = "publish and discover services, e.g. printers"
 # Ditto Eartrumpet Xmousebuttoncontrol
 # sketchup8 dupeguru winmerge handbrake
 #
-# available packages at https://github.com/microsoft/winget-pkgs/
+# available packages at:
+#    https://github.com/microsoft/winget-pkgs/
 7zip.7zip = ""
 Audacity.Audacity = ""
 BurntSushi.ripgrep.MSVC = ""
@@ -151,6 +154,7 @@ GitHub.GitHubDesktop = ""
 GitHub.GitLFS = ""
 GitHub.cli = ""
 GoLang.Go = ""
+TomHudson.gron = "make json greppable"
 Graphviz.Graphviz = ""
 JesseDuffield.lazygit = ""
 Kitware.CMake = ""
