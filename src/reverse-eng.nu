@@ -52,7 +52,10 @@ export def "rabin2 quick" [file: path, ] {
 # frida-trace -U WhatsApp -i “*signal*”
 # Which dlls will be loaded? Runtime linking makes use of LoadLibrary() WinAPI call from kernel32.dll
 # frida-trace -p (pid) -i LoadLibrary*
+# frida-trace -p (pidof notepad) -i mylib.dll!*
 
 export def "frida list modules-and-exports" [pid: number] {
-  frida -p $pid --eval 'var x={};Process.enumerateModulesSync().forEach(function(m){x[m.name] = Module.enumerateExportsSync(m.name)});x' -q | from json
+  (frida -p $pid --eval 'var x={};Process.enumerateModulesSync().forEach(function(m){x[m.name] = Module.enumerateExportsSync(m.name)});x' -q
+    | from json
+    | transpose dll data)
 }
