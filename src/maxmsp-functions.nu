@@ -122,7 +122,7 @@ export def "Max rg" [pattern: string] {
 # ripgrep Max stuff
 export alias "rg-max" = rg --type-add 'max:*.{maxhelp,maxpat,json}' -t max
 
-export def "Max list mxe64" [] { frida list modules-and-exports (pidof Max) | transpose dll data | where dll =~ mxe64 | get dll }
-export def "Max list my-mxe64" [] { Max list mxe64 | filter { $in|str starts-with m. } }
+export def "Max list loaded-mxe64" [] { frida list modules-and-exports (pidof Max) | transpose dll data | where dll =~ mxe64 | get dll }
+export def "Max list my-loaded-mxe64" [] { Max list loaded-mxe64 | filter { $in|str starts-with m. } }
 
 
