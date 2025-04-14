@@ -53,6 +53,6 @@ export def "rabin2 quick" [file: path, ] {
 # Which dlls will be loaded? Runtime linking makes use of LoadLibrary() WinAPI call from kernel32.dll
 # frida-trace -p (pid) -i LoadLibrary*
 
-export def "frida list modules-and-exports" [] {
-  frida -p (pid) --eval 'var x={};Process.enumerateModulesSync().forEach(function(m){x[m.name] = Module.enumerateExportsSync(m.name)});x' -q | from json
+export def "frida list modules-and-exports" [pid: number] {
+  frida -p $pid --eval 'var x={};Process.enumerateModulesSync().forEach(function(m){x[m.name] = Module.enumerateExportsSync(m.name)});x' -q | from json
 }

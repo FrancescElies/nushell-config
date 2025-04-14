@@ -120,6 +120,16 @@ export def magnets [] {
   start http://localhost:3030/web
 }
 
+# gets pid of process with name
+export def pidof [name: string ] {
+  let procs = ps --long | where name =~ $name
+  if (($procs | length) > 1) {
+    $procs | sort-by -in name | input list -d name --fuzzy | get pid
+  } else {
+    $procs | get 0.pid
+  }
+}
+
 # grep for specific process names
 export def psn [name: string = "" ] {
   if ($name | is-empty) {
