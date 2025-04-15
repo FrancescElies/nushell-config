@@ -15,7 +15,7 @@ export def --wrapped main [page: string@"nu-complete pages" --section=null: numb
     # exit underline mode
     LESS_TERMCAP_ue: $'(ansi reset)'
   } {
-    man $section $page ...$rest
+    man ($section|"") $page ...$rest
   }
 }
 
