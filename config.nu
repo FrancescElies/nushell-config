@@ -34,6 +34,7 @@ use ~/src/nushell-config/src/git.nu *
 use ~/src/nushell-config/src/history-utils.nu *
 use ~/src/nushell-config/src/hosts.nu *
 use ~/src/nushell-config/src/just-completions.nu *
+use ~/src/nushell-config/src/man.nu *
 use ~/src/nushell-config/src/maxmsp-functions.nu *
 use ~/src/nushell-config/src/miniserve-completions.nu *
 use ~/src/nushell-config/src/my-configs.nu *
@@ -49,7 +50,6 @@ use ~/src/nushell-config/src/ssh-completions.nu *
 use ~/src/nushell-config/src/symlinks.nu *
 use ~/src/nushell-config/src/utils.nu *
 use ~/src/nushell-config/src/vpn.nu *
-use ~/src/nushell-config/src/vscode-completions.nu *
 use ~/src/nushell-config/src/wezterm-completions.nu *
 use ~/src/nushell-config/src/wibu.nu *
 use ~/src/nushell-config/src/work.nu *
