@@ -19,32 +19,14 @@ verbs: [
         execution: "nvim +{line} {file}"
         leave_broot: false
     }
-    {
-        name: edit-code
-        key: enter
-        extensions: [
-            hjson
-            js
-            json
-            justfile
-            justfile
-            kdl
-            lua
-            makefile
-            md
-            nu
-            py
-            rs
-            toml
-            ts
-            txt
-            yaml
-            yml
-        ]
-        execution: "nvim +{line} {file}"
-        working_dir: "{root}"
-        leave_broot: false
-    }
+    # {
+    #     name: edit-code
+    #     key: enter
+    #     extensions: [ hjson js json justfile justfile kdl lua makefile md nu py rs toml ts txt yaml yml ]
+    #     execution: "nvim +{line} {file}"
+    #     working_dir: "{root}"
+    #     leave_broot: false
+    # }
     {
         name: open-maxpat
         key: enter

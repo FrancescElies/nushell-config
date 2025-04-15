@@ -11,17 +11,17 @@ bootstrap: secret-nu-file
 [private]
 [windows]
 secret-nu-file:
-  if (not (open src/os-this-machine.nu | str contains "use src/os-windows.nu *")) {"use src/os-windows.nu *" | save --append src/os-this-machine.nu }
+  if (not (open src/os-this-machine.nu | str contains "use os-windows.nu *")) {"use os-windows.nu *" | save --append src/os-this-machine.nu }
 
 [private]
 [macos]
 secret-nu-file:
-  if (not (open src/os-this-machine.nu | str contains "use src/os-mac.nu *")) {"use src/os-mac.nu *" | save --append src/os-this-machine.nu }
+  if (not (open src/os-this-machine.nu | str contains "use os-mac.nu *")) {"use os-mac.nu *" | save --append src/os-this-machine.nu }
 
 [private]
 [linux]
 secret-nu-file:
-  if (not (open src/os-this-machine.nu | str contains "use src/os-linux.nu *")) {"use src/os-linux.nu *" | save --append src/os-this-machine.nu }
+  if (not (open src/os-this-machine.nu | str contains "use os-linux.nu *")) {"use os-linux.nu *" | save --append src/os-this-machine.nu }
 
 # create a python virtual environment
 home-venv: bootstrap
