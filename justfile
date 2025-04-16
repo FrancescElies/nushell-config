@@ -33,7 +33,7 @@ update-imports:
 
 [windows]
 windows-pkgs: home-venv
-  (open packages.toml | get windows | transpose | get column0) | each { try { winget install --silent --id $in } }
+  let pkgs = (open packages.toml | get windows | transpose | get column0); winget install --silent ...$pkgs
 
 
 [windows]
