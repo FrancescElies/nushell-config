@@ -5,14 +5,17 @@ use utils.nu *
 
 # Cycling '74 Max cli wrap
 export def Max [maxpat?: path] {
-    let max_exe = match $nu.os-info.name {
+    let max = match $nu.os-info.name {
       "windows" => "C:/Program Files/Cycling '74/Max 9/Max.exe"
       "macos" => "/Applications/Max.app/Contents/MacOS/Max",
       _ => { error make {msg: "not implemented" } }
     }
-    let maxpat = $maxpat | path expand
-    print_purple $"($max_exe) ($maxpat)"
-    if ($maxpat | is-empty) { run-external $max_exe } else { run-external $max_exe $maxpat }
+    print_purple $"($max) ($maxpat)"
+    if ($maxpat | is-empty) {
+      run-external $max
+    } else {
+      run-external $max ($maxpat | path expand)
+  }
 }
 
 # broot Max stuff
