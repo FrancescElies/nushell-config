@@ -291,12 +291,7 @@ export def todos [] { mkdircd ~/src/zettelkasten ; nvim todos.md }
 
 def "nu-complete projects" [] {
     {
-        options: {
-            case_sensitive: false,
-            completion_algorithm: fuzzy, # fuzzy or prefix
-            positional: false,
-            sort: true,
-        },
+        options: { completion_algorithm: fuzzy, case_sensitive: false, positional: false, sort: true, },
         completions: (
           ls ~/src
           | append (try {ls ~/src/work})
@@ -304,8 +299,8 @@ def "nu-complete projects" [] {
           | append (try {ls ~/src/oss})
           | where type == dir | get name
           | path relative-to ~/src)
-      }
-  }
+    }
+}
 
 # cd into project
 export def --env cdp [project: string@"nu-complete projects"] { cd ('~/src' | path expand | path join $project ) }

@@ -1,6 +1,7 @@
-use ~/src/nushell-config/src/broot-helpers.nu *
-use ~/src/nushell-config/src/my-functions.nu *
-use ~/src/nushell-config/src/reverse-eng.nu *
+use broot-helpers.nu *
+use my-functions.nu *
+use reverse-eng.nu *
+use utils.nu *
 
 # Cycling '74 Max cli wrap
 export def Max [maxpat?: path] {
@@ -9,7 +10,9 @@ export def Max [maxpat?: path] {
       "macos" => "/Applications/Max.app/Contents/MacOS/Max",
       _ => { error make {msg: "not implemented" } }
     }
-    if ($maxpat == null) { run-external $max_exe } else { run-external $max_exe ($maxpat | path expand) }
+    let maxpat = $maxpat | path expand
+    print_purple $"($max_exe) ($maxpat)"
+    if ($maxpat | is-empty) { run-external $max_exe } else { run-external $max_exe $maxpat }
 }
 
 # broot Max stuff

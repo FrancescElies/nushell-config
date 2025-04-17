@@ -153,3 +153,8 @@ export def --wrapped "cargo test-windbg" [
   open-in-windbg $executable
 }
 
+# open in visual studio
+export def vs [file: path] {
+  let file = ($file | path expand)
+  run-external `C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\devenv.exe` /Edit $file
+}

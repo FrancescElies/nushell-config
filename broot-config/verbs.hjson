@@ -28,12 +28,17 @@ verbs: [
     #     leave_broot: false
     # }
     {
+        name: open-in-visual-studio
+        shortcut: vs
+        extensions: [ "rs", "c", "cpp", "h", "hpp" ]
+        execution: "cmd /c start \"\" \"C:\\Program Files\\Microsoft Visual Studio\\2022\\Professional\\Common7\\IDE\\devenv.exe\" /Edit \"{file}\" &"
+        working_dir: "{root}"
+        leave_broot: false
+    }
+    {
         name: open-maxpat
         key: enter
-        extensions: [
-            maxpat
-            maxhelp
-        ]
+        extensions: [ "maxpat", "maxhelp" ]
         execution: "wezterm cli spawn -- nu -e \"Max {file}\""
         working_dir: "{root}"
         leave_broot: false
