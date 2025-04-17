@@ -52,6 +52,7 @@ use ~/src/nushell-config/src/utils.nu *
 use ~/src/nushell-config/src/vpn.nu *
 use ~/src/nushell-config/src/wezterm-completions.nu *
 use ~/src/nushell-config/src/wibu.nu *
+use ~/src/nushell-config/src/winget-completions.nu *
 use ~/src/nushell-config/src/work.nu *
 use ~/src/nushell-config/src/zig.nu *
 # [[[end]]]
