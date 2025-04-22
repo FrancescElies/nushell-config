@@ -127,6 +127,7 @@ export def "az trigger pr-ci" [ pr_id: number@"nu-complete pr-id" ] {
         az repos pr policy queue --id $pr_id -e $in -ojson | from json
         | select status configuration.settings.displayName? configuration.type.displayName evaluationId
         | rename status title type id
+        | update cells -c [status] { $in | str replace approved ✅| str replace running 👟| str replace queued ⏳| str replace rejected ❌ }
     )}
   )
 
