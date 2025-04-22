@@ -60,7 +60,7 @@ def "board query" [wiql: string] {
     | from json
     | select fields | flatten
     | rename --column {System.State: state, System.Id: id, System.IterationPath: iteration_path, System.Title: title}
-    | sort-by state
+    | sort-by state title
 
 }
 
