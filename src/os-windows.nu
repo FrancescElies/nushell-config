@@ -158,3 +158,13 @@ export def vs [file: path] {
   let file = ($file | path expand)
   run-external `C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\devenv.exe` /Edit $file
 }
+
+# open screen recordings
+export def "open screen-recordings" [] { start ('~/Videos/Screen Recordings' | path expand) }
+
+export def "screen-recordings to gif" [] {
+  ( ls `~/Videos/Screen Recordings/*mp4` | get name | path parse
+    | filter {|x| not ($x.parent | path join $'($x.stem).gif' | path exists) }
+    | par-each { |el| ffmpeg -i ($el.parent | path join $'($el.stem).($el.extension)') $"($el.parent | path join $el.stem).gif"} )
+  open screen-recordings
+}
