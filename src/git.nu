@@ -113,7 +113,8 @@ export alias gfa = git fetch --all --prune
 export alias gca = git commit --amend
 # git commit amend, don't edit meesage
 export alias gcane = git commit --amend --no-edit
-export def "gcommit" [
+
+export def "gommit" [
   title: string
   body: string = ""
 ] {
