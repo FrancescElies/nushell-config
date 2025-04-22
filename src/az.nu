@@ -116,7 +116,7 @@ export def "az list my prs" [--draft] {
 def "nu-complete pr-id" [] { (az list my prs) | rename -c {id: value,  title: description} }
 
 # trigger ci for PR
-export def "az trigger pr-ci" [ pr_id: number@"nu-complete pr-id" ] {
+export def "az pr trigger-ci" [ pr_id: number@"nu-complete pr-id" ] {
   ( az repos pr policy list --id $pr_id -ojson | from json
   | filter {$in.configuration.isBlocking and $in.configuration.isEnabled}
   | select evaluationId configuration.type.displayName configuration.settings.displayName?
