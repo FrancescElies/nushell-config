@@ -159,6 +159,8 @@ export def vs [file: path] {
   run-external `C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\devenv.exe` /Edit $file
 }
 
+export alias timeline = start http://localhost:5600/#/timeline
+
 # open screen shots
 export def "screen shots" [] { start ('~/Pictures/Screenshots' | path expand) }
 
