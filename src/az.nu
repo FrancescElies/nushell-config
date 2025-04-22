@@ -9,6 +9,7 @@ export def "az pr status" [
 ] {
   let status = (
     az repos pr policy list --id $pr_id -ojson | from json
+    | filter {$in.configuration.isBlocking and $in.configuration.isEnabled}
     | select status configuration.settings.displayName? configuration.type.displayName evaluationId
     | rename status title type id
     | sort-by status
@@ -63,14 +64,14 @@ def "board query" [wiql: string] {
 
 }
 
-export def "az list my-stories" [] {
+export def "az list my stories" [] {
   let wiql = [ "SELECT [System.Id], [System.Title], [System.State], [System.IterationPath] FROM workitems"
                "WHERE [system.assignedto] = @me AND [System.WorkItemType] <> 'Task' AND [system.state] NOT IN ('Closed', 'Obsolete')"
                "ORDER BY [Microsoft.VSTS.Common.Priority], [System.ChangedDate] DESC" ] | str join ' '
     board query $wiql
 }
 
-export def "az list my-tasks" [] {
+export def "az list my tasks" [] {
   let wiql = [ "SELECT [System.Id], [System.Title], [System.State], [System.IterationPath] FROM workitems"
                "WHERE [system.assignedto] = @me AND [System.WorkItemType] = 'Task' AND [system.state] NOT IN ('Closed', 'Obsolete')"
                " ORDER BY [Microsoft.VSTS.Common.Priority], [System.ChangedDate] DESC" ] | str join ' '
@@ -101,13 +102,18 @@ export def "az list following" [] {
 }
 
 # list my pull requests
-export def "az list my-prs" [--draft] {
+export def "az list my prs" [--draft] {
   let my_query = "[].{title: title, createdby: createdBy.displayName, status: status, repo: repository.name, id: pullRequestId, draft: isDraft }"
   let prs = az repos pr list -ojson --query $my_query | from json | where createdby =~ "Francesc" | select id status title draft
-  if $draft { $prs | where draft } else { $prs | where not draft }
+  let prs = if $draft { $prs | where draft } else { $prs | where not draft }
+  $prs | insert ci-status {
+      az pr status $in.id
+      | select status title type | sort-by type status
+      | update cells -c [status] { $in | str replace approved ✅| str replace running 👟| str replace queued ⏳| str replace rejected ❌ }
+  }
 }
 
-def "nu-complete pr-id" [] { (az list my-prs) | rename -c {id: value,  title: description} }
+def "nu-complete pr-id" [] { (az list my prs) | rename -c {id: value,  title: description} }
 
 # trigger ci for PR
 export def "az trigger pr-ci" [ pr_id: number@"nu-complete pr-id" ] {
