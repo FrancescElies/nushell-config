@@ -1,8 +1,20 @@
-export def "az create pr" [ --target-branch (-t): string = 'master' ] {
+export def "az pr new" [ --target-branch (-t): string = 'master' ] {
   git push
   az repos pr create --draft --open --auto-complete -t $target_branch -o table
 }
 
+export def "az pr status" [
+  pr_id: number@"nu-complete pr-id"
+  --pending(-p)  # list only not yet approved policies
+] {
+  let status = (
+    az repos pr policy list --id $pr_id -ojson | from json
+    | select status configuration.settings.displayName? configuration.type.displayName evaluationId
+    | rename status title type id
+    | sort-by status
+  )
+  if $pending { $status | where status != approved } else { $status }
+}
 
 # Get azure devops machines having a certain capability
 export def "az list machines-usercapabilities" [
@@ -101,10 +113,15 @@ def "nu-complete pr-id" [] { (az list my-prs) | rename -c {id: value,  title: de
 export def "az trigger pr-ci" [ pr_id: number@"nu-complete pr-id" ] {
   ( az repos pr policy list --id $pr_id -ojson | from json
   | filter {$in.configuration.isBlocking and $in.configuration.isEnabled}
-  | get evaluationId
-  | par-each --threads 8 {
-      az repos pr policy queue --id $pr_id -e $in -ojson | from json | select evaluationId status
-    }
+  | select evaluationId configuration.type.displayName configuration.settings.displayName?
+  | rename id type title
+  | where type == Build
+  | get id
+  | par-each --threads 8 {(
+        az repos pr policy queue --id $pr_id -e $in -ojson | from json
+        | select status configuration.settings.displayName? configuration.type.displayName evaluationId
+        | rename status title type id
+    )}
   )
 
 }
