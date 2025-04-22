@@ -13,11 +13,11 @@ def "nu-complete gw-paths" [] { git worktree listt | get path }
 
 
 def "nu-complete my-tasks" [] {
-  (az my-tasks) | rename -c {System.Id: value,  System.Title: description} | select value description
+  (az list my tasks) | rename -c {System.Id: value,  System.Title: description} | select value description
 }
 
 def "nu-complete my-stories" [] {
-  (az my-stories) | rename -c {System.Id: value,  System.Title: description} | select value description
+  (az list my stories) | rename -c {System.Id: value,  System.Title: description} | select value description
 }
 
 # git worktree change directory
