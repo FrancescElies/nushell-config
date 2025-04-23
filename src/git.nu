@@ -118,30 +118,23 @@ export def "gommit" [
   title: string
   body: string = ""
 ] {
+
   let current_branch = (git rev-parse --abbrev-ref HEAD)
-  print_purple $"current_branch ($current_branch)"
-  let tickets = (open ~\.gitconfig-branch-tickets.toml)
-  print_purple "~/.gitconfig-branch-tickets.toml 👀"
+  let dbfile = ('~/.gitconfig-branch-tickets.sqlite3' | path expand )
+  let db = (stor import --file-name $dbfile)
 
   mut rest = []
   if $body != "" { $rest = ($rest | append [-m $"($body)"]) }
 
-  try {
-    let story = ( $tickets
-                | get branches
-                | where name == $current_branch
-                | get story.0 )
-    let task = ( $tickets
-               | get branches
-               | where name == $current_branch
-               | get task.0 )
+  let story = ( $db.branches | where name == $current_branch | get story.0 )
+  if $story != 0 { $rest = ($rest | append [-m $"story #($story)"]) }
 
-    if $story != "<Nothing>" { $rest = ($rest | append [-m $"story #($story)"]) }
-    if $task != "<Nothing>" { $rest = ($rest | append [-m $"task #($task)"]) }
-  }
+  let task = ( $db.branches | where name == $current_branch | get task.0 )
+  if $task != 0 { $rest = ($rest | append [-m $"task #($task)"]) }
 
   git commit --message $title ...$rest
 }
+
 # git checkout
 export alias gco = git checkout
 # git cherry pick

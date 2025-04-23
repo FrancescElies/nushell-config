@@ -1,6 +1,31 @@
-export def "az pr new" [ --target-branch (-t): string = 'master' ] {
+export def "az pr new" [ --target-branch (-t): string = 'master' --draft] {
   git push
-  az repos pr create --draft --open --auto-complete -t $target_branch -o table
+  let description = ($nu.temp-path | path join $"az-pr-(random chars).md")
+  let title = ( git log --format=%B -n 1 HEAD ) | lines | first
+  [ "**Problem:** " "" "**Solution:** " "" "**Notes:** " ] | to text | save -f $description
+
+  nvim $description
+
+  let dbfile = ('~/.gitconfig-branch-tickets.sqlite3' | path expand )
+  let db = (stor import --file-name $dbfile)
+  let current_branch = (git rev-parse --abbrev-ref HEAD)
+  let work_items = ([
+    ( $db.branches | where name == $current_branch | get story.0 )
+    ( $db.branches | where name == $current_branch | get task.0 )
+  ] | filter { $in != 0})
+
+  mut args = []
+  if $draft { $args = ($args | append '--draft') }
+  ( ^az repos pr create --open --delete-source-branch
+    --description ...($description | open | lines)
+    --auto-complete -t $target_branch
+    --work-items ...($work_items)
+    --title $title
+    ...$args
+    -o json
+  )
+  | from json
+  | select pullRequestId mergeStatus title
 }
 
 export def "az pr status" [

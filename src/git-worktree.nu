@@ -32,17 +32,12 @@ export def "git map-branch-with-task" [
   --story(-s): int@"nu-complete my-stories"  # story number
   --task(-t): int@"nu-complete my-tasks"   # task number
 ] {
-  let file = ("~/.gitconfig-branch-tickets.toml" | path expand)
-  if not ($file | path exists) { touch $file }
-
   let branch_name = if ($branch | is-empty) { (git rev-parse --abbrev-ref HEAD) } else { $branch }
 
-  print_purple $"mapping ($branch_name) to story=($story) task=($task) in ($file)"
-  let branches = (open $file
-  | get --ignore-errors branches
-  | append [{name: $branch_name, story: $story, task: $task}]
-  | uniq)
-  {branches: $branches} | save -f $file
+  let dbfile = ('~/.gitconfig-branch-tickets.sqlite3' | path expand )
+  stor import --file-name $dbfile
+  stor update --table-name branches -u {name: $branch_name story: $story task: $task}
+  stor export --file-name $dbfile
 }
 
 # git worktree add - convenience wrapper
