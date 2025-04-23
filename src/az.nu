@@ -1,4 +1,4 @@
-export def "az pr new" [ --target-branch (-t): string = 'master' --draft] {
+export def "ado pr new" [ --target-branch (-t): string = 'master' --draft] {
   git push
   let description = ($nu.temp-path | path join $"az-pr-(random chars).md")
   let title = ( git log --format=%B -n 1 HEAD ) | lines | first
@@ -28,7 +28,7 @@ export def "az pr new" [ --target-branch (-t): string = 'master' --draft] {
   | select pullRequestId mergeStatus title
 }
 
-export def "az pr status" [
+export def "ado pr status" [
   pr_id: number@"nu-complete pr-id"
   --pending(-p)  # list only not yet approved policies
 ] {
@@ -43,7 +43,7 @@ export def "az pr status" [
 }
 
 # Get azure devops machines having a certain capability
-export def "az list machines-usercapabilities" [
+export def "ado list machines-usercapabilities" [
   has_capability: string = 'Python311',
   --output (-o): string = 'yaml'  # json, jsonc, none, table, tsv, yaml, yamlc.
 ] {
@@ -54,7 +54,7 @@ export def "az list machines-usercapabilities" [
 }
 
 # Get azure devops machines
-export def "az list machines" [
+export def "ado list machines" [
   --output (-o): string = 'yaml'  # json, jsonc, none, table, tsv, yaml, yamlc.
 ] {
   (  az pipelines agent list
@@ -63,11 +63,11 @@ export def "az list machines" [
   )
 }
 
-export def "az queue build" [ definition_id: int = 42 ] {
+export def "ado queue build" [ definition_id: int = 42 ] {
   az pipelines build queue --open --branch (git rev-parse --abbrev-ref HEAD) --definition-id $definition_id
 }
 
-export def "az download artifact" [
+export def "ado download artifact" [
   build_id: int
 ] {
   az pipelines runs artifact download --artifact-name Installer --path ~/Downloads --run-id $build_id
@@ -89,28 +89,28 @@ def "board query" [wiql: string] {
 
 }
 
-export def "az list my stories" [] {
+export def "ado list my stories" [] {
   let wiql = [ "SELECT [System.Id], [System.Title], [System.State], [System.IterationPath] FROM workitems"
                "WHERE [system.assignedto] = @me AND [System.WorkItemType] <> 'Task' AND [system.state] NOT IN ('Closed', 'Obsolete')"
                "ORDER BY [Microsoft.VSTS.Common.Priority], [System.ChangedDate] DESC" ] | str join ' '
     board query $wiql
 }
 
-export def "az list my tasks" [] {
+export def "ado list my tasks" [] {
   let wiql = [ "SELECT [System.Id], [System.Title], [System.State], [System.IterationPath] FROM workitems"
                "WHERE [system.assignedto] = @me AND [System.WorkItemType] = 'Task' AND [system.state] NOT IN ('Closed', 'Obsolete')"
                " ORDER BY [Microsoft.VSTS.Common.Priority], [System.ChangedDate] DESC" ] | str join ' '
     board query $wiql
   }
 
-export def "az list assigned-to-me" [] {
+export def "ado list assigned-to-me" [] {
   let wiql = [ "SELECT [System.Id], [System.Title], [System.State], [System.IterationPath] FROM workitems"
                "WHERE [system.assignedto] = @me AND [system.state] NOT IN ('Closed', 'Obsolete')"
                "ORDER BY [Microsoft.VSTS.Common.Priority], [System.ChangedDate] DESC"] | str join " "
   board query $wiql
 }
 
-export def "az list created-by-me" [] {
+export def "ado list created-by-me" [] {
   let cols = "[System.Id], [System.WorkItemType], [System.Title], [System.State], [System.AreaPath], [System.IterationPath]"
   let wiql = [ $"SELECT ($cols) FROM workitems"
                "WHERE [System.CreatedBy] = @me AND [system.state]  NOT IN ('Closed', 'Obsolete')"
@@ -118,7 +118,7 @@ export def "az list created-by-me" [] {
   board query $wiql
 }
 
-export def "az list following" [] {
+export def "ado list following" [] {
   let cols = "[System.Id], [System.WorkItemType], [System.Title], [System.State], [System.AreaPath], [System.IterationPath]"
   let wiql = [ $"SELECT ($cols) FROM workitems"
                "WHERE [System.ID] IN (@Follows) AND [system.state]  NOT IN ('Closed', 'Obsolete')"
@@ -127,20 +127,20 @@ export def "az list following" [] {
 }
 
 # list my pull requests
-export def "az list my prs" [--draft] {
+export def "ado list my prs" [--draft] {
   let my_query = "[].{title: title, createdby: createdBy.displayName, status: status, repo: repository.name, id: pullRequestId, draft: isDraft }"
   let prs = az repos pr list -ojson --query $my_query | from json | where createdby =~ "Francesc" | select id status title draft
   let prs = if $draft { $prs | where draft } else { $prs | where not draft }
   $prs | insert ci-status {
-      az pr status $in.id
+      ado pr status $in.id
       | select status title type | sort-by type status
       | update cells -c [status] { $in | str replace approved ✅| str replace running 👟| str replace queued ⏳| str replace rejected ❌ }
   }
 }
 
-def "nu-complete pr-id" [] { (az list my prs) | rename -c {id: value,  title: description} }
+def "nu-complete pr-id" [] { (ado list my prs) | rename -c {id: value,  title: description} }
 
-export def "az pr rejected-policies" [ pr_id: number@"nu-complete pr-id" ] {
+export def "ado pr rejected-policies" [ pr_id: number@"nu-complete pr-id" ] {
   ( az repos pr policy list --id $pr_id -ojson | from json
   | filter {$in.configuration.isBlocking and $in.configuration.isEnabled}
   | select evaluationId configuration.type.displayName configuration.settings.displayName? status
@@ -152,7 +152,7 @@ export def "az pr rejected-policies" [ pr_id: number@"nu-complete pr-id" ] {
 
 # trigger ci for PR
 export def "az pr ci trigger" [ pr_id: number@"nu-complete pr-id" ] {
-  ( az pr rejected-policies $pr_id | par-each {
+  ( ado pr rejected-policies $pr_id | par-each {
     print $"(ansi pb) Triggering: ($in.title)(ansi reset)"
     ( az repos pr policy queue --id $pr_id -e $in.id -ojson | from json
       | select status configuration.settings.displayName? configuration.type.displayName evaluationId
@@ -160,7 +160,7 @@ export def "az pr ci trigger" [ pr_id: number@"nu-complete pr-id" ] {
   })
 }
 
-export def "az pr ci watch" [ pr_id: number@"nu-complete pr-id" ] {
+export def "ado pr ci watch" [ pr_id: number@"nu-complete pr-id" ] {
   print $"(ansi pb) Watching PR: ($pr_id)(ansi reset)"
   loop {
     az pr ci trigger $pr_id
