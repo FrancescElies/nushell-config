@@ -140,20 +140,30 @@ export def "az list my prs" [--draft] {
 
 def "nu-complete pr-id" [] { (az list my prs) | rename -c {id: value,  title: description} }
 
-# trigger ci for PR
-export def "az pr trigger-ci" [ pr_id: number@"nu-complete pr-id" ] {
+def "az pr rejected-policies" [ pr_id: number@"nu-complete pr-id" ] {
   ( az repos pr policy list --id $pr_id -ojson | from json
   | filter {$in.configuration.isBlocking and $in.configuration.isEnabled}
-  | select evaluationId configuration.type.displayName configuration.settings.displayName?
-  | rename id type title
+  | select evaluationId configuration.type.displayName configuration.settings.displayName? status
+  | rename id type title status
   | where type == Build
-  | get id
-  | par-each --threads 8 {(
-        az repos pr policy queue --id $pr_id -e $in -ojson | from json
-        | select status configuration.settings.displayName? configuration.type.displayName evaluationId
-        | rename status title type id
-        | update cells -c [status] { $in | str replace approved ✅| str replace running 👟| str replace queued ⏳| str replace rejected ❌ }
-    )}
+  | where status == rejected
   )
+}
 
+# trigger ci for PR
+export def "az pr ci trigger" [ pr_id: number@"nu-complete pr-id" ] {
+  ( az pr rejected-policies $pr_id | par-each {
+    print $"(ansi pb) Triggering: ($in.title)(ansi reset)"
+    ( az repos pr policy queue --id $pr_id -e $in.id -ojson | from json
+      | select status configuration.settings.displayName? configuration.type.displayName evaluationId
+      | rename status title type id)
+  })
+}
+
+export def "az pr ci watch" [ pr_id: number@"nu-complete pr-id" ] {
+  print $"(ansi pb) Watching PR: ($pr_id)(ansi reset)"
+  loop {
+    az pr ci trigger $pr_id
+    sleep 10sec
+  }
 }
