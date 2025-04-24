@@ -56,6 +56,7 @@ export def --env br [
     --no-sizes(-S)                  # Don't show sizes
     --set-install-state: path       # Where to write the produced cmd (if any) [possible values: undefined, refused, installed]
     --show-root-fs                  # Show filesystem info on top
+    --max-depth: int                # Only show trees up to a certain depth
     --sort-by-count                 # Sort by count (only show one level of the tree)
     --sort-by-date                  # Sort by date (only show one level of the tree)
     --sort-by-size                  # Sort by size (only show one level of the tree)
@@ -95,6 +96,7 @@ export def --env br [
     if $no_sizes { $args = ($args | append $'--no-sizes') }
     if $set_install_state != null { $args = ($args | append $'--set-install-state=($set_install_state)') }
     if $show_root_fs { $args = ($args | append $'--show-root-fs') }
+    if $max_depth != null { $args = ($args | append $'--max-depth=($max_depth)') }
     if $sort_by_count { $args = ($args | append $'--sort-by-count') }
     if $sort_by_date { $args = ($args | append $'--sort-by-date') }
     if $sort_by_size { $args = ($args | append $'--sort-by-size') }
@@ -107,7 +109,11 @@ export def --env br [
     if $whale_spotting { $args = ($args | append $'--whale-spotting') }
     if $write_default_conf != null { $args = ($args | append $'--write-default-conf=($write_default_conf)') }
 
-    let cmd_file = ([ $nu.temp-path, $"broot-(random chars).tmp" ] | path join)
+    let cmd_file = (
+        if ($env.XDG_RUNTIME_DIR? | is-not-empty) { $env.XDG_RUNTIME_DIR } else { $nu.temp-path }
+        | path join $"broot-(random chars).tmp"
+    )
+
     touch $cmd_file
     if ($file == null) {
         ^broot --outcmd $cmd_file ...$args
@@ -149,6 +155,7 @@ export extern broot [
     --no-sizes(-S)                  # Don't show sizes
     --set-install-state: path       # Where to write the produced cmd (if any) [possible values: undefined, refused, installed]
     --show-root-fs                  # Show filesystem info on top
+    --max-depth: int                # Only show trees up to a certain depth
     --sort-by-count                 # Sort by count (only show one level of the tree)
     --sort-by-date                  # Sort by date (only show one level of the tree)
     --sort-by-size                  # Sort by size (only show one level of the tree)
