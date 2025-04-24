@@ -19,7 +19,7 @@ export def Max [maxpat?: path] {
 }
 
 # broot Max stuff
-export alias "Max br" = br --cmd ".maxpat&t/"
+export alias "braxpat" = br --cmd "project.maxpat|.maxpat&t/"
 
 # opens Max settings
 export def --env "Max settings" [] {

@@ -12,9 +12,6 @@ export alias d = brd
 # select a file with broot and print to stdout e.g. `bat (bo)`
 export def bro [] { ^broot --conf ~/src/nushell-config/broot-config/select.hjson }
 
-# select a file with broot and cat it
-export def brat [] { bat (^broot --conf ~/src/nushell-config/broot-config/select.hjson) }
-
 # print tree of folder with broot
 export def bree --wrapped [path: path = . ...rest] { ^broot -c :pt $path ...$rest }
 

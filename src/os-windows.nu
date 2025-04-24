@@ -5,6 +5,7 @@
 # https://github.com/winsiderss/systeminformer
 
 use utils.nu print_purple
+use broot-helpers.nu br
 
 # NOTE: broken
 # overlay use ~/src/nushell-config/.venv/scripts/activate.nu
@@ -163,13 +164,16 @@ export alias timeline = start http://localhost:5600/#/timeline
 
 # open screen shots
 export def "screen shots" [] { start ('~/Pictures/Screenshots' | path expand) }
+export def "br screen shots" [] { br --sort-by-date ('~/Pictures/Screenshots' | path expand)  }
 
 # open screen recordings
 export def "screen recordings" [] { start ('~/Videos/Screen Recordings' | path expand) }
+export def "br screen recordings" [] { br --sort-by-date ('~/Videos/Screen Recordings' | path expand)  }
 
 export def "screen recordings to gif" [] {
   ( ls `~/Videos/Screen Recordings/*mp4` | get name | path parse
     | filter {|x| not ($x.parent | path join $'($x.stem).gif' | path exists) }
     | par-each { |el| ffmpeg -i ($el.parent | path join $'($el.stem).($el.extension)') $"($el.parent | path join $el.stem).gif"} )
-  open screen-recordings
+
+  start ('~/Videos/Screen Recordings' | path expand)
 }
