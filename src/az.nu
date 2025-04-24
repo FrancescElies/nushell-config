@@ -222,7 +222,7 @@ export def "ado pr ci re-queue" [ pr_id: number@"nu-complete pr-id" ] {
 export def "ado pr ci watch" [ pr_id: number@"nu-complete pr-id" ] {
   print $"(ansi pb) Watching PR: ($pr_id)(ansi reset)"
   loop {
-    let result = ado pr ci trigger $pr_id
+    let result = ado pr ci re-queue $pr_id
     if (not ($result | is-empty)) { print $result }
     sleep 10sec
   }
