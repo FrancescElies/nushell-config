@@ -88,14 +88,16 @@ export def "ado pr new" [ --target-branch (-t): string = 'master' --draft] {
 export def "ado pr status" [
   pr_id: number@"nu-complete pr-id"
   --pending(-p)  # list only not yet approved policies
+  --with-policy-id
 ] {
   let status = (
     az repos pr policy list --id $pr_id -ojson | from json
     | filter {$in.configuration.isBlocking and $in.configuration.isEnabled}
-    | select status configuration.settings.displayName? configuration.type.displayName evaluationId
-    | rename status title type id
-    | sort-by status
+    | select status context.isExpired? configuration.settings.displayName? configuration.type.displayName evaluationId
+    | rename status expired            title                               type                           policy-id
+    | sort-by status expired
   )
+  let status = if $with_policy_id { $status } else { $status | reject policy-id }
   if $pending { $status | where status != approved } else { $status }
 }
 
