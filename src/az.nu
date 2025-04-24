@@ -220,8 +220,13 @@ export def "ado pr ci re-queue" [ pr_id: number@"nu-complete pr-id" ] {
 }
 
 export def "ado pr ci watch" [ pr_id: number@"nu-complete pr-id" ] {
-  print $"(ansi pb) Watching PR: ($pr_id)(ansi reset)"
+  let pr = (az repos pr show --id  $pr_id | from json )
+  let pr_title = $"PR ($pr_id) - ($pr | get title)"
+  print $"(ansi pb)Watching(ansi reset) ($pr_title)"
   loop {
+    if (((az repos pr show --id  $pr_id | from json ) | get status) == completed) {
+      return $"($pr_title) (ansi lgi)completed(ansi reset)"
+    }
     let result = ado pr ci re-queue $pr_id
     if (not ($result | is-empty)) { print $result }
     sleep 10sec
