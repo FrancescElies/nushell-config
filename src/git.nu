@@ -114,27 +114,6 @@ export alias gca = git commit --amend
 # git commit amend, don't edit meesage
 export alias gcane = git commit --amend --no-edit
 
-export def "gommit" [
-  title: string
-  body: string = ""
-] {
-
-  let current_branch = (git rev-parse --abbrev-ref HEAD)
-  let dbfile = ('~/.gitconfig-branch-tickets.sqlite3' | path expand )
-  let db = (stor import --file-name $dbfile)
-
-  mut rest = []
-  if $body != "" { $rest = ($rest | append [-m $"($body)"]) }
-
-  let story = ( $db.branches | where name == $current_branch | get story.0 )
-  if $story != 0 { $rest = ($rest | append [-m $"story #($story)"]) }
-
-  let task = ( $db.branches | where name == $current_branch | get task.0 )
-  if $task != 0 { $rest = ($rest | append [-m $"task #($task)"]) }
-
-  git commit --message $title ...$rest
-}
-
 # git checkout
 export alias gco = git checkout
 # git cherry pick

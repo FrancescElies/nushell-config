@@ -11,59 +11,11 @@ export def --wrapped "git worktree listt" [...rest] {
 
 def "nu-complete gw-paths" [] { git worktree listt | get path }
 
-
-def "nu-complete my-tasks" [] {
-  (ado list my tasks) | rename -c {System.Id: value,  System.Title: description} | select value description
-}
-
-def "nu-complete my-stories" [] {
-  (ado list my stories) | rename -c {System.Id: value,  System.Title: description} | select value description
-}
-
 # git worktree change directory
 export def --env "git worktree cd" [
   path?: string@"nu-complete gw-paths"  # branch to create or checkout
 ] {
   cd $path
-}
-
-export def "git map-branch-with-task" [
-  --branch(-b): string  # branch name
-  --story(-s): int@"nu-complete my-stories"  # story number
-  --task(-t): int@"nu-complete my-tasks"   # task number
-] {
-  let branch_name = if ($branch | is-empty) { (git rev-parse --abbrev-ref HEAD) } else { $branch }
-
-  let dbfile = ('~/.gitconfig-branch-tickets.sqlite3' | path expand )
-  stor import --file-name $dbfile
-  stor update --table-name branches -u {name: $branch_name story: $story task: $task}
-  stor export --file-name $dbfile
-}
-
-# git worktree add - convenience wrapper
-export def "git worktree add-work" [
-  branch: string # branch to create or checkout, e.g. cesc/1234-my-description
-  path: path # checkout location
-  --startingat(-@): string = ""  # create a new branch starting at <commit-ish> e.g. master,
-  # custom stuff
-  --story(-s): int@"nu-complete my-stories"  # story number
-  --task(-t): int@"nu-complete my-tasks"   # task number
-] {
-  git map-branch-with-task -b $branch -s $story -t $task
-
-  let repo_name = pwd | path basename | str replace ".git" ""
-  # make sure path has no slashes coming from branch name
-  # let branch_folder = $branch | str replace -a -r `[\\/]` "-"
-  # let path = (".." | path join $"($repo_name)-($branch_folder)")
-
-  git fetch --all
-  if $startingat == "" {
-    print_purple $"git worktree add -B ($branch) ($path)"
-    git worktree add -B $branch $path
-  } else {
-    print_purple $"git worktree add -B ($branch) ($path) ($startingat)"
-    git worktree add -B $branch $path $startingat
-  }
 }
 
 # git worktree remove

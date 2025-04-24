@@ -1,3 +1,60 @@
+def "nu-complete my-tasks" [] { (ado list my tasks) | rename -c {System.Id: value,  System.Title: description} | select value description }
+
+def "nu-complete my-stories" [] { (ado list my stories) | rename -c {System.Id: value,  System.Title: description} | select value description }
+
+# git worktree add - convenience wrapper
+export def "ado worktree add" [
+  branch: string # branch to create or checkout, e.g. cesc/1234-my-description
+  path: path # checkout location
+  --startingat(-@): string = ""  # create a new branch starting at <commit-ish> e.g. master,
+  # custom stuff
+  --story(-s): int@"nu-complete my-stories"  # story number
+  --task(-t): int@"nu-complete my-tasks"   # task number
+] {
+  let branch_name = if ($branch | is-empty) { (git rev-parse --abbrev-ref HEAD) } else { $branch }
+
+  let dbfile = ('~/.gitconfig-branch-tickets.sqlite3' | path expand )
+  stor import --file-name $dbfile
+  stor update --table-name branches -u {name: $branch_name story: $story task: $task}
+  stor export --file-name $dbfile
+
+  let repo_name = pwd | path basename | str replace ".git" ""
+  # make sure path has no slashes coming from branch name
+  # let branch_folder = $branch | str replace -a -r `[\\/]` "-"
+  # let path = (".." | path join $"($repo_name)-($branch_folder)")
+
+  git fetch --all
+  if $startingat == "" {
+    print_purple $"git worktree add -B ($branch) ($path)"
+    git worktree add -B $branch $path
+  } else {
+    print_purple $"git worktree add -B ($branch) ($path) ($startingat)"
+    git worktree add -B $branch $path $startingat
+  }
+}
+
+export def "ado commit" [
+  title: string
+  body: string = ""
+] {
+
+  let current_branch = (git rev-parse --abbrev-ref HEAD)
+  let dbfile = ('~/.gitconfig-branch-tickets.sqlite3' | path expand )
+  let db = (stor import --file-name $dbfile)
+
+  mut rest = []
+  if $body != "" { $rest = ($rest | append [-m $"($body)"]) }
+
+  let story = ( $db.branches | where name == $current_branch | get story.0 )
+  if $story != 0 { $rest = ($rest | append [-m $"story #($story)"]) }
+
+  let task = ( $db.branches | where name == $current_branch | get task.0 )
+  if $task != 0 { $rest = ($rest | append [-m $"task #($task)"]) }
+
+  git commit --message $title ...$rest
+}
+
+
 export def "ado pr new" [ --target-branch (-t): string = 'master' --draft] {
   git push
   let description = ($nu.temp-path | path join $"az-pr-(random chars).md")
@@ -140,30 +197,30 @@ export def "ado list my prs" [--draft] {
 
 def "nu-complete pr-id" [] { (ado list my prs) | rename -c {id: value,  title: description} }
 
-export def "ado pr rejected-policies" [ pr_id: number@"nu-complete pr-id" ] {
+export def "ado pr rejected-or-expired-policies" [ pr_id: number@"nu-complete pr-id" ] {
   ( az repos pr policy list --id $pr_id -ojson | from json
   | filter {$in.configuration.isBlocking and $in.configuration.isEnabled}
-  | select evaluationId configuration.type.displayName configuration.settings.displayName? status
-  | rename id type title status
+  | select evaluationId configuration.type.displayName configuration.settings.displayName? status context.isExpired?
+  | rename id           type                           title                               status expired
   | where type == Build
-  | where status == rejected
+  | where status == rejected or expired == true
   )
 }
 
 # trigger ci for PR
-export def "az pr ci trigger" [ pr_id: number@"nu-complete pr-id" ] {
-  ( ado pr rejected-policies $pr_id | par-each {
+export def "ado pr ci trigger" [ pr_id: number@"nu-complete pr-id" ] {
+  ( ado pr rejected-or-expired-policies $pr_id | par-each {
     print $"(ansi pb) Triggering: ($in.title)(ansi reset)"
     ( az repos pr policy queue --id $pr_id -e $in.id -ojson | from json
       | select status configuration.settings.displayName? configuration.type.displayName evaluationId
-      | rename status title type id)
+      | rename status title                               type                           id)
   })
 }
 
 export def "ado pr ci watch" [ pr_id: number@"nu-complete pr-id" ] {
   print $"(ansi pb) Watching PR: ($pr_id)(ansi reset)"
   loop {
-    az pr ci trigger $pr_id
+    ado pr ci trigger $pr_id
     sleep 10sec
   }
 }
