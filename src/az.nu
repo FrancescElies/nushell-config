@@ -202,17 +202,17 @@ def "nu-complete pr-id" [] { (ado list my prs) | rename -c {id: value,  title: d
 export def "ado pr rejected-or-expired-policies" [ pr_id: number@"nu-complete pr-id" ] {
   ( az repos pr policy list --id $pr_id -ojson | from json
   | filter {$in.configuration.isBlocking and $in.configuration.isEnabled}
-  | select evaluationId configuration.type.displayName configuration.settings.displayName? status context.isExpired?
-  | rename id           type                           title                               status expired
+  | select evaluationId configuration.type.displayName configuration.settings.displayName? status context.isExpired? context.buildId?
+  | rename id           type                           title                               status expired            build-id
   | where type == Build
   | where status == rejected or expired == true
   )
 }
 
 # trigger ci for PR
-export def "ado pr ci trigger" [ pr_id: number@"nu-complete pr-id" ] {
+export def "ado pr ci re-queue" [ pr_id: number@"nu-complete pr-id" ] {
   ( ado pr rejected-or-expired-policies $pr_id | par-each {
-    print $"(ansi pb)\tRe-queueing: ($in.title)(ansi reset)"
+    print $"(ansi pb)\tRe-queueing: ($in.title), previous build ($in.build-id) status=($in.status) expired=($in.expired)(ansi reset)"
     ( az repos pr policy queue --id $pr_id -e $in.id -ojson | from json
       | select status configuration.settings.displayName? configuration.type.displayName evaluationId
       | rename status title                               type                           id)
