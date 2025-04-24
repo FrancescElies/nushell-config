@@ -177,3 +177,17 @@ export def "screen recordings to gif" [] {
 
   start ('~/Videos/Screen Recordings' | path expand)
 }
+
+def "nu-complete proc-names" [] { ps | get name | uniq }
+
+def "nu-complete process-priority" [] { [ [value description]; [3 High] [6 'Above Normal'] [2 Normal] [5 'Below Normal'] [1 Low] ] }
+
+# permanenty set priority for process
+export def "ps set" [
+  proc_name: string@"nu-complete proc-names"
+  --priority(-p): int@"nu-complete process-priority"
+] {
+  # https://answers.microsoft.com/en-us/windows/forum/all/how-to-permanently-set-priority-processes-using/2f9ec439-5333-4625-9577-69d322cfbc5e
+  reg add $'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\($proc_name)\PerfOptions' /v CpuPriorityClass /t REG_DWORD /d $priority
+}
+
