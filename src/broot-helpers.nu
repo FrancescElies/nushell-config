@@ -16,7 +16,7 @@ export def bro [] { ^broot --conf ~/src/nushell-config/broot-config/select.hjson
 export def brat [] { bat (^broot --conf ~/src/nushell-config/broot-config/select.hjson) }
 
 # print tree of folder with broot
-export def tree [path: path = .] { ^broot -c :pt $path }
+export def bree --wrapped [path: path = . ...rest] { ^broot -c :pt $path ...$rest }
 
 
 #----
