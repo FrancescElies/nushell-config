@@ -210,7 +210,7 @@ export def "ado pr rejected-or-expired-policies" [ pr_id: number@"nu-complete pr
 # trigger ci for PR
 export def "ado pr ci trigger" [ pr_id: number@"nu-complete pr-id" ] {
   ( ado pr rejected-or-expired-policies $pr_id | par-each {
-    print $"(ansi pb) Triggering: ($in.title)(ansi reset)"
+    print $"(ansi pb)\tRe-queueing: ($in.title)(ansi reset)"
     ( az repos pr policy queue --id $pr_id -e $in.id -ojson | from json
       | select status configuration.settings.displayName? configuration.type.displayName evaluationId
       | rename status title                               type                           id)
@@ -220,7 +220,8 @@ export def "ado pr ci trigger" [ pr_id: number@"nu-complete pr-id" ] {
 export def "ado pr ci watch" [ pr_id: number@"nu-complete pr-id" ] {
   print $"(ansi pb) Watching PR: ($pr_id)(ansi reset)"
   loop {
-    ado pr ci trigger $pr_id
+    let result = ado pr ci trigger $pr_id
+    if (not ($result | is-empty)) { print $result }
     sleep 10sec
   }
 }
