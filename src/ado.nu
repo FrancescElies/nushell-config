@@ -3,6 +3,8 @@
 # $env.ADO_PROJECT = ''       # (2) inside that organization copy the project name
 # $env.ADO_TOKEN = ''         # (3) go to https://dev.azure.com/ADO_ORGANIZATION/_usersSettings/tokens and create a new token
 # $env.ADO_TEAM = ''          # (4) `az devops team list -ojson | from json | select name id description | explore` to see teams and copy desired uuid
+# $env.ADO_REPO = ''          # (4) `az repos list | from json | select name id` to see repos and copy desired uuid
+
 
 def "nu-complete my-tasks" [] {
     (ado list my tasks)
@@ -264,6 +266,17 @@ export def "ado pr ci watch" [ pr_id: number@"nu-complete pr-id" ] {
         if (not ($result | is-empty)) { print $result }
         sleep 10sec
     }
+}
+
+# NOTE: https://github.com/Azure/azure-cli/issues/27531#issuecomment-2830207020
+export def "ado pr show-beta" [ pr_id: number@"nu-complete pr-id" ] {
+    ( az devops invoke
+    --organization $"https://dev.azure.com/($env.ADO_ORGANIZATION)/"
+    --area git
+    --resource pullRequestCommits
+    --route-parameters $"project=($env.ADO_PROJECT) repositoryId=($env.ADO_REPO) pullRequestId=($pr_id)"
+    --http-method GET
+    --output json )
 }
 
 def "nu-complete my-workitems" [] {
