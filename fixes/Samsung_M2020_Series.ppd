@@ -58,11 +58,11 @@
 *MediaType Color/Color: "@PJL SET PAPERTYPE = COLOR<0A>"
 *MediaType Card/CardStock: "@PJL SET PAPERTYPE = CARD<0A>"
 *MediaType Labels/Labels: "@PJL SET PAPERTYPE = LABEL<0A>"
-*MediaType Preprinted/Preprinted: "@PJL SET PAPERTYPE = USED<0A>"   
-*MediaType Cotton/Cotton: "@PJL SET PAPERTYPE = COTTON<0A>" 
-*MediaType Archive/Archive: "@PJL SET PAPERTYPE = ARCHIVE<0A>" 
-*MediaType Recycled/Recycled: "@PJL SET PAPERTYPE = RECYCLED<0A>" 
-*MediaType Envelope/Envelope: "@PJL SET PAPERTYPE = ENV<0A>" 
+*MediaType Preprinted/Preprinted: "@PJL SET PAPERTYPE = USED<0A>"
+*MediaType Cotton/Cotton: "@PJL SET PAPERTYPE = COTTON<0A>"
+*MediaType Archive/Archive: "@PJL SET PAPERTYPE = ARCHIVE<0A>"
+*MediaType Recycled/Recycled: "@PJL SET PAPERTYPE = RECYCLED<0A>"
+*MediaType Envelope/Envelope: "@PJL SET PAPERTYPE = ENV<0A>"
 *JCLCloseUI: *MediaType
 
 *% =========================================================
@@ -661,7 +661,7 @@
 *%UIConstraints: *MediaType Envelope     *InputSlot Upper
 *%UIConstraints: *MediaType Labels       *InputSlot Upper
 *%UIConstraints: *MediaType Card         *InputSlot Upper
-*%UIConstraints: *MediaType Bond         *InputSlot Upper   
+*%UIConstraints: *MediaType Bond         *InputSlot Upper
 
 
 *% =========================================================

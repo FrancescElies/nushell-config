@@ -32,7 +32,7 @@
 # but can still be canceled on specific launches with -E
 #
 # Possible line_format parts:
-#  - kind: warning|error|test 
+#  - kind: warning|error|test
 #  - path: complete absolute path to the file
 #  - line: 1-based line number
 #  - column: 1-based column

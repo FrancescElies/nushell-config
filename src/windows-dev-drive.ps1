@@ -5,10 +5,10 @@ param(
 	[int64]$SizeBytes = 10GB
 )
 
-$Volume = New-VHD -Path $Path -SizeBytes $SizeBytes | 
-	Mount-VHD -Passthru | 
-	Initialize-Disk -Passthru | 
-	New-Partition -AssignDriveLetter -UseMaximumSize | 
+$Volume = New-VHD -Path $Path -SizeBytes $SizeBytes |
+	Mount-VHD -Passthru |
+	Initialize-Disk -Passthru |
+	New-Partition -AssignDriveLetter -UseMaximumSize |
 	Format-Volume -FileSystem ReFS -Confirm:$false -Force
 
 Write-Output $Volume

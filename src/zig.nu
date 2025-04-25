@@ -20,7 +20,7 @@
 # zig build-lib --name zstd -lc ...(ls lib/**/*c | get name)
 
 # zi build system
-# zig build --help 
+# zig build --help
 # will show user defined flags in the help too
 
 
