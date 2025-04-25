@@ -55,6 +55,7 @@ use ~/src/nushell-config/src/wezterm-completions.nu *
 use ~/src/nushell-config/src/wibu.nu *
 use ~/src/nushell-config/src/winget-completions.nu *
 use ~/src/nushell-config/src/work.nu *
+use ~/src/nushell-config/src/zellij-completions.nu *
 use ~/src/nushell-config/src/zig.nu *
 # [[[end]]]
 
