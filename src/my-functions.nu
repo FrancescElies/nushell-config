@@ -136,7 +136,7 @@ export def psn [name: string = "" ] {
   if ($name | is-empty) {
     ps --long | sort-by -in name | input list -d name --fuzzy
   } else {
-    ps --long | find $name
+    ps --long | find -i $name
   }
 }
 
