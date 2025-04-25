@@ -5,7 +5,6 @@
 # https://github.com/winsiderss/systeminformer
 
 use utils.nu print_purple
-use broot-helpers.nu br
 
 # NOTE: broken
 # overlay use ~/src/nushell-config/.venv/scripts/activate.nu
@@ -180,14 +179,27 @@ export def "screen recordings to gif" [] {
 
 def "nu-complete proc-names" [] { ps | get name | uniq }
 
-def "nu-complete process-priority" [] { [ [value description]; [3 High] [6 'Above Normal'] [2 Normal] [5 'Below Normal'] [1 Low] ] }
+def "nu-complete ps-priority" [] { [ [value description]; [3 High] [6 'Above Normal'] [2 Normal] [5 'Below Normal'] [1 Low] ] }
 
-# permanenty set priority for process
-export def "ps set" [
+# do I have admin rights?
+export def "am i admin" [] {
+  # https://stackoverflow.com/questions/7985755/how-to-detect-if-cmd-is-running-as-administrator-has-elevated-privileges
+  if (net session | complete).exit_code == 0 {
+    true
+  } else {
+    false
+  }
+}
+
+# permanently set priority for process in windows registry
+export def "ps set-permanent-priority" [
   proc_name: string@"nu-complete proc-names"
-  --priority(-p): int@"nu-complete process-priority"
+  --cpu-priority: int@"nu-complete ps-priority" = 2  # Normal
+  --io-priority: int@"nu-complete ps-priority" = 2  # Normal
 ] {
   # https://answers.microsoft.com/en-us/windows/forum/all/how-to-permanently-set-priority-processes-using/2f9ec439-5333-4625-9577-69d322cfbc5e
-  reg add $'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\($proc_name)\PerfOptions' /v CpuPriorityClass /t REG_DWORD /d $priority
+  let perf_options_path = $'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\($proc_name)\PerfOptions'
+  reg add $perf_options_path /v CpuPriorityClass /t REG_DWORD /d $cpu_priority
+  reg add $perf_options_path /v IoPriority /t REG_DWORD /d $io_priority
 }
 
