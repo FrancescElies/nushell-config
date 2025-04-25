@@ -27,6 +27,7 @@ use ~/src/nushell-config/src/clipboard.nu *
 use ~/src/nushell-config/src/docs.nu *
 use ~/src/nushell-config/src/fix.nu *
 use ~/src/nushell-config/src/fnm.nu *
+use ~/src/nushell-config/src/gh-completions.nu *
 use ~/src/nushell-config/src/git-completions.nu *
 use ~/src/nushell-config/src/git-pr.nu *
 use ~/src/nushell-config/src/git-worktree.nu *
