@@ -43,13 +43,13 @@ export def "ado worktree add" [
 
     let db = read_git_ado_db
 
-    let data = {
+    mut data = {
         name: $branch_name
         story: (if $story == null { 0 } else { $story })
         task: (if $task == null { 0 } else { $task })
+        pr: 0
     }
 
-    write_git_ado_db ($db | append $data)
 
     let repo_name = pwd | path basename | str replace ".git" ""
     # make sure path has no slashes coming from branch name
@@ -64,6 +64,12 @@ export def "ado worktree add" [
         print_purple $"git worktree add -B ($branch) ($path) ($startingat)"
         git worktree add -B $branch $path $startingat
     }
+
+    write_git_ado_db ($db | append $data)
+    cd $path
+    let pr = ado pr new --draft
+    $data.pr = $pr.id
+    write_git_ado_db ($db | append $data)
 }
 
 export def "ado commit" [
@@ -82,6 +88,9 @@ export def "ado commit" [
 
     let task = ( $db | where name == $current_branch | get task.0 )
     if $task != 0 { $rest = ($rest | append [-m $"task #($task)"]) }
+
+    let pr = ( $db | where name == $current_branch | get pr.0 )
+    let title = $"($title) \(PR ($pr)\)"
 
     git commit --message $title ...$rest
 }
@@ -113,7 +122,8 @@ export def "ado pr new" [ --target-branch (-t): string = 'master' --draft] {
         -o json
     )
     | from json
-    | select pullRequestId mergeStatus title
+    | select pullRequestId title mergeStatus
+    | rename id            title mergeStatus
 }
 
 export def "ado pr status" [
