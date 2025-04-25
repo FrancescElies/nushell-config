@@ -14,6 +14,20 @@ def "nu-complete my-stories" [] {
     | rename -c {id: value,  title: description} | select value description
 }
 
+
+const dbfile = ('~/.git-ado.json' | path expand )
+
+export def read_git_ado_db [] {
+    if ($dbfile | path exists) {
+        open $dbfile
+    } else {
+        []
+    }
+}
+export def write_git_ado_db [db] {
+    $db | to json | save -f $dbfile
+}
+
 # git worktree add - convenience wrapper
 export def "ado worktree add" [
     branch: string # branch to create or checkout, e.g. cesc/1234-my-description
@@ -25,10 +39,15 @@ export def "ado worktree add" [
 ] {
     let branch_name = if ($branch | is-empty) { (git rev-parse --abbrev-ref HEAD) } else { $branch }
 
-    let dbfile = ('~/.gitconfig-branch-tickets.sqlite3' | path expand )
-    stor import --file-name $dbfile
-    stor update --table-name branches -u {name: $branch_name story: $story task: $task}
-    stor export --file-name $dbfile
+    let db = read_git_ado_db
+
+    let data = {
+        name: $branch_name
+        story: (if $story == null { 0 } else { $story })
+        task: (if $task == null { 0 } else { $task })
+    }
+
+    write_git_ado_db ($db | append $data)
 
     let repo_name = pwd | path basename | str replace ".git" ""
     # make sure path has no slashes coming from branch name
@@ -51,16 +70,15 @@ export def "ado commit" [
 ] {
 
     let current_branch = (git rev-parse --abbrev-ref HEAD)
-    let dbfile = ('~/.gitconfig-branch-tickets.sqlite3' | path expand )
-    let db = (stor import --file-name $dbfile)
+    let db = read_git_ado_db
 
     mut rest = []
     if $body != "" { $rest = ($rest | append [-m $"($body)"]) }
 
-    let story = ( $db.branches | where name == $current_branch | get story.0 )
+    let story = ( $db | where name == $current_branch | get story.0 )
     if $story != 0 { $rest = ($rest | append [-m $"story #($story)"]) }
 
-    let task = ( $db.branches | where name == $current_branch | get task.0 )
+    let task = ( $db | where name == $current_branch | get task.0 )
     if $task != 0 { $rest = ($rest | append [-m $"task #($task)"]) }
 
     git commit --message $title ...$rest
@@ -75,12 +93,11 @@ export def "ado pr new" [ --target-branch (-t): string = 'master' --draft] {
 
     nvim $description
 
-    let dbfile = ('~/.gitconfig-branch-tickets.sqlite3' | path expand )
-    let db = (stor import --file-name $dbfile)
+    let db = read_git_ado_db
     let current_branch = (git rev-parse --abbrev-ref HEAD)
     let work_items = ([
-        ( $db.branches | where name == $current_branch | get story.0 )
-        ( $db.branches | where name == $current_branch | get task.0 )
+        ( $db | where name == $current_branch | get story.0 )
+        ( $db | where name == $current_branch | get task.0 )
     ] | filter { $in != 0})
 
     mut args = []
