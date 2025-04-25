@@ -84,25 +84,19 @@ export def "git branches" [first: int = 5] { ^git branch --sort=-committerdate |
 
 # aliases
 # -------
-# ^git whatchanged
 export alias gwch = ^git whatchanged -p --abbrev-commit --pretty=medium
 export alias gbb = ^git branches
-# ^git difft
-export alias gd = ^git difft
-# ^git add
+export alias gd = ^git diff
+export alias ged = ^git difft
 export alias ga = ^git add
-# ^git add all
 export alias gaa = ^git add --all
-# ^git status
 export alias gs = ^git status
-# ^git log search
 export alias gls = ^git log -p -S
-# ^git short log
 export alias gsl = ^git log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 # ^git blame ignore whitespace, deted lines moved/copied, or any commit
 export alias gblame = ^git blame -w -C -C -C
 # ^git log
-export alias gl_ = ^git log --graph --pretty=format:'%C(auto)%h -%d %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+alias gl_ = ^git log --graph --pretty=format:'%C(auto)%h -%d %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 export alias gl = gl_ -n5
 export alias gl10 = gl_ -n10
 # ^git log with blame a little: glL :FunctionName:path/to/file, glL 15,26:path/to/file
@@ -112,24 +106,15 @@ export alias gla = ^git log --graph --topo-order --date=short --abbrev-commit --
 # ^git fetch all, prune remote branches
 export alias gf = ^git fetch
 export alias gfa = ^git fetch --all --prune
-# ^git commit amend
 export alias gca = ^git commit --amend
-# ^git commit amend, don't edit meesage
 export alias gcane = ^git commit --amend --no-edit
 
-# ^git checkout
-export alias gco = ^git checkout
-# ^git cherry pick
+export alias gcout = ^git checkout
 export alias gcp = ^git cherry-pick
-# ^git cherry pick abort
 export alias gcpa = ^git cherry-pick --abort
-# ^git cherry pick continue
 export alias gcpc = ^git cherry-pick --continue
-# ^git reset hard
 export alias gresethard = ^git reset --hard
-# ^git uncommit
 export alias guncommit = ^git reset --soft HEAD~1
-# ^git unadd files
 export alias gunadd = ^git reset HEAD
 # Discard changes in path
 export alias gdiscard = ^git checkout --
@@ -151,13 +136,9 @@ export def gpush [
 export def gpull [--upstream(-u): string = "origin"] {
   ^git pull --set-upstream $upstream (git rev-parse --abbrev-ref HEAD)
 }
-# ^git rebase
 export alias grb = ^git rebase
-# ^git rebase interactive
 export alias grbi = ^git rebase --interactive
-# ^git rebase abort
 export alias grba = ^git rebase --abort
-# ^git rebase continue
 export alias grbc = ^git rebase --continue
 
 
@@ -170,7 +151,7 @@ def --env groot [] {
    cd (git worktree bare-path)
  }
 }
-# ^git cd to root (bare or worktree)
+# cd to git root (bare or worktree)
 export alias cdroot = groot
 
 # Repack repositories in current folder
@@ -261,3 +242,25 @@ export def "git lfs-fix" [...paths: path] {
   ^git lfs migrate import --no-rewrite ...$paths
 }
 export alias glfsfix = ^git lfs-fix
+
+export def "nu-complete semmantic-message" [] {
+    # https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716
+    [
+        [value    description];
+        [feat     "new feature for the user, not a new feature for build script"]
+        [fix      "bug fix for the user, not a fix to a build script"]
+        [docs     "changes to the documentation"]
+        [style    "formatting, missing semi colons, etc; no production code change"]
+        [refactor "refactoring production code, eg. renaming a variable"]
+        [test     "adding missing tests, refactoring tests; no production code change"]
+        [chore    "updating grunt tasks etc; no production code change"]
+    ]
+}
+
+export def --wrapped "gcomm" [
+    prefix: string@"nu-complete semmantic-message"
+    title: string
+    ...rest
+] {
+    ^git commit -m $"($prefix): ($title)" ...$rest
+}

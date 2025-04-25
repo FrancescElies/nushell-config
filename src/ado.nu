@@ -5,6 +5,7 @@
 # $env.ADO_TEAM = ''          # (4) `az devops team list -ojson | from json | select name id description | explore` to see teams and copy desired uuid
 # $env.ADO_REPO = ''          # (4) `az repos list | from json | select name id` to see repos and copy desired uuid
 
+use git.nu "nu-complete semmantic-message"
 
 def "nu-complete my-tasks" [] {
     (ado list my tasks)
@@ -73,6 +74,7 @@ export def "ado worktree add" [
 }
 
 export def "ado commit" [
+    prefix: string@"nu-complete semmantic-message"
     title: string
     body: string = ""
 ] {
@@ -90,7 +92,7 @@ export def "ado commit" [
     if $task != 0 { $rest = ($rest | append [-m $"task #($task)"]) }
 
     let pr = ( $db | where name == $current_branch | get pr.0 )
-    let title = $"($title) \(PR ($pr)\)"
+    let title = $"($prefix):($title) \(PR ($pr)\)"
 
     git commit --message $title ...$rest
 }
