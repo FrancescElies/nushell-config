@@ -1,5 +1,4 @@
 use utils.nu print_purple
-use az.nu *
 
 # worktree
 # --------

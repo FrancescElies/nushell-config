@@ -18,7 +18,7 @@ source ~/src/nushell-config/src/os-this-machine.nu
 #     this_repo = Path("~/src/nushell-config")
 #     cog.outl(f"use {this_repo / file} *".replace('\\', '/'))
 # ]]]*/
-use ~/src/nushell-config/src/az.nu *
+use ~/src/nushell-config/src/ado.nu *
 use ~/src/nushell-config/src/bat-completions.nu *
 use ~/src/nushell-config/src/broot-helpers.nu *
 use ~/src/nushell-config/src/btm-completions.nu *
