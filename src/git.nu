@@ -1,16 +1,19 @@
-use utils.nu print_purple
-
 const config_repos = [~/src/nushell-config ~/src/kickstart.nvim ~/src/wezterm-config]
 
-export def "git push my-configs" [] { $config_repos | each { cd $in; git push --force-with-lease } }
-export def "git pull my-configs" [] { $config_repos | each { cd $in; git stash; git pull; git stash pop | ignore } }
+export def "git push my-configs" [] {
+    $config_repos | each { cd $in; ^git push --force-with-lease }
+}
+
+export def "git pull my-configs" [] {
+    $config_repos | each { cd $in; ^git stash; ^git pull; ^git stash pop | ignore }
+}
 
 # https://www.youtube.com/watch?v=aolI_Rz0ZqY
 # Apply some useful defaults
-# git my-defaults
+# ^git my-defaults
 #
 # Give me all my pull requests as local refs
-# git config remote.origin.fetch '+refs/pull/*:refs/remotes/origin/pull/*'
+# ^git config remote.origin.fetch '+refs/pull/*:refs/remotes/origin/pull/*'
 #
 # Conditional ~/.gitconfig
 #
@@ -22,50 +25,50 @@ export def "git pull my-configs" [] { $config_repos | each { cd $in; git stash; 
 # Accidentally cloned http repo version?
 # [url "git@github.com:"]
 #   insteadOf = "https://github.com/"
-# git maintenance start
+# ^git maintenance start
 
 # apply my defaults
 export def "git my-defaults" [] {
   # https://jvns.ca/blog/2024/02/16/popular-git-config-options/#help-autocorrect-10
-  git config --global push.autosetupremote true
-  git config --global init.defaultBranch main
-  git config --global pull.rebase true
-  git config --global merge.conflictstyle zdiff3
-  git config --global rebase.autosquash true
-  git config --global push.default current
-  git config --global help.autocorrect 10
-  git config --global interactive.diffFilter delta --color-only
-  git config --global diff.algorithm histogram
-  git config --global branch.sort -committerdate
-  git config --global fetch.prune true
-  git config --global log.date iso
-  git config --global rebase.missingCommitsCheck error
-  git config --global rebase.updateRefs true
+  ^git config --global push.autosetupremote true
+  ^git config --global init.defaultBranch main
+  ^git config --global pull.rebase true
+  ^git config --global merge.conflictstyle zdiff3
+  ^git config --global rebase.autosquash true
+  ^git config --global push.default current
+  ^git config --global help.autocorrect 10
+  ^git config --global interactive.diffFilter delta --color-only
+  ^git config --global diff.algorithm histogram
+  ^git config --global branch.sort -committerdate
+  ^git config --global fetch.prune true
+  ^git config --global log.date iso
+  ^git config --global rebase.missingCommitsCheck error
+  ^git config --global rebase.updateRefs true
 
   # Avoid data corruption
-  git config --global transfer.fsckobjects true
-  git config --global fetch.fsckobjects true
-  git config --global receive.fsckObjects true
+  ^git config --global transfer.fsckobjects true
+  ^git config --global fetch.fsckobjects true
+  ^git config --global receive.fsckObjects true
 
-  # REuse REordered REsolution, tells git to remember conflicts so if it sees them again he won't ask about it.
-  git config --global rerere.enabled true
-  git config --global branch.sort -committerdate
-  # git config gpg.format ssh
-  # git config user.signingkey ~/.ssh/id_ed25519
+  # REuse REordered REsolution, tells ^git to remember conflicts so if it sees them again he won't ask about it.
+  ^git config --global rerere.enabled true
+  ^git config --global branch.sort -committerdate
+  # ^git config gpg.format ssh
+  # ^git config user.signingkey ~/.ssh/id_ed25519
 
   # Big repository stuff
   #
-  # git clone filters:
-  # git clone --fitter=blob:none
-  # git clone --fitter=tree:zero
+  # ^git clone filters:
+  # ^git clone --fitter=blob:none
+  # ^git clone --fitter=tree:zero
   #
   # See multipack indexes, reachability bitmaps and geometric repacking
   # https://github.blog/2021-04-29-scaling-monorepo-maintenance
-  # git maintenance start will also write the commit-graph
-  git config --global fetch.writeCommitGraph true
+  # ^git maintenance start will also write the commit-graph
+  ^git config --global fetch.writeCommitGraph true
   # file system monitory
-  git config --global core.untrackedcache true
-  git config --global core.fsmonitor true
+  ^git config --global core.untrackedcache true
+  ^git config --global core.fsmonitor true
 }
 
 # edit .gitignore
@@ -74,67 +77,67 @@ export def "gig" [] {
 }
 
 export def --wrapped "git difft" [...rest] {
-    with-env {GIT_EXTERNAL_DIFF: difft} { git diff ...$rest }
+    with-env {GIT_EXTERNAL_DIFF: difft} { ^git diff ...$rest }
 }
 
-export def "git branches" [first: int = 5] { git branch --sort=-committerdate | lines | first $first }
+export def "git branches" [first: int = 5] { ^git branch --sort=-committerdate | lines | first $first }
 
 # aliases
 # -------
-# git whatchanged
-export alias gwch = git whatchanged -p --abbrev-commit --pretty=medium
-export alias gbb = git branches
-# git difft
-export alias gd = git difft
-# git add
-export alias ga = git add
-# git add all
-export alias gaa = git add --all
-# git status
-export alias gs = git status
-# git log search
-export alias gls = git log -p -S
-# git short log
-export alias gsl = git log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
-# git blame ignore whitespace, deted lines moved/copied, or any commit
-export alias gblame = git blame -w -C -C -C
-# git log
-export alias gl_ = git log --graph --pretty=format:'%C(auto)%h -%d %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+# ^git whatchanged
+export alias gwch = ^git whatchanged -p --abbrev-commit --pretty=medium
+export alias gbb = ^git branches
+# ^git difft
+export alias gd = ^git difft
+# ^git add
+export alias ga = ^git add
+# ^git add all
+export alias gaa = ^git add --all
+# ^git status
+export alias gs = ^git status
+# ^git log search
+export alias gls = ^git log -p -S
+# ^git short log
+export alias gsl = ^git log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+# ^git blame ignore whitespace, deted lines moved/copied, or any commit
+export alias gblame = ^git blame -w -C -C -C
+# ^git log
+export alias gl_ = ^git log --graph --pretty=format:'%C(auto)%h -%d %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 export alias gl = gl_ -n5
 export alias gl10 = gl_ -n10
-# git log with blame a little: glL :FunctionName:path/to/file, glL 15,26:path/to/file
-export alias glL = git log -L
-# git log all
-export alias gla = git log --graph --topo-order --date=short --abbrev-commit --decorate --all --boundary --pretty=format:'%Cgreen%ad %Cred%h%Creset -%C(yellow)%d%Creset %s %Cblue[%cn]%Creset %Cblue%G?%Creset'
-# git fetch all, prune remote branches
-export alias gf = git fetch
-export alias gfa = git fetch --all --prune
-# git commit amend
-export alias gca = git commit --amend
-# git commit amend, don't edit meesage
-export alias gcane = git commit --amend --no-edit
+# ^git log with blame a little: glL :FunctionName:path/to/file, glL 15,26:path/to/file
+export alias glL = ^git log -L
+# ^git log all
+export alias gla = ^git log --graph --topo-order --date=short --abbrev-commit --decorate --all --boundary --pretty=format:'%Cgreen%ad %Cred%h%Creset -%C(yellow)%d%Creset %s %Cblue[%cn]%Creset %Cblue%G?%Creset'
+# ^git fetch all, prune remote branches
+export alias gf = ^git fetch
+export alias gfa = ^git fetch --all --prune
+# ^git commit amend
+export alias gca = ^git commit --amend
+# ^git commit amend, don't edit meesage
+export alias gcane = ^git commit --amend --no-edit
 
-# git checkout
-export alias gco = git checkout
-# git cherry pick
-export alias gcp = git cherry-pick
-# git cherry pick abort
-export alias gcpa = git cherry-pick --abort
-# git cherry pick continue
-export alias gcpc = git cherry-pick --continue
-# git reset hard
-export alias gresethard = git reset --hard
-# git uncommit
-export alias guncommit = git reset --soft HEAD~1
-# git unadd files
-export alias gunadd = git reset HEAD
+# ^git checkout
+export alias gco = ^git checkout
+# ^git cherry pick
+export alias gcp = ^git cherry-pick
+# ^git cherry pick abort
+export alias gcpa = ^git cherry-pick --abort
+# ^git cherry pick continue
+export alias gcpc = ^git cherry-pick --continue
+# ^git reset hard
+export alias gresethard = ^git reset --hard
+# ^git uncommit
+export alias guncommit = ^git reset --soft HEAD~1
+# ^git unadd files
+export alias gunadd = ^git reset HEAD
 # Discard changes in path
-export alias gdiscard = git checkout --
-# git clean into a pristine working directory (-ff removes untracked directories)
-export alias gcleanest = git clean -dffx
+export alias gdiscard = ^git checkout --
+# ^git clean into a pristine working directory (-ff removes untracked directories)
+export alias gcleanest = ^git clean -dffx
 # Clean (also untracked) and checkout.
-def gcleanout [] { git clean -df ; git checkout -- . }
-# git push
+def gcleanout [] { ^git clean -df ; ^git checkout -- . }
+# ^git push
 export def gpush [
   --upstream(-u): string = "origin"
   --force-with-lease(-f)  # force-with-lease
@@ -143,23 +146,23 @@ export def gpush [
   mut args = []
   if $force_with_lease != null { $args = ($args | append $'--force-with-lease') }
   if $force != null { $args = ($args | append $'--force') }
-  git push ...$args --set-upstream $upstream (git rev-parse --abbrev-ref HEAD)
+  ^git push ...$args --set-upstream $upstream (git rev-parse --abbrev-ref HEAD)
 }
 export def gpull [--upstream(-u): string = "origin"] {
-  git pull --set-upstream $upstream (git rev-parse --abbrev-ref HEAD)
+  ^git pull --set-upstream $upstream (git rev-parse --abbrev-ref HEAD)
 }
-# git rebase
-export alias grb = git rebase
-# git rebase interactive
-export alias grbi = git rebase --interactive
-# git rebase abort
-export alias grba = git rebase --abort
-# git rebase continue
-export alias grbc = git rebase --continue
+# ^git rebase
+export alias grb = ^git rebase
+# ^git rebase interactive
+export alias grbi = ^git rebase --interactive
+# ^git rebase abort
+export alias grba = ^git rebase --abort
+# ^git rebase continue
+export alias grbc = ^git rebase --continue
 
 
 use ~/src/nushell-config/src/git-worktree.nu 'git worktree bare-path'
-# git cd to root (bare or worktree)
+# ^git cd to root (bare or worktree)
 def --env groot [] {
  if ((git worktree bare-path) == null) {
    cd (git rev-parse --show-toplevel)
@@ -167,7 +170,7 @@ def --env groot [] {
    cd (git worktree bare-path)
  }
 }
-# git cd to root (bare or worktree)
+# ^git cd to root (bare or worktree)
 export alias cdroot = groot
 
 # Repack repositories in current folder
@@ -178,7 +181,7 @@ export alias cdroot = groot
 # It does the equivalent of "git gc --aggressive"
 # but done *properly*,  which is to do something like:
 #
-#     git repack -a -d --depth=250 --window=250
+#     ^git repack -a -d --depth=250 --window=250
 #
 # The depth setting is about how deep the delta chains can be;
 # make them longer for old history - it's worth the space overhead.
@@ -214,47 +217,47 @@ export def "git repack-repos" [
         ^git repack -a -d -f --depth=300 --window=300 --window-memory=1g
     }
 }
-export alias grepack = git repack-repos
+export alias grepack = ^git repack-repos
 
-# Delete git merged branches (loal and remote)
+# Delete ^git merged branches (loal and remote)
 export def "git gone" [] {
-    git branch -vl
+    ^git branch -vl
       | lines
       | split column " " BranchName Hash Status --collapse-empty
       | where Status == '[gone]'
-      | each { |it| git branch -D $it.BranchName }
+      | each { |it| ^git branch -D $it.BranchName }
 }
-export alias ggone = git gone
+export alias ggone = ^git gone
 
-#  View git committer activity as a histogram
+#  View ^git committer activity as a histogram
 export def "git activity" [
   path: path = .  # e.g. '*.rs', ./src ...
   --since: string = '1 year ago'
 ] {
-  git log --since $'"($since)"' --pretty=%h»¦«%aN»¦«%s»¦«%aD  -- $path
+  ^git log --since $'"($since)"' --pretty=%h»¦«%aN»¦«%s»¦«%aD  -- $path
   | lines
   | split column "»¦«" sha1 committer_name desc merged_at
   | histogram committer_name merger
   | sort-by merger
   | reverse
 }
-export alias gactivity = git activity
+export alias gactivity = ^git activity
 
 
 # https://stackoverflow.com/questions/46704572/git-error-encountered-7-files-that-should-have-been-pointers-but-werent
 export def "git lfs-fix-everything" [] {
-  git lfs migrate import --fixup --everything
+  ^git lfs migrate import --fixup --everything
 }
-export alias glfsfixeverything = git lfs-fix-everything
+export alias glfsfixeverything = ^git lfs-fix-everything
 
-# This "migrates" files to git lfs which should be in lfs as per .gitattributes,
+# This "migrates" files to ^git lfs which should be in lfs as per .gitattributes,
 # but aren't at the moment (which is the reason for your error message).
 #
-# --no-rewrite prevents git from applying this to older commits, it creates a single new commit instead.
+# --no-rewrite prevents ^git from applying this to older commits, it creates a single new commit instead.
 #
 # Use -m "commitmessage" to set a commitmessage for that commit.
 # https://stackoverflow.com/questions/46704572/git-error-encountered-7-files-that-should-have-been-pointers-but-werent
 export def "git lfs-fix" [...paths: path] {
-  git lfs migrate import --no-rewrite ...$paths
+  ^git lfs migrate import --no-rewrite ...$paths
 }
-export alias glfsfix = git lfs-fix
+export alias glfsfix = ^git lfs-fix
