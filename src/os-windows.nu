@@ -155,12 +155,12 @@ export module win {
     export alias timeline = start http://localhost:5600/#/timeline
 
     # open screen shots
-    export def "screen shots" [] { start ('~/Pictures/Screenshots' | path expand) }
-    export def "br screen shots" [] { br --sort-by-date ('~/Pictures/Screenshots' | path expand)  }
+    export def "open screen shots" [] { start ('~/Pictures/Screenshots' | path expand) }
+    export def "screen shots" [] { br --sort-by-date ('~/Pictures/Screenshots' | path expand)  }
 
     # open screen recordings
-    export def "screen recordings" [] { start ('~/Videos/Screen Recordings' | path expand) }
-    export def "br screen recordings" [] { br --sort-by-date ('~/Videos/Screen Recordings' | path expand)  }
+    export def "open screen recordings" [] { start ('~/Videos/Screen Recordings' | path expand) }
+    export def "screen recordings" [] { br --sort-by-date ('~/Videos/Screen Recordings' | path expand)  }
 
     export def "screen recordings to gif" [] {
         ( ls `~/Videos/Screen Recordings/*mp4` | get name | path parse
