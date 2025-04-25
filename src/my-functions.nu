@@ -74,6 +74,7 @@ export def "network printers" [] {
 
 # compact ls
 export def lsg [] { try { ls | sort-by type name -r | grid --icons --color | str trim } catch { ls | get name | to text} }
+export alias l = lsg
 
 # jdownloader downloads info (requires a jdown python script)
 export def jd [] {
