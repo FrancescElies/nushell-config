@@ -1,16 +1,16 @@
 const config_repos = [~/src/nushell-config ~/src/kickstart.nvim ~/src/wezterm-config]
 
-export def "git push my-configs" [] {
+export def "gpush my-configs" [] {
     $config_repos | each { cd $in; ^git push --force-with-lease }
 }
 
-export def "git pull my-configs" [] {
+export def "gpull my-configs" [] {
     $config_repos | each { cd $in; ^git stash; ^git pull; ^git stash pop | ignore }
 }
 
 # https://www.youtube.com/watch?v=aolI_Rz0ZqY
 # Apply some useful defaults
-# ^git my-defaults
+# ^gmy-defaults
 #
 # Give me all my pull requests as local refs
 # ^git config remote.origin.fetch '+refs/pull/*:refs/remotes/origin/pull/*'
@@ -28,7 +28,7 @@ export def "git pull my-configs" [] {
 # ^git maintenance start
 
 # apply my defaults
-export def "git my-defaults" [] {
+export def "gmy-defaults" [] {
   # https://jvns.ca/blog/2024/02/16/popular-git-config-options/#help-autocorrect-10
   ^git config --global push.autosetupremote true
   ^git config --global init.defaultBranch main
@@ -72,20 +72,16 @@ export def "git my-defaults" [] {
 }
 
 # edit .gitignore
-export def "gig" [] {
-    nvim $"(git rev-parse --show-toplevel)/.gitignore"
-}
+export def "gig" [] { nvim $"(git rev-parse --show-toplevel)/.gitignore" }
 
-export def --wrapped "git difft" [...rest] {
-    with-env {GIT_EXTERNAL_DIFF: difft} { ^git diff ...$rest }
-}
+# gi diff with external difftool
+export def --wrapped "git difft" [...rest] { with-env {GIT_EXTERNAL_DIFF: difft} { ^git diff ...$rest } }
 
-export def "git branches" [first: int = 5] { ^git branch --sort=-committerdate | lines | first $first }
+# list git branches sorted by date
+export def "gbranches" [first: int = 5] { ^git branch --sort=-committerdate | lines | first $first }
 
 # aliases
 # -------
-export alias gwch = ^git whatchanged -p --abbrev-commit --pretty=medium
-export alias gbb = ^git branches
 export alias gd = ^git diff
 export alias ged = ^git difft
 export alias ga = ^git add
@@ -109,20 +105,23 @@ export alias gfa = ^git fetch --all --prune
 export alias gca = ^git commit --amend
 export alias gcane = ^git commit --amend --no-edit
 
-export alias gcout = ^git checkout
+export alias gco = ^git checkout
+# create/reset and checkout a branch
+export alias gcob = ^git checkout -B
+# Discard changes in path
+export alias gdiscard = ^git checkout --
+# Clean (also untracked) and checkout.
+def gcleanout [] { ^git clean -df ; ^git checkout -- . }
+
 export alias gcp = ^git cherry-pick
 export alias gcpa = ^git cherry-pick --abort
 export alias gcpc = ^git cherry-pick --continue
 export alias gresethard = ^git reset --hard
 export alias guncommit = ^git reset --soft HEAD~1
 export alias gunadd = ^git reset HEAD
-# Discard changes in path
-export alias gdiscard = ^git checkout --
 # ^git clean into a pristine working directory (-ff removes untracked directories)
 export alias gcleanest = ^git clean -dffx
-# Clean (also untracked) and checkout.
-def gcleanout [] { ^git clean -df ; ^git checkout -- . }
-# ^git push
+
 export def gpush [
   --upstream(-u): string = "origin"
   --force-with-lease(-f)  # force-with-lease
@@ -136,6 +135,7 @@ export def gpush [
 export def gpull [--upstream(-u): string = "origin"] {
   ^git pull --set-upstream $upstream (git rev-parse --abbrev-ref HEAD)
 }
+
 export alias grb = ^git rebase
 export alias grbi = ^git rebase --interactive
 export alias grba = ^git rebase --abort
@@ -184,7 +184,7 @@ export alias cdroot = groot
 # We also add the --window-memory limit of 1 gig, which helps protect
 # us from a window that has very large objects such as binary blobs.
 #
-export def "git repack-repos" [
+export def "grepack-repos" [
   path: path = .
   --prune
 ] {
@@ -201,7 +201,7 @@ export def "git repack-repos" [
 export alias grepack = ^git repack-repos
 
 # Delete ^git merged branches (loal and remote)
-export def "git gone" [] {
+export def "ggone" [] {
     ^git branch -vl
       | lines
       | split column " " BranchName Hash Status --collapse-empty
@@ -211,7 +211,7 @@ export def "git gone" [] {
 export alias ggone = ^git gone
 
 #  View ^git committer activity as a histogram
-export def "git activity" [
+export def "gactivity" [
   path: path = .  # e.g. '*.rs', ./src ...
   --since: string = '1 year ago'
 ] {
@@ -226,7 +226,7 @@ export alias gactivity = ^git activity
 
 
 # https://stackoverflow.com/questions/46704572/git-error-encountered-7-files-that-should-have-been-pointers-but-werent
-export def "git lfs-fix-everything" [] {
+export def "glfs-fix-everything" [] {
   ^git lfs migrate import --fixup --everything
 }
 export alias glfsfixeverything = ^git lfs-fix-everything
@@ -238,10 +238,9 @@ export alias glfsfixeverything = ^git lfs-fix-everything
 #
 # Use -m "commitmessage" to set a commitmessage for that commit.
 # https://stackoverflow.com/questions/46704572/git-error-encountered-7-files-that-should-have-been-pointers-but-werent
-export def "git lfs-fix" [...paths: path] {
+export def "glfs-fix" [...paths: path] {
   ^git lfs migrate import --no-rewrite ...$paths
 }
-export alias glfsfix = ^git lfs-fix
 
 export def "nu-complete semmantic-message" [] {
     # https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716
@@ -257,7 +256,7 @@ export def "nu-complete semmantic-message" [] {
     ]
 }
 
-export def --wrapped "gcomm" [
+export def --wrapped "gommit" [
     prefix: string@"nu-complete semmantic-message"
     title: string
     ...rest
