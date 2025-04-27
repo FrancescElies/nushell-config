@@ -548,3 +548,16 @@ export extern "gh variable" [
     --repo(-R)      # Select another repository using the [HOST/]OWNER/REPO format
     --help          # Show help for command
 ]
+
+export def "gh pr view inline-review-comments" [pr_id?: int] {
+    let pr_id = if ($pr_id == null) { ^gh pr view --json number | from json | get number } else { $pr_id }
+    let repo = ^gh repo view --json name,owner | from json
+
+    ( ( gh api
+          -H "Accept: application/vnd.github+json"
+          -H "X-GitHub-Api-Version: 2022-11-28"
+          $"/repos/($repo.owner.login)/($repo.name)/pulls/($pr_id)/comments")
+      | from json
+      | select user.login body diff_hunk )
+    # TODO: how to wrap text in diff_hunk for max column width?
+}
