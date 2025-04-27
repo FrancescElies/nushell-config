@@ -4,8 +4,8 @@ alias b := bootstrap
 
 bootstrap: secret-nu-file
   nu bootstrap.nu
-  print $"Now you can e.g. (ansi lyu)just fedora-pkgs(ansi reset) or (ansi lyu)just debian-pkgs(ansi reset) or (ansi lyu)just windows-pkgs(ansi reset)"
-  print $"Later on e.g. (ansi lyu)just rust-pkgs(ansi reset) and/or (ansi lyu)just rust-dev-pkgs(ansi reset)"
+  print $"Now you can e.g. (ansi lyu)just get-fedora-pkgs(ansi reset) or (ansi lyu)just get-debian-pkgs(ansi reset) or (ansi lyu)just get-windows-pkgs(ansi reset)"
+  print $"Later on e.g. (ansi lyu)just get-rust-pkgs(ansi reset) and/or (ansi lyu)just rust-dev-pkgs(ansi reset)"
 
 
 [private]
@@ -32,7 +32,7 @@ update-imports:
   cog -r config.nu
 
 [windows]
-windows-pkgs: home-venv
+get-windows-pkgs: home-venv
   let pkgs = (open packages.toml | get windows | transpose | get column0); winget install --silent ...$pkgs
 
 
@@ -44,7 +44,7 @@ windows-fix-long-paths:
 
 # https://blog.xoria.org/macos-tips/
 [macos]
-mac-pkgs: home-venv
+get mac-pkgs: home-venv
   brew install ...(open packages.toml | get mac-brew | transpose | get column0)
   brew install --cask ...(open packages.toml | get mac-brew-cask | transpose | get column0)
 
@@ -64,16 +64,19 @@ fix-closed-laptop-lid-should-not-suspend:
   sudo cp fixes/ignore-closed-lid.conf /etc/systemd/logind.conf.d/ignore-closed-lid.conf
 
 [unix]
-debian-pkgs: home-venv
+get-debian-pkgs: home-venv
   sudo apt remove -y nano
   sudo apt install -y ...(open packages.toml | get debian | transpose | get column0)
   sudo systemctl enable syncthing@cesc.service
 
 [unix]
-fedora-pkgs: home-venv
+get-fedora-pkgs: home-venv
   sudo dnf remove -y nano
   sudo dnf install -y ...(open packages.toml | get fedora | transpose | get column0)
   sudo systemctl enable syncthing@cesc.service
+
+get-sops: bootstrap
+  start https://github.com/getsops/sops/releases
 
 [private]
 [windows]
@@ -96,11 +99,11 @@ cargo-binstall: rustup-tooling
   ~/.cargo/bin/broot --install
 
 [windows]
-rust-pkgs: cargo-binstall
+get-rust-pkgs: cargo-binstall
    print done
 
 [unix]
-rust-pkgs: cargo-binstall
+get-rust-pkgs: cargo-binstall
   ~/.cargo/bin/broot --install
   print install binaries
   sudo cp ~/.cargo/bin/broot /usr/local/bin/
@@ -112,6 +115,6 @@ rust-pkgs: cargo-binstall
   sudo cp ~/.cargo/bin/btm   /usr/local/bin/
   sudo cp ~/.cargo/bin/ouch  /usr/local/bin/
 
-rust-pkgs-dev: cargo-binstall
+get-rust-pkgs-dev: cargo-binstall
   cargo binstall -y ...(open packages.toml | get rust-dev-pkgs | transpose | get column0)
 
