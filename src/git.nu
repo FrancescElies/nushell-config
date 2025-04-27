@@ -91,7 +91,9 @@ export def "gbranches" [first: int = 5] { ^git branch --sort=-committerdate | li
 # aliases
 # -------
 export alias gd = ^git diff
+export alias gds = ^git diff --staged
 export alias ged = ^git difft
+export alias geds = ^git difft --staged
 export alias ga = ^git add
 export alias gaa = ^git add --all
 export alias gs = ^git status
