@@ -11,7 +11,6 @@ cd ~/src/nushell-config
 just bootstrap
 ```
 
-
 ## Links
 - https://www.nushell.sh/blog/2023-08-23-happy-birthday-nushell-4.html
 - https://github.com/dandavison/nushell-config
