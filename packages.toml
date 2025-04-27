@@ -86,6 +86,7 @@ watchexec-cli = "execute commands in response to modifications"
 [fedora]
 # ocrmypdf = "adds OCR layer to scanned PDF files, allowing them to be searched"
 # tesseract-osd = "orientation detection (needeb by ocrmypdf)"
+age = "modern secure encryption tool"
 bat = "better cat"
 cascadia-mono-nf-fonts = "cascadia with nerdfont"
 curl = "cli data transfer"
@@ -109,6 +110,7 @@ wireguard-tools = "vpn"
 [debian]
 # https://omakub.org/ opinionated setup
 # "Easy scrollable window tiling: https://github.com/paperwm/PaperWM"
+age = "modern secure encryption tool"
 bat = "better cat"
 build-essential = ""
 golang = "go programming language"
@@ -147,6 +149,7 @@ avahi-utils = "publish and discover services, e.g. printers"
 # available packages at:
 #    https://github.com/microsoft/winget-pkgs/
 "7zip.7zip" = ""
+"FiloSottile.age" = "modern secure encryption tool"
 "Audacity.Audacity" = ""
 "BurntSushi.ripgrep.MSVC" = ""
 "Casey.Just" = ""
