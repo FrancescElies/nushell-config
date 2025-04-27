@@ -29,9 +29,9 @@ use ~/src/nushell-config/src/fix.nu *
 use ~/src/nushell-config/src/fnm.nu *
 use ~/src/nushell-config/src/gh-completions.nu *
 use ~/src/nushell-config/src/git-completions.nu *
+use ~/src/nushell-config/src/git-my-alias.nu *
 use ~/src/nushell-config/src/git-pr.nu *
 use ~/src/nushell-config/src/git-worktree.nu *
-use ~/src/nushell-config/src/git.nu *
 use ~/src/nushell-config/src/history-utils.nu *
 use ~/src/nushell-config/src/hosts.nu *
 use ~/src/nushell-config/src/just-completions.nu *

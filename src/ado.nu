@@ -5,7 +5,7 @@
 # $env.ADO_TEAM = ''          # (4) `az devops team list -ojson | from json | select name id description | explore` to see teams and copy desired uuid
 # $env.ADO_REPO = ''          # (4) `az repos list | from json | select name id` to see repos and copy desired uuid
 
-use git.nu "nu-complete semmantic-message"
+use git-my-alias.nu "nu-complete semmantic-message"
 
 def "nu-complete my-tasks" [] {
     (ado list my tasks)
