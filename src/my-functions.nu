@@ -1,6 +1,7 @@
 # my notes
 use utils.nu print_purple
 
+export alias ex = explore
 export alias ll = ls -l
 
 export def notes [] {
