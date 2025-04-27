@@ -1,6 +1,8 @@
 # my notes
 use utils.nu print_purple
 
+export alias ll = ls -l
+
 export def notes [] {
   cd ~/src/zettelkasten
   broot .
