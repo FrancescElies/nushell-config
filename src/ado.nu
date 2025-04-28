@@ -195,24 +195,31 @@ def "board query" [wiql: string] {
 
 }
 
+export def "ado list bugs" [] {
+    let wiql = [ "SELECT [System.Id], [System.WorkItemType], [System.Title], [System.State], [System.IterationPath] FROM workitems"
+        "WHERE [System.WorkItemType] = 'Bug' AND [system.state] NOT IN ('Closed', 'Obsolete')"
+        "ORDER BY [Microsoft.VSTS.Common.Priority], [System.ChangedDate] ASC" ] | str join ' '
+    board query $wiql
+}
+
 export def "ado list my stories" [] {
     let wiql = [ "SELECT [System.Id], [System.WorkItemType], [System.Title], [System.State], [System.IterationPath] FROM workitems"
         "WHERE [system.assignedto] = @me AND [System.WorkItemType] <> 'Task' AND [system.state] NOT IN ('Closed', 'Obsolete')"
-        "ORDER BY [Microsoft.VSTS.Common.Priority], [System.ChangedDate] DESC" ] | str join ' '
+        "ORDER BY [Microsoft.VSTS.Common.Priority], [System.ChangedDate] ASC" ] | str join ' '
     board query $wiql
 }
 
 export def "ado list my tasks" [] {
     let wiql = [ "SELECT [System.Id], [System.WorkItemType], [System.Title], [System.State], [System.IterationPath] FROM workitems"
         "WHERE [system.assignedto] = @me AND [System.WorkItemType] = 'Task' AND [system.state] NOT IN ('Closed', 'Obsolete')"
-        " ORDER BY [Microsoft.VSTS.Common.Priority], [System.ChangedDate] DESC" ] | str join ' '
+        " ORDER BY [Microsoft.VSTS.Common.Priority], [System.ChangedDate] ASC" ] | str join ' '
     board query $wiql
 }
 
 export def "ado list assigned-to-me" [] {
     let wiql = [ "SELECT [System.Id], [System.WorkItemType], [System.Title], [System.State], [System.IterationPath] FROM workitems"
         "WHERE [system.assignedto] = @me AND [system.state] NOT IN ('Closed', 'Obsolete')"
-        "ORDER BY [Microsoft.VSTS.Common.Priority], [System.ChangedDate] DESC"] | str join " "
+        "ORDER BY [Microsoft.VSTS.Common.Priority], [System.ChangedDate] ASC"] | str join " "
     board query $wiql
 }
 
@@ -220,7 +227,7 @@ export def "ado list created-by-me" [] {
     let cols = "[System.Id], [System.WorkItemType], [System.Title], [System.State], [System.AreaPath], [System.IterationPath]"
     let wiql = [ $"SELECT ($cols) FROM workitems"
         "WHERE [System.CreatedBy] = @me AND [system.state]  NOT IN ('Closed', 'Obsolete')"
-        "ORDER BY [System.ChangedDate] DESC" ] | str join ' '
+        "ORDER BY [System.ChangedDate] ASC" ] | str join ' '
     board query $wiql
 }
 
@@ -228,7 +235,7 @@ export def "ado list following" [] {
     let cols = "[System.Id], [System.WorkItemType], [System.Title], [System.State], [System.AreaPath], [System.IterationPath]"
     let wiql = [ $"SELECT ($cols) FROM workitems"
         "WHERE [System.ID] IN (@Follows) AND [system.state]  NOT IN ('Closed', 'Obsolete')"
-        "ORDER BY [System.ChangedDate] DESC" ] | str join ' '
+        "ORDER BY [System.ChangedDate] ASC" ] | str join ' '
     board query $wiql
 }
 
