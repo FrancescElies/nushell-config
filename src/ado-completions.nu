@@ -5,6 +5,7 @@
 # $env.ADO_TEAM = ''          # (4) `az devops team list -ojson | from json | select name id description | explore` to see teams and copy desired uuid
 # $env.ADO_REPO = ''          # (4) `az repos list | from json | select name id` to see repos and copy desired uuid
 
+use git-completions.nu "nu-complete git checkout"
 use git-my-alias.nu "nu-complete semmantic-message"
 
 export module ado {
@@ -37,10 +38,11 @@ export module ado {
     export def "worktree add" [
         branch: string # branch to create or checkout, e.g. cesc/1234-my-description
         path: path # checkout location
-        --startingat(-@): string = ""  # create a new branch starting at <commit-ish> e.g. master,
+        --startingat(-@): string@"nu-complete git checkout"  # create a new branch starting at <commit-ish> e.g. master,
         # custom stuff
         --story(-s): int@"nu-complete my-stories"  # story number
         --task(-t): int@"nu-complete my-tasks"   # task number
+        --no-pr # don't create pr
     ] {
         let branch_name = if ($branch | is-empty) { (git rev-parse --abbrev-ref HEAD) } else { $branch }
 
@@ -69,10 +71,12 @@ export module ado {
         }
 
         write_git_ado_db ($db | append $data)
-        cd $path
-        let pr = pr new --draft
-        $data.pr = $pr.id
-        write_git_ado_db ($db | append $data)
+        if not $no_pr {
+            cd $path
+            let pr = pr new --draft
+            $data.pr = $pr.id
+            write_git_ado_db ($db | append $data)
+        }
     }
 
     export def --wrapped "commit" [
