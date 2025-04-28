@@ -257,20 +257,29 @@ export def "nu-complete semmantic-message" [] {
     # https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716
     [
         [value    description];
+        [build    "new feature for the user, not a new feature for build script"]
+        [chore    "updating grunt tasks etc; no production code change"]
+        [ci       "ci"]
+        [docs     "changes to the documentation"]
         [feat     "new feature for the user, not a new feature for build script"]
         [fix      "bug fix for the user, not a fix to a build script"]
-        [docs     "changes to the documentation"]
-        [style    "formatting, missing semi colons, etc; no production code change"]
+        [perf     "performance"]
         [refactor "refactoring production code, eg. renaming a variable"]
+        [style    "formatting, missing semi colons, etc; no production code change"]
         [test     "adding missing tests, refactoring tests; no production code change"]
-        [chore    "updating grunt tasks etc; no production code change"]
     ]
 }
 
+# lightweight convention for commit messages
+# https://www.conventionalcommits.org/en/v1.0.0/
 export def --wrapped "gommit" [
-    prefix: string@"nu-complete semmantic-message"
+    type: string@"nu-complete semmantic-message"
     title: string
+    --scope: string # contextual information
+    --breaking-changes(-b)
     ...rest
 ] {
-    ^git commit -m $"($prefix): ($title)" ...$rest
+    let scope = if ($scope | is-empty) { "" } else { $"\(($scope)\)" }
+    let breaking_change = if $breaking_changes { "!" } else { "" }
+    ^git commit -m $"($type)($scope)($breaking_change): ($title)" ...$rest
 }

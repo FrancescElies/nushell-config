@@ -75,28 +75,29 @@ export module ado {
         write_git_ado_db ($db | append $data)
     }
 
-    export def "commit" [
-        prefix: string@"nu-complete semmantic-message"
+    export def --wrapped "commit" [
+        type: string@"nu-complete semmantic-message"
         title: string
-        body: string = ""
+        --scope: string  # contextual information
+        --breaking-changes(-b)
+        ...rest
     ] {
 
+    let scope = if ($scope | is-empty) { "" } else { $"\(($scope)\)" }
+        let breaking_change = if $breaking_changes { "!" } else { "" }
         let current_branch = (git rev-parse --abbrev-ref HEAD)
         let db = read_git_ado_db
 
-        mut rest = []
-        if $body != "" { $rest = ($rest | append [-m $"($body)"]) }
-
+        mut links = []
         let story = ( $db | where name == $current_branch | get story.0 )
-        if $story != 0 { $rest = ($rest | append [-m $"story #($story)"]) }
-
         let task = ( $db | where name == $current_branch | get task.0 )
-        if $task != 0 { $rest = ($rest | append [-m $"task #($task)"]) }
+        if $story != 0 { $links = ($links | append [-m $"story #($story)"]) }
+        if $task != 0 { $links = ($links | append [-m $"task #($task)"]) }
 
         let pr = ( $db | where name == $current_branch | get pr.0 )
-        let title = $"($prefix):($title) \(PR ($pr)\)"
+        let title = $"($type):($title) \(PR ($pr)\)"
 
-        git commit --message $title ...$rest
+        ^git commit -m $"($type)($scope)($breaking_change): ($title)" ...$links ...$rest
     }
 
 
