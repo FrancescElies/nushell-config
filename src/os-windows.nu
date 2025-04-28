@@ -186,6 +186,7 @@ export module win {
         --cpu-priority: int@"nu-complete ps-priority" = 2
         --io-priority: int@"nu-complete ps-priority" = 2
     ] {
+        if not (is-admin) { error make {msg: $"(ansi rb)You need admin rights(ansi reset)" } }
         # https://answers.microsoft.com/en-us/windows/forum/all/how-to-permanently-set-priority-processes-using/2f9ec439-5333-4625-9577-69d322cfbc5e
         let perf_options_path = $'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\($proc_name)\PerfOptions'
         reg add $perf_options_path /v CpuPriorityClass /t REG_DWORD /d $cpu_priority
@@ -194,6 +195,7 @@ export module win {
 
     # permanently remap Caps Lock as Esc
     export def "remap caps-lock-esc" [] {
+        if not (is-admin) { error make {msg: $"(ansi rb)You need admin rights(ansi reset)" } }
         let key = 'HKLM\System\CurrentControlSet\Control\Keyboard Layout\'
         let data = ['00' '00' '00' '00' '00' '00' '00' '00' '02' '00' '00' '00' '01' '00' '3A' '00' '00' '00' '00' '00'] | str join ''
         #                                                    ^^                 -^^---^^---^^---^^-
