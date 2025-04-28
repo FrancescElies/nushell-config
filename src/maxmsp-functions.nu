@@ -11,10 +11,9 @@ const maxmsp = if $nu.os-info.name == "windows" {
     "not implemented"
 }
 
-def "nu-complete maxpats" [] { ls **/* | where name =~ maxpat | get name }
 
 # Cycling '74 Max cli wrap
-export def "Max start" [maxpat?: path@"nu-complete maxpats"] {
+export def "Max start" [maxpat?: path] {
     if ($maxpat | is-empty) {
         run-external $maxmsp
     } else {
