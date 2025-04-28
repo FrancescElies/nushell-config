@@ -5,6 +5,7 @@
 # https://github.com/winsiderss/systeminformer
 
 export module win {
+    use broot-helpers.nu *
     # file version and signature viewer from file
     export def "read version" [file: path] {
         ^sigcheck -nobanner $file | lines | skip 1 | parse --regex '\s*(?<name>.+?):(?<value>.+)'
@@ -191,4 +192,16 @@ export module win {
         reg add $perf_options_path /v IoPriority /t REG_DWORD /d $io_priority
     }
 
+    # permanently remap Caps Lock as Esc
+    export def "remap caps-lock-esc" [] {
+        let key = 'HKLM\System\CurrentControlSet\Control\Keyboard Layout\'
+        let data = ['00' '00' '00' '00' '00' '00' '00' '00' '02' '00' '00' '00' '01' '00' '3A' '00' '00' '00' '00' '00'] | str join ''
+        #                                                    ^^                 -^^---^^---^^---^^-
+        # The ['02']: sets how many remaps there will be plus 1. So 01 is 1-remap, (06 would be 5-remaps)
+        # The [ '01' '00' '3A' '00' ]: Remaps Caps Lock ('3A' '00') to Esc ('01' '00') where each key is little endian
+        reg add $key /v "Scancode Map" /t REG_BINARY /d $data
+        print $'(ansi pb)For remap to take effect you need to reboot(ansi reset)'
+    }
+
 }
+
