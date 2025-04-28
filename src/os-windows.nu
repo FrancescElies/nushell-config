@@ -5,9 +5,8 @@
 # https://github.com/winsiderss/systeminformer
 
 export module win {
-    # sigcheck wrapper, file version and signature viewer
-    export def "which version" [file: path ] {
-        print $"sigcheck -nobanner ($file)"
+    # file version and signature viewer from file
+    export def "read version" [file: path] {
         ^sigcheck -nobanner $file | lines | skip 1 | parse --regex '\s*(?<name>.+?):(?<value>.+)'
     }
 
@@ -23,7 +22,7 @@ export module win {
     #     sigcheck -o [-vt][-v[r]] [-w file] <sigcheck csv file>
     #     sigcheck -t[u][v] [-i] [-c|-ct] [-w file] <certificate store name|*>
     export extern "sigcheck" [
-        ...args: any                              # Arguments to be passed to your program
+        ...args: any
         -a    # Show extended version information. The entropy measure reported
               # is the bits per byte of information of the file's contents.
         -c    # CSV output with comma delimiter
@@ -70,6 +69,9 @@ export module win {
         #   -w      Writes the output to the specified file.
         --nobanner  # Do not display the startup banner and copyright message.
     ]
+
+    # application for CPU spikes, unhandled exception and hung window monitoring cli tool
+    #
     # https://learn.microsoft.com/en-us/sysinternals/downloads/procdump#using-procdump
     #
     # Examples:
@@ -78,10 +80,8 @@ export module win {
     #
     #   Uninstall ProcDump as the (AeDebug) postmortem debugger:
     #   procdump -u
-    export extern "procdump" [
-        ...args: any                              # Arguments to be passed to your program
-        # command?: string@"nu-complete rustup"
-    ]
+    export extern "procdump" [ ...args: any ]
+
 
     # https://stackoverflow.com/questions/8560166/silent-installation-of-a-msi-package
     export def "msi silent-install" [msi_file: path] {
@@ -108,17 +108,28 @@ export module win {
         print wmic Product Where "Name='Max 8 (64-bit)'" Call Uninstall /NoInteractive
     }
 
-    def "nu-complete processes" [] { ps | select pid name | sort-by name | rename -c {pid: value, name: description} }
-
-    export def "windbg attach-to-process" [
-        --pid(-p): int@"nu-complete processes"  # process-id
-    ] {
-
-        ~/AppData/Local/Microsoft/WindowsApps/WinDbgX.exe -p $pid
+    # open in visual studio
+    export def "open in visual-studio" [file: path] {
+        let file = ($file | path expand)
+        let vs = 'C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\devenv.exe'
+        if (not ($vs | path exists)) {
+            error make {msg: $"($vs) not found, please edit 'open in visual-studio' function in ($env.CURRENT_FILE)" }
+        }
+        run-external $vs /Edit $file
     }
 
-    export def "windbg open-exe" [executable: path] {
-        ~/AppData/Local/Microsoft/WindowsApps/WinDbgX.exe $executable
+    def "nu-complete procs" [] { ps | select pid name | sort-by name | rename -c { pid: value, name: description } }
+
+    export def "windbg attach-to-process" [ --pid(-p): int@"nu-complete procs" ] {
+        let windbg = '~/AppData/Local/Microsoft/WindowsApps/WinDbgX.exe'
+        if (not ($windbg | path exists)) {
+            error make {msg: $"($windbg) not found, please edit 'windbg attach-to-process' function in ($env.CURRENT_FILE)" }
+        }
+        run-external $windbg "-p" $pid
+    }
+
+    export def "windbg" [ ...args: any ] {
+        ~/AppData/Local/Microsoft/WindowsApps/WinDbgX.exe ...$args
     }
 
 
@@ -146,12 +157,6 @@ export module win {
         open-in-windbg $executable
     }
 
-    # open in visual studio
-    export def "open in vs-2022" [file: path] {
-        let file = ($file | path expand)
-        run-external `C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\devenv.exe` /Edit $file
-    }
-
     export alias timeline = start http://localhost:5600/#/timeline
 
     # open screen shots
@@ -173,16 +178,6 @@ export module win {
     def "nu-complete proc-names" [] { ps | get name | uniq }
 
     def "nu-complete ps-priority" [] { [ [value description]; [3 High] [6 'Above Normal'] [2 Normal] [5 'Below Normal'] [1 Low] ] }
-
-    # do I have admin rights?
-    export def "am i admin" [] {
-        # https://stackoverflow.com/questions/7985755/how-to-detect-if-cmd-is-running-as-administrator-has-elevated-privileges
-        if (net session | complete).exit_code == 0 {
-            true
-        } else {
-            false
-        }
-    }
 
     # permanently set priority for process in windows registry
     export def "ps set-permanent-priority" [
