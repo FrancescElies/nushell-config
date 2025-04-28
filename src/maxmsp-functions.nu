@@ -3,19 +3,23 @@ use my-functions.nu *
 use reverse-eng.nu *
 use utils.nu *
 
+const maxmsp = if $nu.os-info.name == "windows" {
+    "C:/Program Files/Cycling '74/Max 9/Max.exe"
+} else if $nu.os-info.name == "macos" {
+    "/Applications/Max.app/Contents/MacOS/Max"
+} else {
+    "not implemented"
+}
+
+def "nu-complete maxpats" [] { ls **/* | where name =~ maxpat | get name }
+
 # Cycling '74 Max cli wrap
-export def Max [maxpat?: path] {
-    let max = match $nu.os-info.name {
-      "windows" => "C:/Program Files/Cycling '74/Max 9/Max.exe"
-      "macos" => "/Applications/Max.app/Contents/MacOS/Max",
-      _ => { error make {msg: "not implemented" } }
-    }
-    print_purple $"($max) ($maxpat)"
+export def "Max start" [maxpat?: path@"nu-complete maxpats"] {
     if ($maxpat | is-empty) {
-      run-external $max
+        run-external $maxmsp
     } else {
-      run-external $max ($maxpat | path expand)
-  }
+        run-external $maxmsp ($maxpat | path expand)
+    }
 }
 
 # broot Max stuff
