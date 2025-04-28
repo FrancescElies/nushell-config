@@ -11,7 +11,7 @@ bootstrap: secret-nu-file
 [private]
 [windows]
 secret-nu-file:
-  if (not (try { open src/os-this-machine.nu | str contains "use os-windows.nu *") } catch { false }) {"use os-windows.nu *" | save --append src/os-this-machine.nu }
+  if (not (try { open src/os-this-machine.nu | str contains "use os-windows.nu *" } catch { false })) {"use os-windows.nu *" | save --append src/os-this-machine.nu }
 
 [private]
 [macos]
