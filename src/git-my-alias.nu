@@ -79,6 +79,7 @@ export alias geds = ^git difft --staged
 export alias ga = ^git add
 export alias gaa = ^git add --all
 export alias gs = ^git status
+export alias gstatus = ^git status
 export alias gls = ^git log -p -S
 export alias gsl = ^git log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 # ^git blame ignore whitespace, deted lines moved/copied, or any commit
