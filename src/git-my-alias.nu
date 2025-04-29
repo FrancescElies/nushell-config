@@ -1,22 +1,3 @@
-const config_repos = [~/src/nushell-config ~/src/kickstart.nvim ~/src/wezterm-config]
-
-export def "gpush my-configs" [] {
-    $config_repos | each {
-        cd $in
-        ^git push --force-with-lease
-    }
-}
-
-export def "gpull my-configs" [] {
-    $config_repos | each {
-        cd $in
-        print $"(ansi pb)($in)(ansi reset)"
-        ^git stash
-        ^git pull
-        ^git stash pop | complete
-    }
-}
-
 # https://www.youtube.com/watch?v=aolI_Rz0ZqY
 # Apply some useful defaults
 # ^gmy-defaults

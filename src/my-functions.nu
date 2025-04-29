@@ -276,6 +276,34 @@ export def "my ip" [] {
   # http get https://api6.ipify.org
 }
 
+const config_repos = [~/src/nushell-config ~/src/kickstart.nvim ~/src/wezterm-config]
+
+export def "my config status-all" [] {
+    $config_repos | each {
+        cd $in
+        print $"(ansi pb)($in)(ansi reset)"
+        ^git status
+    }
+}
+
+export def "my config push-all" [] {
+    $config_repos | each {
+        cd $in
+        print $"(ansi pb)($in)(ansi reset)"
+        ^git push --force-with-lease
+    }
+}
+
+export def "my config pull-all" [] {
+    $config_repos | each {
+        cd $in
+        print $"(ansi pb)($in)(ansi reset)"
+        ^git stash
+        ^git pull
+        ^git stash pop | complete
+    }
+}
+
 # which apps do I have
 export def "my apps" [] {
   let venv_pkgs = (python -c `from importlib.metadata import entry_points; print('\n'.join(x.name for x in entry_points()['console_scripts']))` | lines)
