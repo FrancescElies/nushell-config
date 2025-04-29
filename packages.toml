@@ -46,6 +46,7 @@ ouch = "extract/compress files"
 # pastel = "generate, analyze, convert and manipulate colors"
 pgen = "passphrase generator"
 rustscan = "network scanner"
+# serie = "rich git log graph" TODO: only unix
 tailspin = "log file highlighter"
 tealdeer = "TLDR client"
 trippy = "network diagnostic tool"
