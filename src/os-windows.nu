@@ -213,5 +213,13 @@ export module win {
         print $'(ansi pb)For remap to take effect you need to reboot(ansi reset)'
     }
 
+    # list logical disks somehing akin to unix's df command
+    export def "disk free" [] {
+        (wmic logicaldisk get deviceid,size,freespace,volumename,description | str trim
+            | detect columns
+            | insert Use% { ($in.freespace|into int) / ($in.size|into int) * 100 }
+        )
+    }
+
 }
 
