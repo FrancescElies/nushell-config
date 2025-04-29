@@ -380,6 +380,25 @@ export extern "git fetch" [
   -6                                            # Use IPv6 addresses, ignore IPv4 addresses
 ]
 
+def "nu-complete git show format" [] { [oneline short medium full fuller reference email raw] }
+
+# show various type of objects
+export extern "git show" [
+    commit?: string@"nu-complete git commits all" # The commit ID to be cherry-picked
+    --pretty: string
+    --format:string@"nu-complete git show format" # one of oneline, short, medium, full, fuller, reference, email, raw, format:<string> and tformat:<string>.
+    --abbrev-commit                               # show a prefix that names the object uniquely. shorter than the full 40-byte hexadecimal commit object name,
+    --no-abbrev-commit                            # show the full 40-byte hexadecimal commit object name.
+    --oneline                                     # shorthand for "--pretty=oneline --abbrev-commit"
+    --encoding: string                            # re-code the commit log message in the preferred encoding
+    --expand-tabs: int = 4                        # perform a tab expansion (replace each tab with enough spaces to fill to the next display column)
+    --no-expand-tabs
+    --notes: string                               # show the notes (see git-notes(1))
+    --no-notes
+    --show-notes-by-default                       # show the default notes unless options for displaying specific notes are given.
+    --show-signature                              # check the validity of a signed commit object
+]
+
 # Push changes
 export extern "git push" [
   remote?: string@"nu-complete git remotes",         # the name of the remote
