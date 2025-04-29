@@ -111,12 +111,20 @@ export module win {
 
     # open in visual studio
     export def "open in visual-studio" [file: path] {
-        let file = ($file | path expand)
-        let vs = 'C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\devenv.exe'
-        if (not ($vs | path exists)) {
-            error make {msg: $"($vs) not found, please edit 'open in visual-studio' function in ($env.CURRENT_FILE)" }
+        let vswhere = $'($env."ProgramFiles(x86)")\Microsoft Visual Studio\Installer\vswhere.exe'
+        if not ($vswhere | path exists) {
+            error make {msg: $"($vswhere) not found" }
         }
-        run-external $vs /Edit $file
+
+        # https://github.com/microsoft/vswhere/wiki/Find-VC
+        let latest = ^$vswhere -latest | parse "{property}: {value}"
+        let installation_path = $latest | transpose --header-row | get installationPath.0
+        let vs = $'($installation_path)\Common7\IDE\devenv.exe'
+        if not ($vs | path exists) {
+            error make {msg: $"($vs) not found" }
+        }
+
+        run-external $vs /Edit ($file | path expand)
     }
 
     def "nu-complete procs" [] { ps | select pid name | sort-by name | rename -c { pid: value, name: description } }
