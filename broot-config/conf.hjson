@@ -249,14 +249,15 @@ preview_transformers: [
         input_extensions: [ "json" ]
         output_extension: json
         mode: text
-        command: [ "jq" ]
+        # command: [ "jq" ]
+        command: [ "gron" ]
     }
 
     {
         input_extensions: [ "md" ]
         output_extension: md
         mode: text
-        command: [ "mdcat" ]
+        command: [ "mdcat --ansi" ]
     }
 ]
 
