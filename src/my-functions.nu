@@ -247,15 +247,6 @@ export def concat-videos-in-folder [folder: path] {
 
 export def watch-cwd [] { watch . { |op, path, new_path| $"($op) ($path) ($new_path)"} }
 
-export def which-process-locks [path: path] {
-  if $nu.os-info.name == "windows" {
-    # https://learn.microsoft.com/en-us/sysinternals/downloads/handle
-    handle $path
-  } else {
-    lsof $path
-  }
-}
-
 export def "youtube download-audio" [ url: string ] {
   let yt_dlp = "~/bin/yt-dlp" | path expand
   mut args = ['-x' '--audio-format=vorbis']

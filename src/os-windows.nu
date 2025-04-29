@@ -221,5 +221,10 @@ export module win {
         )
     }
 
+    # unix's lsof like but in windows, a wrapper for handle https://learn.microsoft.com/en-us/sysinternals/downloads/handle
+    export def --wrapped lsof [...rest] {
+        handle ...$rest
+    }
+
 }
 
