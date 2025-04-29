@@ -18,7 +18,7 @@
 # ^git maintenance start
 
 # apply my defaults
-export def "gmy-defaults" [] {
+export def "my set git-defaults" [] {
   # https://jvns.ca/blog/2024/02/16/popular-git-config-options/#help-autocorrect-10
   ^git config --global push.autosetupremote true
   ^git config --global init.defaultBranch main
@@ -256,8 +256,8 @@ export def "nu-complete semmantic-message" [] {
 export def --wrapped "gommit" [
     type: string@"nu-complete semmantic-message"
     title: string
-    --scope: string # contextual information
-    --breaking-changes(-b)
+    --scope(-s): string     # adds contextual(information)
+    --breaking-changes(-b)  # adds ! to commit title
     ...rest
 ] {
     let scope = if ($scope | is-empty) { "" } else { $"\(($scope)\)" }
