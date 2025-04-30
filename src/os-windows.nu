@@ -182,7 +182,8 @@ export module win {
         open-in-windbg $executable
     }
 
-    export alias timeline = start http://localhost:5600/#/timeline
+    export alias "open timeline" = start http://localhost:5600/#/timeline
+    export alias "open music" = ^"/Program Files/VideoLAN/VLC/vlc.exe" ~/Music
 
     # open screen shots
     export def "open screen shots" [] { start ('~/Pictures/Screenshots' | path expand) }
