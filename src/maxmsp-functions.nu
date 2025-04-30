@@ -3,6 +3,7 @@ use my-functions.nu *
 use reverse-eng.nu *
 use utils.nu *
 
+
 const maxmsp = if $nu.os-info.name == "windows" {
     "C:/Program Files/Cycling '74/Max 9/Max.exe"
 } else if $nu.os-info.name == "macos" {
@@ -134,4 +135,18 @@ export alias "rg-max" = rg --type-add 'max:*.{maxhelp,maxpat,json}' -t max
 export def "Max list loaded-mxe64" [] { frida list modules-and-exports (pidof Max) | where dll =~ mxe64 }
 export def "Max list my-loaded-mxe64" [] { Max list loaded-mxe64 | filter { $in.dll | str starts-with m. } }
 
-
+export def "Max list available-objects" [] {
+    let alias = (
+        ls `~/Documents/Max 9/Packages/*/init/*txt` | get name | each { |file|
+            ( open $file | parse "max objectfile {name} {obj};"
+                | insert max-package { $""}
+                | insert description { $"alias of $($in.obj) by ($file | path basename)"} )
+        }
+    ) | flatten
+    let objects_without_alias = (
+        fd --follow -HI mxe64 ("~/Documents/Max 9/Packages" | path expand) | lines | path parse | get stem
+        | each {
+            if not ($in in $alias.obj) { $in } } | wrap name | insert description { null }
+    )
+    $alias | select name description | append $objects_without_alias
+}
