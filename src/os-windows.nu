@@ -185,13 +185,8 @@ export module win {
     export alias "open timeline" = start http://localhost:5600/#/timeline
     export alias "open music" = ^"/Program Files/VideoLAN/VLC/vlc.exe" ~/Music
 
-    # open screen shots
-    export def "open screen shots" [] { start ('~/Pictures/Screenshots' | path expand) }
-    export def "screen shots" [] { br --sort-by-date ('~/Pictures/Screenshots' | path expand)  }
-
-    # open screen recordings
-    export def "open screen recordings" [] { start ('~/Videos/Screen Recordings' | path expand) }
-    export def "screen recordings" [] { br --sort-by-date ('~/Videos/Screen Recordings' | path expand)  }
+    export def "open last screen-shot" [] { start (ls ('~/Pictures/Screenshots' | path expand) | sort-by modified | last | get name) }
+    export def "open last screen-recording" [] { start (ls ('~/Videos/Screen Recordings' | path expand) | sort-by modified | last | get name) }
 
     export def "screen recordings to gif" [] {
         ( ls `~/Videos/Screen Recordings/*mp4` | get name | path parse
