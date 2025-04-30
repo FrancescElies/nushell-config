@@ -296,7 +296,7 @@ export module ado {
             }
             let result = pr ci re-queue $pr_id
             if (not ($result | is-empty)) { print $result }
-            sleep 10sec
+            sleep 60sec
         }
     }
 
