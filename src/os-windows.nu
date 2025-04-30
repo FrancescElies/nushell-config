@@ -4,6 +4,22 @@
 
 # https://github.com/winsiderss/systeminformer
 
+export alias sudo = ^gsudo
+def "nu-complete sudo-cache-param" [] { [help on off] }
+export def "sudo cache" [param: string@"nu-complete sudo-cache-param" ] {
+    ^gsudo cache $param
+}
+def "nu-complete sudo-config-key" [] { gsudo config | parse "# {value}: {description}" }
+export def --wrapped "sudo config" [
+    key?: string@"nu-complete sudo-config-key"
+    value?: string
+    --global
+    --reset
+    ...rest
+] {
+    ^gsudo config config $key $global $reset ...$rest
+}
+
 export module win {
     use broot-helpers.nu *
     # file version and signature viewer from file
