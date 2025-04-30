@@ -62,7 +62,7 @@ export module ado {
         # let path = (".." | path join $"($repo_name)-($branch_folder)")
 
         git fetch --all
-        if $startingat == "" {
+        if ($startingat | is-empty) {
             print_purple $"git worktree add -B ($branch) ($path)"
             git worktree add -B $branch $path
         } else {
@@ -73,7 +73,8 @@ export module ado {
         write_git_ado_db ($db | append $data)
         if not $no_pr {
             cd $path
-            let pr = pr new --draft
+            let title = $branch
+            let pr = pr new $title --draft
             $data.pr = $pr.id
             write_git_ado_db ($db | append $data)
         }
@@ -105,10 +106,14 @@ export module ado {
     }
 
 
-    export def "pr new" [ --target-branch (-t): string = 'master' --draft] {
+    export def "pr new" [
+        title?: string
+        --target-branch (-t): string = 'master'
+        --draft
+    ] {
         git push
         let description = ($nu.temp-path | path join $"az-pr-(random chars).md")
-        let title = ( git log --format=%B -n 1 HEAD ) | lines | first
+        let title = if (title | is-empty) { ( git log --format=%B -n 1 HEAD ) | lines | first } else { $title }
         [ "**Problem:** " "" "**Solution:** " "" "**Notes:** " ] | to text | save -f $description
 
         nvim $description
