@@ -74,7 +74,7 @@ export module ado {
         if not $no_pr {
             cd $path
             let title = $branch
-            let pr = pr new $title --draft
+            let pr = pr new $"🏗️: ($title)" --draft
             $data.pr = $pr.id
             write_git_ado_db ($db | append $data)
         }
