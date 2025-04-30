@@ -83,7 +83,7 @@ export module ado {
     export def --wrapped "commit" [
         type: string@"nu-complete semmantic-message"
         title: string
-        --scope: string  # contextual information
+        --scope(-s): string  # contextual information
         --breaking-changes(-b)
         ...rest
     ] {
@@ -100,9 +100,9 @@ export module ado {
         if $task != 0 { $links = ($links | append [-m $"task #($task)"]) }
 
         let pr = ( $db | where name == $current_branch | get pr.0 )
-        let title = $"($type):($title) \(PR ($pr)\)"
+        let title = [ -m $"($type)($scope)($breaking_change): ($title) - \(PR ($pr)\)" ]
 
-        ^git commit -m $"($type)($scope)($breaking_change): ($title)" ...$links ...$rest
+        ^git commit ...$title ...$links ...$rest
     }
 
 
@@ -300,15 +300,23 @@ export module ado {
         }
     }
 
-    # NOTE: https://github.com/Azure/azure-cli/issues/27531#issuecomment-2830207020
-    export def "pr show-beta" [ pr_id: number@"nu-complete pr-id" ] {
+    export def "pr show-commits" [ pr_id: number@"nu-complete pr-id" ] {
         ( az devops invoke
-            --organization $"https://dev.azure.com/($env.ADO_ORGANIZATION)/"
             --area git
             --resource pullRequestCommits
-            --route-parameters $"project=($env.ADO_PROJECT) repositoryId=($env.ADO_REPO) pullRequestId=($pr_id)"
+            --route-parameters project=($env.ADO_PROJECT) repositoryId=($env.ADO_REPO) pullRequestId=($pr_id)
             --http-method GET
             --output json )
+        | from json
+        | get value
+        | select author.name comment commitId
+    }
+
+    export def "list wikis" [] {
+        ( az devops invoke --area wiki --resource wikis --route-parameters project=($env.ADO_PROJECT)
+            | from json
+            | get value
+            | select mappedPath name type remoteUrl versions )
     }
 
     def "nu-complete my-workitems" [] {
