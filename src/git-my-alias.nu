@@ -78,6 +78,7 @@ export alias ged = ^git difft
 export alias geds = ^git difft --staged
 export alias ga = ^git add
 export alias gaa = ^git add --all
+export alias gau = ^git add --update
 export alias gs = ^git status
 export alias gstatus = ^git status
 export alias gls = ^git log -p -S
