@@ -113,7 +113,7 @@ export module ado {
     ] {
         git push
         let description = ($nu.temp-path | path join $"az-pr-(random chars).md")
-        let title = if (title | is-empty) { ( git log --format=%B -n 1 HEAD ) | lines | first } else { $title }
+        let title = if ($title | is-empty) { ( git log --format=%B -n 1 HEAD ) | lines | first } else { $title }
         [ "**Problem:** " "" "**Solution:** " "" "**Notes:** " ] | to text | save -f $description
 
         nvim $description
