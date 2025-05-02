@@ -271,7 +271,7 @@ export alias rsync-fat = ^rsync -rtcvP --update
 
 # what is my public ip
 export def "my ip" [] {
-  curl https://ipinfo.io
+  http get https://ipinfo.io/json
   # http get https://api.ipify.org
   # http get https://api6.ipify.org
 }
