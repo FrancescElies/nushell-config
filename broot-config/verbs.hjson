@@ -92,14 +92,14 @@ verbs: [
 
     # A popular set of shortcuts for going up and down:
     #
-    { key: "ctrl-p", execution: ":line_up" }  # previous line
-    { key: "ctrl-n", execution: ":line_down" } # next line
     { key: "ctrl-u", execution: ":page_up" }
     { key: "ctrl-d", execution: ":page_down" }
     #
     # Add to stage and move
-    { invocation: "stage_go_next", key: "ctrl-j", cmd: ":toggle_stage;:next_match" }
-    { invocation: "stage_go_next", key: "ctrl-k", cmd: ":toggle_stage;:previous_match" }
+    { key: "ctrl-p", execution: ":previous_match" }
+    { key: "ctrl-n", execution: ":next_match" }
+    { key: "ctrl-j", invocation: "stage_go_next", cmd: ":toggle_stage;:next_match" }
+    { key: "ctrl-k", invocation: "stage_go_next", cmd: ":toggle_stage;:previous_match" }
 
 
     # broot defaults ctrl- conflicts with macos shortcuts, thus adding this:
