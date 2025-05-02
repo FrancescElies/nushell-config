@@ -110,6 +110,14 @@ export module win {
         msiexec.exe /i $msi_file /QN /L*V $logfile
     }
 
+    export def "dotnet install" [ version?: string ] {
+        let version = if ($version | is-empty) { (open global.json).sdk.version } else { $version }
+        cd ~/Downloads
+        let file = $"dotnet-sdk-($version)-win-x64.exe"
+        http get $"https://builds.dotnet.microsoft.com/dotnet/Sdk/8.0.100/($file)"  | save -f $file
+        start $file
+    }
+
     def "nu-complete installed-pkgs" [] {
         ( open /tmp/installed-pkgs.txt | lines
             | each { $in | str trim }
