@@ -229,7 +229,8 @@ export module win {
     export def "disk free" [] {
         (wmic logicaldisk get deviceid,size,freespace,volumename,description | str trim
             | detect columns
-            | insert Use% { ($in.freespace|into int) / ($in.size|into int) * 100 }
+            | insert Use% { 100 - ($in.freespace|into int) / ($in.size|into int) * 100 }
+            | move Use% --after DeviceID
         )
     }
 
