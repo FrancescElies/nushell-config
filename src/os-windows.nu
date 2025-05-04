@@ -247,5 +247,7 @@ export module win {
         handle ...$rest
     }
 
+    export def "which all-dumpbin" [] { vswhere -latest -find **/dumpbin.exe | str replace -a '\\' '/' }
+
 }
 

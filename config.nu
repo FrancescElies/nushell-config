@@ -19,6 +19,7 @@ source ~/src/nushell-config/src/os-this-machine.nu
 #     cog.outl(f"use {this_repo / file} *".replace('\\', '/'))
 # ]]]*/
 use ~/src/nushell-config/src/ado-completions.nu *
+use ~/src/nushell-config/src/ai-completions.nu *
 use ~/src/nushell-config/src/bat-completions.nu *
 use ~/src/nushell-config/src/broot-helpers.nu *
 use ~/src/nushell-config/src/btm-completions.nu *
@@ -38,11 +39,13 @@ use ~/src/nushell-config/src/hosts-completions.nu *
 use ~/src/nushell-config/src/just-completions.nu *
 use ~/src/nushell-config/src/man.nu *
 use ~/src/nushell-config/src/maxmsp-functions.nu *
+use ~/src/nushell-config/src/media.nu *
 use ~/src/nushell-config/src/miniserve-completions.nu *
 use ~/src/nushell-config/src/my-configs.nu *
 use ~/src/nushell-config/src/my-functions.nu *
 use ~/src/nushell-config/src/neovim.nu *
 use ~/src/nushell-config/src/parse-help.nu *
+use ~/src/nushell-config/src/process.nu *
 use ~/src/nushell-config/src/pueue-completions.nu *
 use ~/src/nushell-config/src/reverse-eng.nu *
 use ~/src/nushell-config/src/rg-completions.nu *

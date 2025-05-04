@@ -10,7 +10,7 @@
 
 # https://blog.devit.co/diving-into-radare2/
 
-use ./my-functions.nu pid
+use process.nu pid
 
 export module reng {
     export alias r2 = radare2

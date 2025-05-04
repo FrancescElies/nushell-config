@@ -9,7 +9,12 @@ export def --env "ssh-agent start" [] {
         | into record
         | load-env
 }
-export def "open rqbit" [] { ssh -L 3030:localhost:3030 intel-pc -fN; start http://localhost:3030/web }
-export def "open prowlarr" [] {  start http://intel-pc:9696/ }
-export def "open jellyfin" [] {  start http://intel-pc:8096 }
 
+export def "my rqbit" [] {
+  if (ps --long | where command =~  "3030:localhost:3030" | is-empty) {
+    ssh -L 3030:localhost:3030 intel-pc -fN
+  }
+  start http://localhost:3030/web
+}
+export def "my prowlarr" [] {  start http://intel-pc:9696/ }
+export def "my jellyfin" [] {  start http://intel-pc:8096 }
