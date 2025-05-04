@@ -17,7 +17,7 @@ def "nu-complete projects" [] {
 # cd into project
 export def --env "my project" [project: string@"nu-complete projects"] { cd ('~/src' | path expand | path join $project ) }
 # cd into project
-export alias cdp = explore
+export alias cdp = my project
 
 export def "my todos" [] {
     mkdircd ~/src/zettelkasten
