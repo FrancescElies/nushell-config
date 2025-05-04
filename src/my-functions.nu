@@ -138,3 +138,8 @@ def "my compiler-flags" [] {
     print "-Werror -Wall -Wextra -fsanitize=address,undefined,float-divide-by-zero,unsigned-integer-overflow,implicit-conversion,local-bounds,nullability"
 }
 
+# backup by-year
+export def "my backup by-year" [serverip: string = "intel-pc"] {
+    restic --repo sftp:($serverip):by-year.restic backup ~/by-year
+}
+

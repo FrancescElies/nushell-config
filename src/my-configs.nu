@@ -21,12 +21,7 @@ export module "my config" {
 
     const config_repos = [~/src/nushell-config ~/src/kickstart.nvim ~/src/wezterm-config]
 
-    # backup by-year
-    export def "my backup by-year" [serverip: string = "intel-pc"] {
-        restic --repo sftp:($serverip):by-year.restic backup ~/by-year
-    }
-
-    export def "my config status-all" [] {
+    export def "status-all" [] {
         $config_repos | each {
             cd $in
             print $"(ansi pb)($in)(ansi reset)"
@@ -34,7 +29,7 @@ export module "my config" {
         }
     }
 
-    export def "my config push-all" [] {
+    export def "push-all" [] {
         $config_repos | each {
             cd $in
             print $"(ansi pb)($in)(ansi reset)"
@@ -42,7 +37,7 @@ export module "my config" {
         }
     }
 
-    export def "my config pull-all" [] {
+    export def "pull-all" [] {
         $config_repos | each {
             cd $in
             print $"(ansi pb)($in)(ansi reset)"
