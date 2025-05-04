@@ -1,8 +1,3 @@
-use utils.nu print_purple
-
-# worktree
-# --------
-
 # git worktree list as table
 export def --wrapped "git worktree listt" [...rest] {
   ^git worktree list ...$rest | lines | parse --regex `(?P<path>.+?) +(?P<commit>\w+) \[(?P<branch>.+)\]`

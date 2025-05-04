@@ -22,45 +22,43 @@
 # AllowedIPs = 0.0.0.0/0, ::/0
 # Endpoint = CCC.CCC.CCC.CCC:51820
 
-use utils.nu print_purple
-
 export module container {
     export def up [
       --addr: string = "10.14.0.2/16",
       --conf: path = /etc/wireguard/wg-ch.conf
     ] {
 
-        print_purple create netns called container
+        print $"(ansi pb)create netns called container(ansi reset)"
         sudo ip netns add container
 
-        print_purple create wireguard interface in init namespace
+        print $"(ansi pb)create wireguard interface in init namespace(ansi reset)"
         sudo ip link add wg0 type wireguard
 
         # needs to be done before moving wg0 to container otherwise dns resolution won't work
-        print_purple setconf wg0
+        print $"(ansi pb)setconf wg0(ansi reset)"
         sudo wg setconf wg0 $conf
 
-        print_purple move it to container netns
+        print $"(ansi pb)move it to container netns(ansi reset)"
         sudo ip link set wg0 netns container
 
-        print_purple configure wg0
+        print $"(ansi pb)configure wg0(ansi reset)"
         sudo ip -n container addr add $addr dev wg0
 
-        print_purple wg0 up
+        print $"(ansi pb)wg0 up(ansi reset)"
         sudo ip -n container link set wg0 up
 
-        print_purple bring up loopback interface for container netns
+        print $"(ansi pb)bring up loopback interface for container netns(ansi reset)"
         sudo ip netns exec container ip link set dev lo up
 
-        print_purple adding default route
+        print $"(ansi pb)adding default route(ansi reset)"
         sudo ip -n container route add default dev wg0
     }
 
     export def down [ ] {
-        print_purple "delete wg0"
+        print $"(ansi pb)"delete wg0"(ansi reset)"
         try { sudo ip -n container link del wg0 }
 
-        print_purple "removing container netns"
+        print $"(ansi pb)"removing container netns"(ansi reset)"
         try { sudo ip netns del container }
     }
 
@@ -83,44 +81,44 @@ export module route-all-traffic {
       --addr: string = "10.14.0.2/16",
 	  --conf: path = /etc/wireguard/wg-ch.conf
     ] {
-        print_purple "killing wpa_supplicant & dhcpd"
+        print $"(ansi pb)"killing wpa_supplicant & dhcpd"(ansi reset)"
         try { sudo killall wpa_supplicant dhcpcd }
 
-        print_purple "adding physical netns"
+        print $"(ansi pb)"adding physical netns"(ansi reset)"
         sudo ip netns add physical
 
-        print_purple "creating wg0"
+        print $"(ansi pb)"creating wg0"(ansi reset)"
         # The birthplace is now the "physical" namespace,
         # which means the wireguard ciphertext UDP sockets will be assigned to devices like eth0 and wlan0
         sudo ip -n physical link add wg0 type wireguard
         # We can now move it into the "init" (1) namespace and it will still remember its birthplace for the sockets.
         sudo ip -n physical link set wg0 netns 1
 
-        print_purple "configuring wg0"
+        print $"(ansi pb)configuring wg0(ansi reset)"
         sudo wg setconf wg0 $conf
         sudo ip addr add $addr dev wg0
 
-        print_purple $"moving ($iface_eth) to netns"
+        print $"(ansi pb)moving ($iface_eth) to netns(ansi reset)"
         sudo ip link set $iface_eth down
         sudo ip link set $iface_eth netns physical
 
-        print_purple $"bringing up ($iface_eth)"
+        print $"(ansi pb)bringing up ($iface_eth)(ansi reset)"
         sudo ip -n physical link set $iface_eth up
 
-        print_purple $"moving ($iface_wlan) to netns"
+        print $"(ansi pb)moving ($iface_wlan) to netns(ansi reset)"
         sudo ip link set $iface_wlan down
         sudo iw phy phy0 set netns name physical
 
-        #print_purple $"bringing up ($iface_wlan)"
+        #print $"(ansi pb)bringing up ($iface_wlan)(ansi reset)"
         #sudo ip -n physical link set $iface_wlan up
 
-        print_purple $"start dhcpcd for ($iface_eth)"
+        print $"(ansi pb)start dhcpcd for ($iface_eth)(ansi reset)"
         # add "export PATH=$PATH:/sbin:/usr/sbin" to .bashrc if dhcpcd not found
         sudo ip netns exec physical dhcpcd -b $iface_eth
         # sudo ip netns exec physical dhcpcd -b $iface_wlan
         # sudo ip netns exec physical wpa_supplicant -B -c/etc/wpa_supplicant/wpa_supplicant-wlan0.conf -i$iface_wlan
 
-        print_purple $"setting wg0 up"
+        print $"(ansi pb)setting wg0 up(ansi reset)"
         sudo ip link set wg0 up
         sudo ip route add default dev wg0
     }
@@ -129,24 +127,24 @@ export module route-all-traffic {
       iface_eth: string = "eno1",
       iface_wlan: string = "wlp2s0",
     ] {
-        print_purple "killing processes"
+        print $"(ansi pb)killing processes(ansi reset)"
         try { killall wpa_supplicant dhcpcd }
 
-        print_purple "removing eth from physical netns"
+        print $"(ansi pb)removing eth from physical netns(ansi reset)"
         try { sudo ip -n physical link set $iface_eth down }
         try { sudo ip -n physical link set $iface_eth netns 1 }
 
-        print_purple "removing wlan from physical netns"
+        print $"(ansi pb)removing wlan from physical netns(ansi reset)"
         try { sudo ip -n physical link set $iface_wlan down }
         try { sudo ip netns exec physical iw phy phy0 set netns 1 }
 
-        print_purple "delete wg0"
+        print $"(ansi pb)delete wg0(ansi reset)"
         try { sudo ip link del wg0 }
 
-        print_purple "removing physical netns"
+        print $"(ansi pb)removing physical netns(ansi reset)"
         try { sudo ip netns del physical }
 
-        print_purple $"start dhcpcd for ($iface_eth)"
+        print $"(ansi pb)start dhcpcd for ($iface_eth)(ansi reset)"
         sudo dhcpcd -b $iface_eth
         # dhcpcd -b $iface_wlan
         # wpa_supplicant -B -c/etc/wpa_supplicant/wpa_supplicant-wlan0.conf -i$iface_wlan

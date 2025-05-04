@@ -63,10 +63,10 @@ export module ado {
 
         git fetch --all
         if ($startingat | is-empty) {
-            print_purple $"git worktree add -B ($branch) ($path)"
+            print $"(ansi pb)git worktree add -B ($branch) ($path)(ansi reset)"
             git worktree add -B $branch $path
         } else {
-            print_purple $"git worktree add -B ($branch) ($path) ($startingat)"
+            print $"(ansi pb)git worktree add -B ($branch) ($path) ($startingat)(ansi reset)"
             git worktree add -B $branch $path $startingat
         }
 

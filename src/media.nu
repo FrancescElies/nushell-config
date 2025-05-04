@@ -70,7 +70,6 @@ export def concat-videos-in-folder [folder: path] {
 export def "youtube download-audio" [ url: string ] {
   let yt_dlp = "~/bin/yt-dlp" | path expand
   mut args = ['-x' '--audio-format=vorbis']
-  print_purple python $yt_dlp ...$args $url
   python $yt_dlp  ...$args $url
 }
 
@@ -82,7 +81,6 @@ export def "youtube download-video" [
   mut args = []
   if ($sub_lang | is-not-empty) { $args = ($args | append $'--write-sub --sub-lang ($sub_lang)' ) }
 
-  print_purple python $yt_dlp  ...$args $url
   python $yt_dlp  ...$args $url
 }
 
