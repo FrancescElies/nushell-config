@@ -144,6 +144,30 @@ $env.config.hooks.env_change = {
     ]
 }
 
+$env.config.menus = [
+    {
+      name: abbr_menu
+      only_buffer_difference: false
+      marker: "👀 "
+      type: {
+        layout: columnar
+        columns: 1
+        col_width: 20
+        col_padding: 2
+      }
+      style: {
+        text: green
+        selected_text: green_reverse
+        description_text: yellow
+      }
+      source: { |buffer, position|
+        scope aliases
+        | where name == $buffer
+        | each { |elt| {value: $elt.expansion }}
+      }
+    }
+]
+
 # The default config record. This is where much of your global configuration is setup.
 $env.config.keybindings = [
     # https://www.nushell.sh/blog/2024-05-15-top-nushell-hacks.html
@@ -158,29 +182,9 @@ $env.config.keybindings = [
         ]
     }
     {
-         name: open_broot
-         modifier: control
-         keycode: char_b
-         mode: [emacs, vi_normal, vi_insert]
-         event: {
-           send: executehostcommand,
-           cmd: "br"
-         }
-    }
-    {
-         name: open_lazyGit
-         modifier: control
-         keycode: char_g
-         mode: [emacs, vi_normal, vi_insert]
-         event: {
-           send: executehostcommand,
-           cmd: "lazygit"
-         }
-    }
-    {
          name: find_file_with_Broot
          modifier: control
-         keycode: char_b
+         keycode: char_s
          mode: [emacs, vi_normal, vi_insert]
          event: {
            send: executehostcommand,
@@ -194,7 +198,7 @@ $env.config.keybindings = [
          mode: [emacs, vi_normal, vi_insert]
          event: {
            send: executehostcommand,
-           cmd: "commandline edit --insert (bro)"
+           cmd: "commandline edit --insert (cd ~; bro)"
          }
     }
     {
@@ -229,5 +233,5 @@ $env.config.keybindings = [
    }
 ]
 
-print $"(ansi pi)ctrl(ansi reset): [(ansi pi)b(ansi reset)]root, [(ansi pi)g(ansi reset)]it, insert-[(ansi pi)a(ansi reset)]bsolute-[(ansi pi)f(ansi reset)]ilepath, [(ansi pi)j(ansi reset)]ump, go [(ansi pi)u(ansi reset)]p, [(ansi pi)space(ansi reset)] expand"
+print $"(ansi pi)ctrl(ansi reset): [(ansi pi)s(ansi reset)]earch path, insert [(ansi pi)a(ansi reset)]bsolute [(ansi pi)f(ansi reset)]ile, [(ansi pi)j(ansi reset)]ump, go [(ansi pi)u(ansi reset)]p, [(ansi pi)space(ansi reset)] expand"
 
