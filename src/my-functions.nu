@@ -278,6 +278,11 @@ export def "my ip" [] {
 
 const config_repos = [~/src/nushell-config ~/src/kickstart.nvim ~/src/wezterm-config]
 
+# backup by-year
+export def "my backup by-year" [serverip: string = "intel-pc"] {
+    restic --repo sftp:($serverip):by-year.restic backup ~/by-year
+}
+
 export def "my config status-all" [] {
     $config_repos | each {
         cd $in
