@@ -38,8 +38,8 @@ use ~/src/nushell-config/src/history-utils.nu *
 use ~/src/nushell-config/src/hosts-completions.nu *
 use ~/src/nushell-config/src/just-completions.nu *
 use ~/src/nushell-config/src/man.nu *
-use ~/src/nushell-config/src/maxmsp-functions.nu *
-use ~/src/nushell-config/src/media.nu *
+use ~/src/nushell-config/src/maxmsp-completions.nu *
+use ~/src/nushell-config/src/media-completions.nu *
 use ~/src/nushell-config/src/miniserve-completions.nu *
 use ~/src/nushell-config/src/my-configs.nu *
 use ~/src/nushell-config/src/my-functions.nu *

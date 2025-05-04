@@ -1,7 +1,8 @@
-
 #
 # ffmpeg -i VIDEO.mp4 -vf unsharp=13:13:5 VIDEO-unsharp.mp4
 
+export module media {
+}
 # Reduces video size and converts to mp4
 # See https://stackoverflow.com/questions/12026381/ffmpeg-converting-mov-files-to-mp4
 export def "reduce-size video" [input_video: path] {
