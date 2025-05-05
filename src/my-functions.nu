@@ -54,7 +54,10 @@ export def "my wezterm logs" [] {
   }
 }
 
-export def "my time-today" [] { ~/src/nushell-config/.venv/bin/python ~/src/nushell-config/src/time_spent_today.py }
+export def "my time-today" [] {
+    use ~/.venv/Scripts/activate.nu
+    python ~/src/nushell-config/src/time_spent_today.py
+}
 
 # list services (printers, scanners...) in local network with avahi-browse
 export def "my network services" [] {
