@@ -4,7 +4,7 @@
 
 # https://github.com/winsiderss/systeminformer
 
-export alias sudo = ^gsudo
+# export alias sudo = ^gsudo
 def "nu-complete sudo-cache-param" [] { [help on off] }
 export def "sudo cache" [param: string@"nu-complete sudo-cache-param" ] {
     ^gsudo cache $param
