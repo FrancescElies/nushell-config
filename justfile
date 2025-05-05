@@ -33,7 +33,7 @@ update-imports:
 
 [windows]
 get-windows-pkgs: home-venv
-  let pkgs = (open packages.toml | get windows | transpose | get column0); winget install --silent ...$pkgs
+  let pkgs = (open packages.toml | get windows | transpose | get column0); sudo winget install --silent ...$pkgs
 
 
 [windows]

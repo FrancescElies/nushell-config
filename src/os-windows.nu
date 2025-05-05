@@ -110,14 +110,6 @@ export module win {
         msiexec.exe /i $msi_file /QN /L*V $logfile
     }
 
-    export def "dotnet install" [ version?: string ] {
-        let version = if ($version | is-empty) { (open global.json).sdk.version } else { $version }
-        cd ~/Downloads
-        let file = $"dotnet-sdk-($version)-win-x64.exe"
-        http get $"https://builds.dotnet.microsoft.com/dotnet/Sdk/8.0.100/($file)"  | save -f $file
-        start $file
-    }
-
     def "nu-complete installed-pkgs" [] {
         ( open /tmp/installed-pkgs.txt | lines
             | each { $in | str trim }
@@ -248,6 +240,9 @@ export module win {
     }
 
     export def "which all-dumpbin" [] { vswhere -latest -find **/dumpbin.exe | str replace -a '\\' '/' }
+
+    # copy to clipboard install basic software, useful when asked to do support on other machines
+    export def "copy debug-session-software" [] { echo "winget install --silent BurntSushi.ripgrep.MSVC sharkdp.fd dystroy.broot TomHudson.gron" | clip }
 
 }
 
