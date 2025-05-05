@@ -235,12 +235,13 @@ lines_after_match_in_preview: 1
 preview_transformers: [
     // # Use mutool to render any PDF file as an image
     // # In this example we use placeholders for the input and output files
-    // {
-    //     input_extensions: [ "pdf" ] // case doesn't matter
-    //     output_extension: png
-    //     mode: image
-    //     command: [ "mutool", "draw", "-o", "{output-path}", "{input-path}" ]
-    // }
+    {
+        input_extensions: [ "pdf" ] // case doesn't matter
+        output_extension: png
+        mode: image
+        // command: [ "mutool", "draw", "-o", "{output-path}", "{input-path}" ]
+        command: [ "mutool", "draw", "-w", "1000", "-o", "{output-path}", "{input-path}" ]
+    }
 
     // # Use jq to beautify JSON
     // # In this example, the command refers to neither the input nor the output,
