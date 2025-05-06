@@ -100,7 +100,7 @@ export module ado {
         if $task != 0 { $links = ($links | append [-m $"task #($task)"]) }
 
         let pr = ( $db | where name == $current_branch | get pr.0 )
-        let title = [ -m $"($type)($scope)($breaking_change): ($title) - \(PR ($pr)\)" ]
+        let title = [ -m $"($type)($scope)($breaking_change): ($title) - PR ($pr)" ]
 
         ^git commit ...$title ...$links ...$rest
     }
