@@ -1,4 +1,7 @@
 export module "my config" {
+
+    export def "edit this-machine" [] { nvim ~/src/nushell-config/src/os-this-machine.nu }
+
     export def "edit weztern" [] { nvim ~/src/wezterm-config/wezterm.lua }
 
     export def "edit nvim" [] { nvim ~/src/kickstart.nvim/init.lua }
