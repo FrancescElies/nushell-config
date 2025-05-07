@@ -20,8 +20,9 @@ export def --env "my project" [project: string@"nu-complete projects"] { cd ('~/
 export alias cdp = my project
 
 export def "my todos" [] {
-    mkdircd ~/src/zettelkasten
-    nvim todos.md
+    mkdir ~/src/zettelkasten
+    cd ~/src/zettelkasten
+    br
 }
 export alias todos = my todos
 
@@ -91,7 +92,7 @@ export def "date format ymd" [] { (date now | format date %Y-%m-%d) }
 export def "date format dmy" [] { (date now | format date %d-%m-%Y) }
 
 # create directory and cd into it (alias mcd)
-export def --env mkdircd [dir] { mkdir $dir; cd $dir }
+export def --env mkdircd [dir: path] { mkdir $dir; cd $dir }
 alias mcd = mkdircd
 
 #compress to 7z using max compression
