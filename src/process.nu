@@ -24,9 +24,12 @@ export def pid [] { ps | sort-by -in name | input list -d name --fuzzy  | get pi
 
 def "nu-complete list-process-names" [] { ps | get name | sort | uniq }
 
-#kill specified process in name
+# kill specified process with substring
 export def killn [name: string@"nu-complete list-process-names"] {
-  print "Following processes were killed"
-  ps | find --columns [name] $name | each {|x| try {kill -f $x.pid}; echo $x }
+    let procs = ps | find --columns [name] $name | sort-by -in name
+    print $procs
+    if (input $"(ansi pb)Do you want to kill processes above [y/n](ansi reset)?" | str downcase) == "y" {
+        $procs | each { try { kill -f $in.pid } }
+    }
 }
 export alias k = killn

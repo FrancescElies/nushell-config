@@ -87,7 +87,8 @@ export alias gsl = ^git log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset
 export alias gblame = ^git blame -w -C -C -C
 # ^git log
 alias gl_ = ^git log --graph --pretty=format:'%C(auto)%h -%d %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-export alias gl = gl_ -n5
+export alias gl = gl_
+export alias gl5 = gl_ -n5
 export alias gl10 = gl_ -n10
 # ^git log with blame a little: glL :FunctionName:path/to/file, glL 15,26:path/to/file
 export alias glL = ^git log -L
