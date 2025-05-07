@@ -45,7 +45,13 @@ export def "my open-ports" [] {
 }
 
 # extracts archives with different extensions
-export alias extract = ouch decompress
+export alias decompress = ouch decompress
+# extracts archives
+export def "decompress all" [path: path = "."] {
+    cd $path
+    ( ls *[tar, zip, bz, bz2, gz, lz4, xz, lzma, tgz, tbz, tlz4, txz, tzlma, tsz, tzst sz, zst, rar]
+    | each { ouch decompress $in.name })
+}
 
 export def "my wezterm logs" [] {
   if $nu.os-info.name == "linux" {
