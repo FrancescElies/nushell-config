@@ -74,6 +74,19 @@ export def "gbranches" [first: int = 5] { ^git branch --sort=-committerdate | li
 # -------
 export alias gd = ^git diff
 export alias gds = ^git diff --staged
+# Yield remote branches like `origin/main`, `upstream/feature-a`
+def "nu-complete git remote branches with prefix" [] {
+    {
+        options: { completion_algorithm: fuzzy, case_sensitive: false, positional: false, sort: true, },
+        completions: ( ^git branch --no-color -r | lines | parse -r '^\*?(\s*|\s*\S* -> )(?P<branch>\S*$)' | get branch | uniq )
+    }
+}
+# gd-merge-base
+export def gdmb [
+  rev1: string@"nu-complete git remote branches with prefix"
+  rev2: string@"nu-complete git remote branches with prefix"
+] { ^git diff $rev1 (git merge-base $rev1 $rev2) }
+
 export alias ged = ^git difft
 export alias geds = ^git difft --staged
 export alias ga = ^git add

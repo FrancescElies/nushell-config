@@ -56,3 +56,6 @@ export def "rust links" [] {
         [associated-types     https://gavinleroy.com/writings/i-heart-assoc-types.html]
     ]
 }
+
+export def --wrapped "rust proc-macro expand" [...rest ] { cargo expand ...$rest }
+export def --wrapped "rust proc-macro backtrace" [...rest ] { RUSTFLAGS="-Z proc-macro-backtrace" cargo +nightly ...$rest }

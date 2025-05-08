@@ -1,9 +1,11 @@
 
 # Pull requests
 
-export def "pr diff" [path: path = .] {
+export def "pr diff" [
+  --target-branch: string = "origin/master"  # pr's target branch (normally main, master, ...)
+] {
   let this_branch = (git rev-parse --abbrev-ref HEAD)
-  git diff $this_branch ( git merge-base $this_branch origin/master )
+  git diff $this_branch ( git merge-base $this_branch $target_branch )
 }
 
 # opens files modified by pr in nvim
