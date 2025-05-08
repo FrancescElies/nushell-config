@@ -62,7 +62,7 @@ export def "my wezterm logs" [] {
 }
 
 export def "my time-today" [] {
-    use ~/.venv/Scripts/activate.nu
+    cd ~
     python ~/src/nushell-config/src/time_spent_today.py
 }
 
