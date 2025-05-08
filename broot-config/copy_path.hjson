@@ -1,0 +1,11 @@
+verbs: [
+  {
+      invocation: "ok"
+      key: "enter"
+      leave_broot: false
+      execution: ":copy_path"
+      apply_to: "file"
+  }
+  { key: "ctrl-r", execution: ":focus {initial-root}" }
+  { key: "ctrl-up", internal: ":focus .." }
+]

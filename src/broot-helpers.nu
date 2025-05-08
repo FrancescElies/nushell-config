@@ -10,14 +10,15 @@ export def --env brd [] {
 export alias d = brd
 
 # select a file with broot and print to stdout e.g. `bat (bo)`
-export def --wrapped bro [ path?: path ...rest ] {
+export def --wrapped bro [ path: path = "." ...rest ] {
     ^broot --conf ~/src/nushell-config/broot-config/select.hjson $path ...$rest
 }
 
 # broot + clip: select file path add it's path to clipboard
-export def --wrapped brip [ path?: path ...rest ] {
-    bro $path ...$rest | clip
+export def --wrapped brclip [ path: path = "." ...rest ] {
+    ^broot --conf ~\src\nushell-config\broot-config\copy_path.hjson $path ...$rest
 }
+export alias brip = brclip
 
 # print tree of folder with broot
 export def bree --wrapped [path: path = . ...rest] { ^broot -c :pt $path ...$rest }
