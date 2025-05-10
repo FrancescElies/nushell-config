@@ -234,6 +234,49 @@ $env.config.keybindings = [
            cmd: "cd (^broot --only-folders --conf ~/src/nushell-config/broot-config/selectdir.hjson)"
          }
    }
+   {
+       # nu_scripts/custom-menus/fuzzy/modules.nu
+       name: fuzzy_module
+       modifier: control
+       keycode: char_u
+       mode: [emacs, vi_normal, vi_insert]
+       event: {
+           send: executehostcommand
+           cmd: '
+               commandline edit --replace "use "
+               commandline edit --insert (
+                   $env.NU_LIB_DIRS
+                   | each {|dir|
+                       ls ($dir | path join "**" "*.nu")
+                       | get name
+                       | str replace $dir ""
+                       | str trim -c "/"
+                   }
+                   | flatten
+                   | input list --fuzzy
+                       $"Please choose a (ansi magenta)module(ansi reset) to (ansi cyan_underline)load(ansi reset):"
+               )
+           '
+       }
+   }
+   {
+       # nu_scripts/custom-menus/fuzzy/history.nu
+       name: fuzzy_history
+       modifier: control
+       keycode: char_h
+       mode: [emacs, vi_normal, vi_insert]
+       event: {
+           send: executehostcommand
+           cmd: "commandline edit --insert (
+           history
+           | each { |it| $it.command }
+           | uniq
+           | reverse
+           | input list --fuzzy
+           $'Please choose a (ansi magenta)command from history(ansi reset):'
+           )"
+       }
+   }
 ]
 
 print $"(ansi pi)ctrl(ansi reset): [(ansi pi)s(ansi reset)]earch path, insert [(ansi pi)a(ansi reset)]bsolute [(ansi pi)f(ansi reset)]ile, [(ansi pi)j(ansi reset)]ump, go [(ansi pi)u(ansi reset)]p, [(ansi pi)space(ansi reset)] expand"
