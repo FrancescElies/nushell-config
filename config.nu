@@ -47,6 +47,7 @@ use ~/src/nushell-config/src/neovim.nu *
 use ~/src/nushell-config/src/parse-help.nu *
 use ~/src/nushell-config/src/process.nu *
 use ~/src/nushell-config/src/pueue-completions.nu *
+use ~/src/nushell-config/src/pytest-completions.nu *
 use ~/src/nushell-config/src/reverse-eng.nu *
 use ~/src/nushell-config/src/rg-completions.nu *
 use ~/src/nushell-config/src/rust.nu *
