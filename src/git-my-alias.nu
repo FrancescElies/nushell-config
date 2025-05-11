@@ -192,7 +192,7 @@ export alias cdroot = groot
 # We also add the --window-memory limit of 1 gig, which helps protect
 # us from a window that has very large objects such as binary blobs.
 #
-export def "grepack-repos" [
+export def "git repack-repos" [
   path: path = .
   --prune
 ] {
@@ -206,20 +206,21 @@ export def "grepack-repos" [
         ^git repack -a -d -f --depth=300 --window=300 --window-memory=1g
     }
 }
-export alias grepack = ^git repack-repos
+export alias grepack = git repack-repos
 
-# Delete ^git merged branches (loal and remote)
-export def "ggone" [] {
-    ^git branch -vl
-      | lines
-      | split column " " BranchName Hash Status --collapse-empty
-      | where Status == '[gone]'
-      | each { |it| ^git branch -D $it.BranchName }
+# Delete ^git merged branches (local and remote)
+export def "git gone" [remote: string = 'origin'] {
+    let branches = git branch --merged | lines | where ($it != "* master" and $it != "* main") | str trim
+    $branches | each {git branch -D ($in ) }
+
+    if (input $"(ansi pb)Do you want to delete remote branches too [y/n](ansi reset)?" | str downcase) == "y" {
+        $branches | each {git push $remote --delete $in }
+    }
 }
-export alias ggone = ^git gone
+export alias ggone = git gone
 
 #  View ^git committer activity as a histogram
-export def "gactivity" [
+export def "git activity" [
   path: path = .  # e.g. '*.rs', ./src ...
   --since: string = '1 year ago'
 ] {
@@ -230,7 +231,7 @@ export def "gactivity" [
   | sort-by merger
   | reverse
 }
-export alias gactivity = ^git activity
+export alias gactivity = git activity
 
 
 # https://stackoverflow.com/questions/46704572/git-error-encountered-7-files-that-should-have-been-pointers-but-werent
