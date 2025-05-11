@@ -136,10 +136,12 @@ export def "my ip" [] {
 # which apps do I have
 export def "my apps" [] {
   let venv_pkgs = (python -c `from importlib.metadata import entry_points; print('\n'.join(x.name for x in entry_points()['console_scripts']))` | lines)
-  let bin_pkgs = (ls ~/bin/**/* | where type == file | get name)
-  let cargo_bin_pkgs = (ls ~/.cargo/bin/* | where type == file | get name)
-  let go_bin_pkgs = (ls ~/go/bin/* | where type == file | get name)
-  return ($venv_pkgs | append $bin_pkgs | append $cargo_bin_pkgs | append $go_bin_pkgs)
+  let bin_pkgs = (try {ls ~/bin/**/*} catch {[]} | where type == file | get name)
+  let cargo_bin_pkgs = (try {ls ~/.cargo/bin/*} catch {[]} | where type == file | get name)
+  let go_bin_pkgs = (try {ls ~/go/bin/*} catch {[]} | where type == file | get name)
+  return ($venv_pkgs | append $bin_pkgs | append $cargo_bin_pkgs | append $go_bin_pkgs
+        | path parse | flatten | move stem --first | move extension --after stem
+    )
 }
 
 def "my compiler-flags" [] {
