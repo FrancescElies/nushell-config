@@ -23,7 +23,7 @@ export alias psn = ps name
 
 # get the counts of the multiset processes
 export def "ps count" [] {
-    ps | get name | uniq --count | sort-by count name
+    ps | get name | uniq --count | sort-by count | rename name count
 }
 export alias psc = ps count
 
