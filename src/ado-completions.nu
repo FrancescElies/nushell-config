@@ -34,6 +34,14 @@ export module ado {
         $db | to json | save -f $dbfile
     }
 
+    # review a pr on a separate folder
+    export def "worktree review-pr" [ branch: string ] {
+        let startingat = $"origin/($branch)"
+        let path = $branch | str replace "/" "--" | str replace " " "-"
+        print $"(ansi pb)git worktree add -B ($branch) ($path) ($startingat)(ansi reset)"
+        git worktree add -B $branch ('..' | path join $path) $startingat
+    }
+
     # git worktree add - convenience wrapper
     export def "worktree add" [
         branch: string # branch to create or checkout, e.g. cesc/1234-my-description
