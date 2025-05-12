@@ -100,13 +100,13 @@ export alias gsl = ^git log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset
 export alias gblame = ^git blame -w -C -C -C
 # ^git log
 alias gl_ = ^git log --graph --pretty=format:'%C(auto)%h -%d %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+export alias gla = gl_ --all
+export alias gl = gl_ -n5
 export alias gl5 = gl_ -n5
 export alias gl9 = gl_ -n9
 # ^git log with blame a little: glL :FunctionName:path/to/file, glL 15,26:path/to/file
 export alias glL = ^git log -L
 # ^git log all
-export alias glol = ^git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-export alias glola = ^git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --all
 # ^git fetch all, prune remote branches
 export alias gf = ^git fetch
 export alias gfa = ^git fetch --all --prune
