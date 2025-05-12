@@ -44,9 +44,7 @@ export module "my config" {
         $config_repos | each {
             cd $in
             print $"(ansi pb)($in)(ansi reset)"
-            ^git stash
             ^git pull
-            ^git stash pop | complete
         }
     }
 
