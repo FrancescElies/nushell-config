@@ -33,8 +33,6 @@ def "nu-complete list-process-names" [] { ps | get name | sort | uniq }
 export def "ps kill-name" [name: string@"nu-complete list-process-names"] {
     let procs = ps | find --ignore-case --columns [name] $name | sort-by -in name
     print $procs
-    if (input $"(ansi pb)Do you want to kill processes above [y/n](ansi reset)?" | str downcase) == "y" {
-        $procs | each { try { kill -f $in.pid } }
-    }
+    $procs | each { try { kill -f $in.pid } }
 }
 export alias killn = ps kill-name
