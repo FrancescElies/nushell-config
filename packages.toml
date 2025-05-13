@@ -20,6 +20,7 @@ python-benedict = "dict subclass with keylist/keypath support, built-in I/O oper
 coreutils = "Cross-platform rewrite of GNU coreutils"
 # caliguda = "nicer dd replacement, burning tool"
 bat = "cat clone"
+toastify = "cli tool that shows desktop notifications using notify-rust"
 # mdcat = "cat for markdown"
 bandwhich = "display current network utilization by process, connection and remote host"
 starship = "cross-shell prompt"

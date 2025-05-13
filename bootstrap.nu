@@ -2,14 +2,16 @@ use src/symlinks.nu symlink
 use src/utils.nu ask_yes_no
 
 
-export def main [] {
-    mkdir ~/src/work
-    mkdir ~/src/oss
+def config-pueue [] {
+    let config_dir = match $nu.os-info.name {
+        "windows" => '~\AppData\Roaming\pueue' ,
+        "macos" => '~/Library/Application Support/pueue' ,
+        _ => "~/.config/pueue." ,
+    }
+    symlink --force ~/src/nushell-config/config/pueue/ $config_dir
+}
 
-    # yt-dlp
-    let yt_dlp = "~/bin/yt-dlp" | path expand
-    if (not ($yt_dlp | path exists)) { http get https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp | save -f $yt_dlp }
-
+def config-broot-bacon [] {
     # broot
     let broot_config_dir = match $nu.os-info.name {
         "windows" => '~\AppData\Roaming\dystroy\broot' ,
@@ -26,6 +28,18 @@ export def main [] {
     }
     if not ($bacon_config_dir | path exists) { mkdir $bacon_config_dir }
     symlink --force ~/src/nushell-config/bacon-config $bacon_config_dir
+}
+
+export def main [] {
+    mkdir ~/src/work
+    mkdir ~/src/oss
+
+    # yt-dlp
+    let yt_dlp = "~/bin/yt-dlp" | path expand
+    if (not ($yt_dlp | path exists)) { http get https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp | save -f $yt_dlp }
+
+    config-broot-bacon
+    config-pueue
 
     # uv
     if (which ^uv | is-empty ) {

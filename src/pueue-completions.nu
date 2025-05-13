@@ -1,14 +1,8 @@
 module completions {
 
   export alias q = pueue
-
-  # pueued --daemonize
-  export def qd [] {
-    match $nu.os-info.name {
-        "windows" => { ^start /min pueued },
-        _ => { pueued -d },
-    }
-  }
+  # pueued: add --daemonize(-d) to send it to background
+  export alias qd = pueued -c ('~/src/nushell-config/config/pueue/pueue.yml' | path expand)
 
   def "nu-complete pueue color" [] {
     [ "auto" "never" "always" ]
