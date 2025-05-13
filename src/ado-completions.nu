@@ -35,7 +35,7 @@ export module ado {
     }
 
     # review a pr on a separate folder
-    export def "worktree review-pr" [ branch: string ] {
+    export def "pr review" [ branch: string ] {
         let startingat = $"origin/($branch)"
         let path = $branch | str replace "/" "--" | str replace " " "-"
         print $"(ansi pb)git worktree add -B ($branch) ($path) ($startingat)(ansi reset)"
@@ -261,10 +261,21 @@ export module ado {
     }
 
     # list my pull requests
+    export def "list prs" [] {
+        let my_query = "[].{title: title, createdby: createdBy.displayName, reviewers: reviewers, status: status, repo: repository.name, id: pullRequestId, draft: isDraft }"
+        let prs = az repos pr list -ojson --query $my_query | from json | select id status createdby reviewers title draft
+        $prs | insert ci-status {
+            pr status $in.id
+            | select status title type | sort-by type status
+            | update cells -c [status] { $in | str replace approved ✅| str replace running 👟| str replace queued ⏳| str replace rejected ❌ }
+        }
+    }
+
+    # list my pull requests
     export def "list my prs" [--draft] {
-    let my_query = "[].{title: title, createdby: createdBy.displayName, status: status, repo: repository.name, id: pullRequestId, draft: isDraft }"
-    let prs = az repos pr list -ojson --query $my_query | from json | where createdby =~ "Francesc" | select id status title draft
-    let prs = if $draft { $prs | where draft } else { $prs | where not draft }
+        let my_query = "[].{title: title, createdby: createdBy.displayName, reviewers: reviewers, status: status, repo: repository.name, id: pullRequestId, draft: isDraft }"
+        let prs = az repos pr list -ojson --query $my_query | from json | where createdby =~ "Francesc" | select id status title draft
+        let prs = if $draft { $prs | where draft } else { $prs | where not draft }
         $prs | insert ci-status {
             pr status $in.id
             | select status title type | sort-by type status
