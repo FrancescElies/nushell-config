@@ -101,6 +101,7 @@ export alias gblame = ^git blame -w -C -C -C
 # ^git log
 alias gl_ = ^git log --graph --pretty=format:'%C(auto)%h -%d %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 export alias gla = gl_ --all
+export alias gla20 = gl_ --all -n20
 export alias gl = gl_ -n5
 export alias gl5 = gl_ -n5
 export alias gl9 = gl_ -n9
