@@ -247,7 +247,7 @@ $env.config.keybindings = [
         mode: [emacs, vi_normal, vi_insert]
         event: {
            send: executehostcommand,
-           cmd: ' cd ("~/src" | path expand | path join ( nu-complete projects | get completions | input list --fuzzy $"Goto (ansi mu)project(ansi reset):") ); br '
+           cmd: ' cd ("~/src" | path expand | path join ( nu-complete projects | get completions | input list --fuzzy $"Goto (ansi mu)project(ansi reset):") )'
         }
    }
    {
