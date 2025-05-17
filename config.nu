@@ -221,16 +221,6 @@ $env.config.keybindings = [
          }
     }
     {
-         name: List_files
-         modifier: control
-         keycode: char_l
-         mode: [emacs, vi_normal, vi_insert]
-         event: {
-           send: executehostcommand,
-           cmd: "print ''; lsg"
-         }
-    }
-    {
          name: Jump_to_directory
          modifier: control
          keycode: char_j
