@@ -98,12 +98,11 @@ export alias gsl = ^git log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset
 # ^git blame ignore whitespace, deted lines moved/copied, or any commit
 export alias gblame = ^git blame -w -C -C -C
 # ^git log
-alias gl_ = ^git log --graph --pretty=format:'%C(auto)%h -%d %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-export alias gla = gl_ --all
-export alias gla20 = gl_ --all -n20
-export alias gl = gl_ -n5
-export alias gl5 = gl_ -n5
-export alias gl9 = gl_ -n9
+export alias gl = ^git log --graph --pretty=format:'%C(auto)%h -%d %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+export alias gla = gl --all
+export alias gla20 = gl --all -n20
+export alias gl5 = gl -n5
+export alias gl9 = gl -n9
 # ^git log with blame a little: glL :FunctionName:path/to/file, glL 15,26:path/to/file
 export alias glL = ^git log -L
 # ^git log all
