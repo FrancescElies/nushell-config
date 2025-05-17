@@ -8,4 +8,6 @@ verbs: [
   }
   { key: "ctrl-r", execution: ":focus {initial-root}" }
   { key: "ctrl-up", internal: ":focus .." }
+  { key: "ctrl-p", execution: ":previous_match" }
+  { key: "ctrl-n", execution: ":next_match" }
 ]
