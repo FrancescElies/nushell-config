@@ -18,7 +18,7 @@
 # ^git maintenance start
 
 # apply my defaults
-export def "my set git-defaults" [] {
+export def "git set my-defaults" [] {
   # https://jvns.ca/blog/2024/02/16/popular-git-config-options/#help-autocorrect-10
   ^git config --global push.autosetupremote true
   ^git config --global init.defaultBranch main
@@ -60,6 +60,7 @@ export def "my set git-defaults" [] {
   ^git config --global core.untrackedcache true
   ^git config --global core.fsmonitor true
 }
+export alias gsetmydefaults = git set my-defaults
 
 # edit .gitignore
 export def "gig" [] { nvim $"(git rev-parse --show-toplevel)/.gitignore" }
@@ -70,8 +71,6 @@ export def --wrapped "git difft" [...rest] { with-env {GIT_EXTERNAL_DIFF: difft}
 # list git branches sorted by date
 export def "gbranches" [first: int = 5] { ^git branch --sort=-committerdate | lines | first $first }
 
-# aliases
-# -------
 export alias gd = ^git diff
 export alias gds = ^git diff --staged
 # Yield remote branches like `origin/main`, `upstream/feature-a`
