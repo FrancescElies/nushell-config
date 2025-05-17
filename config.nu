@@ -227,7 +227,7 @@ $env.config.keybindings = [
          mode: [emacs, vi_normal, vi_insert]
          event: {
            send: executehostcommand,
-           cmd: "lsg"
+           cmd: "print ''; lsg"
          }
     }
     {
