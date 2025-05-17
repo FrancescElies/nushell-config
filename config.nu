@@ -113,11 +113,6 @@ $env.config.hooks.env_change = {
             ) }
             code: "overlay use env.nu"
         }
-        {
-            |before, after|
-                print (pwd);
-                if ((ls | length) < 15) { print (lsg) } else { print "folder has +15 files" }
-        }
         # windows activate venv
         {
             condition: {|before, after|
@@ -226,6 +221,16 @@ $env.config.keybindings = [
          }
     }
     {
+         name: List_files
+         modifier: control
+         keycode: char_l
+         mode: [emacs, vi_normal, vi_insert]
+         event: {
+           send: executehostcommand,
+           cmd: "lsg"
+         }
+    }
+    {
          name: Jump_to_directory
          modifier: control
          keycode: char_j
@@ -234,6 +239,16 @@ $env.config.keybindings = [
            send: executehostcommand,
            cmd: "cd (^broot --only-folders --conf ~/src/nushell-config/broot-config/selectdir.hjson)"
          }
+    }
+    {
+        name: goto_to_project
+        modifier: alt
+        keycode: char_p
+        mode: [emacs, vi_normal, vi_insert]
+        event: {
+           send: executehostcommand,
+           cmd: ' cd ("~/src" | path expand | path join ( nu-complete projects | get completions | input list --fuzzy $"Goto (ansi mu)project(ansi reset):") ); br '
+        }
    }
    {
        # nu_scripts/custom-menus/fuzzy/modules.nu
@@ -281,5 +296,17 @@ $env.config.keybindings = [
    # }
 ]
 
-print $"(ansi pi)ctrl(ansi reset): [(ansi pi)s(ansi reset)]earch path, insert [(ansi pi)a(ansi reset)]bsolute [(ansi pi)f(ansi reset)]ile, [(ansi pi)j(ansi reset)]ump, go [(ansi pi)u(ansi reset)]p, [(ansi pi)space(ansi reset)] expand"
+const ctrl_bindings = [
+    $"(ansi rb)s(ansi reset)earch path"
+    $"(ansi rb)a(ansi reset)bsolute (ansi rb)f(ansi reset)ile path"
+    $"(ansi rb)j(ansi reset)ump"
+    $"go (ansi rb)u(ansi reset)p"
+    $"(ansi rb)l(ansi reset)ist files"
+    $"(ansi rb)space(ansi reset) expand"
+]
+const alt_bindings = [
+    $"goto (ansi yb)p(ansi reset)roject"
+]
+print $"(ansi rb)ctrl(ansi reset): ($ctrl_bindings | str join ', ')"
+print $"(ansi yb)alt(ansi reset): ($alt_bindings | str join ', ')"
 

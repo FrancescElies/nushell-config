@@ -2,7 +2,7 @@
 export alias ex = explore
 export alias ll = ls -l
 
-def "nu-complete projects" [] {
+export def "nu-complete projects" [] {
     {
         options: { completion_algorithm: fuzzy, case_sensitive: false, positional: false, sort: true, },
         completions: (
