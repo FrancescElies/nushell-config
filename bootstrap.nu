@@ -34,6 +34,8 @@ export def main [] {
     mkdir ~/src/work
     mkdir ~/src/oss
 
+    symlink --force ~/src/nushell-config/.inputrc ~/.inputrc
+
     # yt-dlp
     let yt_dlp = "~/bin/yt-dlp" | path expand
     if (not ($yt_dlp | path exists)) { http get https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp | save -f $yt_dlp }
