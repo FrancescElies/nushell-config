@@ -70,7 +70,7 @@ use ~/src/nushell-config/src/zig.nu *
 
 # https://www.nushell.sh/blog/2024-12-04-configuration_preview.html
 #
-# Finding overriden values
+# Finding overridden values
 #
 # let defaults = nu -n -c "$env.config = {}; $env.config | reject color_config keybindings menus | to nuon" | from nuon | transpose key default
 # let current = $env.config | reject color_config keybindings menus | transpose key current
@@ -181,16 +181,6 @@ $env.config.keybindings = [
         ]
     }
     {
-         name: find_file_with_Broot
-         modifier: control
-         keycode: char_s
-         mode: [emacs, vi_normal, vi_insert]
-         event: {
-           send: executehostcommand,
-           cmd: "br"
-         }
-    }
-    {
          name: insert_absolute_File_with_Broot
          modifier: control
          keycode: char_a
@@ -229,6 +219,30 @@ $env.config.keybindings = [
            send: executehostcommand,
            cmd: "cd (^broot --only-folders --conf ~/src/nushell-config/broot-config/selectdir.hjson)"
          }
+    }
+    {
+         name: Jump_to_directory
+         modifier: control
+         keycode: char_j
+         mode: [emacs, vi_normal, vi_insert]
+         event: {
+           send: executehostcommand,
+           cmd: "cd (^broot --only-folders --conf ~/src/nushell-config/broot-config/selectdir.hjson)"
+         }
+    }
+    {
+        name: open_editor
+        modifier: alt
+        keycode: char_e
+        mode: [emacs, vi_normal, vi_insert]
+        event: { send: executehostcommand, cmd: 'nvim' }
+    }
+    {
+        name: open_editor
+        modifier: alt
+        keycode: char_b
+        mode: [emacs, vi_normal, vi_insert]
+        event: { send: executehostcommand, cmd: 'br' }
     }
     {
         name: goto_to_project
@@ -287,16 +301,16 @@ $env.config.keybindings = [
 ]
 
 const ctrl_bindings = [
-    $"(ansi rb)s(ansi reset)earch path"
-    $"(ansi rb)a(ansi reset)bsolute (ansi rb)f(ansi reset)ile path"
+    $"insert (ansi rb)a(ansi reset)bsolute (ansi rb)f(ansi reset)ile path"
     $"(ansi rb)j(ansi reset)ump"
-    $"go (ansi rb)u(ansi reset)p"
-    $"(ansi rb)l(ansi reset)ist files"
-    $"(ansi rb)space(ansi reset) expand"
+    $"(ansi rb)u(ansi reset)se \(fuzzy\)"
+    $"(ansi rb)space(ansi reset) \(expands alias\)"
 ]
 const alt_bindings = [
-    $"goto (ansi yb)p(ansi reset)roject"
+    $"(ansi yb)p(ansi reset)roject"
+    $"open (ansi yb)e(ansi reset)ditor"
+    $"(ansi yb)b(ansi reset)root"
 ]
 print $"(ansi rb)ctrl(ansi reset): ($ctrl_bindings | str join ', ')"
-print $"(ansi yb)alt(ansi reset): ($alt_bindings | str join ', ')"
+print $"(ansi yb)alt(ansi reset): open ($alt_bindings | str join ', ')"
 
