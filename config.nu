@@ -311,6 +311,7 @@ const alt_bindings = [
     $"open (ansi yb)e(ansi reset)ditor"
     $"(ansi yb)b(ansi reset)root"
 ]
+print $"(ansi defb)ctrl-i(ansi reset): (ansi defr)TAB(ansi reset), (ansi defb)ctrl-m(ansi reset): (ansi defr)ENTER(ansi reset), (ansi defb)ctrl-[(ansi reset): (ansi defr)ESC(ansi reset)"
 print $"(ansi rb)ctrl(ansi reset): ($ctrl_bindings | str join ', ')"
 print $"(ansi yb)alt(ansi reset): open ($alt_bindings | str join ', ')"
 
