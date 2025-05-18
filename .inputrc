@@ -1,4 +1,5 @@
 # Settings in this file affect all programs that use the GNU readline library, e.g. bash, zsh ...
+# https://www.topbug.net/blog/2017/07/31/inputrc-for-humans/
 #
 # Allow up/down autocompletion of commands from bash history.
 # From: coderwall.com/p/oqtj8w
