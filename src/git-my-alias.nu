@@ -143,8 +143,15 @@ export def gpull [--upstream(-u): string = "origin"] {
   ^git pull --set-upstream $upstream (git rev-parse --abbrev-ref HEAD)
 }
 
+# current branch
+export alias gb = git rev-parse --abbrev-ref HEAD
 export alias grb = ^git rebase
 export alias grbi = ^git rebase --interactive
+export alias grbi = ^git rebase --interactive
+# git rebase merge base
+export def grbimb [ rev: string@"nu-complete git remote branches with prefix" ] {
+    ^git rebase --interactive (git merge-base (git rev-parse --abbrev-ref HEAD) $rev )
+}
 export alias grba = ^git rebase --abort
 export alias grbc = ^git rebase --continue
 
