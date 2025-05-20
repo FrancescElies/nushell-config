@@ -45,6 +45,7 @@ use ~/src/nushell-config/src/my-configs.nu *
 use ~/src/nushell-config/src/my-functions.nu *
 use ~/src/nushell-config/src/neovim.nu *
 use ~/src/nushell-config/src/nupass.nu *
+use ~/src/nushell-config/src/ouch-completions.nu *
 use ~/src/nushell-config/src/parse-help.nu *
 use ~/src/nushell-config/src/process.nu *
 use ~/src/nushell-config/src/pueue-completions.nu *
