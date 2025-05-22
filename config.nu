@@ -26,6 +26,7 @@ use ~/src/nushell-config/src/btm-completions.nu *
 use ~/src/nushell-config/src/cargo-completions.nu *
 use ~/src/nushell-config/src/clipboard.nu *
 use ~/src/nushell-config/src/docs.nu *
+use ~/src/nushell-config/src/fd-completions.nu *
 use ~/src/nushell-config/src/fix.nu *
 use ~/src/nushell-config/src/flamegraph-completions.nu *
 use ~/src/nushell-config/src/fnm.nu *
