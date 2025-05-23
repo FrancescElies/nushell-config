@@ -254,12 +254,12 @@ preview_transformers: [
         command: [ "gron" ]
     }
 
-    {
-        input_extensions: [ "md" ]
-        output_extension: md
-        mode: text
-        command: [ "mdcat --ansi" ]
-    }
+    //{
+    //    input_extensions: [ "md" ]
+    //    output_extension: md
+    //    mode: text
+    //    command: [ "mdcat --ansi" ]
+    //}
 ]
 
 ###############################################################
