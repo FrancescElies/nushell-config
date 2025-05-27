@@ -74,6 +74,8 @@ export module image {
 
 }
 
+export alias "pdf gettext" = pymupdf gettext
+
 # reduces pdf size using gs
 export def "pdf shrink" [
     infile: path, # a pdf file
