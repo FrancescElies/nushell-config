@@ -1,4 +1,4 @@
-export def --env "fnm-setup" [] {
+export def --env "my node fnm-setup" [] {
   use std "path add"
   if not (which fnm | is-empty) {
     ^fnm env --json | from json | load-env
