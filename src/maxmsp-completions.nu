@@ -15,6 +15,7 @@ const maxmsp = if $nu.os-info.name == "windows" {
 
 # Cycling '74 Max cli wrap
 export def "Max start" [maxpat?: path] {
+    Max set no-crashrecovery
     if ($maxpat | is-empty) {
         run-external $maxmsp
     } else {
@@ -27,11 +28,6 @@ export alias braxpat = br --cmd ".maxpat&t/"
 export alias broject = br --cmd "project&t/"
 export alias brataset = br --cmd ".xml&t/"
 
-# opens Max settings
-export def --env "Max settings" [] {
-  cd "~/AppData/Roaming/Cycling '74/Max 9/Settings"
-  br
-}
 
 # sets Max Audio Status
 export def "Max set audio-status" [] {
@@ -67,24 +63,26 @@ export def "Max preferences" [] {
 }
 
 # opens maxinterface.json
-export def "Max interface" [] {
-  nvim "C:/Program Files/Cycling '74/Max 9/resources/interfaces/maxinterface.json"
-}
+export def "Max interface" [] { nvim "C:/Program Files/Cycling '74/Max 9/resources/interfaces/maxinterface.json" }
+
+# br AppData Cycling '74
+export def --env "Max br" [] { cd "~/AppData/Roaming/Cycling '74"; br }
+
+# opens Max settings
+export def --env "Max br settings" [] { cd "~/AppData/Roaming/Cycling '74/Max 9/Settings"; br }
 
 # goes to Cycling '74/Logs, where .dmp files are
-export def --env "Max dumps" [] {
-  cd "~/AppData/Roaming/Cycling '74/Logs"
-  br
-}
+export def --env "Max br logs-and-dumps" [] { cd "~/AppData/Roaming/Cycling '74/Logs"; br }
+
+# opens Max 9 Packages folder
+export def --env "Max br packages" [] { cd "~/Documents/Max 9/Packages"; br }
+
 
 # show Max examples
-export def --env "Max examples" [] {
-  cd "~/src/oss/max-sdk/source"
-  br
-}
+export def --env "Max br examples" [] { cd "~/src/oss/max-sdk/source"; br }
 
 # opens Max's api
-export def "Max api" [] {
+export def "Max br api" [] {
   if not ("~/src/oss/max-sdk/source/max-sdk-base" | path exists) {
     mkdir ~/src/oss
     cd ~/src/oss
@@ -100,12 +98,6 @@ export def "Max latest-dump" [] {
   let latest_dump = (ls "~/AppData/Roaming/Cycling '74/Logs" | sort-by modified | last)
   print $"opening ($latest_dump.name)"
   start $latest_dump.name
-}
-
-# opens Max 9 Packages folder
-export def --env "Max packages" [] {
-  cd "~/Documents/Max 9/Packages"
-  br
 }
 
 export def "Max download-installers" [] {
