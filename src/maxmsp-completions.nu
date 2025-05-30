@@ -121,14 +121,17 @@ export def "Max preferences set logtosystemconsole" [] {
     | upsert preferences.logtosystemconsole 1
     | to json | save -f $maxpreferences
 }
+
 export def "Max preferences set node-logging" [] {
-    const filename = "node-for-max-log.txt"
-    print $"(ansi pb)> tspin ($filename)(ansi reset)"
+    const logname = "node-for-max-log.txt"
+    let logfolder = pwd
+    print $"(ansi pb)> tspin ($logname)(ansi reset)"
     open $maxpreferences | from json
-    | upsert preferences.n4m_debug_log_name $filename
+    | upsert preferences.n4m_debug_log_name $logname
     | upsert preferences.n4m_debug_log_enabled 1
-    | upsert preferences.n4m_debug_log_folder (pwd)
+    | upsert preferences.n4m_debug_log_folder $logfolder
     | to json | save -f $maxpreferences
+    return ($logfolder | path join $logname)
 }
 
 # greps for something max related in all known locations where something interesting might be found
