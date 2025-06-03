@@ -537,6 +537,7 @@ export extern "git merge" [
   --no-commit(-n)                                            # Apply changes without making any commit
   --signoff                                                  # Add Signed-off-by line to the commit message
   --ff                                                       # Fast-forward if possible
+  --squash
   --continue                                                 # Continue after resolving a conflict
   --abort                                                    # Abort resolving conflict and go back to original state
   --quit                                                     # Forget about the current merge in progress
