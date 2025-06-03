@@ -30,9 +30,11 @@ export alias psc = ps count
 def "nu-complete list-process-names" [] { ps | get name | sort | uniq }
 
 # kill specified process with substring
-export def "ps kill-name" [name: string@"nu-complete list-process-names"] {
-    let procs = ps | find --ignore-case --columns [name] $name | sort-by -in name
-    print $procs
-    $procs | each { try { kill -f $in.pid } }
+export def "ps kill-name" [...names: string@"nu-complete list-process-names"] {
+    for name in $names {
+        let procs = ps | find --ignore-case --columns [name] $name | sort-by -in name
+        print $procs
+        $procs | each { try { kill -f $in.pid } }
+    }
 }
 export alias killn = ps kill-name
