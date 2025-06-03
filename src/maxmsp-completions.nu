@@ -12,8 +12,12 @@ const maxmsp = if $nu.os-info.name == "windows" {
     "not implemented"
 }
 
+def "nu-complete maxpats" [] { {
+    options: { completion_algorithm: fuzzy, case_sensitive: false, positional: false, sort: true, },
+    completions: ( ls **/*.max* | get name)
+} }
 # Cycling '74 Max cli wrap
-export def "Max start" [maxpat?: path] {
+export def "Max start" [maxpat?: path@"nu-complete maxpats"] {
     Max preferences set no-crashrecovery
     Max preferences set node-logging
     Max preferences set logtosystemconsole
@@ -22,6 +26,19 @@ export def "Max start" [maxpat?: path] {
     } else {
         run-external $maxmsp ($maxpat | path expand)
     }
+}
+
+def "nu-complete my-maxpats" [] { {
+    options: { completion_algorithm: fuzzy, case_sensitive: false, positional: false, sort: true, },
+    completions: ( ls ~/src/work/my-maxpats/**/*proj*maxpat | get name)
+} }
+# Cycling '74 Max cli wrap
+export def "Max start my" [maxpat: path@"nu-complete my-maxpats"] {
+    cd ~/src/work/my-maxpats
+    Max preferences set no-crashrecovery
+    Max preferences set node-logging
+    Max preferences set logtosystemconsole
+    run-external $maxmsp ( $maxpat | path expand )
 }
 
 # broot Max stuff
