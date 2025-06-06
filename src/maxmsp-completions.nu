@@ -182,3 +182,7 @@ export def "Max list available-objects" [] {
     )
     $alias | select name description | append $objects_without_alias
 }
+
+export def "Max list node-procs" [] {
+    ps --long | where name =~ node | where command =~ Max | select pid name cwd command
+}
