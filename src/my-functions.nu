@@ -8,6 +8,7 @@ export def "nu-complete projects" [] {
         completions: (
           ls ~/src
           | append (try {ls ~/src/work})
+          | append (try {ls ~/src/work/my-maxpats/*})
           | append (try {ls ~/src/work/*-worktrees/*})
           | append (try {ls ~/src/oss})
           | where type == dir | get name
