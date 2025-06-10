@@ -21,6 +21,10 @@ export def --env "my project" [project: string@"nu-complete projects"] { cd ('~/
 # cd into project
 export alias cdp = my project
 
+use std-rfc/iter recurse
+# something like gron
+export def gronu [] { $in | recurse | update item { to nuon } }
+
 export def "my todos" [] {
     mkdir ~/src/zettelkasten
     cd ~/src/zettelkasten
