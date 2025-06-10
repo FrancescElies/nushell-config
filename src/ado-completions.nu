@@ -180,7 +180,22 @@ export module ado {
         ) | from json
     }
 
-    export def "queue build" [ definition_id: int = 42 ] {
+    # Yield remote branches like `origin/main`, `upstream/feature-a`
+    def "nu-complete git remote branches" [] {
+      ^git branch --no-color -r | lines | parse -r '^\*?(\s*|\s*\S* -> )(?P<branch>\S*$)' | get branch | uniq | parse "{remote}/{branch_name}" | get branch_name
+    }
+
+    def "nu-complete pipeline-definitions" [] { [
+        [value description];
+        [42    pr]
+        [80    installer]
+    ] }
+
+
+    export def "queue build" [
+      branch: string@"nu-complete git remote branches"
+      definition_id: int@"nu-complete pipeline-definitions" = 42
+    ] {
         az pipelines build queue --open --branch (git rev-parse --abbrev-ref HEAD) --definition-id $definition_id
     }
 
