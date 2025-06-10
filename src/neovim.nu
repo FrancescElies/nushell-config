@@ -3,10 +3,16 @@ export alias e = nvim
 # opens nvim in emergency mode (minimal defaults and no plugins)
 export alias ee = nvim -u ~/src/kickstart.nvim/minimal-vimrc.vim
 
-export def "nvim clean-swap" [] {
+export def "nvim clean shada" [] {
     match $nu.os-info.name {
         "windows" => { fd swp ~/AppData/Local/nvim-data/swap -x rm },
-        _ => { fd swp ~/.local/share/nvim/swap -x rm },
+        _ => { rm -rf ~/.local/state/nvim/shada },
+    }
+}
+export def "nvim clean swap" [] {
+    match $nu.os-info.name {
+        "windows" => { fd swp ~/AppData/Local/nvim-data/swap -x rm },
+        _ => { fd swp ~/.local/state/nvim/swap -x rm },
     }
 }
 

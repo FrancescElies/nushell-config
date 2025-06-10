@@ -21,6 +21,7 @@ python-benedict = "dict subclass with keylist/keypath support, built-in I/O oper
 aichat = "LLM CLI tool"
 coreutils = "Cross-platform rewrite of GNU coreutils"
 # caliguda = "nicer dd replacement, burning tool"
+himalaya = "cli mail tool"
 bat = "cat clone"
 toastify = "cli tool that shows desktop notifications using notify-rust"
 # mdcat = "cat for markdown"
@@ -50,13 +51,12 @@ ouch = "extract/compress files"
 # pastel = "generate, analyze, convert and manipulate colors"
 pgen = "passphrase generator"
 rustscan = "network scanner"
-# series = "rich git log graph" TODO: only unix
 tailspin = "log file highlighter"
 tealdeer = "TLDR client"
-trippy = "network diagnostic tool"
+# trippy = "network diagnostic tool"
 xh = "http requests"
 # hurl = "run HTTP requests defined in a simple plain text format"
-hwatch = "watch command"
+# hwatch = "watch command"
 
 [rust-dev-pkgs]
 # py-spy = "python sample profiler"
