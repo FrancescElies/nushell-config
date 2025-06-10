@@ -7,6 +7,7 @@ MechanicalSoup = "automate interaction with websites, (no Javascript, for js see
 frida-tools = "dynamic instrumentation toolkit for devs"
 magic-wormhole = "get things from one computer to another, safely"
 litecli = "CLI for SQLite Databases with auto-completion and syntax highlighting "
+elia-chat = "LLM CLI tool"
 ipython = "repl"
 img2pdf = "lossless conversion of rater images to pdf"
 honcho = "Foreman clone, manage Procfile apps"
@@ -17,6 +18,7 @@ yt-dlp = "audo video downloader"
 python-benedict = "dict subclass with keylist/keypath support, built-in I/O operations (base64, csv, html, ini, json, pickle, plist, query-string, toml, xls, xml, yaml), s3 support and many utilities."
 
 [rust-pkgs]
+aichat = "LLM CLI tool"
 coreutils = "Cross-platform rewrite of GNU coreutils"
 # caliguda = "nicer dd replacement, burning tool"
 bat = "cat clone"
