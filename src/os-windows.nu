@@ -113,7 +113,7 @@ export module win {
     def "nu-complete installed-pkgs" [] {
         ( open /tmp/installed-pkgs.txt | lines
             | each { $in | str trim }
-            | filter {not ($in | is-empty) } )
+            | where {not ($in | is-empty) } )
     }
 
     export def "msi refresh-list" [] { wmic product get name | save -f /tmp/installed-pkgs.txt }
@@ -190,7 +190,7 @@ export module win {
 
     export def "screen recordings to gif" [] {
         ( ls `~/Videos/Screen Recordings/*mp4` | get name | path parse
-            | filter {|x| not ($x.parent | path join $'($x.stem).gif' | path exists) }
+            | where {|x| not ($x.parent | path join $'($x.stem).gif' | path exists) }
             | par-each { |el| ffmpeg -i ($el.parent | path join $'($el.stem).($el.extension)') $"($el.parent | path join $el.stem).gif"} )
 
         start ('~/Videos/Screen Recordings' | path expand)

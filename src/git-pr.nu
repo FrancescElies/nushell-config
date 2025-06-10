@@ -19,7 +19,7 @@ export def "pr files" [
   if ($extension| is-empty) {
     $files
   } else {
-    let filtered_files = ( $files | filter { |x| ($x | path parse).extension == $extension} )
+    let filtered_files = ( $files | where { |x| ($x | path parse).extension == $extension} )
     $filtered_files
   }
 
@@ -48,7 +48,7 @@ export def "pr review-maxpats" [
     (git ls-files . --exclude-standard --others)
     | lines
     | path parse
-    | filter {|x| $x.extension == "maxpat"}
+    | where {|x| $x.extension == "maxpat"}
     | path join
   )
   print "untracked maxpats:"

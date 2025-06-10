@@ -131,7 +131,7 @@ export module ado {
         let work_items = ([
             ( $db | where name == $current_branch | get story.0 )
             ( $db | where name == $current_branch | get task.0 )
-        ] | filter { $in != 0})
+        ] | where { $in != 0})
 
         mut args = []
         if $draft { $args = ($args | append '--draft') }
@@ -155,7 +155,7 @@ export module ado {
     ] {
         let status = (
             az repos pr policy list --id $pr_id -ojson | from json
-            | filter {$in.configuration.isBlocking and $in.configuration.isEnabled}
+            | where {$in.configuration.isBlocking and $in.configuration.isEnabled}
             | select status context.isExpired? configuration.settings.displayName? configuration.type.displayName evaluationId
             | rename status expired            title                               type                           policy-id
             | sort-by status expired
@@ -203,9 +203,9 @@ export module ado {
         az pipelines runs artifact download --artifact-name Installer --path ~/Downloads --run-id $build_id
     }
 
-    export alias "filter-active-workitem" = filter { $in not-in ['Closed' 'Obsolete' Review 'Info Needed' Implemented] }
 
     # NOTE: https://learn.microsoft.com/en-us/azure/devops/boards/queries/wiql-syntax?view=azure-devops#where-clause
+    # active items ['Closed' 'Obsolete' Review 'Info Needed' Implemented] }
 
     def "board query" [wiql: string] {
         let table = az boards query --output table --wiql $wiql -o json
@@ -302,7 +302,7 @@ export module ado {
 
     export def "pr rejected-or-expired-policies" [ pr_id: number@"nu-complete pr-id" ] {
         ( az repos pr policy list --id $pr_id -ojson | from json
-            | filter {$in.configuration.isBlocking and $in.configuration.isEnabled}
+            | where {$in.configuration.isBlocking and $in.configuration.isEnabled}
             | select evaluationId configuration.type.displayName configuration.settings.displayName? status context.isExpired? context.buildId?
             | rename id           type                           title                               status expired            build-id
             | where type == Build
