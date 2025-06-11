@@ -83,31 +83,28 @@ export def "Max preferences" [] {
 # opens maxinterface.json
 export def "Max interface" [] { nvim "C:/Program Files/Cycling '74/Max 9/resources/interfaces/maxinterface.json" }
 
-# br AppData Cycling '74
-export def --env "Max br" [] { cd "~/AppData/Roaming/Cycling '74"; br }
+# AppData Cycling '74
+export def --env "Max appdata" [] { cd "~/AppData/Roaming/Cycling '74"; lsg }
 
 # opens Max settings
-export def --env "Max br settings" [] { cd "~/AppData/Roaming/Cycling '74/Max 9/Settings"; br }
+export def --env "Max settings" [] { cd "~/AppData/Roaming/Cycling '74/Max 9/Settings"; lsg }
 
 # goes to Cycling '74/Logs, where .dmp files are
-export def --env "Max br logs-and-dumps" [] { cd "~/AppData/Roaming/Cycling '74/Logs"; br }
+export def --env "Max logs-and-dumps" [] { cd "~/AppData/Roaming/Cycling '74/Logs"; lsg }
 
 # opens Max 9 Packages folder
-export def --env "Max br packages" [] { cd "~/Documents/Max 9/Packages"; br }
+export def --env "Max  packages" [] { cd "~/Documents/Max 9/Packages"; lsg }
 
 
 # show Max examples
-export def --env "Max br examples" [] { cd "~/src/oss/max-sdk/source"; br }
+export def --env "Max examples" [] { cd "~/src/oss/max-sdk/source"; lsg }
 
 # opens Max's api
-export def "Max br api" [] {
-    if not ("~/src/oss/max-sdk/source/max-sdk-base" | path exists) {
-        mkdir ~/src/oss
-        cd ~/src/oss
-        git clone https://github.com/Cycling74/max-sdk
-    }
-    cd "~/src/oss/max-sdk/source/max-sdk-base/c74support/max-includes"
-    br
+export def "Max api" [] {
+    let sdk_base = "~/src/oss/max-sdk/source/max-sdk-base"
+    if not ($sdk_base | path exists) { mkdircd ~/src/oss; git clone https://github.com/Cycling74/max-sdk }
+    cd ( $sdk_base | path join "c74support/max-includes" )
+    lsg
 }
 
 
