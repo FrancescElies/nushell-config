@@ -126,8 +126,9 @@ export alias gcpc = ^git cherry-pick --continue
 export alias gresethard = ^git reset --hard
 export alias guncommit = ^git reset --soft HEAD~1
 export alias gunadd = ^git reset HEAD
-# ^git clean into a pristine working directory (-ff removes untracked directories)
+# git clean: removes untracked, modifies untracked nested git repositories
 export alias gcleanest = ^git clean -dffx
+export alias gclean = ^git clean -df
 
 export def gpush [
   --upstream(-u): string = "origin"
