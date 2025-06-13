@@ -85,7 +85,7 @@ $env.SHELL = "nu"  # makes broot open nu
 $env.EDITOR = "nvim"
 $env.PYTHONUNBUFFERED = 1
 $env.PYTHONBREAKPOINT = "ipdb.set_trace"
-$env.RUST_BACKTRACE = 0
+$env.RUST_BACKTRACE = 1
 $env.RIPGREP_CONFIG_PATH  = ("~/src/nushell-config/src/.ripgreprc" | path expand)
 
 $env.BR_INSTALL = "no"
