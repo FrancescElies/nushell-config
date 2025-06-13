@@ -103,7 +103,7 @@ $env.config.cursor_shape = {
    vi_normal: block
  }
 
-$env.config.edit_mode = "vi" # emacs, vi
+$env.config.edit_mode = "emacs"
 
 $env.config.hooks.env_change = {
     PWD: [
