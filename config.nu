@@ -100,10 +100,10 @@ $env.config.cursor_shape = {
    # block, underscore, line, blink_block, blink_underscore, blink_line, inherit to skip setting cursor shape
    emacs: line
    vi_insert: line
-   vi_normal: block
+   vi_normal: underscore
  }
 
-$env.config.edit_mode = "emacs"
+$env.config.edit_mode = "vi"
 
 $env.config.hooks.env_change = {
     PWD: [
