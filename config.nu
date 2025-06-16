@@ -5,6 +5,8 @@
 # starship init nu | save -f ~/.cache/starship/init.nu
 use ~/.cache/starship/init.nu
 
+source ~/src/nushell-config/zoxide.nu
+
 source ~/src/nushell-config/src/os-this-machine.nu
 
 # cog -r config.nu
