@@ -56,6 +56,8 @@ tailspin = "log file highlighter"
 tealdeer = "TLDR client"
 # trippy = "network diagnostic tool"
 xh = "http requests"
+yazi-cli = "yazi cli"
+yazi-fm = "yazi file manager"
 # hurl = "run HTTP requests defined in a simple plain text format"
 # hwatch = "watch command"
 
