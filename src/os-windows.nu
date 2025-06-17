@@ -158,7 +158,7 @@ export module win {
     }
 
 
-    export alias dumps = broot --sort-by-date c:/dumps
+    export def "open last dump" [] { start (ls ('/dumps' | path expand) | sort-by modified | last | get name) }
 
     # https://lldb.llvm.org/use/tutorial.html, `br set -n myfunction` , wa set var ret
     export def "lldb attach-to-process" [process_name: string = "", processid: int = 0] {
