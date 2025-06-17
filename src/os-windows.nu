@@ -107,10 +107,14 @@ export module win {
     def "nu-complete list-process-names" [] { ps | get name | sort | uniq }
 
     #   Watches app for crashes
-    export def "procdump watch" [ app: string@"nu-complete list-process-names" ] {
+    export def "procdump watch" [
+        app: string@"nu-complete list-process-names"
+        --and-open
+    ] {
         loop {
             try {^procdump -accepteula -ma -e -w $app c:\dumps}
-            open last dump
+            if $and_open { open last dump }
+
         }
     }
 
