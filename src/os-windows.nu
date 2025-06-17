@@ -92,12 +92,27 @@ export module win {
     # https://learn.microsoft.com/en-us/sysinternals/downloads/procdump#using-procdump
     #
     # Examples:
+    #   Wait for App to start and create mem dump if it crashes
+    #   procdump -accepteula -ma -e -w Max.exe c:\dumps
+    #
     #   Install ProcDump as the (AeDebug) postmortem debugger:
-    #   procdump -ma -i c:\dumps
+    #   procdump -accepteula -ma -i c:\dumps
     #
     #   Uninstall ProcDump as the (AeDebug) postmortem debugger:
     #   procdump -u
     export extern "procdump" [ ...args: any ]
+    export def "procdump postmortem-debugger install" [] { ^procdump -accepteula -ma -i c:\dumps }
+    export def "procdump postmortem-debugger uninstall" [] { ^procdump -u }
+
+    def "nu-complete list-process-names" [] { ps | get name | sort | uniq }
+
+    #   Watches app for crashes
+    export def "procdump watch" [ app: string@"nu-complete list-process-names" ] {
+        loop {
+            try {^procdump -accepteula -ma -e -w $app c:\dumps}
+            open last dump
+        }
+    }
 
 
     # https://stackoverflow.com/questions/8560166/silent-installation-of-a-msi-package
