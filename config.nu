@@ -1,13 +1,5 @@
 # https://github.com/nushell/nushell/blob/main/crates/nu-utils/src/default_files/default_config.nu
 
-# cargo binstall starship
-# mkdir ~/.cache/starship
-# starship init nu | save -f ~/.cache/starship/init.nu
-use ~/.cache/starship/init.nu
-
-source ~/src/nushell-config/zoxide.nu
-
-source ~/src/nushell-config/src/os-this-machine.nu
 
 # cog -r config.nu
 #
@@ -303,6 +295,14 @@ $env.config.keybindings = [
    #     }
    # }
 ]
+
+# cargo binstall starship
+# mkdir ~/.cache/starship
+# starship init nu | save -f ~/.cache/starship/init.nu
+use ~/.cache/starship/init.nu
+
+source ~/src/nushell-config/src/os-this-machine.nu
+source ~/src/nushell-config/zoxide.nu
 
 const ctrl_bindings = [
     $"insert (ansi rb)a(ansi reset)bsolute (ansi rb)f(ansi reset)ile path"
