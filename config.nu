@@ -299,7 +299,9 @@ $env.config.keybindings = [
 # cargo binstall starship
 # mkdir ~/.cache/starship
 # starship init nu | save -f ~/.cache/starship/init.nu
-use ~/.cache/starship/init.nu
+# mkdir ($nu.data-dir | path join "vendor/autoload")
+# starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")
+# https://starship.rs/guide/
 
 source ~/src/nushell-config/src/os-this-machine.nu
 source ~/src/nushell-config/zoxide.nu
