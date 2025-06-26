@@ -213,17 +213,7 @@ $env.config.keybindings = [
          mode: [emacs, vi_normal, vi_insert]
          event: {
            send: executehostcommand,
-           cmd: "cd (^broot --only-folders --conf ~/src/nushell-config/broot-config/selectdir.hjson)"
-         }
-    }
-    {
-         name: Jump_to_directory
-         modifier: control
-         keycode: char_j
-         mode: [emacs, vi_normal, vi_insert]
-         event: {
-           send: executehostcommand,
-           cmd: "cd (^broot --only-folders --conf ~/src/nushell-config/broot-config/selectdir.hjson)"
+           cmd: "zi"
          }
     }
     {
