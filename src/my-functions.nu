@@ -21,6 +21,8 @@ export def --env "my project" [project: string@"nu-complete projects"] { cd ('~/
 # cd into project
 export alias cdp = my project
 
+export alias lg = lazygit
+
 use std-rfc/iter recurse
 # something like gron
 export def gronu [] { $in | recurse | update item { to nuon } }
