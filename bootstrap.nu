@@ -2,11 +2,21 @@ use src/symlinks.nu symlink
 use src/utils.nu ask_yes_no
 
 
+# broken on windows, using workaround
+# YAZI_CONFIG_HOME=~/src/nushell-config/config/yazi/
+def config-yazi [] {
+    let config_dir = match $nu.os-info.name {
+        "windows" => '~\AppData\Roaming\yazi' ,
+        _ => "~/.config/yazi" ,
+    }
+    symlink --force ~/src/nushell-config/config/yazi/ $config_dir
+}
+
 def config-pueue [] {
     let config_dir = match $nu.os-info.name {
         "windows" => '~\AppData\Roaming\pueue' ,
         "macos" => '~/Library/Application Support/pueue' ,
-        _ => "~/.config/pueue." ,
+        _ => "~/.config/pueue" ,
     }
     symlink --force ~/src/nushell-config/config/pueue/ $config_dir
 }
@@ -42,6 +52,7 @@ export def main [] {
 
     config-broot-bacon
     config-pueue
+    config-yazi
 
     # uv
     if (which ^uv | is-empty ) {

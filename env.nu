@@ -40,6 +40,9 @@ match $nu.os-info.name {
         path add ('/Program Files/CodeMeter/DevKit/bin' | path expand)
         path add ("/Program Files/Cycling '74/Max 9/" | path expand)
 
+        # HACK: appdata not read, `rg YAZI_CONFIG_HOME`
+        $env.YAZI_CONFIG_HOME = ("~/src/nushell-config/config/yazi/" | path expand)
+
         # const perl_dir = '~/src/oss/strawberry-perl-5.40.0.1-RC1-64bit-portable/strawberry-perl-5.40.0.1-RC1-64bit-portable/'
         # path add ($perl_dir | path join 'perl\site\bin' | path expand)
         # path add ($perl_dir | path join 'perl\bin' | path expand)
