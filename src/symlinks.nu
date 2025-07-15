@@ -13,8 +13,7 @@ export def symlink [
     mkdir ($new_link_name | path dirname)
 
     if ($force and ($new_link_name | path exists)) {
-       print $"Moving ($new_link_name) to trash"
-       rm --trash --recursive $new_link_name
+       rm --recursive $new_link_name
     }
 
     if $nu.os-info.family == 'windows' {
