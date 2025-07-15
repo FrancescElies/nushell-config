@@ -99,8 +99,26 @@ $env.config.cursor_shape = {
 
 $env.config.edit_mode = "vi"
 
+def "env-change pwd toolkit" [ --directory ] {
+    {
+        condition: (if $directory {
+            {|_, after| $after | path join 'toolkit' 'mod.nu' | path exists }
+        } else {
+            {|_, after| $after | path join 'toolkit.nu' | path exists }
+        })
+        code: ([
+            "print -n $'(ansi default_underline)(ansi default_bold)toolkit(ansi reset) module (ansi yellow_italic)detected(ansi reset)... '"
+            $"use (if $directory { 'toolkit/' } else { 'toolkit.nu' })"
+            "print $'(ansi green_bold)activated!(ansi reset)'"
+        ] | str join "\n")
+    }
+}
+
+
 $env.config.hooks.env_change = {
     PWD: [
+        (env-change pwd toolkit)
+        (env-change pwd toolkit --directory)
         {
             condition: { |_, after| (
                 ( (pwd | path basename) != "nushell-config" )
