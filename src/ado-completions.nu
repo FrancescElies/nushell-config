@@ -372,3 +372,9 @@ export module ado {
         }
     }
 }
+
+export def "my stories" [] {
+    ado list my stories | ado open workitems
+    ado list my tasks | ado open workitems
+}
+
