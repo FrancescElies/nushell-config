@@ -4,6 +4,13 @@ use src/utils.nu ask_yes_no
 
 # broken on windows, using workaround
 # YAZI_CONFIG_HOME=~/src/nushell-config/config/yazi/
+def config-glazewm [] {
+    let config_dir = '~/.glzr/glazewm'
+    symlink --force ~/src/nushell-config/config/glazewm/ $config_dir
+}
+
+# broken on windows, using workaround
+# YAZI_CONFIG_HOME=~/src/nushell-config/config/yazi/
 def config-yazi [] {
     let config_dir = match $nu.os-info.name {
         "windows" => '~\AppData\Roaming\yazi' ,
@@ -53,6 +60,9 @@ export def main [] {
     config-broot-bacon
     config-pueue
     config-yazi
+    if $nu.os-info.name == "windows" {
+        config-glazewm
+    }
 
     # uv
     if (which ^uv | is-empty ) {
