@@ -308,8 +308,9 @@ $env.config.keybindings = [
 # mkdir ~/.cache/starship
 # starship init nu | save -f ~/.cache/starship/init.nu
 # https://starship.rs/guide/
-mkdir ($nu.data-dir | path join "vendor/autoload")
-starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")
+#
+# mkdir ($nu.data-dir | path join "vendor/autoload")
+# starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")
 
 source ~/src/nushell-config/src/os-this-machine.nu
 source ~/src/nushell-config/zoxide.nu
