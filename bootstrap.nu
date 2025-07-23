@@ -9,6 +9,16 @@ def config-glazewm [] {
     symlink --force ~/src/nushell-config/config/glazewm/ $config_dir
 }
 
+def config-foot [] {
+    let config_dir = '~/.config/foot'
+    symlink --force ~/src/nushell-config/config/foot/ $config_dir
+}
+
+def config-sway [] {
+    let config_dir = '~/.config/sway'
+    symlink --force ~/src/nushell-config/config/sway/ $config_dir
+}
+
 # broken on windows, using workaround
 # YAZI_CONFIG_HOME=~/src/nushell-config/config/yazi/
 def config-yazi [] {
@@ -60,6 +70,10 @@ export def main [] {
     config-broot-bacon
     config-pueue
     config-yazi
+    if $nu.os-info.name == "linux" {
+        config-sway
+        config-foot
+    }
     if $nu.os-info.name == "windows" {
         config-glazewm
     }
