@@ -14,6 +14,7 @@ img2pdf = "lossless conversion of rater images to pdf"
 honcho = "Foreman clone, manage Procfile apps"
 ipdb = "better pdb"
 chardet = "character encoding detector"
+yake = "yet another keyword extractor (extract most important keywords from a document)"
 yt-dlp = "audo video downloader"
 # memray
 python-benedict = "dict subclass with keylist/keypath support, built-in I/O operations (base64, csv, html, ini, json, pickle, plist, query-string, toml, xls, xml, yaml), s3 support and many utilities."
