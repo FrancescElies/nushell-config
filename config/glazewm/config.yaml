@@ -131,6 +131,10 @@ workspaces:
   - name: '9'
 
 window_rules:
+  - commands: ["set-floating"]
+    match:
+      - window_process: { equals: "Flow.Launcher" }
+        window_title: { equals: "Settings" }
   - commands: ['ignore']
     match:
       # Ignores any Zebar windows.
@@ -208,8 +212,9 @@ keybindings:
     bindings: ['alt+v']
 
   # Change focus from tiling windows -> floating -> fullscreen.
-  - commands: ['wm-cycle-focus']
-    bindings: ['alt+space']
+  # conflicts with flow search
+  # - commands: ['wm-cycle-focus']
+  #   bindings: ['alt+space']
 
   # Change the focused window to be floating.
   - commands: ['toggle-floating --centered']
