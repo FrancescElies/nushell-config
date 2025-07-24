@@ -15,7 +15,7 @@ const maxmsp = if $nu.os-info.name == "windows" {
 
 def "nu-complete maxpats" [] { {
     options: { completion_algorithm: fuzzy, case_sensitive: false, positional: false, sort: true, },
-    completions: ( ls **/*.max* | get name)
+    completions: (fd maxpat | lines)
 } }
 # Cycling '74 Max cli wrap
 export def "Max start" [maxpat?: path@"nu-complete maxpats"] {
@@ -31,7 +31,7 @@ export def "Max start" [maxpat?: path@"nu-complete maxpats"] {
 
 def "nu-complete my-maxpats" [] { {
     options: { completion_algorithm: fuzzy, case_sensitive: false, positional: false, sort: true, },
-    completions: ( ls ~/src/work/my-maxpats/**/*proj*maxpat | get name)
+    completions: (fd maxpat ~/src/work/my-maxpats | lines)
 } }
 # Cycling '74 Max cli wrap
 export def "Max start my" [maxpat: path@"nu-complete my-maxpats"] {
