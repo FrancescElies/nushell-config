@@ -2,6 +2,7 @@ use broot-helpers.nu *
 use my-functions.nu *
 use reverse-eng.nu *
 use utils.nu *
+use process.nu pidof
 
 
 const maxmsp = if $nu.os-info.name == "windows" {
