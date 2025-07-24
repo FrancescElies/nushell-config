@@ -213,8 +213,8 @@ keybindings:
 
   # Change focus from tiling windows -> floating -> fullscreen.
   # conflicts with flow search
-  # - commands: ['wm-cycle-focus']
-  #   bindings: ['alt+space']
+  - commands: ['wm-cycle-focus']
+    bindings: ['alt+space']
 
   # Change the focused window to be floating.
   - commands: ['toggle-floating --centered']
@@ -253,6 +253,9 @@ keybindings:
   # Terminal and Git Bash respectively.
   - commands: ['shell-exec alacritty']
     bindings: ['alt+enter']
+
+  - commands: ['shell-exec flowsearch']
+    bindings: ['alt+d']
 
   # Focus the next/previous active workspace defined in `workspaces` config.
   - commands: ['focus --next-active-workspace']
