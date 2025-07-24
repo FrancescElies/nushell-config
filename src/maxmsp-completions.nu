@@ -162,8 +162,9 @@ export def "Max rg" [pattern: string] {
 # ripgrep Max stuff
 export alias "rg-max" = rg --type-add 'max:*.{maxhelp,maxpat,json}' -t max
 
-export def "Max list loaded-mxe64" [] { frida list modules-and-exports (pidof Max) | where dll =~ mxe64 }
-export def "Max list my-loaded-mxe64" [] { Max list loaded-mxe64 | where { $in.dll | str starts-with m. } }
+export def "Max list loaded-mxe64" [] {
+    frida -p (pidof Max) --eval 'Process.enumerateModules()' -q | from json | where ($it.name | str ends-with mxe64)
+}
 
 export def "Max list available-objects" [] {
     let alias = (
