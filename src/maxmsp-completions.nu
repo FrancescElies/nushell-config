@@ -23,8 +23,10 @@ export def "Max start" [maxpat?: path@"nu-complete maxpats"] {
     Max preferences set node-logging
     Max preferences set logtosystemconsole
     if ($maxpat | is-empty) {
+        print $"(ansi pb)> ($maxmsp)(ansi reset)"
         run-external $maxmsp
     } else {
+        print $"(ansi pb)> ($maxmsp) ($maxpat | path expand)(ansi reset)"
         run-external $maxmsp ($maxpat | path expand)
     }
 }
@@ -39,6 +41,7 @@ export def "Max start my" [maxpat: path@"nu-complete my-maxpats"] {
     Max preferences set no-crashrecovery
     Max preferences set node-logging
     Max preferences set logtosystemconsole
+    print $"(ansi pb)> ($maxmsp) ($maxpat | path expand)(ansi reset)"
     run-external $maxmsp ( $maxpat | path expand )
 }
 
