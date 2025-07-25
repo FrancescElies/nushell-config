@@ -95,6 +95,7 @@ $env.RIPGREP_CONFIG_PATH  = ("~/src/nushell-config/src/.ripgreprc" | path expand
 $env.BR_INSTALL = "no"
 $env.BROOT_CONFIG_DIR = ("~/src/nushell-config/broot-config" | path expand)
 
+$env.FZF_DEFAULT_COMMAND = "fd --type file --hidden"
 
 if $nu.os-info.name == "windows" {
     # cd ~/src/oss; git clone https://github.com/microsoft/vcpkg.git

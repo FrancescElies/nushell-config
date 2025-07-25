@@ -205,6 +205,39 @@ $env.config.keybindings = [
          }
     }
     {
+        name: fzf_dirs
+        modifier: control
+        keycode: char_y
+        mode: [emacs, vi_normal, vi_insert]
+        event: [
+          {
+            send: executehostcommand
+            cmd: "
+              let FZF_CTRL_Y_COMMAND = \$\"fd --type directory --hidden | fzf --preview 'tree -C {} | head -n 200'\";
+              let result = nu -n -c $FZF_CTRL_Y_COMMAND;
+              cd $result;
+            "
+          }
+        ]
+    }
+    {
+        name: fzf_files
+        modifier: control
+        keycode: char_t
+        mode: [emacs, vi_normal, vi_insert]
+        event: [
+          {
+            send: executehostcommand
+            cmd: "
+              let fzf_ctrl_t_command = \$\"fd --type file --hidden | fzf --preview 'bat --color=always --style=full --line-range=:500 {}' \";
+              let result = nu -n -l -i -c $fzf_ctrl_t_command;
+              commandline edit --append $result;
+              commandline set-cursor --end
+            "
+          }
+        ]
+}
+    {
          name: insert_File_with_Broot
          modifier: control
          keycode: char_f
