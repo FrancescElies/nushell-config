@@ -65,6 +65,7 @@ fix-closed-laptop-lid-should-not-suspend:
 
 [unix]
 get-debian-pkgs: home-venv
+  ln -s  ~/.local/share/applications ("src/linux/gnome-apps" | path expand)
   sudo apt remove -y nano
   sudo apt install -y ...(open packages.toml | get debian | transpose | get column0)
   sudo systemctl enable syncthing@cesc.service
