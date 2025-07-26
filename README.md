@@ -1,5 +1,9 @@
 # nushell-config
 
+> [!NOTE]
+> [omakub](https://omakub.org/)
+> [nu-scripts](https://github.com/nushell/nu_scripts)
+
 ## Install
 Install [just](https://github.com/casey/just?tab=readme-ov-file#packages)
 `apt install just` or `dnf install just` or `winget install --silent --id Casey.Just`
