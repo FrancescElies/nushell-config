@@ -2,6 +2,14 @@
 export alias ex = explore
 export alias ll = ls -l
 
+export def "apt search-fuzzy" [] {
+    apt-cache search . |fzf --multi | lines | parse "{package} - {description}"
+}
+
+export def "apt install-fuzzy" [] {
+    sudo apt install ...(apt search-fuzzy | get package)
+}
+
 export def "nu-complete projects" [] {
     {
         options: { completion_algorithm: fuzzy, case_sensitive: false, positional: false, sort: true, },
