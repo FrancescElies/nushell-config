@@ -1,5 +1,3 @@
-use ~/.config/broot/launcher/nushell/br *
-
 export def --env "ssh-agent start" [] {
     ^ssh-agent -c
         | lines
