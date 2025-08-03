@@ -1,5 +1,8 @@
 # https://github.com/nushell/nushell/blob/main/crates/nu-utils/src/default_files/default_config.nu
 
+$env.NU_LIB_DIRS = [
+    "~/src/nushell-config/src"
+]
 
 # cog -r config.nu
 #
@@ -303,13 +306,9 @@ $env.config.keybindings = [
                commandline edit --replace "use "
                commandline edit --insert (
                    $env.NU_LIB_DIRS
-                   | each {|dir|
-                       ls ($dir | path join "**" "*.nu")
-                       | get name
-                       | str replace $dir ""
-                       | str trim -c "/"
-                   }
+                   | each { |dir| cd $dir; ls *.nu }
                    | flatten
+                   | get name
                    | input list --fuzzy
                        $"Please choose a (ansi magenta)module(ansi reset) to (ansi cyan_underline)load(ansi reset):"
                )
