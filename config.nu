@@ -323,6 +323,8 @@ $env.config.keybindings = [
                    | input list --fuzzy
                        $"Please choose a (ansi magenta)module(ansi reset) to (ansi cyan_underline)load(ansi reset):"
                )
+               commandline edit --append " *"
+               commandline set-cursor --end
            '
        }
    }
