@@ -12,9 +12,11 @@ export def "aptf install" [] {
 
 export alias lg = lazygit
 
-use std-rfc/iter recurse
-# something like gron
-export def gronu [] { $in | recurse | update item { to nuon } }
+# # something like gron
+# export def gronu [] {
+#     use std-rfc/iter recurse
+#     $in | recurse | update item { to nuon }
+# }
 
 export def "my todos" [] {
     mkdir ~/src/zettelkasten
@@ -23,11 +25,11 @@ export def "my todos" [] {
 }
 export alias todos = my todos
 
-# create big file
-export def "my create big-file" [filesize: filesize, outfile: path = bigfile.txt] {
-    use std
-    "a" | std repeat (128kib | into int) | str join "" o> $outfile
-}
+# # create big file
+# export def "my create big-file" [filesize: filesize, outfile: path = bigfile.txt] {
+#     use std repeat
+#     "a" | std repeat (128kib | into int) | str join "" o> $outfile
+# }
 
 export alias pipx = python ~/bin/pipx.pyz
 
