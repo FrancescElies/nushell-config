@@ -10,25 +10,6 @@ export def "apt install-fuzzy" [] {
     sudo apt install ...(apt search-fuzzy | get package)
 }
 
-export def "nu-complete projects" [] {
-    {
-        options: { completion_algorithm: fuzzy, case_sensitive: false, positional: false, sort: true, },
-        completions: (
-          ls ~/src
-          | append (try {ls ~/src/work})
-          | append (try {ls ~/src/work/my-maxpats/*})
-          | append (try {ls ~/src/work/*-worktrees/*})
-          | append (try {ls ~/src/work/customerprj/*})
-          | append (try {ls ~/src/oss})
-          | where type == dir | get name
-          | path relative-to ~/src)
-    }
-}
-# cd into project
-export def --env "my project" [project: string@"nu-complete projects"] { cd ('~/src' | path expand | path join $project ) }
-# cd into project
-export alias cdp = my project
-
 export alias lg = lazygit
 
 use std-rfc/iter recurse

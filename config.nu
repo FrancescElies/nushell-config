@@ -15,6 +15,55 @@ $env.NU_LIB_DIRS = [
 #     this_repo = Path("~/src/nushell-config")
 #     cog.outl(f"use {this_repo / file} *".replace('\\', '/'))
 # ]]]*/
+# use ~/src/nushell-config/src/ado-completions.nu *
+# use ~/src/nushell-config/src/ai-completions.nu *
+# use ~/src/nushell-config/src/bat-completions.nu *
+# use ~/src/nushell-config/src/broot-helpers.nu *
+# use ~/src/nushell-config/src/btm-completions.nu *
+# use ~/src/nushell-config/src/cargo-completions.nu *
+# use ~/src/nushell-config/src/clipboard.nu *
+# use ~/src/nushell-config/src/docs.nu *
+# use ~/src/nushell-config/src/fd-completions.nu *
+# use ~/src/nushell-config/src/fix.nu *
+# use ~/src/nushell-config/src/flamegraph-completions.nu *
+# use ~/src/nushell-config/src/fnm.nu *
+# use ~/src/nushell-config/src/gh-completions.nu *
+# use ~/src/nushell-config/src/git-completions.nu *
+# use ~/src/nushell-config/src/git-my-alias.nu *
+# use ~/src/nushell-config/src/git-pr.nu *
+# use ~/src/nushell-config/src/git-worktree.nu *
+# use ~/src/nushell-config/src/history-utils.nu *
+# use ~/src/nushell-config/src/hosts-completions.nu *
+# use ~/src/nushell-config/src/just-completions.nu *
+# use ~/src/nushell-config/src/man.nu *
+# use ~/src/nushell-config/src/maxmsp-completions.nu *
+# use ~/src/nushell-config/src/media-completions.nu *
+# use ~/src/nushell-config/src/miniserve-completions.nu *
+# use ~/src/nushell-config/src/my-configs.nu *
+# use ~/src/nushell-config/src/my-functions.nu *
+# use ~/src/nushell-config/src/neovim.nu *
+# use ~/src/nushell-config/src/nupass.nu *
+# use ~/src/nushell-config/src/ouch-completions.nu *
+# use ~/src/nushell-config/src/parse-help.nu *
+# use ~/src/nushell-config/src/pnpm-completions.nu *
+# use ~/src/nushell-config/src/process.nu *
+# use ~/src/nushell-config/src/pueue-completions.nu *
+# use ~/src/nushell-config/src/pytest-completions.nu *
+# use ~/src/nushell-config/src/reverse-eng.nu *
+# use ~/src/nushell-config/src/rg-completions.nu *
+# use ~/src/nushell-config/src/rust.nu *
+# use ~/src/nushell-config/src/rustup-completions.nu *
+# use ~/src/nushell-config/src/ssh-completions.nu *
+# use ~/src/nushell-config/src/symlinks.nu *
+# use ~/src/nushell-config/src/ttyper-completions.nu *
+# use ~/src/nushell-config/src/utils.nu *
+# use ~/src/nushell-config/src/vpn.nu *
+# use ~/src/nushell-config/src/wezterm-completions.nu *
+# use ~/src/nushell-config/src/wibu.nu *
+# use ~/src/nushell-config/src/winget-completions.nu *
+# use ~/src/nushell-config/src/work.nu *
+# use ~/src/nushell-config/src/zellij-completions.nu *
+# use ~/src/nushell-config/src/zig.nu *
 # [[[end]]]
 
 
@@ -61,9 +110,9 @@ def "env-change pwd toolkit" [ --directory ] {
             {|_, after| $after | path join 'toolkit.nu' | path exists }
         })
         code: ([
-            "print -n $'(ansi default_underline)(ansi default_bold)toolkit(ansi reset) module (ansi yellow_italic)detected(ansi reset)... '"
+            "print -n $'(ansi defu)(ansi defb)toolkit(ansi reset) module (ansi yi)detected(ansi reset)... '"
             $"use (if $directory { 'toolkit/' } else { 'toolkit.nu' })"
-            "print $'(ansi green_bold)activated!(ansi reset)'"
+            "print $'(ansi gb)activated!(ansi reset)'"
         ] | str join "\n")
     }
 }
@@ -103,9 +152,10 @@ $env.config.hooks.env_change = {
         {
             condition: {|_, after| ($after | path join 'Cargo.lock' | path exists) }
             code: {
-                use std "path add"
-                path add ($env.PWD | path join 'target/debug')
-                path add ($env.PWD | path join 'target/release')
+                $env.path ++= [
+                    ($env.PWD | path join 'target/debug')
+                    ($env.PWD | path join 'target/release')
+                ]
             }
         }
     ]
@@ -242,7 +292,17 @@ $env.config.keybindings = [
         mode: [emacs, vi_normal, vi_insert]
         event: {
            send: executehostcommand,
-           cmd: ' cd ("~/src" | path expand | path join ( nu-complete projects | get completions | input list --fuzzy $"Goto (ansi mu)project(ansi reset):") )'
+           cmd: ' cd ("~/src" | path expand | path join (
+               ls ~/src
+               | append (try {ls ~/src/work})
+               | append (try {ls ~/src/work/my-maxpats/*})
+               | append (try {ls ~/src/work/*-worktrees/*})
+               | append (try {ls ~/src/work/customerprj/*})
+               | append (try {ls ~/src/oss})
+               | where type == dir | get name
+               | path relative-to ~/src
+               | input list --fuzzy $"Goto (ansi mu)project(ansi reset):")
+           )'
         }
    }
    {
