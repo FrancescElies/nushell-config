@@ -262,28 +262,14 @@ $env.config.keybindings = [
          }
     }
     {
-         name: Jump_to_directory
+         name: lazygit
          modifier: control
-         keycode: char_j
+         keycode: char_g
          mode: [emacs, vi_normal, vi_insert]
          event: {
            send: executehostcommand,
-           cmd: "zi"
+           cmd: "lazygit"
          }
-    }
-    {
-        name: open_editor
-        modifier: alt
-        keycode: char_e
-        mode: [emacs, vi_normal, vi_insert]
-        event: { send: executehostcommand, cmd: 'nvim' }
-    }
-    {
-        name: open_editor
-        modifier: alt
-        keycode: char_b
-        mode: [emacs, vi_normal, vi_insert]
-        event: { send: executehostcommand, cmd: 'br' }
     }
     {
         name: goto_to_project
@@ -368,8 +354,6 @@ const ctrl_bindings = [
 ]
 const alt_bindings = [
     $"(ansi yb)p(ansi reset)roject"
-    $"open (ansi yb)e(ansi reset)ditor"
-    $"(ansi yb)b(ansi reset)root"
 ]
 print $"(ansi defb)ctrl-i(ansi reset): (ansi defr)TAB(ansi reset), (ansi defb)ctrl-m(ansi reset): (ansi defr)ENTER(ansi reset), (ansi defb)ctrl-[(ansi reset): (ansi defr)ESC(ansi reset)"
 print $"(ansi rb)ctrl(ansi reset): ($ctrl_bindings | str join ', ')"
