@@ -15,55 +15,6 @@ $env.NU_LIB_DIRS = [
 #     this_repo = Path("~/src/nushell-config")
 #     cog.outl(f"use {this_repo / file} *".replace('\\', '/'))
 # ]]]*/
-use ~/src/nushell-config/src/ado-completions.nu *
-use ~/src/nushell-config/src/ai-completions.nu *
-use ~/src/nushell-config/src/bat-completions.nu *
-use ~/src/nushell-config/src/broot-helpers.nu *
-use ~/src/nushell-config/src/btm-completions.nu *
-use ~/src/nushell-config/src/cargo-completions.nu *
-use ~/src/nushell-config/src/clipboard.nu *
-use ~/src/nushell-config/src/docs.nu *
-use ~/src/nushell-config/src/fd-completions.nu *
-use ~/src/nushell-config/src/fix.nu *
-use ~/src/nushell-config/src/flamegraph-completions.nu *
-use ~/src/nushell-config/src/fnm.nu *
-use ~/src/nushell-config/src/gh-completions.nu *
-use ~/src/nushell-config/src/git-completions.nu *
-use ~/src/nushell-config/src/git-my-alias.nu *
-use ~/src/nushell-config/src/git-pr.nu *
-use ~/src/nushell-config/src/git-worktree.nu *
-use ~/src/nushell-config/src/history-utils.nu *
-use ~/src/nushell-config/src/hosts-completions.nu *
-use ~/src/nushell-config/src/just-completions.nu *
-use ~/src/nushell-config/src/man.nu *
-use ~/src/nushell-config/src/maxmsp-completions.nu *
-use ~/src/nushell-config/src/media-completions.nu *
-use ~/src/nushell-config/src/miniserve-completions.nu *
-use ~/src/nushell-config/src/my-configs.nu *
-use ~/src/nushell-config/src/my-functions.nu *
-use ~/src/nushell-config/src/neovim.nu *
-use ~/src/nushell-config/src/nupass.nu *
-use ~/src/nushell-config/src/ouch-completions.nu *
-use ~/src/nushell-config/src/parse-help.nu *
-use ~/src/nushell-config/src/pnpm-completions.nu *
-use ~/src/nushell-config/src/process.nu *
-use ~/src/nushell-config/src/pueue-completions.nu *
-use ~/src/nushell-config/src/pytest-completions.nu *
-use ~/src/nushell-config/src/reverse-eng.nu *
-use ~/src/nushell-config/src/rg-completions.nu *
-use ~/src/nushell-config/src/rust.nu *
-use ~/src/nushell-config/src/rustup-completions.nu *
-use ~/src/nushell-config/src/ssh-completions.nu *
-use ~/src/nushell-config/src/symlinks.nu *
-use ~/src/nushell-config/src/ttyper-completions.nu *
-use ~/src/nushell-config/src/utils.nu *
-use ~/src/nushell-config/src/vpn.nu *
-use ~/src/nushell-config/src/wezterm-completions.nu *
-use ~/src/nushell-config/src/wibu.nu *
-use ~/src/nushell-config/src/winget-completions.nu *
-use ~/src/nushell-config/src/work.nu *
-use ~/src/nushell-config/src/zellij-completions.nu *
-use ~/src/nushell-config/src/zig.nu *
 # [[[end]]]
 
 
