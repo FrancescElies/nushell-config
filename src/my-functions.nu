@@ -2,11 +2,11 @@
 export alias ex = explore
 export alias ll = ls -l
 
-export def "apt search-fuzzy" [] {
+export def "aptf search" [] {
     apt-cache search . |fzf --multi | lines | parse "{package} - {description}"
 }
 
-export def "apt install-fuzzy" [] {
+export def "aptf install" [] {
     sudo apt install ...(apt search-fuzzy | get package)
 }
 
