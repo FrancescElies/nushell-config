@@ -216,9 +216,8 @@ $env.config.keybindings = [
           {
             send: executehostcommand
             cmd: "
-              let FZF_CTRL_Y_COMMAND = \$\"fd --type directory --hidden | fzf --preview 'tree -C {} | head -n 200'\";
-              let result = nu -n -c $FZF_CTRL_Y_COMMAND;
-              cd $result;
+              cd ( fd --type directory --hidden
+                   | fzf --preview 'tree -C {} | head -n 200');
             "
           }
         ]
@@ -232,9 +231,10 @@ $env.config.keybindings = [
           {
             send: executehostcommand
             cmd: "
-              let fzf_ctrl_t_command = \$\"fd --type file --hidden | fzf --preview 'bat --color=always --style=full --line-range=:500 {}' \";
-              let result = nu -n -l -i -c $fzf_ctrl_t_command;
-              commandline edit --append $result;
+              commandline edit --append (
+                fd --type file --hidden
+                | fzf --preview 'bat --color=always --style=full --line-range=:500 {}'
+              );
               commandline set-cursor --end
             "
           }
