@@ -40,7 +40,7 @@ use ~/src/nushell-config/src/git-my-alias.nu *
 # use ~/src/nushell-config/src/miniserve-completions.nu *
 # use ~/src/nushell-config/src/my-configs.nu *
 use ~/src/nushell-config/src/my-functions.nu *
-# use ~/src/nushell-config/src/neovim.nu *
+use ~/src/nushell-config/src/neovim.nu *
 # use ~/src/nushell-config/src/nupass.nu *
 # use ~/src/nushell-config/src/ouch-completions.nu *
 # use ~/src/nushell-config/src/parse-help.nu *
