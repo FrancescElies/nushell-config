@@ -48,9 +48,9 @@ $env.path ++= [
     # pipx puts binaries in .local/bin
     '~/.local/bin'
     '~/bin'
-    (ls ~/bin | where type == dir | get name)
-    ( ls ~/bin/*/* | where type == dir | get name | where {$in|str ends-with "bin"} )
 ]
+$env.path ++= (ls ~/bin | where type == dir | get name)
+$env.path ++= ( ls ~/bin/*/* | where type == dir | get name | where {$in|str ends-with "bin"} )
 
 $env.path = ($env.path | uniq)
 
