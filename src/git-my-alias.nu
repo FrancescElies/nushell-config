@@ -157,15 +157,6 @@ export alias grba = ^git rebase --abort
 export alias grbc = ^git rebase --continue
 
 
-use ~/src/nushell-config/src/git-worktree.nu 'git worktree bare-path'
-# ^git cd to root (bare or worktree)
-def --env groot [] {
- if ((git worktree bare-path) == null) {
-   cd (git rev-parse --show-toplevel)
- } else {
-   cd (git worktree bare-path)
- }
-}
 # cd to git root (bare or worktree)
 export alias cdroot = groot
 
@@ -302,5 +293,42 @@ export def "gage" [] {
         }
     } |
     sort-by last_commit
+}
+
+
+#
+# worktrees
+#
+# git worktree list as table
+export def --wrapped "git worktree listt" [...rest] {
+  ^git worktree list ...$rest | lines | parse --regex `(?P<path>.+?) +(?P<commit>\w+) \[(?P<branch>.+)\]`
+}
+
+def "nu-complete gw-paths" [] { git worktree listt | get path }
+
+# git worktree change directory
+export def --env "git worktree cd" [
+  path?: string@"nu-complete gw-paths"  # branch to create or checkout
+] {
+  cd $path
+}
+
+# git worktree remove
+export def --env "git worktree remove-with-force" [path: string@"nu-complete gw-paths"] {
+  git clean -fdx; git worktree remove --force $path
+}
+
+export def "git worktree bare-path" [] {
+  ^git worktree list | parse --regex `(?P<path>.+?) +\(bare\)` | get 0?.path?
+}
+
+
+# ^git cd to root (bare or worktree)
+def --env groot [] {
+ if ((git worktree bare-path) == null) {
+   cd (git rev-parse --show-toplevel)
+ } else {
+   cd (git worktree bare-path)
+ }
 }
 
