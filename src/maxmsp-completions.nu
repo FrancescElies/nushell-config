@@ -5,13 +5,24 @@ use utils.nu *
 use process.nu pidof
 
 
-const maxmsp = if $nu.os-info.name == "windows" {
-    "C:/Program Files/Cycling '74/Max 9/Max.exe"
+const max_dir = if $nu.os-info.name == "windows" {
+    "C:/Program Files/Cycling '74/Max 9/"
 } else if $nu.os-info.name == "macos" {
-    "/Applications/Max.app/Contents/MacOS/Max"
+    "/Applications/Max.app/Contents/MacOS/"
 } else {
     "not implemented"
 }
+
+const max_bin = if $nu.os-info.name == "windows" {
+    $max_dir | path join "Max.exe"
+} else if $nu.os-info.name == "macos" {
+    $max_dir | path join "Max"
+} else {
+    "not implemented"
+}
+const max_resources_pkgs = $max_dir | path join "resources/packages"
+const max_examples = $max_dir | path join "examples"
+
 
 def "nu-complete maxpats" [] { {
     options: { completion_algorithm: fuzzy, case_sensitive: false, positional: false, sort: true, },
@@ -23,11 +34,11 @@ export def "Max start" [maxpat?: path@"nu-complete maxpats"] {
     Max preferences set node-logging
     Max preferences set logtosystemconsole
     if ($maxpat | is-empty) {
-        print $"(ansi pb)> ($maxmsp)(ansi reset)"
-        run-external $maxmsp
+        print $"(ansi pb)> ($max_bin)(ansi reset)"
+        run-external $max_bin
     } else {
-        print $"(ansi pb)> ($maxmsp) ($maxpat | path expand)(ansi reset)"
-        run-external $maxmsp ($maxpat | path expand)
+        print $"(ansi pb)> ($max_bin) ($maxpat | path expand)(ansi reset)"
+        run-external $max_bin ($maxpat | path expand)
     }
 }
 
@@ -35,20 +46,28 @@ def "nu-complete my-maxpats" [] { {
     options: { completion_algorithm: fuzzy, case_sensitive: false, positional: false, sort: true, },
     completions: (fd maxpat ~/src/work/my-maxpats | lines)
 } }
+
 # Cycling '74 Max cli wrap
 export def "Max start my" [maxpat: path@"nu-complete my-maxpats"] {
     cd ~/src/work/my-maxpats
     Max preferences set no-crashrecovery
     Max preferences set node-logging
     Max preferences set logtosystemconsole
-    print $"(ansi pb)> ($maxmsp) ($maxpat | path expand)(ansi reset)"
-    run-external $maxmsp ( $maxpat | path expand )
+    print $"(ansi pb)> ($max_bin) ($maxpat | path expand)(ansi reset)"
+    run-external $max_bin ( $maxpat | path expand )
 }
 
-# broot Max stuff
-export alias braxpat = br --cmd ".maxpat&t/"
-export alias broject = br --cmd "project&t/"
-export alias brataset = br --cmd ".xml&t/"
+export def "Max fzf-examples" [] {
+    cd $max_examples
+    Max start (fd . | fzf)
+}
+
+def "nu-complete maxhelp" [] { cd $max_resources_pkgs; ls | get name}
+export def "Max help" [folder: path@"nu-complete maxhelp"] {
+    let dir = ($max_resources_pkgs | path join $folder)
+    cd $dir
+    Max start (fd maxhelp | fzf)
+}
 
 
 # sets Max Audio Status
@@ -100,8 +119,7 @@ export def --env "Max logs-and-dumps" [] { cd "~/AppData/Roaming/Cycling '74/Log
 export def --env "Max  packages" [] { cd "~/Documents/Max 9/Packages"; lsg }
 
 
-# show Max examples
-export def --env "Max examples" [] { cd "~/src/oss/max-sdk/source"; lsg }
+export def --env "Max sdk-examples" [] { cd "~/src/oss/max-sdk/source"; lsg }
 
 # opens Max's api
 export def "Max api" [] {
