@@ -6,6 +6,26 @@ export def "aptf search" [] {
     apt-cache search . |fzf --multi | lines | parse "{package} - {description}"
 }
 
+# ripgrep->fzf->edit(nvim) [QUERY]
+export def rgfed [] {
+    let RELOAD = 'rg --column --color=always --smart-case {q}'
+    let OPENER = '
+        if $env.FZF_SELECT_COUNT == 0 {
+            nvim {1} +{2}     # No selection. Open the current line in Vim.
+        } else {
+            nvim +cw -q {+f}  # Build quickfix list for the selected items.
+        }
+    '
+  ( fzf --disabled --ansi --multi
+      --bind $"start:reload:($RELOAD)" --bind $"change:reload:($RELOAD)"
+      --bind $"enter:become:($OPENER)" --bind $"ctrl-o:execute:($OPENER)"
+      --bind 'ctrl-a:select-all,ctrl-d:deselect-all,ctrl-/:toggle-preview'
+      --delimiter ':'
+      --preview 'bat --style=full --color=always --highlight-line {2} {1}'
+      --preview-window '~4,+{2}+4/3,<80(up)'
+      --query "$*" )
+}
+
 export def "aptf install" [] {
     sudo apt install ...(apt search-fuzzy | get package)
 }
