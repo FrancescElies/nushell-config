@@ -29,11 +29,6 @@ def config-yazi [] {
     symlink --force ~/src/nushell-config/config/yazi/ $config_dir
 }
 
-def config-flowlauncher [] {
-    let config_dir = '~\AppData\Roaming\FlowLauncher'
-    symlink --force ~/src/nushell-config/config/flowlauncher/ $config_dir
-}
-
 def config-pueue [] {
     let config_dir = match $nu.os-info.name {
         "windows" => '~\AppData\Roaming\pueue' ,
@@ -81,7 +76,6 @@ export def main [] {
     }
     if $nu.os-info.name == "windows" {
         config-glazewm
-        config-flowlauncher
     }
 
     # uv
