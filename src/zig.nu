@@ -28,3 +28,9 @@
 # dumpCurrentStackTrace will show c and zig code
 # zig build -Drelease-fast
 # objdump -d zig-out/bin/foo -Minterl | vim
+
+# https://zig.guide/
+# https://pedropark99.github.io/zig-book/
+# https://codeberg.org/ziglings/exercises
+# https://ziglang.org/documentation/master/std/
+# https://learnxinyminutes.com/zig/
