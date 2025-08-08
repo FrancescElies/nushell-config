@@ -5,29 +5,43 @@ use utils.nu *
 use process.nu pidof
 
 
-const max_dir = if $nu.os-info.name == "windows" {
-    "C:/Program Files/Cycling '74/Max 9/"
-} else if $nu.os-info.name == "macos" {
-    "/Applications/Max.app/Contents/MacOS/"
-} else {
-    "not implemented"
-}
-
 const max_bin = if $nu.os-info.name == "windows" {
-    $max_dir | path join "Max.exe"
+    "C:/Program Files/Cycling '74/Max 9/Max.exe"
 } else if $nu.os-info.name == "macos" {
-    $max_dir | path join "Max"
+    "/Applications/Max.app/Contents/MacOS/Max"
 } else {
-    "not implemented"
+    error make {msg: not-implemented }
 }
-const max_resources_pkgs = $max_dir | path join "resources/packages"
-const max_examples = $max_dir | path join "examples"
 
+const max_resources_pkgs = if $nu.os-info.name == "windows" {
+    "C:/Program Files/Cycling '74/Max 9/resources/packages"
+} else if $nu.os-info.name == "macos" {
+    error make {msg: not-implemented, }
+} else {
+    error make {msg: not-implemented, }
+}
+
+const max_examples = if $nu.os-info.name == "windows" {
+    "C:/Program Files/Cycling '74/Max 9/examples"
+} else if $nu.os-info.name == "macos" {
+    error make {msg: not-implemented, }
+} else {
+    error make {msg: not-implemented, }
+}
+
+const max_searchpaths = if $nu.os-info.name == "windows" {
+    "~/AppData/Roaming/Cycling '74/Max 9/Settings/maxsearchpaths.txt"
+} else if $nu.os-info.name == "macos" {
+    error make {msg: not-implemented, }
+} else {
+    error make {msg: not-implemented, }
+}
 
 def "nu-complete maxpats" [] { {
     options: { completion_algorithm: fuzzy, case_sensitive: false, positional: false, sort: true, },
     completions: (fd maxpat | lines)
 } }
+
 # Cycling '74 Max cli wrap
 export def "Max start" [maxpat?: path@"nu-complete maxpats"] {
     Max preferences set no-crashrecovery
