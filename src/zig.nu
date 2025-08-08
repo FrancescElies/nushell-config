@@ -34,3 +34,11 @@
 # https://codeberg.org/ziglings/exercises
 # https://ziglang.org/documentation/master/std/
 # https://learnxinyminutes.com/zig/
+
+# // zig cc main.c -o main.exe -lUser32
+# #include <windows.h>
+#
+# int main() {
+#     MessageBoxA(NULL, "Hello from Windows API!", "Zig & C", MB_OK);
+#     return 0;
+# }

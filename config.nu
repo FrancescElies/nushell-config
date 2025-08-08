@@ -129,24 +129,24 @@ $env.config.hooks.env_change = {
             ) }
             code: "overlay use env.nu"
         }
-        # windows activate venv
-        {
-            condition: {|before, after|
-                (not ('activate' in (overlay list))) and ($after | path join ".venv/Scripts/activate.nu" | path exists)
-            }
-            code: 'overlay use .venv/Scripts/activate.nu'
-        }
-        # unix like activate venv
-        {
-            condition: {|before, after|
-                (not ('activate' in (overlay list))) and ($after | path join ".venv/bin/activate.nu" | path exists)
-            }
-            code: 'overlay use .venv/bin/activate.nu'
-        }
-        {
-            condition: {|before, after| [.nvmrc .node-version] | path exists | any { |it| $it }}
-            code: {|before, after| if ('FNM_DIR' in $env) { fnm use } }
-        }
+        # # windows activate venv
+        # {
+        #     condition: {|before, after|
+        #         (not ('activate' in (overlay list))) and ($after | path join ".venv/Scripts/activate.nu" | path exists)
+        #     }
+        #     code: 'overlay use .venv/Scripts/activate.nu'
+        # }
+        # # unix like activate venv
+        # {
+        #     condition: {|before, after|
+        #         (not ('activate' in (overlay list))) and ($after | path join ".venv/bin/activate.nu" | path exists)
+        #     }
+        #     code: 'overlay use .venv/bin/activate.nu'
+        # }
+        # {
+        #     condition: {|before, after| [.nvmrc .node-version] | path exists | any { |it| $it }}
+        #     code: {|before, after| if ('FNM_DIR' in $env) { fnm use } }
+        # }
         # https://github.com/nushell/nu_scripts/blob/main/nu-hooks/nu-hooks/rusty-paths/rusty-paths.nu
         {
             condition: {|_, after| ($after | path join 'Cargo.lock' | path exists) }
