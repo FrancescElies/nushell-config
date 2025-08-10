@@ -6,6 +6,10 @@ export def "aptf search" [] {
     apt-cache search . |fzf --multi | lines | parse "{package} - {description}"
 }
 
+export def "aptf install" [] {
+    sudo apt install ...(aptf search | get package)
+}
+
 # ripgrep->fzf->edit(nvim) [QUERY]
 export def rgfed [] {
     let RELOAD = 'rg --column --color=always --smart-case {q}'
@@ -24,10 +28,6 @@ export def rgfed [] {
       --preview 'bat --style=full --color=always --highlight-line {2} {1}'
       --preview-window '~4,+{2}+4/3,<80(up)'
       --query "$*" )
-}
-
-export def "aptf install" [] {
-    sudo apt install ...(apt search-fuzzy | get package)
 }
 
 export alias lg = lazygit
