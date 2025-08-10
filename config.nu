@@ -261,6 +261,16 @@ $env.config.keybindings = [
          }
     }
     {
+         name: editor
+         modifier: control
+         keycode: char_e
+         mode: [emacs, vi_normal, vi_insert]
+         event: {
+           send: executehostcommand,
+           cmd: "nvim"
+         }
+    }
+    {
          name: lazygit
          modifier: control
          keycode: char_g
