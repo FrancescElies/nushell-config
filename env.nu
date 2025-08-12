@@ -42,6 +42,7 @@ match $nu.os-info.name {
 
 # common paths
 $env.path ++= [
+    '~/.zvm/bin'
     '~/src/radare2/prefix/bin'
     '~/go/bin'
     '~/.cargo/bin'
