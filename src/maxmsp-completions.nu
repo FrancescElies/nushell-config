@@ -127,7 +127,8 @@ export def --env "Max appdata" [] { cd "~/AppData/Roaming/Cycling '74"; lsg }
 export def --env "Max settings" [] { cd "~/AppData/Roaming/Cycling '74/Max 9/Settings"; lsg }
 
 # goes to Cycling '74/Logs, where .dmp files are
-export def --env "Max logs-and-dumps" [] { cd "~/AppData/Roaming/Cycling '74/Logs"; lsg }
+export def --env "Max dumps" [] { ls `~/AppData/Roaming/Cycling '74/Logs/` | sort-by modified | get name }
+export def --env "Max logs" [] { ls `~/AppData/Roaming/Cycling '74/Max 0/Logs/` | sort-by modified | get name }
 
 # opens Max 9 Packages folder
 export def --env "Max  packages" [] { cd "~/Documents/Max 9/Packages"; lsg }
@@ -143,13 +144,6 @@ export def "Max api" [] {
     lsg
 }
 
-
-# opens latest .dmp file from Cycling '74/Logs
-export def "Max latest-dump" [] {
-    let latest_dump = (ls "~/AppData/Roaming/Cycling '74/Logs" | sort-by modified | last)
-    print $"opening ($latest_dump.name)"
-    start $latest_dump.name
-}
 
 export def "Max download-installers" [] {
     let dir = '~/src/work/installers-exe'
