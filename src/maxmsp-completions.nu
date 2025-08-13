@@ -111,30 +111,21 @@ export def "Max set audio-status" [] {
 
 const maxpreferences = ("~/AppData/Roaming/Cycling '74/Max 9/Settings/maxpreferences.maxpref" | path expand)
 
-# opens maxpreferences.maxpref
-export def "Max preferences" [] {
-    cd "~/AppData/Roaming/Cycling '74/Max 9/Settings"
-    nvim $maxpreferences
-}
-
 # opens maxinterface.json
-export def "Max interface" [] { nvim "C:/Program Files/Cycling '74/Max 9/resources/interfaces/maxinterface.json" }
+export def "Max edit interface" [] { nvim "C:/Program Files/Cycling '74/Max 9/resources/interfaces/maxinterface.json" }
+export def "Max edit maxpreferences" [] { nvim $maxpreferences }
 
-# AppData Cycling '74
-export def --env "Max appdata" [] { cd "~/AppData/Roaming/Cycling '74"; lsg }
+export def --env "Max goto settings" [] { cd "~/AppData/Roaming/Cycling '74/Max 9/Settings"; lsg }
+export def --env "Max goto installation-dir" [] { cd "C:/Program Files/Cycling '74/Max 9"; lsg }
+export def --env "Max goto resources" [] { cd "C:/Program Files/Cycling '74/Max 9/resources"; lsg }
+export def --env "Max goto appdata-roaming" [] { cd "~/AppData/Roaming/Cycling '74"; lsg }
+export def --env "Max goto packages" [] { cd "~/Documents/Max 9/Packages"; lsg }
+export def --env "Max goto sdk-examples" [] { cd "~/src/oss/max-sdk/source"; lsg }
 
-# opens Max settings
-export def --env "Max settings" [] { cd "~/AppData/Roaming/Cycling '74/Max 9/Settings"; lsg }
-
-# goes to Cycling '74/Logs, where .dmp files are
-export def --env "Max dumps" [] { ls `~/AppData/Roaming/Cycling '74/Logs/` | sort-by modified | get name }
-export def --env "Max logs" [] { ls `~/AppData/Roaming/Cycling '74/Max 0/Logs/` | sort-by modified | get name }
-
-# opens Max 9 Packages folder
-export def --env "Max  packages" [] { cd "~/Documents/Max 9/Packages"; lsg }
-
-
-export def --env "Max sdk-examples" [] { cd "~/src/oss/max-sdk/source"; lsg }
+# goto  crash dumps are stored
+export def --env "Max list dumps" [] { ls `~/AppData/Roaming/Cycling '74/Logs/` | sort-by modified | get name }
+# goto where logsk are stored
+export def --env "Max list logs" [] { ls `~/AppData/Roaming/Cycling '74/Max 9/Logs/` | sort-by modified | get name }
 
 # opens Max's api
 export def "Max api" [] {
