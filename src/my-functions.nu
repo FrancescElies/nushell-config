@@ -10,8 +10,8 @@ export def "aptf install" [] {
     sudo apt install ...(aptf search | get package)
 }
 
-# ripgrep->fzf->edit(nvim) [QUERY]
-export def rgfed [] {
+# ripgrep->fzf->vim [QUERY]
+export def rg-fzf-nvim [] {
     let RELOAD = 'rg --column --color=always --smart-case {q}'
     let OPENER = '
         if $env.FZF_SELECT_COUNT == 0 {
@@ -29,6 +29,8 @@ export def rgfed [] {
       --preview-window '~4,+{2}+4/3,<80(up)'
       --query "$*" )
 }
+# ripgrep->fzf->vim [QUERY]
+export alias rfv = rg-fzf-nvim
 
 export alias lg = lazygit
 

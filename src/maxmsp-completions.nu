@@ -42,6 +42,34 @@ def "nu-complete maxpats" [] { {
     completions: (fd maxpat | lines)
 } }
 
+# Run cdb (x64) on a .dmp
+#   • default  : stream output to the screen only
+#   • --log/-l : additionally write <dump>.log next to the .dmp
+def "Max dump" [
+    dmpfile: string          # positional argument: the .dmp
+    --log(-l)                # optional flag       : save a .log
+] {
+    let cdb = 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\cdb.exe'
+    if not ($cdb | path exists) {
+        error make {msg: 'cdb.exe not found – run  winget install "windows driver kit"'}
+    }
+
+    let dump_path = ($dmpfile | path expand)
+    if not ($dump_path | path exists) {
+        error make {msg: $"dump file ($dump_path) does not exist"}
+    }
+
+    if $log {
+        let parsed   = ($dump_path | path parse)
+        let log_file = ($parsed.parent) | path join $"($parsed.stem).log"
+
+        run-external $cdb "-z" $dump_path "-c" '!analyze -v; !pe; q' "-logo" $log_file
+        print $"saved debugger log → ($log_file)"
+    } else {
+        run-external $cdb "-z" $dump_path "-c" '!analyze -v; !pe; q'
+    }
+}
+
 # Cycling '74 Max cli wrap
 export def "Max start" [maxpat?: path@"nu-complete maxpats"] {
     Max preferences set no-crashrecovery
