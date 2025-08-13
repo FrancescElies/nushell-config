@@ -156,7 +156,7 @@ export def --env "Max list dumps" [] { ls `~/AppData/Roaming/Cycling '74/Logs/` 
 export def --env "Max list logs" [] { ls `~/AppData/Roaming/Cycling '74/Max 9/Logs/` | sort-by modified | get name }
 
 # opens Max's api
-export def "Max api" [] {
+export def "Max goto header-files" [] {
     let sdk_base = "~/src/oss/max-sdk/source/max-sdk-base"
     if not ($sdk_base | path exists) { mkdircd ~/src/oss; git clone https://github.com/Cycling74/max-sdk }
     cd ( $sdk_base | path join "c74support/max-includes" )
