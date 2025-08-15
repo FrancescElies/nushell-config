@@ -29,11 +29,6 @@
 # zig build -Drelease-fast
 # objdump -d zig-out/bin/foo -Minterl | vim
 
-# https://zig.guide/
-# https://pedropark99.github.io/zig-book/
-# https://codeberg.org/ziglings/exercises
-# https://ziglang.org/documentation/master/std/
-# https://learnxinyminutes.com/zig/
 
 # // zig cc main.c -o main.exe -lUser32
 # #include <windows.h>
@@ -42,3 +37,16 @@
 #     MessageBoxA(NULL, "Hello from Windows API!", "Zig & C", MB_OK);
 #     return 0;
 # }
+
+
+export def "zig links" [] {
+    [
+        [name                 link];
+        [zig-guide https://zig.guide/]
+        [zig-book https://pedropark99.github.io/zig-book/]
+        [zig-lings https://codeberg.org/ziglings/exercises]
+        [zig-docs https://ziglang.org/documentation/master/std/]
+        [operation-costs-cpucycles  http://ithare.com/infographics-operation-costs-in-cpu-clock-cycles/]
+        [handles-better-pointers    https://mjtsai.com/blog/2018/06/27/handles-are-the-better-pointers/]
+    ]
+}
