@@ -42,7 +42,6 @@ export def "rust libraries" [] {
 export def "rust links" [] {
     [
         [name                 link];
-        [unsafe-mental-model  https://ia0.github.io/unsafe-mental-model/what-are-types.html]
         [nextest              https://nexte.st/]
         [comprehensive-rust   https://google.github.io/comprehensive-rust/error-handling/thiserror-and-anyhow.html]
         [rust-cookbook        https://rust-lang-nursery.github.io/rust-cookbook/]
@@ -52,6 +51,8 @@ export def "rust links" [] {
         [dystroy              "https://dystroy.org/blog/how-not-to-learn-rust/#mistake-1-not-be-prepared-for-the-first-high-step"]
         [half-hour            https://fasterthanli.me/articles/a-half-hour-to-learn-rust]
         [unsafe-rust-and-zig  https://zackoverflow.dev/writing/unsafe-rust-vs-zig]
+        [unsafe-guidelines https://rust-lang.github.io/unsafe-code-guidelines/glossary.html]
+        [unsafe-mental-model  https://ia0.github.io/unsafe-mental-model/what-are-types.html]
         [negative-programming https://github.com/tigerbeetle/tigerbeetle/blob/main/docs/TIGER_STYLE.md]
         [associated-types     https://gavinleroy.com/writings/i-heart-assoc-types.html]
     ]
