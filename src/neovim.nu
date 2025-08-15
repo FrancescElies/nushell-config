@@ -1,8 +1,8 @@
-# opens nvim
 export alias e = nvim
-export alias v = nvim
-# opens nvim in emergency mode (minimal defaults and no plugins)
+export alias nv = nvim
 export alias ee = nvim -u ~/src/kickstart.nvim/minimal-vimrc.vim
+export alias nvim-emergency = nvim -u ~/src/kickstart.nvim/minimal-vimrc.vim
+export alias nve = nvim -u ~/src/kickstart.nvim/minimal-vimrc.vim
 
 export def "nvim clean shada" [] {
     match $nu.os-info.name {
