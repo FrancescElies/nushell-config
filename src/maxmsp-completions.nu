@@ -2,7 +2,6 @@ use broot-helpers.nu *
 use my-functions.nu *
 use reverse-eng.nu *
 use utils.nu *
-use process.nu pidof
 
 
 const max_bin = if $nu.os-info.name == "windows" {
@@ -211,7 +210,10 @@ export def "Max rg" [pattern: string] {
 export alias "rg-max" = rg --type-add 'max:*.{maxhelp,maxpat,json}' -t max
 
 export def "Max list loaded-mxe64" [] {
-    frida -p (pidof Max) --eval 'Process.enumerateModules()' -q | from json | where ($it.name | str ends-with mxe64)
+    (frida -p (ps | where name =~ Max | get 0.pid)
+        --eval 'Process.enumerateModules()' -q
+        | from json
+        | where ($it.name | str ends-with mxe64))
 }
 
 export def "Max list available-objects" [] {

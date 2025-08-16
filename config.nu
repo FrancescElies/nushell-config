@@ -29,7 +29,7 @@ $env.NU_LIB_DIRS = [
 # use ~/src/nushell-config/src/fnm.nu *
 # use ~/src/nushell-config/src/gh-completions.nu *
 # use ~/src/nushell-config/src/git-completions.nu *
-use ~/src/nushell-config/src/git-my-alias.nu *
+# use ~/src/nushell-config/src/git-my-alias.nu *
 # use ~/src/nushell-config/src/git-pr.nu *
 # use ~/src/nushell-config/src/history-utils.nu *
 # use ~/src/nushell-config/src/hosts-completions.nu *
@@ -40,12 +40,10 @@ use ~/src/nushell-config/src/git-my-alias.nu *
 # use ~/src/nushell-config/src/miniserve-completions.nu *
 # use ~/src/nushell-config/src/my-configs.nu *
 use ~/src/nushell-config/src/my-functions.nu *
-use ~/src/nushell-config/src/neovim.nu *
 # use ~/src/nushell-config/src/nupass.nu *
 # use ~/src/nushell-config/src/ouch-completions.nu *
 # use ~/src/nushell-config/src/parse-help.nu *
 # use ~/src/nushell-config/src/pnpm-completions.nu *
-use ~/src/nushell-config/src/process.nu *
 # use ~/src/nushell-config/src/pueue-completions.nu *
 # use ~/src/nushell-config/src/pytest-completions.nu *
 # use ~/src/nushell-config/src/reverse-eng.nu *

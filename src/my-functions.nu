@@ -178,11 +178,84 @@ export def "my backup by-year" [serverip: string = "intel-pc"] {
 
 # yazi wrapper
 export def --env y [...args] {
-	let tmp = (mktemp -t "yazi-cwd.XXXXXX")
-	yazi ...$args --cwd-file $tmp
-	let cwd = (open $tmp)
-	if $cwd != "" and $cwd != $env.PWD {
-		cd $cwd
-	}
-	rm -fp $tmp
+    let tmp = (mktemp -t "yazi-cwd.XXXXXX")
+    yazi ...$args --cwd-file $tmp
+    let cwd = (open $tmp)
+    if $cwd != "" and $cwd != $env.PWD {
+        cd $cwd
+    }
+    rm -fp $tmp
 }
+
+#
+# neovim
+#
+export alias e = nvim
+export alias nv = nvim
+export alias ee = nvim -u ~/src/kickstart.nvim/minimal-vimrc.vim
+export alias nvim-emergency = nvim -u ~/src/kickstart.nvim/minimal-vimrc.vim
+export alias nve = nvim -u ~/src/kickstart.nvim/minimal-vimrc.vim
+export def "nvim clean shada" [] {
+    match $nu.os-info.name {
+        "windows" => { fd swp ~/AppData/Local/nvim-data/swap -x rm },
+        _ => { rm -rf ~/.local/state/nvim/shada },
+    }
+}
+export def "nvim clean swap" [] {
+    match $nu.os-info.name {
+        "windows" => { fd swp ~/AppData/Local/nvim-data/swap -x rm },
+        _ => { fd swp ~/.local/state/nvim/swap -x rm },
+    }
+}
+export def "nvim pr-files" [] { nvim ...(pr files) }
+export def "nvim server" [] {
+    nvim --listen ~/.cache/nvim/server.pipe --headless
+}
+export def "nvim client" [...file: path] {
+    nvim --remote --server ~/.cache/nvim/server.pipe ...$file
+}
+
+
+#
+# process
+#
+# fuzzy select find process pid
+export def pid [] { ps | sort-by -in name | input list -d name --fuzzy  | get pid }
+
+# gets pid of process with name
+export def pidof [name: string ] {
+  let procs = ps --long | where name =~ $name
+  if (($procs | length) > 1) {
+    $procs | sort-by -in name | input list -d name --fuzzy | get pid
+  } else {
+    $procs | get 0.pid
+  }
+}
+
+# grep for specific process names
+export def "ps name" [name: string = "" ] {
+  if ($name | is-empty) {
+    ps --long | sort-by -in name | input list -d name --fuzzy
+  } else {
+    ps --long | find --ignore-case --columns [name] -i $name
+  }
+}
+export alias psn = ps name
+
+# get the counts of the multiset processes
+export def "ps count" [] {
+    ps | get name | uniq --count | sort-by count | rename name count
+}
+export alias psc = ps count
+
+def "nu-complete list-process-names" [] { ps | get name | sort | uniq }
+
+# kill specified process with substring
+export def "ps kill-name" [...names: string@"nu-complete list-process-names"] {
+    for name in $names {
+        let procs = ps | find --ignore-case --columns [name] $name | sort-by -in name
+        print $procs
+        $procs | each { try { kill -f $in.pid } }
+    }
+}
+export alias killn = ps kill-name
