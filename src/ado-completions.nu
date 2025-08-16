@@ -6,7 +6,23 @@
 # $env.ADO_REPO = ''          # (4) `az repos list | from json | select name id` to see repos and copy desired uuid
 
 use git-completions.nu "nu-complete git checkout"
-use git-my-alias.nu "nu-complete semmantic-message"
+
+export def "nu-complete semmantic-message" [] {
+    # https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716
+    [
+        [value    description];
+        [build    "new feature for the user, not a new feature for build script"]
+        [chore    "updating grunt tasks etc; no production code change"]
+        [ci       "ci"]
+        [docs     "changes to the documentation"]
+        [feat     "new feature for the user, not a new feature for build script"]
+        [fix      "bug fix for the user, not a fix to a build script"]
+        [perf     "performance"]
+        [refactor "refactoring production code, eg. renaming a variable"]
+        [style    "formatting, missing semi colons, etc; no production code change"]
+        [test     "adding missing tests, refactoring tests; no production code change"]
+    ]
+}
 
 export module ado {
 
