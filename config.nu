@@ -75,7 +75,7 @@ use ~/src/nushell-config/src/my-functions.nu *
 # learning about configuration options
 # config nu --default  | nu-highlight
 
-$env.config.show_banner = true
+$env.config.show_banner = false
 # $env.config.buffer_editor = ["nvim" "-u" "~/src/kickstart.nvim/minimal-vimrc.vim"]
 $env.config.buffer_editor = ["nvim"]
 $env.config.shell_integration.osc133 = false
@@ -354,6 +354,5 @@ const alt_bindings = [
     $"(ansi yb)p(ansi reset)roject"
 ]
 print $"(ansi defb)ctrl-i(ansi reset): (ansi defr)TAB(ansi reset), (ansi defb)ctrl-m(ansi reset): (ansi defr)ENTER(ansi reset), (ansi defb)ctrl-[(ansi reset): (ansi defr)ESC(ansi reset)"
-print $"(ansi rb)ctrl(ansi reset): ($ctrl_bindings | str join ', ')"
-print $"(ansi yb)alt(ansi reset): open ($alt_bindings | str join ', ')"
+print $"(ansi yb)alt(ansi reset): open ($alt_bindings | str join ', '), (ansi rb)ctrl(ansi reset): ($ctrl_bindings | str join ', ')"
 
