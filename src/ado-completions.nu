@@ -136,25 +136,25 @@ export module ado {
         --draft
     ] {
         git push
-        let description = ($nu.temp-path | path join $"az-pr-(random chars).md")
+        let description = ($nu.temp-path | path join $"az-pr.md")
         let title = if ($title | is-empty) { ( git log --format=%B -n 1 HEAD ) | lines | first } else { $title }
-        [ "**Problem:** " "" "**Solution:** " "" "**Notes:** " ] | to text | save -f $description
+        # [ "**Problem:** " "" "**Solution:** " "" "**Notes:** " ] | to text | save -f $description
 
         nvim $description
 
         let db = read_git_ado_db
         let current_branch = (git rev-parse --abbrev-ref HEAD)
-        let work_items = ([
-            ( $db | where name == $current_branch | get story.0 )
-            ( $db | where name == $current_branch | get task.0 )
-        ] | where { $in != 0})
+        # let work_items = ([
+        #     ( $db | where name == $current_branch | get story.0 )
+        #     ( $db | where name == $current_branch | get task.0 )
+        # ] | where { $in != 0})
 
         mut args = []
         if $draft { $args = ($args | append '--draft') }
         ( ^az repos pr create --open --delete-source-branch
             --description ...($description | open | lines)
             --auto-complete -t $target_branch
-            --work-items ...($work_items)
+            # --work-items ...($work_items)
             --title $title
             ...$args
             -o json
