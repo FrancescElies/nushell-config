@@ -10,10 +10,11 @@ match $nu.os-info.name {
             '~/AppData/Local/bob/nvim-bin'
             '~/AppData/Roaming/Python/Python312/Scripts'
             '~/AppData/Roaming/Python/Scripts'
-            'c:/Program Files/Neovim/bin'
+            ('/Program Files/WinHTTrack' | path expand)
+            ('/Program Files/Neovim/bin' | path expand)
             ('/Program Files/WIBU-SYSTEMS/AxProtector/Devkit/bin' | path expand)
             ('/Program Files/CodeMeter/DevKit/bin' | path expand)
-            ("/Program Files/Cycling '74/Max 9/" | path expand)
+            ("/Program Files/Cycling '74/Max 9" | path expand)
         ]
 
         # HACK: appdata not read, `rg YAZI_CONFIG_HOME`
