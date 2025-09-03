@@ -14,6 +14,7 @@ match $nu.os-info.name {
             ('/Program Files/Neovim/bin' | path expand)
             ('/Program Files/WIBU-SYSTEMS/AxProtector/Devkit/bin' | path expand)
             ('/Program Files/CodeMeter/DevKit/bin' | path expand)
+            ('/Program Files/LLVM/bin' | path expand)
             ("/Program Files/Cycling '74/Max 9" | path expand)
         ]
 

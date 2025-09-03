@@ -54,6 +54,7 @@ export def "rust links" [] {
         [unsafe-guidelines https://rust-lang.github.io/unsafe-code-guidelines/glossary.html]
         [unsafe-mental-model  https://ia0.github.io/unsafe-mental-model/what-are-types.html]
         [negative-programming https://github.com/tigerbeetle/tigerbeetle/blob/main/docs/TIGER_STYLE.md]
+        [types-table          https://rustcurious.com/elements]
         [associated-types     https://gavinleroy.com/writings/i-heart-assoc-types.html]
     ]
 }
