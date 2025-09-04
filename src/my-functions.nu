@@ -259,3 +259,10 @@ export def "ps kill-name" [...names: string@"nu-complete list-process-names"] {
     }
 }
 export alias killn = ps kill-name
+
+# copilot
+export def hey [...words: string] {
+    # maybe use other elia, tgpt, aichat
+    gh copilot explain $"($words | str join ' ')"
+}
+
