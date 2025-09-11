@@ -157,9 +157,6 @@ export alias grba = ^git rebase --abort
 export alias grbc = ^git rebase --continue
 
 
-# cd to git root (bare or worktree)
-export alias cdroot = groot
-
 # Repack repositories in current folder
 # repacker: repack a repo the way Linus recommends.
 #
@@ -323,14 +320,6 @@ export def "git worktree bare-path" [] {
 }
 
 
-# ^git cd to root (bare or worktree)
-def --env groot [] {
- if ((git worktree bare-path) == null) {
-   cd (git rev-parse --show-toplevel)
- } else {
-   cd (git worktree bare-path)
- }
-}
 
 #
 # Pull requests

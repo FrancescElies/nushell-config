@@ -266,3 +266,14 @@ export def hey [...words: string] {
     gh copilot explain $"($words | str join ' ')"
 }
 
+
+# ^git cd to root (bare or worktree)
+def --env git-root [] {
+    if ((git worktree bare-path) == null) {
+        cd (git rev-parse --show-toplevel)
+    } else {
+        cd (git worktree bare-path)
+    }
+}
+# cd to git root (bare or worktree)
+export alias cdroot = git-root
