@@ -40,6 +40,7 @@ $env.NU_LIB_DIRS = [
 # use ~/src/nushell-config/src/miniserve-completions.nu *
 # use ~/src/nushell-config/src/my-configs.nu *
 use ~/src/nushell-config/src/my-functions.nu *
+use ~/src/nushell-config/src/git-aliases.nu *
 # use ~/src/nushell-config/src/nupass.nu *
 # use ~/src/nushell-config/src/ouch-completions.nu *
 # use ~/src/nushell-config/src/parse-help.nu *
@@ -286,7 +287,9 @@ $env.config.keybindings = [
                | where type == dir | get name
                | path relative-to ~/src
                | input list --fuzzy $"Goto (ansi mu)project(ansi reset):")
-           )'
+           );
+           nvim
+           '
         }
    }
    {

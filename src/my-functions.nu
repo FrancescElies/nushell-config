@@ -1,4 +1,5 @@
 # my notes
+use git-aliases.nu *
 export alias ex = explore
 export alias ll = ls -l
 
@@ -207,7 +208,8 @@ export def "nvim clean swap" [] {
         _ => { fd swp ~/.local/state/nvim/swap -x rm },
     }
 }
-export def "nvim pr-files" [] { nvim ...(pr files) }
+export def "nvim pr-files" [] { nvim ...(git pr files) }
+
 export def "nvim server" [] {
     nvim --listen ~/.cache/nvim/server.pipe --headless
 }
