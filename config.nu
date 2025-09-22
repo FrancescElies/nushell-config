@@ -288,7 +288,6 @@ $env.config.keybindings = [
                | path relative-to ~/src
                | input list --fuzzy $"Goto (ansi mu)project(ansi reset):")
            );
-           nvim
            '
         }
    }
