@@ -21,14 +21,22 @@ export def rg-fzf-nvim [] {
             nvim +cw -q {+f}  # Build quickfix list for the selected items.
         }
     '
-  ( fzf --disabled --ansi --multi
-      --bind $"start:reload:($RELOAD)" --bind $"change:reload:($RELOAD)"
-      --bind $"enter:become:($OPENER)" --bind $"ctrl-o:execute:($OPENER)"
-      --bind 'ctrl-a:select-all,ctrl-d:deselect-all,ctrl-/:toggle-preview'
-      --delimiter ':'
-      --preview 'bat --style=full --color=always --highlight-line {2} {1}'
-      --preview-window '~4,+{2}+4/3,<80(up)'
-      --query "$*" )
+    # 1. Search for text in files using Ripgrep
+    # 2. Interactively restart Ripgrep with reload action
+    #    * Press alt-enter to switch to fzf-only filtering
+    # 3. Open the file in Vim
+    ( fzf --disabled --ansi --multi
+        --bind $"start:reload:($RELOAD)"
+        --bind $"change:reload:($RELOAD)"
+        --bind $"enter:become:($OPENER)"
+        --bind $"ctrl-o:execute:($OPENER)"
+        --bind 'ctrl-a:select-all,ctrl-d:deselect-all,ctrl-/:toggle-preview'
+        --bind 'ctrl-f:unbind(change,alt-enter)+change-prompt(2. (ctrl-f [f]ind-toggle) fzf> )+enable-search+clear-query'
+        --prompt '1. (ctrl-f [f]ind-toggle) ripgrep> '
+        --delimiter ':'
+        --preview 'bat --style=full --color=always --highlight-line {2} {1}'
+        --preview-window '~4,+{2}+4/3,<80(up)'
+        --query "$*" )
 }
 # ripgrep->fzf->vim [QUERY]
 export alias rfv = rg-fzf-nvim
