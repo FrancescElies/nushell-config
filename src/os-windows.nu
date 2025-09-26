@@ -3,6 +3,7 @@
 # export alias vim = "c:/tools/vim/vim90/vim.exe"
 
 # https://github.com/winsiderss/systeminformer
+# http://www.windbg.xyz/windbg/article/105-Windbg---Display-parameters-whenever-specific-function-is-called
 
 # export alias sudo = ^gsudo
 def "nu-complete sudo-cache-param" [] { [help on off] }
