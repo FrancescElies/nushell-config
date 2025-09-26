@@ -2,6 +2,7 @@ use broot-helpers.nu *
 use my-functions.nu *
 use reverse-eng.nu *
 use utils.nu *
+use symlinks.nu *
 
 
 const max_bin = if $nu.os-info.name == "windows" {
@@ -235,3 +236,6 @@ export def "Max list available-objects" [] {
 export def "Max list node-procs" [] {
     ps --long | where name =~ node | where command =~ Max | select pid name cwd command
 }
+
+export def "Max use stable" [] { symlink --force `/Program Files/Cycling '74/Max9-stable/` `/Program Files/Cycling '74/Max 9` }
+export def "Max use beta" [] { symlink --force `/Program Files/Cycling '74/Max9-beta/` `/Program Files/Cycling '74/Max 9` }
