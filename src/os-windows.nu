@@ -4,6 +4,7 @@
 
 # https://github.com/winsiderss/systeminformer
 # http://www.windbg.xyz/windbg/article/105-Windbg---Display-parameters-whenever-specific-function-is-called
+# https://github.com/mmozeiko/wcap small recording util
 
 # export alias sudo = ^gsudo
 def "nu-complete sudo-cache-param" [] { [help on off] }
