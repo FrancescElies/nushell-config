@@ -70,17 +70,28 @@ def "Max dump" [
     }
 }
 
+def "nu-complete maxloglevel" [] { {
+    options: { completion_algorithm: fuzzy, case_sensitive: false, positional: false, sort: true, },
+    completions: ([info debug trace])
+} }
+
+
 # Cycling '74 Max cli wrap
-export def "Max start" [maxpat?: path@"nu-complete maxpats"] {
+export def "Max start" [
+    maxpat?: path@"nu-complete maxpats"
+    --log(-l): string@"nu-complete maxloglevel"
+] {
+    mut args = []
+    if $log != null { $args = ($args | append $'--log=($log)') }
     Max preferences set no-crashrecovery
     Max preferences set node-logging
     Max preferences set logtosystemconsole
     if ($maxpat | is-empty) {
         print $"(ansi pb)> ($max_bin)(ansi reset)"
-        run-external $max_bin
+        run-external $max_bin ...$args
     } else {
         print $"(ansi pb)> ($max_bin) ($maxpat | path expand)(ansi reset)"
-        run-external $max_bin ($maxpat | path expand)
+        run-external $max_bin ...$args ($maxpat | path expand)
     }
 }
 
