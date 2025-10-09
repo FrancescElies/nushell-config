@@ -49,12 +49,7 @@ export alias lg = lazygit
 #     $in | recurse | update item { to nuon }
 # }
 
-export def "my todos" [] {
-    mkdir ~/src/zettelkasten
-    cd ~/src/zettelkasten
-    br
-}
-export alias todos = my todos
+export alias todos = nvim ~/src/_notes/src/todos.md
 
 # # create big file
 # export def "my create big-file" [filesize: filesize, outfile: path = bigfile.txt] {
