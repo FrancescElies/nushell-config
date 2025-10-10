@@ -196,6 +196,7 @@ $env.config.keybindings = [
             { edit: insertchar, value: ' '}
         ]
     }
+
     {
          name: insert_absolute_File_with_Broot
          modifier: control
@@ -206,6 +207,7 @@ $env.config.keybindings = [
            cmd: "commandline edit --insert (cd ~; bro)"
          }
     }
+
     {
         name: fzf_dirs
         modifier: control
@@ -221,6 +223,7 @@ $env.config.keybindings = [
           }
         ]
     }
+
     {
         name: fzf_files
         modifier: control
@@ -238,17 +241,25 @@ $env.config.keybindings = [
             "
           }
         ]
-}
+    }
+
     {
-         name: insert_File_with_Broot
+         name: find_file_and_edit
          modifier: control
          keycode: char_f
          mode: [emacs, vi_normal, vi_insert]
          event: {
            send: executehostcommand,
-           cmd: "commandline edit --insert (bro | path expand | path relative-to ('.' | path expand))"
+           # cmd: "commandline edit --insert (bro | path expand | path relative-to ('.' | path expand))"
+           cmd: "
+                nvim (
+                  fd --type file
+                  | fzf --preview 'bat --color=always --style=full --line-range=:500 {}'
+                )
+            "
          }
     }
+
     {
          name: go_Up_to_root_dir
          modifier: control
@@ -259,6 +270,7 @@ $env.config.keybindings = [
            cmd: "cdroot"
          }
     }
+
     {
          name: lazygit
          modifier: control
@@ -269,6 +281,7 @@ $env.config.keybindings = [
            cmd: "lazygit"
          }
     }
+
     {
         name: goto_to_project
         modifier: alt
@@ -291,6 +304,7 @@ $env.config.keybindings = [
            '
         }
    }
+
    {
        # nu_scripts/custom-menus/fuzzy/modules.nu
        name: fuzzy_module
@@ -314,6 +328,7 @@ $env.config.keybindings = [
            '
        }
    }
+
    # NOTE: clunky, doesn't work nicely with multiline
    # {
    #     # nu_scripts/custom-menus/fuzzy/history.nu
