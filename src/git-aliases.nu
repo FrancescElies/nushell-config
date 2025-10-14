@@ -99,6 +99,7 @@ export alias gsl = ^git log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset
 export alias gblame = ^git blame -w -C -C -C
 # ^git log
 export alias gl = ^git log --graph --pretty=format:'%C(auto)%h -%d %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+export alias glsummary = gl --merges --first-parent
 export alias gla = gl --all
 export alias gla20 = gl --all -n20
 export alias gl5 = gl -n5
