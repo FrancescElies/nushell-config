@@ -60,10 +60,6 @@ export def "git set my-defaults" [] {
   ^git config --global core.untrackedcache true
   ^git config --global core.fsmonitor true
 }
-export alias gsetmydefaults = git set my-defaults
-
-# edit .gitignore
-export def "gig" [] { nvim $"(git rev-parse --show-toplevel)/.gitignore" }
 
 # gi diff with external difftool
 export def --wrapped "git difft" [...rest] { with-env {GIT_EXTERNAL_DIFF: difft} { ^git diff ...$rest } }
@@ -71,8 +67,8 @@ export def --wrapped "git difft" [...rest] { with-env {GIT_EXTERNAL_DIFF: difft}
 # list git branches sorted by date
 export def "gbranches" [first: int = 5] { ^git branch --sort=-committerdate | lines | first $first }
 
-export alias gd = ^git diff
-export alias gds = ^git diff --staged
+export alias gd = ^git difft
+export alias gds = ^git difft --staged
 # Yield remote branches like `origin/main`, `upstream/feature-a`
 def "nu-complete git remote branches with prefix" [] {
     {
@@ -86,17 +82,14 @@ export def gdmb [
   rev2: string@"nu-complete git remote branches with prefix"
 ] { ^git diff $rev1 (git merge-base $rev1 $rev2) }
 
-export alias ged = ^git difft
-export alias geds = ^git difft --staged
-export alias ga = ^git add
-export alias gaa = ^git add --all
-export alias gau = ^git add --update
 export alias gs = ^git status
-export alias gstatus = ^git status
-export alias gls = ^git log -p -S
-export alias gsl = ^git log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
-# ^git blame ignore whitespace, deted lines moved/copied, or any commit
+
+# git search: useful when you’re looking for an exact block of code (like a struct), and want to know the history of that block since it first came into being
+export alias glsearch = ^git log -p -S
+
+# ^git blame ignore white-space, deleted lines moved/copied, or any commit
 export alias gblame = ^git blame -w -C -C -C
+
 # ^git log
 export alias gl = ^git log --graph --pretty=format:'%C(auto)%h -%d %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 export alias glsummary = gl --merges --first-parent
@@ -106,27 +99,23 @@ export alias gl5 = gl -n5
 export alias gl9 = gl -n9
 # ^git log with blame a little: glL :FunctionName:path/to/file, glL 15,26:path/to/file
 export alias glL = ^git log -L
-# ^git log all
-# ^git fetch all, prune remote branches
-export alias gf = ^git fetch
-export alias gfa = ^git fetch --all --prune
+
+export alias ga = ^git add
+export alias gaa = ^git add --all
 export alias gca = ^git commit --amend
 export alias gcane = ^git commit --amend --no-edit
-
-export alias gco = ^git checkout
-# create/reset and checkout a branch
-export alias gcob = ^git checkout -B
 # Discard changes in path
 export alias gdiscard = ^git checkout --
 # Clean (also untracked) and checkout.
 def gcleanout [] { ^git clean -df ; ^git checkout -- . }
 
-export alias gcp = ^git cherry-pick
-export alias gcpa = ^git cherry-pick --abort
-export alias gcpc = ^git cherry-pick --continue
-export alias gresethard = ^git reset --hard
+export alias gco = ^git checkout
+
+# remove last commit but keep changes in files
 export alias guncommit = ^git reset --soft HEAD~1
+# unadd files
 export alias gunadd = ^git reset HEAD
+
 # git clean: removes untracked, modifies untracked nested git repositories
 export alias gcleanest = ^git clean -dffx
 export alias gclean = ^git clean -df
@@ -147,15 +136,17 @@ export def gpull [--upstream(-u): string = "origin"] {
 
 # current branch
 export alias gb = git rev-parse --abbrev-ref HEAD
-export alias grb = ^git rebase
-export alias grbi = ^git rebase --interactive
+# ^git fetch all, prune remote branches
+export alias gfa = ^git fetch --all --prune
+# create/reset and checkout a branch
+export alias gcob = ^git checkout -B
+
+
 export alias grbi = ^git rebase --interactive
 # git rebase merge base
 export def grbimb [ rev: string@"nu-complete git remote branches with prefix" ] {
     ^git rebase --interactive (git merge-base (git rev-parse --abbrev-ref HEAD) $rev )
 }
-export alias grba = ^git rebase --abort
-export alias grbc = ^git rebase --continue
 
 
 # Repack repositories in current folder
@@ -213,7 +204,6 @@ export def "git gone" [remote: string = 'origin'] {
         $branches | each {git push $remote --delete $in }
     }
 }
-export alias ggone = git gone
 
 #  View ^git committer activity as a histogram
 export def "git activity" [
@@ -227,14 +217,10 @@ export def "git activity" [
   | sort-by merger
   | reverse
 }
-export alias gactivity = git activity
 
 
 # https://stackoverflow.com/questions/46704572/git-error-encountered-7-files-that-should-have-been-pointers-but-werent
-export def "glfs-fix-everything" [] {
-  ^git lfs migrate import --fixup --everything
-}
-export alias glfsfixeverything = ^git lfs-fix-everything
+export def "git fix-everything" [] { ^git lfs migrate import --fixup --everything }
 
 # This "migrates" files to ^git lfs which should be in lfs as per .gitattributes,
 # but aren't at the moment (which is the reason for your error message).
@@ -243,9 +229,7 @@ export alias glfsfixeverything = ^git lfs-fix-everything
 #
 # Use -m "commitmessage" to set a commitmessage for that commit.
 # https://stackoverflow.com/questions/46704572/git-error-encountered-7-files-that-should-have-been-pointers-but-werent
-export def "glfs-fix" [...paths: path] {
-  ^git lfs migrate import --no-rewrite ...$paths
-}
+export def "glfs-fix" [...paths: path] { ^git lfs migrate import --no-rewrite ...$paths }
 
 export def "nu-complete semmantic-message" [] {
     # https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716
@@ -297,8 +281,9 @@ export def "gage" [] {
 #
 # worktrees
 #
+
 # git worktree list as table
-export def --wrapped "git worktree listt" [...rest] {
+export def --wrapped "git worktree list" [...rest] {
   ^git worktree list ...$rest | lines | parse --regex `(?P<path>.+?) +(?P<commit>\w+) \[(?P<branch>.+)\]`
 }
 
