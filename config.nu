@@ -28,7 +28,6 @@ $env.NU_LIB_DIRS = [
 # use ~/src/nushell-config/src/flamegraph-completions.nu *
 # use ~/src/nushell-config/src/fnm.nu *
 # use ~/src/nushell-config/src/gh-completions.nu *
-# use ~/src/nushell-config/src/git-completions.nu *
 # use ~/src/nushell-config/src/git-my-alias.nu *
 # use ~/src/nushell-config/src/git-pr.nu *
 # use ~/src/nushell-config/src/history-utils.nu *
@@ -41,6 +40,7 @@ $env.NU_LIB_DIRS = [
 # use ~/src/nushell-config/src/my-configs.nu *
 use ~/src/nushell-config/src/my-functions.nu *
 use ~/src/nushell-config/src/git-aliases.nu *
+use ~/src/nushell-config/src/git-completions.nu *
 # use ~/src/nushell-config/src/nupass.nu *
 # use ~/src/nushell-config/src/ouch-completions.nu *
 # use ~/src/nushell-config/src/parse-help.nu *

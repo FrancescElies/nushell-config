@@ -82,8 +82,6 @@ export def gdmb [
   rev2: string@"nu-complete git remote branches with prefix"
 ] { ^git diff $rev1 (git merge-base $rev1 $rev2) }
 
-export alias gs = ^git status
-
 # git search: useful when you’re looking for an exact block of code (like a struct), and want to know the history of that block since it first came into being
 export alias glsearch = ^git log -p -S
 
@@ -93,60 +91,20 @@ export alias gblame = ^git blame -w -C -C -C
 # ^git log
 export alias gl = ^git log --graph --pretty=format:'%C(auto)%h -%d %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 export alias glsummary = gl --merges --first-parent
-export alias gla = gl --all
-export alias gla20 = gl --all -n20
-export alias gl5 = gl -n5
-export alias gl9 = gl -n9
-# ^git log with blame a little: glL :FunctionName:path/to/file, glL 15,26:path/to/file
-export alias glL = ^git log -L
 
-export alias ga = ^git add
-export alias gaa = ^git add --all
-export alias gca = ^git commit --amend
-export alias gcane = ^git commit --amend --no-edit
-# Discard changes in path
-export alias gdiscard = ^git checkout --
-# Clean (also untracked) and checkout.
-def gcleanout [] { ^git clean -df ; ^git checkout -- . }
+export alias uncommit = ^git reset --soft HEAD~1
+export alias unadd = ^git reset HEAD
 
-export alias gco = ^git checkout
-
-# remove last commit but keep changes in files
-export alias guncommit = ^git reset --soft HEAD~1
-# unadd files
-export alias gunadd = ^git reset HEAD
-
-# git clean: removes untracked, modifies untracked nested git repositories
-export alias gcleanest = ^git clean -dffx
-export alias gclean = ^git clean -df
-
-export def gpush [
-  --upstream(-u): string = "origin"
-  --force-with-lease(-f)  # force-with-lease
-  --force(-F)           # force
-] {
+export def push [--upstream(-u): string = "origin", --force-with-lease(-f), --force(-F)] {
   mut args = []
   if $force_with_lease != null { $args = ($args | append $'--force-with-lease') }
   if $force != null { $args = ($args | append $'--force') }
   ^git push ...$args --set-upstream $upstream (git rev-parse --abbrev-ref HEAD)
 }
-export def gpull [--upstream(-u): string = "origin"] {
-  ^git pull --set-upstream $upstream (git rev-parse --abbrev-ref HEAD)
-}
+export def pull [--upstream(-u): string = "origin"] { ^git pull --set-upstream $upstream (git rev-parse --abbrev-ref HEAD) }
 
-# current branch
-export alias gb = git rev-parse --abbrev-ref HEAD
-# ^git fetch all, prune remote branches
-export alias gfa = ^git fetch --all --prune
-# create/reset and checkout a branch
-export alias gcob = ^git checkout -B
-
-
-export alias grbi = ^git rebase --interactive
 # git rebase merge base
-export def grbimb [ rev: string@"nu-complete git remote branches with prefix" ] {
-    ^git rebase --interactive (git merge-base (git rev-parse --abbrev-ref HEAD) $rev )
-}
+export def merge-base [ rev: string@"nu-complete git remote branches with prefix" ] { git merge-base (git rev-parse --abbrev-ref HEAD) $rev }
 
 
 # Repack repositories in current folder
@@ -229,7 +187,7 @@ export def "git fix-everything" [] { ^git lfs migrate import --fixup --everythin
 #
 # Use -m "commitmessage" to set a commitmessage for that commit.
 # https://stackoverflow.com/questions/46704572/git-error-encountered-7-files-that-should-have-been-pointers-but-werent
-export def "glfs-fix" [...paths: path] { ^git lfs migrate import --no-rewrite ...$paths }
+export def "git lfs-fix" [...paths: path] { ^git lfs migrate import --no-rewrite ...$paths }
 
 export def "nu-complete semmantic-message" [] {
     # https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716
@@ -250,7 +208,7 @@ export def "nu-complete semmantic-message" [] {
 
 # lightweight convention for commit messages
 # https://www.conventionalcommits.org/en/v1.0.0/
-export def --wrapped "gommit" [
+export def --wrapped "commit" [
     type: string@"nu-complete semmantic-message"
     title: string
     --scope(-s): string     # adds contextual(information)
@@ -263,7 +221,7 @@ export def --wrapped "gommit" [
 }
 
 # Creates a table listing the branches of a git repository and the day of the last commit
-export def "gage" [] {
+export def "git branch-ages" [] {
     git branch |
     lines |
     str substring 2.. |
