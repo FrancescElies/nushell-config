@@ -83,14 +83,14 @@ export def gdmb [
 ] { ^git diff $rev1 (git merge-base $rev1 $rev2) }
 
 # git search: useful when you’re looking for an exact block of code (like a struct), and want to know the history of that block since it first came into being
-export alias glsearch = ^git log -p -S
+export alias "git log-search" = ^git log -p -S
 
-# ^git blame ignore white-space, deleted lines moved/copied, or any commit
-export alias gblame = ^git blame -w -C -C -C
+# better blame: ^git blame ignore white-space, deleted lines moved/copied, or any commit
+export alias "git bblame" = ^git blame -w -C -C -C
 
-# ^git log
-export alias gl = ^git log --graph --pretty=format:'%C(auto)%h -%d %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-export alias glsummary = gl --merges --first-parent
+# git log pretty
+export alias "git log-pretty" = ^git log --graph --pretty=format:'%C(auto)%h -%d %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+export alias "git log-pretty-merges" = git log-pretty --merges --first-parent
 
 export alias uncommit = ^git reset --soft HEAD~1
 export alias unadd = ^git reset HEAD
