@@ -1,3 +1,9 @@
+export def "cargo multi-fix" [] {
+  cargo fmt --all
+  cargo fix --allow-dirty --allow-staged
+  cargo clippy --fix --allow-dirty --allow-staged
+}
+
 # rustup override set stable
 
 export def "rust commands" [] {

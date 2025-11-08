@@ -269,3 +269,10 @@ def --env git-root [] {
 }
 # cd to git root (bare or worktree)
 export alias cdroot = git-root
+
+export def "python multi-fix" [] {
+    ruff check --fix
+    black .
+    pyright .
+}
+
