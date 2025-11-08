@@ -1,3 +1,7 @@
+# Overview: https://ziglang.org/learn/overview/#wide-range-of-targets-supported
+#           https://zig.guide/
+#           https://github.com/zighelp/zighelp/
+
 # https://www.youtube.com/watch?v=YXrb-DqsBNU
 # You add one dependency but you can remove one cmake e.g.
 
