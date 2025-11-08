@@ -38,6 +38,23 @@
 #     return 0;
 # }
 
+# https://zig.news/kristoff/how-to-release-your-zig-applications-2h90
+#
+# Zig will produce a build optimized for the current, thus always specify a
+# target when doing releases.
+# To finetune the selection of instruction sets you can take a look at -Dcpu
+#
+# In practice here's how you would want to make a release for Arm macOS:
+# build-exe is fine for simple projects, but build will use `build.zig` file
+# $ zig build-exe myapp.zig -target aarch64-macos
+# $ zig build -Dtarget=aarch64-macos
+#
+# zig targets | nvim
+# x86-64-linux // uses musl libc
+# x86-64-linux-gnu // uses glibc
+# x86-64-windows // uses MingW headers
+# x86-64-windows-msvc // uses MSVC headers but they need to be present in your system
+# wasm32-freestanding // you will have to use build-obj since wasm modules are not full exes
 
 export def "zig links" [] {
     [
