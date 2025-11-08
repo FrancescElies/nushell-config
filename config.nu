@@ -20,7 +20,7 @@ $env.NU_LIB_DIRS = [
 # use ~/src/nushell-config/src/bat-completions.nu *
 # use ~/src/nushell-config/src/broot-helpers.nu *
 # use ~/src/nushell-config/src/btm-completions.nu *
-# use ~/src/nushell-config/src/cargo-completions.nu *
+use ~/src/nushell-config/src/cargo-completions.nu *
 # use ~/src/nushell-config/src/clipboard.nu *
 # use ~/src/nushell-config/src/docs.nu *
 use ~/src/nushell-config/src/fd-completions.nu *
