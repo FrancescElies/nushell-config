@@ -60,6 +60,9 @@
 # x86-64-windows-msvc // uses MSVC headers but they need to be present in your system
 # wasm32-freestanding // you will have to use build-obj since wasm modules are not full exes
 
+# go install -ldflags "-s -w" github.com/tristanisham/zvm@latest
+# zvm i --zls 0.15.2
+
 export def "zig links" [] {
     [
         [name                 link];
