@@ -29,7 +29,7 @@ use ~/src/nushell-config/src/fd-completions.nu *
 # use ~/src/nushell-config/src/gh-completions.nu *
 # use ~/src/nushell-config/src/git-my-alias.nu *
 # use ~/src/nushell-config/src/git-pr.nu *
-use ~/src/nushell-config/src/history-utils.nu *
+# use ~/src/nushell-config/src/history-utils.nu *
 # use ~/src/nushell-config/src/hosts-completions.nu *
 use ~/src/nushell-config/src/just-completions.nu *
 # use ~/src/nushell-config/src/man.nu *
