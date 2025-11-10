@@ -15,7 +15,7 @@ $env.NU_LIB_DIRS = [
 #     this_repo = Path("~/src/nushell-config")
 #     cog.outl(f"use {this_repo / file} *".replace('\\', '/'))
 # ]]]*/
-# use ~/src/nushell-config/src/ado-completions.nu *
+use ~/src/nushell-config/src/ado-completions.nu *
 # use ~/src/nushell-config/src/ai-completions.nu *
 # use ~/src/nushell-config/src/bat-completions.nu *
 # use ~/src/nushell-config/src/broot-helpers.nu *

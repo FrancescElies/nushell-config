@@ -160,8 +160,6 @@ export module ado {
             -o json
         )
         | from json
-        | select pullRequestId title mergeStatus
-        | rename id            title mergeStatus
     }
 
     export def "pr status" [
