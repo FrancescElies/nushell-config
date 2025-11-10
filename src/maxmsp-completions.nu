@@ -249,4 +249,4 @@ export def "Max list node-procs" [] {
 }
 
 export def "Max use stable" [] { symlink --force `/Program Files/Cycling '74/Max9-stable/` `/Program Files/Cycling '74/Max 9` }
-export def "Max use beta" [] { symlink --force `/Program Files/Cycling '74/Max9-beta/` `/Program Files/Cycling '74/Max 9` }
+export def "Max use 910" [] { symlink --force `/Program Files/Cycling '74/Max 910/` `/Program Files/Cycling '74/Max 9` }
