@@ -46,7 +46,7 @@ use ~/src/nushell-config/src/git-completions.nu *
 # use ~/src/nushell-config/src/pnpm-completions.nu *
 # use ~/src/nushell-config/src/pueue-completions.nu *
 # use ~/src/nushell-config/src/pytest-completions.nu *
-# use ~/src/nushell-config/src/reverse-eng.nu *
+use ~/src/nushell-config/src/reverse-eng.nu *
 # use ~/src/nushell-config/src/rg-completions.nu *
 # use ~/src/nushell-config/src/rust.nu *
 # use ~/src/nushell-config/src/rustup-completions.nu *
