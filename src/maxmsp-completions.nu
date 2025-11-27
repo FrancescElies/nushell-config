@@ -97,12 +97,12 @@ export def "Max start" [
 
 def "nu-complete my-maxpats" [] { {
     options: { completion_algorithm: fuzzy, case_sensitive: false, positional: false, sort: true, },
-    completions: (fd maxpat ~/src/work/my-maxpats | lines)
+    completions: (fd maxpat /s/my-maxpats | lines)
 } }
 
 # Cycling '74 Max cli wrap
 export def "Max start my" [maxpat: path@"nu-complete my-maxpats"] {
-    cd ~/src/work/my-maxpats
+    cd /s/my-maxpats
     Max preferences set no-crashrecovery
     Max preferences set node-logging
     Max preferences set logtosystemconsole
@@ -176,7 +176,7 @@ export def "Max goto header-files" [] {
 
 
 export def "Max download-installers" [] {
-    let dir = '~/src/work/installers-exe'
+    let dir = '/s/installers-exe'
     mkdir $dir
     cd $dir
     if not ("Max862_240319.zip" | path exists) { wget https://downloads.cdn.cycling74.com/max8/Max862_240319.zip }

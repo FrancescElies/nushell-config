@@ -8,7 +8,7 @@
 # Conditional ~/.gitconfig
 #
 # [includelf "gitdir:~/projects/work/"]
-#   path = ~/src/work/.gitconfig
+#   path = /s/.gitconfig
 # [includelf "gitdir:~/src/oss/"]
 #   path = ~/projects/oss/.gitconfig
 #
