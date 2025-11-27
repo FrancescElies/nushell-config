@@ -52,6 +52,7 @@ export module ado {
 
     # review a pr on a separate folder
     export def "pr review" [ branch: string ] {
+        git fetch --all | ignore
         let startingat = $"origin/($branch)"
         let path = $branch | str replace "/" "--" | str replace " " "-"
         print $"(ansi pb)git worktree add -B ($branch) ($path) ($startingat)(ansi reset)"

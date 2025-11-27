@@ -288,17 +288,16 @@ $env.config.keybindings = [
         mode: [emacs, vi_normal, vi_insert]
         event: {
            send: executehostcommand,
-           cmd: ' cd ("~/src" | path expand | path join (
+           cmd: ' cd (
                ls ~/src
-               | append (try {ls ~/src/work})
-               | append (try {ls ~/src/work/my-maxpats/*})
-               | append (try {ls ~/src/work/*-worktrees/*})
-               | append (try {ls ~/src/work/*-wt/*})
-               | append (try {ls ~/src/work/customerprj/*})
-               | append (try {ls ~/src/oss})
+               | append (try {ls --full-paths ~/src/oss})
+               | append (try {ls --full-paths /s})
+               | append (try {ls --full-paths /s/my-maxpats/*})
+               | append (try {ls --full-paths /s/*-worktrees/*})
+               | append (try {ls --full-paths /s/*-wt/*})
+               | append (try {ls --full-paths /s/customerprj/*})
                | where type == dir | get name
-               | path relative-to ~/src
-               | input list --fuzzy $"Goto (ansi mu)project(ansi reset):")
+               | input list --fuzzy $"Goto (ansi mu)project(ansi reset):"
            );
            '
         }
