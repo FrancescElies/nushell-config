@@ -58,7 +58,6 @@ def config-broot-bacon [] {
 }
 
 export def main [] {
-    mkdir /s
     mkdir ~/src/oss
 
     symlink --force ~/src/nushell-config/.inputrc ~/.inputrc

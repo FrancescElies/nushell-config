@@ -26,6 +26,10 @@ e asm.cmt.right=true        # show comments at right
 
 ```
 
+## Attacks 
+typical exploitable c problems buffer overflow, stack smashing, return oriented
+programming.
+
 ## usage
 cli
 ```
