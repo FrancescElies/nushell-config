@@ -296,6 +296,8 @@ $env.config.keybindings = [
                | append (try {ls --full-paths /s/*-worktrees/*})
                | append (try {ls --full-paths /s/*-wt/*})
                | append (try {ls --full-paths /s/customerprj/*})
+               | append ~/Downloads
+               | append ~/Desktop
                | where type == dir | get name
                | input list --fuzzy $"Goto (ansi mu)project(ansi reset):"
            );
