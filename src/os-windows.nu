@@ -274,9 +274,17 @@ export module win {
     # copy to clipboard install basic software, useful when asked to do support on other machines
     export def "copy debug-session-software" [] { echo "winget install --silent BurntSushi.ripgrep.MSVC sharkdp.fd dystroy.broot TomHudson.gron" | clip }
 
-    export def "windows new-mail" [attachment?: path] {
+    export def "outlook new-mail" [
+        to: string,
+        subject: string,
+        --attach(-a): path,
+        --body(-b): string = "",
+    ] {
         let outlook_path = 'C:/Program Files/Microsoft Office/root/Office16/OUTLOOK.EXE'
-        run-external $outlook_path /c ipm.note /a ($attachment | path expand)
+        ( run-external $outlook_path
+            /c ipm.note
+            /m $"($to)?subject=($subject)&body=($body)"
+            ...(if $attach != null {  ['/a' ($attach | path expand)] } ) )
     }
 
 }
