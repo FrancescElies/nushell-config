@@ -281,6 +281,8 @@ export module win {
         --body(-b): string = "",
     ] {
         let outlook_path = 'C:/Program Files/Microsoft Office/root/Office16/OUTLOOK.EXE'
+        # let outlook_path = '~\AppData\Local\Microsoft\WindowsApps\olk.exe' | path expand
+
         ( run-external $outlook_path
             /c ipm.note
             /m $"($to)?subject=($subject)&body=($body)"
