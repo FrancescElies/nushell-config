@@ -53,8 +53,9 @@ $env.path ++= [
     '~/.local/bin'
     '~/bin'
 ]
-$env.path ++= (ls ~/bin | where type == dir | get name)
-$env.path ++= ( ls ~/bin/*/* | where type == dir | get name | where {$in|str ends-with "bin"} )
+$env.path ++= ( ls ~/bin | where type == dir | get name )
+$env.path ++= ( ls ~/bin/*/bin | get name )
+$env.path ++= ( ls /usr/local/*/bin | get name )
 
 $env.path = ($env.path | uniq)
 
