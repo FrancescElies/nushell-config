@@ -49,6 +49,8 @@ $env.path ++= [
     '~/src/radare2/prefix/bin'
     '~/go/bin'
     '~/.cargo/bin'
+    '~/.zvm/bin'
+    '~/.zvm/bin/self'
     # pipx puts binaries in .local/bin
     '~/.local/bin'
     '~/bin'
