@@ -46,11 +46,10 @@ match $nu.os-info.name {
 # common paths
 $env.path ++= [
     '~/.zvm/bin'
+    '~/.zvm/self'
     '~/src/radare2/prefix/bin'
     '~/go/bin'
     '~/.cargo/bin'
-    '~/.zvm/bin'
-    '~/.zvm/bin/self'
     # pipx puts binaries in .local/bin
     '~/.local/bin'
     '~/bin'
@@ -59,7 +58,7 @@ $env.path ++= ( ls ~/bin | where type == dir | get name )
 $env.path ++= ( ls ~/bin/*/bin | get name )
 $env.path ++= ( ls /usr/local/*/bin | get name )
 
-$env.path = ($env.path | uniq)
+$env.path = ( $env.path | uniq )
 
 
 $env.SHELL = "nu"  # makes broot open nu
