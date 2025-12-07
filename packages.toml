@@ -216,12 +216,11 @@ neovim = ""
 restic = ""
 ripgrep = ""
 vlc = ""
+nushell = ""
 
 [mac-brew-cask]
 flameshot = ""
 gimp = ""
-neovim = ""
-nushell = ""
 obs = ""
 vlc = ""
 wezterm = ""
