@@ -137,7 +137,8 @@ export module ado {
         --draft
     ] {
         git push
-        let description = ($nu.temp-path | path join $"az-pr.md")
+        let main_or_master = git rev-parse --abbrev-ref origin/HEAD
+        let description = (git log --format=%B $"(git merge-base HEAD $main_or_master)..HEAD")
         let title = if ($title | is-empty) { ( git log --format=%B -n 1 HEAD ) | lines | first } else { $title }
         # [ "**Problem:** " "" "**Solution:** " "" "**Notes:** " ] | to text | save -f $description
 
