@@ -330,7 +330,7 @@ export def "git pr review-maxpats" [
 
 # Quickly add all files, commit changes, and push commits and all stashes to a new branch to prevent merge conflicts.
 # Inspired by https://github.com/qw3rtman/git-fire
-export def git-fire [] {
+export def "git fire" [] {
     let initial_branch = git rev-parse --abbrev-ref HEAD
     let new_branch = $"fire/($initial_branch)-(date now | format date "%Y%m%d-%H%M%S")"
 	git checkout -b "$(new_branch)"
@@ -347,4 +347,23 @@ export def git-fire [] {
             |sha| try { git push --no-verify origin $"($sha):refs/heads/($initial_branch)-stash-($sha)" }
         }
     }
+}
+
+export def "git standup" [--until: string, --since: string, --author: string] {
+    mut args = []
+    if $until != null { $args = ($args | append [--until $until]) }
+    if $author != null { $args = ($args | append [--author (git config user.name)]) }
+    if $since != null { $args = ($args | append [--since ($since)] ) }
+
+    let format = "%Cred%h%Creset - %s %Cgreen(%ad) %C(bold blue)<%an>%Creset"
+    ( git --no-pager log --all
+        --no-merges
+        --abbrev-commit
+        --oneline
+        --pretty=$"format:'($format)'"
+        --date='-relative'
+        --color=always
+        --stat
+        ...$args
+    )
 }
