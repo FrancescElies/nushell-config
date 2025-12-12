@@ -327,3 +327,24 @@ export def "git pr review-maxpats" [
   print "Once done cleanup: rm tmp_*maxpat"
 
 }
+
+# Quickly add all files, commit changes, and push commits and all stashes to a new branch to prevent merge conflicts.
+# Inspired by https://github.com/qw3rtman/git-fire
+export def git-fire [] {
+    let initial_branch = git rev-parse --abbrev-ref HEAD
+    let new_branch = $"fire/($initial_branch)-(date now | format date "%Y%m%d-%H%M%S")"
+	git checkout -b "$(new_branch)"
+	cd (git rev-parse --show-toplevel)
+    git add -A
+	git commit -m $"Fire! Branch (initial_branch)." --no-verify
+    git remote | lines | each {
+        |remote| try { git push --no-verify --set-upstream $remote $initial_branch }
+    }
+
+    let stash_complete = git rev-list -g stash | complete
+    if $stash_complete.exit_code == 0 {
+         git rev-list -g stash | lines | each {
+            |sha| try { git push --no-verify origin $"($sha):refs/heads/($initial_branch)-stash-($sha)" }
+        }
+    }
+}
